@@ -13,6 +13,7 @@ export interface PromptEntry {
   sent: boolean;
   createdAt: number;
   updatedAt: number;
+  trashedAt?: number;
 }
 
 

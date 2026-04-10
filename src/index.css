@@ -1,22 +1,13 @@
 :root {
   font: 16px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
-  color-scheme: dark;
-  color: #e0e0e0;
-  background: #0f0f14;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-}
+body { margin: 0; }
 
-#root {
-  min-height: 100svh;
-}
+#root { min-height: 100svh; }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }

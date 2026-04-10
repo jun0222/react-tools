@@ -8,7 +8,7 @@ import {
 import {
   ZapIcon, CopyIcon, PlusIcon, TrashIcon, EditIcon,
   SendIcon, CheckIcon, ReplyIcon, DownloadIcon, UploadIcon,
-  SparklesIcon, SunIcon, MoonIcon,
+  SparklesIcon, SunIcon, MoonIcon, RestoreIcon,
 } from './icons';
 import './OneShot.css';
 
@@ -23,13 +23,21 @@ const OneShot = () => {
   const [editBody, setEditBody] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState('');
+  const [showTrash, setShowTrash] = useState(false);
   const [toast, setToast] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const listRef = useRef<HTMLDivElement>(null);
 
+  const active = prompts.filter(p => !p.trashedAt);
+  const trashed = prompts.filter(p => p.trashedAt);
+
   useEffect(() => { savePrompts(prompts); }, [prompts]);
-  useEffect(() => { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); }, [dark]);
+
+  useEffect(() => {
+    document.documentElement.dataset.osTheme = dark ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+  }, [dark]);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -42,7 +50,7 @@ const OneShot = () => {
     setTimeout(() => setToast(''), 2000);
   }, []);
 
-  const shotTitle = getShotTitle(prompts.length);
+  const shotTitle = getShotTitle(active.length);
 
   // --- Prompt CRUD ---
   const addPrompt = () => {
@@ -57,9 +65,29 @@ const OneShot = () => {
     showToast('プロンプト追加 ⚡');
   };
 
-  const deletePrompt = (id: string) => {
+  const trashPrompt = (id: string) => {
+    setPrompts(prev => prev.map(p =>
+      p.id === id ? { ...p, trashedAt: Date.now() } : p
+    ));
+    showToast('ゴミ箱に移動しました');
+  };
+
+  const restorePrompt = (id: string) => {
+    setPrompts(prev => prev.map(p =>
+      p.id === id ? { ...p, trashedAt: undefined } : p
+    ));
+    showToast('復元しました');
+  };
+
+  const deleteForever = (id: string) => {
     setPrompts(prev => prev.filter(p => p.id !== id));
-    showToast('削除しました');
+    showToast('完全に削除しました');
+  };
+
+  const emptyTrash = () => {
+    setPrompts(prev => prev.filter(p => !p.trashedAt));
+    setShowTrash(false);
+    showToast('ゴミ箱を空にしました');
   };
 
   const startEdit = (p: PromptEntry) => { setEditingId(p.id); setEditBody(p.body); };
@@ -132,8 +160,8 @@ const OneShot = () => {
   };
 
   const handleDistill = async () => {
-    if (prompts.length === 0) { showToast('プロンプトがありません'); return; }
-    const ok = await copyToClipboard(buildGlobalDistillPrompt(prompts));
+    if (active.length === 0) { showToast('プロンプトがありません'); return; }
+    const ok = await copyToClipboard(buildGlobalDistillPrompt(active));
     showToast(ok ? '蒸留プロンプトをコピー ✨' : 'コピー失敗');
   };
 
@@ -152,7 +180,7 @@ const OneShot = () => {
             <span className="accent">{shotTitle}</span>
             <span className="shot">Shot</span>
           </h1>
-          <span className="os-count-badge">{prompts.length} prompts</span>
+          <span className="os-count-badge">{active.length} prompts</span>
         </div>
 
         <div className="os-toolbar">
@@ -164,6 +192,15 @@ const OneShot = () => {
             <SparklesIcon size={14} /> {shotTitle.toUpperCase()} DISTILL
           </button>
 
+          <button
+            className={`os-btn os-btn-ghost ${showTrash ? 'os-btn-trash-active' : ''}`}
+            onClick={() => setShowTrash(v => !v)}
+            title="ゴミ箱"
+          >
+            <TrashIcon size={14} />
+            {trashed.length > 0 && <span className="os-trash-badge">{trashed.length}</span>}
+          </button>
+
           <button className="os-btn os-btn-ghost" onClick={handleExport}>
             <DownloadIcon size={14} />
           </button>
@@ -172,6 +209,38 @@ const OneShot = () => {
           </button>
         </div>
       </header>
+
+      {/* ===== TRASH PANEL ===== */}
+      {showTrash && (
+        <div className="os-trash-panel">
+          <div className="os-trash-panel-header">
+            <span>ゴミ箱 ({trashed.length}件)</span>
+            {trashed.length > 0 && (
+              <button className="os-btn os-btn-sm os-btn-ghost" onClick={emptyTrash}>
+                すべて削除
+              </button>
+            )}
+          </div>
+          {trashed.length === 0 ? (
+            <p className="os-trash-empty">ゴミ箱は空です</p>
+          ) : (
+            trashed.map(p => (
+              <div key={p.id} className="os-trash-item">
+                <div className="os-trash-item-body">{p.body.slice(0, 120)}{p.body.length > 120 ? '…' : ''}</div>
+                <div className="os-trash-item-actions">
+                  <span className="os-trash-date">{formatDate(p.trashedAt!)}</span>
+                  <button className="os-btn os-btn-sm os-btn-purple" onClick={() => restorePrompt(p.id)}>
+                    <RestoreIcon size={11} /> 復元
+                  </button>
+                  <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => deleteForever(p.id)}>
+                    <TrashIcon size={11} /> 完全削除
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
 
       {/* ===== NEW PROMPT ===== */}
       {!showNewForm ? (
@@ -204,7 +273,7 @@ const OneShot = () => {
 
       {/* ===== PROMPT LIST ===== */}
       <div className="os-bubble-list" ref={listRef}>
-        {prompts.length === 0 && (
+        {active.length === 0 && (
           <div className="os-empty">
             <div className="os-empty-icon"><ZapIcon size={48} /></div>
             <p><strong>プロンプトがまだありません</strong></p>
@@ -212,7 +281,7 @@ const OneShot = () => {
           </div>
         )}
 
-        {prompts.map(p => (
+        {active.map(p => (
           <div key={p.id} className={`os-bubble ${p.sent ? 'sent' : ''}`}>
             <div className="os-bubble-meta">
               {p.sent && <span className="os-sent-badge">SENT</span>}
@@ -277,7 +346,7 @@ const OneShot = () => {
                   <button className="os-btn os-btn-sm os-btn-purple" onClick={() => setReplyingTo(replyingTo === p.id ? null : p.id)}>
                     <ReplyIcon size={12} /> Reply
                   </button>
-                  <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => deletePrompt(p.id)} style={{ marginLeft: 'auto' }}>
+                  <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => trashPrompt(p.id)} style={{ marginLeft: 'auto' }}>
                     <TrashIcon size={12} />
                   </button>
                 </>

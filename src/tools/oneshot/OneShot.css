@@ -1,6 +1,18 @@
 /* ============================
    OneShot - Prompt Manager
    ============================ */
+
+/* --- Full-page theme --- */
+html[data-os-theme="dark"] {
+  background: #0f0f14;
+  color-scheme: dark;
+}
+html[data-os-theme="light"] {
+  background: #f5f5f8;
+  color-scheme: light;
+}
+
+/* --- Theme variables --- */
 .oneshot {
   --os-pink: #ff2d7b;
   --os-purple: #a855f7;
@@ -16,7 +28,7 @@
   --os-surface2: #22222e;
   --os-border: #2e2e3e;
   --os-text: #e0e0e0;
-  --os-text-dim: #888;
+  --os-text-dim: #666;
 }
 
 .oneshot.light {
@@ -76,20 +88,22 @@
   letter-spacing: -2px;
   margin: 0;
   line-height: 1;
-  transition: all 0.5s;
 }
 .os-logo h1 .accent {
   color: var(--os-pink);
+}
+.oneshot.dark .os-logo h1 .accent {
   text-shadow: 0 0 10px #ff007f;
 }
 .os-logo h1 .shot {
-  color: #fff;
+  color: var(--os-text);
 }
 
 .os-toolbar {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 /* --- Buttons --- */
@@ -155,31 +169,75 @@
   font-size: 10px;
 }
 
-/* --- Mode Toggle --- */
-.os-mode-toggle {
-  display: flex;
-  border-radius: var(--os-radius-sm);
-  overflow: hidden;
-  border: 1.5px solid var(--os-border);
+.os-btn-trash-active {
+  border-color: rgba(255, 45, 123, 0.5);
+  color: var(--os-pink);
 }
-.os-mode-toggle button {
-  padding: 7px 14px;
-  font-family: inherit;
+
+/* --- Trash badge --- */
+.os-trash-badge {
+  background: var(--os-pink);
+  color: #fff;
+  border-radius: 99px;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 1px 5px;
+  line-height: 1.4;
+}
+
+/* --- Trash Panel --- */
+.os-trash-panel {
+  background: var(--os-surface);
+  border: 1.5px solid var(--os-border);
+  border-radius: var(--os-radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.os-trash-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  background: var(--os-surface);
   color: var(--os-text-dim);
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
 }
-.os-mode-toggle button.active {
-  background: var(--os-pink);
-  color: #fff;
+
+.os-trash-empty {
+  font-size: 12px;
+  color: var(--os-text-dim);
+  text-align: center;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.os-trash-item {
+  padding: 10px 0;
+  border-top: 1px dashed var(--os-border);
+}
+
+.os-trash-item-body {
+  font-size: 12px;
+  color: var(--os-text-dim);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.os-trash-item-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.os-trash-date {
+  font-size: 10px;
+  color: var(--os-text-dim);
+  margin-right: auto;
 }
 
 /* --- Prompt Bubbles --- */
@@ -232,7 +290,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 
 .os-sent-badge {
@@ -267,6 +325,7 @@
   cursor: pointer;
   padding: 2px 0;
   user-select: none;
+  white-space: normal;
 }
 .os-body-check:hover .os-body-checkbox {
   border-color: var(--os-pink);
@@ -294,7 +353,6 @@
 }
 
 /* --- Editing --- */
-.os-edit-input,
 .os-edit-textarea {
   width: 100%;
   background: var(--os-surface2);
@@ -308,19 +366,11 @@
   resize: vertical;
   outline: none;
   transition: border-color 0.2s;
-}
-.os-edit-input:focus,
-.os-edit-textarea:focus {
-  border-color: var(--os-pink);
-}
-.os-edit-input {
-  font-weight: 800;
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-.os-edit-textarea {
   min-height: 120px;
   line-height: 1.7;
+}
+.os-edit-textarea:focus {
+  border-color: var(--os-pink);
 }
 
 /* --- Replies --- */
@@ -387,7 +437,6 @@
   color: var(--os-text-dim);
 }
 .os-empty-icon {
-  font-size: 48px;
   margin-bottom: 16px;
   opacity: 0.3;
   color: var(--os-pink);
@@ -414,14 +463,8 @@
   z-index: 999;
 }
 @keyframes os-toast-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* --- Scroll to top --- */
@@ -439,7 +482,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.2s;
   font-size: 20px;
   z-index: 998;
