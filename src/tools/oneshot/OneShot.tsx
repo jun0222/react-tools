@@ -80,6 +80,20 @@ const OneShot = () => {
     showToast('保存しました');
   };
 
+  const toggleCheckbox = (promptId: string, lineIndex: number) => {
+    setPrompts(prev => prev.map(p => {
+      if (p.id !== promptId) return p;
+      const lines = p.body.split('\n');
+      const line = lines[lineIndex];
+      if (line.match(/^- \[ \]/)) {
+        lines[lineIndex] = line.replace(/^- \[ \]/, '- [x]');
+      } else if (line.match(/^- \[x\]/i)) {
+        lines[lineIndex] = line.replace(/^- \[x\]/i, '- [ ]');
+      }
+      return { ...p, body: lines.join('\n') };
+    }));
+  };
+
   const toggleSent = (id: string) => {
     setPrompts(prev => prev.map(p =>
       p.id === id ? { ...p, sent: !p.sent } : p
@@ -243,7 +257,21 @@ const OneShot = () => {
                     autoFocus
                   />
                 ) : (
-                  <div className="os-bubble-body">{p.body}</div>
+                  <div className="os-bubble-body">
+                    {p.body.split('\n').map((line, i) => {
+                      const unchecked = line.match(/^- \[ \] (.*)/);
+                      const checked = line.match(/^- \[x\] (.*)/i);
+                      if (unchecked || checked) {
+                        return (
+                          <label key={i} className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
+                            <span className="os-body-checkbox"><CheckIcon size={10} /></span>
+                            <span>{(unchecked ?? checked)![1]}</span>
+                          </label>
+                        );
+                      }
+                      return <div key={i}>{line || '\u00A0'}</div>;
+                    })}
+                  </div>
                 )}
 
                 {/* Actions */}

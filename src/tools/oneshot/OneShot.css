@@ -249,6 +249,40 @@
   flex-wrap: wrap;
 }
 
+/* --- Inline Checkboxes in body --- */
+.os-body-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 2px 0;
+  user-select: none;
+}
+.os-body-check:hover .os-body-checkbox {
+  border-color: var(--os-pink);
+}
+.os-body-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid var(--os-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: transparent;
+}
+.os-body-check.checked .os-body-checkbox {
+  background: var(--os-pink);
+  border-color: var(--os-pink);
+  color: #fff;
+}
+.os-body-check.checked span:last-child {
+  text-decoration: line-through;
+  color: var(--os-text-dim);
+}
+
 /* --- Editing --- */
 .os-edit-input,
 .os-edit-textarea {
