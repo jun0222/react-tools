@@ -15,11 +15,6 @@ export interface PromptEntry {
   updatedAt: number;
 }
 
-export interface CheckItem {
-  id: string;
-  text: string;
-  checked: boolean;
-}
 
 // --- ロゴ生成用ヘルパー ---
 const words = [
@@ -119,18 +114,6 @@ export const buildGlobalDistillPrompt = (prompts: PromptEntry[]): string => {
 
 ${promptList}
 `;
-};
-
-// --- AI出力からチェックリスト生成 ---
-export const parseChecklist = (text: string): CheckItem[] => {
-  const lines = text.split('\n');
-  return lines
-    .filter((line) => line.trim().match(/^[-*•]\s|^\d+[.)]\s/))
-    .map((line) => ({
-      id: uid(),
-      text: line.replace(/^[-*•]\s+|^\d+[.)]\s+/, '').trim(),
-      checked: false,
-    }));
 };
 
 // --- クリップボード ---
