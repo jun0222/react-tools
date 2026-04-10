@@ -1,35 +1,80 @@
 .home {
+  --h-pink: #ff2d7b;
+  --h-radius: 16px;
+}
+
+.home.dark {
+  --h-bg: #0f0f14;
+  --h-surface: #1a1a24;
+  --h-border: #2e2e3e;
+  --h-text: #e0e0e0;
+  --h-text-dim: #666;
+  --h-heading: #ffffff;
+}
+
+.home.light {
+  --h-bg: #f5f5f8;
+  --h-surface: #ffffff;
+  --h-border: #e0e0e8;
+  --h-text: #1a1a2e;
+  --h-text-dim: #888;
+  --h-heading: #0f0f14;
+}
+
+.home {
   max-width: 820px;
   margin: 0 auto;
   padding: 48px 16px;
   font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
-  color: #e0e0e0;
+  color: var(--h-text);
   min-height: 100vh;
   box-sizing: border-box;
 }
 
 .home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 48px;
 }
 
-.home-header h1 {
+.home-title h1 {
   font-size: 40px;
   font-weight: 900;
   font-style: italic;
   letter-spacing: -2px;
   margin: 0 0 8px;
-  color: #fff;
+  color: var(--h-heading);
 }
 
-.home-header h1 span {
-  color: #ff2d7b;
+.home-title h1 span {
+  color: var(--h-pink);
+}
+
+.home.dark .home-title h1 span {
   text-shadow: 0 0 16px #ff007f;
 }
 
-.home-header p {
+.home-title p {
   font-size: 13px;
-  color: #666;
+  color: var(--h-text-dim);
   margin: 0;
+}
+
+.home-theme-btn {
+  background: var(--h-surface);
+  border: 1.5px solid var(--h-border);
+  border-radius: 10px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.2s;
+  color: var(--h-text);
+}
+
+.home-theme-btn:hover {
+  border-color: var(--h-pink);
 }
 
 .home-grid {
@@ -39,9 +84,9 @@
 }
 
 .home-card {
-  background: #1a1a24;
-  border: 1.5px solid #2e2e3e;
-  border-radius: 16px;
+  background: var(--h-surface);
+  border: 1.5px solid var(--h-border);
+  border-radius: var(--h-radius);
   padding: 24px;
   text-decoration: none;
   color: inherit;
@@ -70,13 +115,13 @@
 .home-card-name {
   font-size: 18px;
   font-weight: 800;
-  color: #fff;
+  color: var(--h-heading);
   letter-spacing: -0.5px;
 }
 
 .home-card-desc {
   font-size: 12px;
-  color: #666;
+  color: var(--h-text-dim);
   line-height: 1.6;
 }
 
@@ -87,7 +132,7 @@
   text-transform: uppercase;
   padding: 2px 8px;
   border-radius: 99px;
-  border: 1px solid #2e2e3e;
-  color: #555;
+  border: 1px solid var(--h-border);
+  color: var(--h-text-dim);
   width: fit-content;
 }

@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+
+interface Props { dark: boolean; onToggleTheme: () => void; }
 import type { PromptEntry, Reply } from './helpers';
 import {
   getShotTitle, loadPrompts, savePrompts, uid,
@@ -12,11 +14,8 @@ import {
 } from './icons';
 import './OneShot.css';
 
-const THEME_KEY = 'oneshot-theme';
-
-const OneShot = () => {
+const OneShot = ({ dark, onToggleTheme }: Props) => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
-  const [dark, setDark] = useState(() => localStorage.getItem(THEME_KEY) !== 'light');
   const [showNewForm, setShowNewForm] = useState(false);
   const [newBody, setNewBody] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -33,11 +32,6 @@ const OneShot = () => {
   const trashed = prompts.filter(p => p.trashedAt);
 
   useEffect(() => { savePrompts(prompts); }, [prompts]);
-
-  useEffect(() => {
-    document.documentElement.dataset.osTheme = dark ? 'dark' : 'light';
-    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
-  }, [dark]);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -184,7 +178,7 @@ const OneShot = () => {
         </div>
 
         <div className="os-toolbar">
-          <button className="os-btn os-btn-ghost" onClick={() => setDark(d => !d)} title="テーマ切替">
+          <button className="os-btn os-btn-ghost" onClick={onToggleTheme} title="テーマ切替">
             {dark ? <SunIcon size={14} /> : <MoonIcon size={14} />}
           </button>
 

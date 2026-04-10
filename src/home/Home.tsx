@@ -12,11 +12,21 @@ const tools = [
   },
 ];
 
-const Home = () => (
-  <div className="home">
+interface Props {
+  dark: boolean;
+  onToggleTheme: () => void;
+}
+
+const Home = ({ dark, onToggleTheme }: Props) => (
+  <div className={`home ${dark ? 'dark' : 'light'}`}>
     <header className="home-header">
-      <h1>react-<span>tools</span></h1>
-      <p>{tools.length} tool{tools.length !== 1 ? 's' : ''} available</p>
+      <div className="home-title">
+        <h1>react-<span>tools</span></h1>
+        <p>{tools.length} tool{tools.length !== 1 ? 's' : ''} available</p>
+      </div>
+      <button className="home-theme-btn" onClick={onToggleTheme} title="テーマ切替">
+        {dark ? '☀' : '🌙'}
+      </button>
     </header>
 
     <div className="home-grid">
