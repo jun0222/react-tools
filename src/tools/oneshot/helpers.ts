@@ -61,6 +61,15 @@ export const exportPrompts = (prompts: PromptEntry[]): void => {
   URL.revokeObjectURL(url);
 };
 
+// --- インポートバリデーション ---
+export const findDuplicateIds = (
+  incoming: PromptEntry[],
+  existing: PromptEntry[],
+): string[] => {
+  const existingIds = new Set(existing.map(p => p.id));
+  return incoming.map(p => p.id).filter(id => existingIds.has(id));
+};
+
 // --- インポート ---
 export const importPrompts = (): Promise<PromptEntry[]> =>
   new Promise((resolve, reject) => {

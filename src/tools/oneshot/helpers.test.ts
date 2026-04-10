@@ -4,6 +4,7 @@ import {
   loadPrompts,
   savePrompts,
   uid,
+  findDuplicateIds,
   buildGlobalDistillPrompt,
   copyToClipboard,
 } from './helpers';
@@ -83,6 +84,33 @@ describe('savePrompts / loadPrompts', () => {
     savePrompts([trashed]);
     const loaded = loadPrompts();
     expect(loaded[0].trashedAt).toBe(9999);
+  });
+});
+
+// =====================
+// findDuplicateIds
+// =====================
+describe('findDuplicateIds', () => {
+  it('重複がなければ空配列を返す', () => {
+    const existing = [makePrompt({ id: 'a' }), makePrompt({ id: 'b' })];
+    const incoming = [makePrompt({ id: 'c' }), makePrompt({ id: 'd' })];
+    expect(findDuplicateIds(incoming, existing)).toEqual([]);
+  });
+
+  it('重複するIDをすべて返す', () => {
+    const existing = [makePrompt({ id: 'a' }), makePrompt({ id: 'b' })];
+    const incoming = [makePrompt({ id: 'a' }), makePrompt({ id: 'c' }), makePrompt({ id: 'b' })];
+    expect(findDuplicateIds(incoming, existing)).toEqual(['a', 'b']);
+  });
+
+  it('既存が空のとき常に空配列を返す', () => {
+    const incoming = [makePrompt({ id: 'x' })];
+    expect(findDuplicateIds(incoming, [])).toEqual([]);
+  });
+
+  it('incomingが空のとき常に空配列を返す', () => {
+    const existing = [makePrompt({ id: 'a' })];
+    expect(findDuplicateIds([], existing)).toEqual([]);
   });
 });
 

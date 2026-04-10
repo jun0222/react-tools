@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-
-interface Props { dark: boolean; onToggleTheme: () => void; }
 import type { PromptEntry, Reply } from './helpers';
 import {
   getShotTitle, loadPrompts, savePrompts, uid,
-  exportPrompts, importPrompts, buildGlobalDistillPrompt,
+  exportPrompts, importPrompts, findDuplicateIds, buildGlobalDistillPrompt,
   copyToClipboard,
 } from './helpers';
+
+interface Props { dark: boolean; onToggleTheme: () => void; }
 import {
   ZapIcon, CopyIcon, PlusIcon, TrashIcon, EditIcon,
   SendIcon, CheckIcon, ReplyIcon, DownloadIcon, UploadIcon,
@@ -148,6 +148,11 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
   const handleImport = async () => {
     try {
       const data = await importPrompts();
+      const dupes = findDuplicateIds(data, prompts);
+      if (dupes.length > 0) {
+        showToast(`インポートブロック: ${dupes.length}件のIDが重複しています`);
+        return;
+      }
       setPrompts(prev => [...data, ...prev]);
       showToast(`${data.length}件インポートしました`);
     } catch { showToast('インポート失敗'); }
