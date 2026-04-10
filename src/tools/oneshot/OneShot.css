@@ -216,22 +216,6 @@
   border-left-color: var(--os-sent);
 }
 
-.os-bubble-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  gap: 8px;
-}
-
-.os-bubble-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-  margin: 0;
-  flex: 1;
-}
-
 .os-bubble-meta {
   font-size: 10px;
   color: var(--os-text-dim);

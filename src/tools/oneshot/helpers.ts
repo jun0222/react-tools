@@ -8,7 +8,6 @@ export interface Reply {
 
 export interface PromptEntry {
   id: string;
-  title: string;
   body: string;
   replies: Reply[];
   sent: boolean;
@@ -93,7 +92,7 @@ export const buildGlobalDistillPrompt = (prompts: PromptEntry[]): string => {
   const promptList = prompts
     .map(
       (p, i) =>
-        `### Prompt ${i + 1}: ${p.title}\n${p.body}${
+        `### Prompt ${i + 1}\n${p.body}${
           p.replies.length
             ? '\n\n**Replies:**\n' +
               p.replies.map((r) => `- ${r.resolved ? '[RESOLVED] ' : ''}${r.text}`).join('\n')

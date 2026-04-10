@@ -19,10 +19,8 @@ const OneShot = () => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [mode, setMode] = useState<ViewMode>('prompt');
   const [showNewForm, setShowNewForm] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
   const [newBody, setNewBody] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editTitle, setEditTitle] = useState('');
   const [editBody, setEditBody] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState('');
@@ -54,14 +52,14 @@ const OneShot = () => {
 
   // --- Prompt CRUD ---
   const addPrompt = () => {
-    if (!newTitle.trim() || !newBody.trim()) return;
+    if (!newBody.trim()) return;
     const entry: PromptEntry = {
-      id: uid(), title: newTitle.trim(), body: newBody.trim(),
+      id: uid(), body: newBody.trim(),
       replies: [], sent: false,
       createdAt: Date.now(), updatedAt: Date.now(),
     };
     setPrompts(prev => [entry, ...prev]);
-    setNewTitle(''); setNewBody(''); setShowNewForm(false);
+    setNewBody(''); setShowNewForm(false);
     showToast('プロンプト追加 ⚡');
   };
 
@@ -71,12 +69,12 @@ const OneShot = () => {
   };
 
   const startEdit = (p: PromptEntry) => {
-    setEditingId(p.id); setEditTitle(p.title); setEditBody(p.body);
+    setEditingId(p.id); setEditBody(p.body);
   };
 
   const saveEdit = (id: string) => {
     setPrompts(prev => prev.map(p =>
-      p.id === id ? { ...p, title: editTitle, body: editBody, updatedAt: Date.now() } : p
+      p.id === id ? { ...p, body: editBody, updatedAt: Date.now() } : p
     ));
     setEditingId(null);
     showToast('保存しました');
@@ -200,18 +198,12 @@ const OneShot = () => {
             </button>
           ) : (
             <div className="os-new-form">
-              <input
-                className="os-edit-input"
-                placeholder="タイトル..."
-                value={newTitle}
-                onChange={e => setNewTitle(e.target.value)}
-                autoFocus
-              />
               <textarea
                 className="os-edit-textarea"
                 placeholder="プロンプト本文..."
                 value={newBody}
                 onChange={e => setNewBody(e.target.value)}
+                autoFocus
               />
               <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
                 <button className="os-btn os-btn-pink" onClick={addPrompt}>
@@ -236,22 +228,10 @@ const OneShot = () => {
 
             {prompts.map(p => (
               <div key={p.id} className={`os-bubble ${p.sent ? 'sent' : ''}`}>
-                {/* Header */}
-                <div className="os-bubble-header">
-                  {editingId === p.id ? (
-                    <input
-                      className="os-edit-input"
-                      value={editTitle}
-                      onChange={e => setEditTitle(e.target.value)}
-                      autoFocus
-                    />
-                  ) : (
-                    <h3 className="os-bubble-title">{p.title}</h3>
-                  )}
-                  <div className="os-bubble-meta">
-                    {p.sent && <span className="os-sent-badge">SENT</span>}
-                    <span>{formatDate(p.updatedAt)}</span>
-                  </div>
+                {/* Meta */}
+                <div className="os-bubble-meta">
+                  {p.sent && <span className="os-sent-badge">SENT</span>}
+                  <span>{formatDate(p.updatedAt)}</span>
                 </div>
 
                 {/* Body */}
@@ -260,6 +240,7 @@ const OneShot = () => {
                     className="os-edit-textarea"
                     value={editBody}
                     onChange={e => setEditBody(e.target.value)}
+                    autoFocus
                   />
                 ) : (
                   <div className="os-bubble-body">{p.body}</div>
