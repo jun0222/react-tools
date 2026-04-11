@@ -6,15 +6,15 @@ import {
   copyToClipboard,
 } from './helpers';
 
-interface Props { dark: boolean; onToggleTheme: () => void; }
+interface Props { dark: boolean; }
 import {
   ZapIcon, CopyIcon, PlusIcon, TrashIcon, EditIcon,
   SendIcon, CheckIcon, ReplyIcon, DownloadIcon, UploadIcon,
-  SparklesIcon, SunIcon, MoonIcon, RestoreIcon,
+  SparklesIcon, RestoreIcon,
 } from './icons';
 import './OneShot.css';
 
-const OneShot = ({ dark, onToggleTheme }: Props) => {
+const OneShot = ({ dark }: Props) => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newBody, setNewBody] = useState('');
@@ -27,6 +27,18 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const listRef = useRef<HTMLDivElement>(null);
+  const newBodyRef = useRef<HTMLTextAreaElement>(null);
+  const editBodyRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = newBodyRef.current;
+    if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+  }, [newBody]);
+
+  useEffect(() => {
+    const el = editBodyRef.current;
+    if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+  }, [editBody]);
 
   const active = prompts.filter(p => !p.trashedAt);
   const trashed = prompts.filter(p => p.trashedAt);
@@ -183,10 +195,6 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
         </div>
 
         <div className="os-toolbar">
-          <button className="os-btn os-btn-ghost" onClick={onToggleTheme} title="テーマ切替">
-            {dark ? <SunIcon size={14} /> : <MoonIcon size={14} />}
-          </button>
-
           <button className="os-btn os-btn-pink" onClick={handleDistill}>
             <SparklesIcon size={14} /> {shotTitle.toUpperCase()} DISTILL
           </button>
@@ -253,6 +261,7 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
       ) : (
         <div className="os-new-form">
           <textarea
+            ref={newBodyRef}
             className="os-edit-textarea"
             placeholder="プロンプト本文..."
             value={newBody}
@@ -289,6 +298,7 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
 
             {editingId === p.id ? (
               <textarea
+                ref={editBodyRef}
                 className="os-edit-textarea"
                 value={editBody}
                 onChange={e => setEditBody(e.target.value)}
@@ -324,11 +334,12 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
                 </>
               ) : (
                 <>
-                  <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => startEdit(p)}>
+                  <button className="os-btn os-btn-sm os-btn-ghost" aria-label="編集" onClick={() => startEdit(p)}>
                     <EditIcon size={12} />
                   </button>
                   <button
                     className="os-btn os-btn-sm os-btn-ghost"
+                    aria-label="コピー"
                     onClick={async () => {
                       const ok = await copyToClipboard(p.body);
                       showToast(ok ? 'コピーしました' : 'コピー失敗');
@@ -345,7 +356,7 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
                   <button className="os-btn os-btn-sm os-btn-purple" onClick={() => setReplyingTo(replyingTo === p.id ? null : p.id)}>
                     <ReplyIcon size={12} /> Reply
                   </button>
-                  <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => trashPrompt(p.id)} style={{ marginLeft: 'auto' }}>
+                  <button className="os-btn os-btn-sm os-btn-ghost" aria-label="ゴミ箱に移動" onClick={() => trashPrompt(p.id)} style={{ marginLeft: 'auto' }}>
                     <TrashIcon size={12} />
                   </button>
                 </>
@@ -356,11 +367,11 @@ const OneShot = ({ dark, onToggleTheme }: Props) => {
               <div className="os-replies">
                 {p.replies.map(r => (
                   <div key={r.id} className={`os-reply ${r.resolved ? 'resolved' : ''}`}>
-                    <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => toggleResolve(p.id, r.id)}>
+                    <button className="os-btn os-btn-sm os-btn-ghost" aria-label="リプライを解決" onClick={() => toggleResolve(p.id, r.id)}>
                       <CheckIcon size={12} />
                     </button>
                     <span className="os-reply-text">{r.text}</span>
-                    <button className="os-btn os-btn-sm os-btn-ghost" onClick={() => deleteReply(p.id, r.id)}>
+                    <button className="os-btn os-btn-sm os-btn-ghost" aria-label="リプライを削除" onClick={() => deleteReply(p.id, r.id)}>
                       <TrashIcon size={10} />
                     </button>
                   </div>

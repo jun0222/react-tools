@@ -363,7 +363,8 @@ html[data-os-theme="light"] {
   font-size: 13px;
   padding: 10px 12px;
   box-sizing: border-box;
-  resize: vertical;
+  resize: none;
+  overflow: hidden;
   outline: none;
   transition: border-color 0.2s;
   min-height: 120px;

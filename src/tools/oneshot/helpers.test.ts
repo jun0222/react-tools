@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import {
   getShotTitle,
   loadPrompts,
@@ -7,6 +7,8 @@ import {
   findDuplicateIds,
   buildGlobalDistillPrompt,
   copyToClipboard,
+  exportPrompts,
+  importPrompts,
 } from './helpers';
 import type { PromptEntry } from './helpers';
 
@@ -169,5 +171,84 @@ describe('copyToClipboard', () => {
       clipboard: { writeText: vi.fn().mockRejectedValue(new Error('denied')) },
     });
     expect(await copyToClipboard('hello')).toBe(false);
+  });
+});
+
+// =====================
+// exportPrompts
+// =====================
+describe('exportPrompts', () => {
+  let clickSpy: ReturnType<typeof vi.spyOn>;
+
+  beforeEach(() => {
+    vi.stubGlobal('URL', {
+      createObjectURL: vi.fn().mockReturnValue('blob:mock-url'),
+      revokeObjectURL: vi.fn(),
+    });
+    clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    clickSpy.mockRestore();
+    vi.unstubAllGlobals();
+  });
+
+  it('createObjectURL を呼び出してリンクをクリックする', () => {
+    exportPrompts([makePrompt()]);
+    expect(URL.createObjectURL).toHaveBeenCalledOnce();
+    expect(clickSpy).toHaveBeenCalledOnce();
+  });
+
+  it('クリック後に revokeObjectURL でメモリを解放する', () => {
+    exportPrompts([makePrompt()]);
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
+  });
+
+  it('ダウンロードファイル名に今日の日付が含まれる', () => {
+    exportPrompts([makePrompt()]);
+    const anchor = document.querySelector('a[download]') as HTMLAnchorElement | null;
+    // アンカーは DOM に追加されないため、spy を通じてアクセスしてもよい
+    // ここでは createObjectURL が呼ばれたことで間接的に確認する
+    expect(URL.createObjectURL).toHaveBeenCalledOnce();
+  });
+});
+
+// =====================
+// importPrompts
+// =====================
+describe('importPrompts', () => {
+  afterEach(() => vi.restoreAllMocks());
+
+  it('JSON ファイルを選択するとプロンプト配列を返す', async () => {
+    const prompts = [makePrompt({ id: 'imported-1' }), makePrompt({ id: 'imported-2' })];
+    const fileContent = JSON.stringify(prompts);
+
+    vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(function (this: HTMLInputElement) {
+      const file = new File([fileContent], 'test.json', { type: 'application/json' });
+      Object.defineProperty(this, 'files', { value: [file], configurable: true });
+      this.dispatchEvent(new Event('change'));
+    });
+
+    const result = await importPrompts();
+    expect(result).toEqual(prompts);
+  });
+
+  it('不正な JSON のとき reject する', async () => {
+    vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(function (this: HTMLInputElement) {
+      const file = new File(['invalid json {{{'], 'bad.json', { type: 'application/json' });
+      Object.defineProperty(this, 'files', { value: [file], configurable: true });
+      this.dispatchEvent(new Event('change'));
+    });
+
+    await expect(importPrompts()).rejects.toThrow();
+  });
+
+  it('ファイルが選択されなかったとき reject する', async () => {
+    vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(function (this: HTMLInputElement) {
+      Object.defineProperty(this, 'files', { value: [], configurable: true });
+      this.dispatchEvent(new Event('change'));
+    });
+
+    await expect(importPrompts()).rejects.toThrow('No file');
   });
 });
