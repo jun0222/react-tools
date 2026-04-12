@@ -204,11 +204,8 @@ describe('exportPrompts', () => {
     expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
   });
 
-  it('ダウンロードファイル名に今日の日付が含まれる', () => {
+  it('createObjectURL が呼ばれる（ファイル生成を間接的に確認）', () => {
     exportPrompts([makePrompt()]);
-    const anchor = document.querySelector('a[download]') as HTMLAnchorElement | null;
-    // アンカーは DOM に追加されないため、spy を通じてアクセスしてもよい
-    // ここでは createObjectURL が呼ばれたことで間接的に確認する
     expect(URL.createObjectURL).toHaveBeenCalledOnce();
   });
 });

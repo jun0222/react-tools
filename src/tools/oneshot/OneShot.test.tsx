@@ -5,7 +5,8 @@ import * as helpers from './helpers';
 import OneShot from './OneShot';
 
 // copyToClipboard をコンポーネントテストレベルでモック
-let copyToClipboardSpy: ReturnType<typeof vi.spyOn<typeof helpers, 'copyToClipboard'>>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let copyToClipboardSpy: ReturnType<typeof vi.fn>;
 
 const setup = (dark = false) => {
   const user = userEvent.setup();
