@@ -14,6 +14,8 @@ import {
 } from './icons';
 import './OneShot.css';
 
+type FilterMode = 'all' | 'unsent' | 'sent';
+
 const OneShot = ({ dark }: Props) => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [showNewForm, setShowNewForm] = useState(false);
@@ -25,6 +27,7 @@ const OneShot = ({ dark }: Props) => {
   const [showTrash, setShowTrash] = useState(false);
   const [toast, setToast] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [filterMode, setFilterMode] = useState<FilterMode>('all');
 
   const listRef = useRef<HTMLDivElement>(null);
   const newBodyRef = useRef<HTMLTextAreaElement>(null);
@@ -38,10 +41,15 @@ const OneShot = ({ dark }: Props) => {
   useEffect(() => {
     const el = editBodyRef.current;
     if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-  }, [editBody]);
+  }, [editBody, editingId]);
 
   const active = prompts.filter(p => !p.trashedAt);
   const trashed = prompts.filter(p => p.trashedAt);
+  const filtered = active.filter(p => {
+    if (filterMode === 'unsent') return !p.sent;
+    if (filterMode === 'sent') return p.sent;
+    return true;
+  });
 
   useEffect(() => { savePrompts(prompts); }, [prompts]);
 
@@ -68,7 +76,20 @@ const OneShot = ({ dark }: Props) => {
     };
     setPrompts(prev => [entry, ...prev]);
     setNewBody(''); setShowNewForm(false);
+    setFilterMode('all');
     showToast('プロンプト追加 ⚡');
+  };
+
+  const handlePaste = (
+    setter: (v: string) => void,
+    e: React.ClipboardEvent<HTMLTextAreaElement>,
+  ) => {
+    e.preventDefault();
+    const paste = e.clipboardData.getData('text/plain');
+    const el = e.currentTarget;
+    const start = el.selectionStart ?? el.value.length;
+    const end = el.selectionEnd ?? el.value.length;
+    setter(el.value.slice(0, start) + paste + el.value.slice(end));
   };
 
   const trashPrompt = (id: string) => {
@@ -266,6 +287,7 @@ const OneShot = ({ dark }: Props) => {
             placeholder="プロンプト本文..."
             value={newBody}
             onChange={e => setNewBody(e.target.value)}
+            onPaste={e => handlePaste(setNewBody, e)}
             autoFocus
           />
           <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
@@ -279,6 +301,19 @@ const OneShot = ({ dark }: Props) => {
         </div>
       )}
 
+      {/* ===== FILTER BAR ===== */}
+      <div className="os-filter-bar">
+        {(['all', 'unsent', 'sent'] as FilterMode[]).map(mode => (
+          <button
+            key={mode}
+            className={`os-btn os-btn-sm ${filterMode === mode ? 'os-btn-purple' : 'os-btn-ghost'}`}
+            onClick={() => setFilterMode(mode)}
+          >
+            {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : '送信済み'}
+          </button>
+        ))}
+      </div>
+
       {/* ===== PROMPT LIST ===== */}
       <div className="os-bubble-list" ref={listRef}>
         {active.length === 0 && (
@@ -289,7 +324,7 @@ const OneShot = ({ dark }: Props) => {
           </div>
         )}
 
-        {active.map(p => (
+        {filtered.map(p => (
           <div key={p.id} className={`os-bubble ${p.sent ? 'sent' : ''}`}>
             <div className="os-bubble-meta">
               {p.sent && <span className="os-sent-badge">SENT</span>}
@@ -302,6 +337,7 @@ const OneShot = ({ dark }: Props) => {
                 className="os-edit-textarea"
                 value={editBody}
                 onChange={e => setEditBody(e.target.value)}
+                onPaste={e => handlePaste(setEditBody, e)}
                 autoFocus
               />
             ) : (

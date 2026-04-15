@@ -240,6 +240,13 @@ html[data-os-theme="light"] {
   margin-right: auto;
 }
 
+/* --- Filter Bar --- */
+.os-filter-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
 /* --- Prompt Bubbles --- */
 .os-bubble-list {
   display: flex;

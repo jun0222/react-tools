@@ -350,3 +350,149 @@ describe('チェックボックス構文', () => {
     expect(screen.getByText('完了タスク').closest('.os-body-check')).toHaveClass('checked');
   });
 });
+
+// =====================
+// フィルタ
+// =====================
+describe('フィルタ', () => {
+  it('フィルタボタン（すべて・未送信・送信済み）が表示される', () => {
+    setup();
+    expect(screen.getByRole('button', { name: /^すべて$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^未送信$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^送信済み$/ })).toBeInTheDocument();
+  });
+
+  it('「未送信」フィルタで未送信プロンプトのみ表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'A未送信');
+    await addPrompt(user, 'B送信済み'); // 最新が先頭
+    // 先頭の "B送信済み" を Mark Sent
+    await user.click(screen.getAllByRole('button', { name: /Mark Sent/ })[0]);
+
+    await user.click(screen.getByRole('button', { name: /^未送信$/ }));
+
+    expect(screen.getByText('A未送信')).toBeInTheDocument();
+    expect(screen.queryByText('B送信済み')).not.toBeInTheDocument();
+  });
+
+  it('「送信済み」フィルタで送信済みプロンプトのみ表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'A未送信');
+    await addPrompt(user, 'B送信済み');
+    await user.click(screen.getAllByRole('button', { name: /Mark Sent/ })[0]);
+
+    await user.click(screen.getByRole('button', { name: /^送信済み$/ }));
+
+    expect(screen.queryByText('A未送信')).not.toBeInTheDocument();
+    expect(screen.getByText('B送信済み')).toBeInTheDocument();
+  });
+
+  it('「すべて」フィルタで全プロンプトが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'A未送信');
+    await addPrompt(user, 'B送信済み');
+    await user.click(screen.getAllByRole('button', { name: /Mark Sent/ })[0]);
+
+    await user.click(screen.getByRole('button', { name: /^未送信$/ }));
+    await user.click(screen.getByRole('button', { name: /^すべて$/ }));
+
+    expect(screen.getByText('A未送信')).toBeInTheDocument();
+    expect(screen.getByText('B送信済み')).toBeInTheDocument();
+  });
+
+  it('フィルタ中にプロンプトを追加すると「すべて」に戻って表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '既存');
+    await user.click(screen.getByRole('button', { name: /^未送信$/ }));
+    await addPrompt(user, '新規追加');
+    expect(screen.getByText('新規追加')).toBeInTheDocument();
+    expect(screen.getByText('既存')).toBeInTheDocument();
+  });
+});
+
+// =====================
+// 編集テキストエリアの高さ（自動リサイズ）
+// =====================
+describe('編集テキストエリアの自動リサイズ', () => {
+  let scrollHeightSpy: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    scrollHeightSpy = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollHeight');
+    Object.defineProperty(HTMLElement.prototype, 'scrollHeight', {
+      configurable: true,
+      get: () => 200,
+    });
+  });
+
+  afterEach(() => {
+    if (scrollHeightSpy) {
+      Object.defineProperty(HTMLElement.prototype, 'scrollHeight', scrollHeightSpy);
+    }
+  });
+
+  it('編集ボタンを押した直後にテキストエリアの高さが scrollHeight に合わせて設定される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '高さテスト用テキスト');
+    await user.click(screen.getByRole('button', { name: '編集' }));
+
+    const textarea = screen.getByDisplayValue('高さテスト用テキスト') as HTMLTextAreaElement;
+    expect(textarea.style.height).toBe('200px');
+  });
+
+  it('一度キャンセルして同じプロンプトを再度編集しても高さが設定される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '再編集テキスト');
+
+    // 1回目編集→キャンセル
+    await user.click(screen.getByRole('button', { name: '編集' }));
+    await user.click(screen.getByRole('button', { name: /キャンセル/ }));
+
+    // 2回目編集（editBody は前回と同じ値のまま）
+    await user.click(screen.getByRole('button', { name: '編集' }));
+
+    const textarea = screen.getByDisplayValue('再編集テキスト') as HTMLTextAreaElement;
+    expect(textarea.style.height).toBe('200px');
+  });
+});
+
+// =====================
+// 貼り付け（コピペ）
+// =====================
+describe('貼り付け（コピペ）', () => {
+  const makePasteEvent = (target: Element, text: string) => {
+    const event = new Event('paste', { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'clipboardData', {
+      value: { getData: (_type: string) => text },
+      configurable: true,
+    });
+    Object.defineProperty(event, 'currentTarget', {
+      value: target,
+      configurable: true,
+    });
+    return event;
+  };
+
+  it('新規フォームに貼り付けるとテキストが二重にならず一度だけ設定される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    const textarea = screen.getByPlaceholderText('プロンプト本文...') as HTMLTextAreaElement;
+
+    fireEvent(textarea, makePasteEvent(textarea, '貼り付けテキスト'));
+
+    expect(textarea.value).toBe('貼り付けテキスト');
+  });
+
+  it('編集テキストエリアへの貼り付けでもコンテンツが二重にならない', async () => {
+    const { user } = setup();
+    await addPrompt(user, '元テキスト');
+    await user.click(screen.getByRole('button', { name: '編集' }));
+    const textarea = screen.getByDisplayValue('元テキスト') as HTMLTextAreaElement;
+
+    // カーソルを末尾に設定して貼り付け
+    textarea.selectionStart = textarea.value.length;
+    textarea.selectionEnd = textarea.value.length;
+    fireEvent(textarea, makePasteEvent(textarea, '追記'));
+
+    expect(textarea.value).toBe('元テキスト追記');
+  });
+});
