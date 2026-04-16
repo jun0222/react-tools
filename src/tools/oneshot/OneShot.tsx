@@ -14,6 +14,15 @@ import {
 } from './icons';
 import './OneShot.css';
 
+// TODO: 複数プロジェクト対応
+// 現在は全プロンプトが1つのプロジェクトに属している。
+// 将来的には「プロジェクト」という概念を追加し、プロジェクトごとにプロンプトを管理できるようにしたい。
+// 実装イメージ:
+// - PromptEntry に projectId を追加
+// - Project 型 (id, name, color) を定義
+// - ヘッダーにプロジェクト切替セレクタを追加
+// - localStorage のキーをプロジェクトごとに分ける（例: `oneshot-prompts-${projectId}`）
+
 type FilterMode = 'all' | 'unsent' | 'sent';
 
 const OneShot = ({ dark }: Props) => {
