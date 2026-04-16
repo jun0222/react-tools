@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
+import Phantom from './tools/phantom/Phantom';
 
 const THEME_KEY = 'oneshot-theme';
 
@@ -59,6 +60,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home dark={dark} />} />
         <Route path="/oneshot" element={<OneShot dark={dark} />} />
+        <Route path="/phantom" element={<Phantom />} />
       </Routes>
     </BrowserRouter>
   );
