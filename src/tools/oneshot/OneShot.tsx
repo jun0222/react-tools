@@ -408,37 +408,64 @@ const OneShot = ({ dark }: Props) => {
         )}
 
         {filtered.map(p => (
-          <div key={p.id} className={`os-bubble ${p.sent ? 'sent' : ''}`}>
+          <div
+            key={p.id}
+            className={`os-bubble${p.sent ? ' sent' : ''}${p.inProgress ? ' in-progress' : ''}`}
+          >
             <div className="os-bubble-meta">
+              {p.inProgress && <span className="os-inprogress-badge">▶ 作業中</span>}
               {p.sent && <span className="os-sent-badge">SENT</span>}
               <span>{formatDate(p.updatedAt)}</span>
             </div>
 
             {editingId === p.id ? (
-              <textarea
-                ref={editBodyRef}
-                className="os-edit-textarea"
-                value={editBody}
-                onChange={e => setEditBody(e.target.value)}
-                onPaste={e => handlePaste(setEditBody, e)}
-                autoFocus
-              />
+              <>
+                <textarea
+                  ref={editBodyRef}
+                  className="os-edit-textarea"
+                  value={editBody}
+                  onChange={e => setEditBody(e.target.value)}
+                  onPaste={e => handlePaste(setEditBody, e)}
+                  autoFocus
+                />
+                <input
+                  className="os-tag-input"
+                  placeholder="タグ（カンマ区切り）"
+                  value={editTags}
+                  onChange={e => setEditTags(e.target.value)}
+                />
+              </>
             ) : (
-              <div className="os-bubble-body">
-                {p.body.split('\n').map((line, i) => {
-                  const unchecked = line.match(/^- \[ \] (.*)/);
-                  const checked = line.match(/^- \[x\] (.*)/i);
-                  if (unchecked || checked) {
-                    return (
-                      <label key={i} className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
-                        <span className="os-body-checkbox"><CheckIcon size={10} /></span>
-                        <span>{(unchecked ?? checked)![1]}</span>
-                      </label>
-                    );
-                  }
-                  return <div key={i}>{line || '\u00A0'}</div>;
-                })}
-              </div>
+              <>
+                <div className="os-bubble-body">
+                  {p.body.split('\n').map((line, i) => {
+                    const unchecked = line.match(/^- \[ \] (.*)/);
+                    const checked = line.match(/^- \[x\] (.*)/i);
+                    if (unchecked || checked) {
+                      return (
+                        <label key={i} className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
+                          <span className="os-body-checkbox"><CheckIcon size={10} /></span>
+                          <span>{(unchecked ?? checked)![1]}</span>
+                        </label>
+                      );
+                    }
+                    return <div key={i}>{line || '\u00A0'}</div>;
+                  })}
+                </div>
+                {p.tags.length > 0 && (
+                  <div className="os-tags">
+                    {p.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className={`os-tag${selectedTag === tag ? ' os-tag-active' : ''}`}
+                        onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
 
             <div className="os-bubble-actions">
@@ -453,6 +480,27 @@ const OneShot = ({ dark }: Props) => {
                 </>
               ) : (
                 <>
+                  {canReorder && (
+                    <>
+                      <button
+                        className="os-btn os-btn-sm os-btn-ghost"
+                        aria-label="上に移動"
+                        onClick={() => moveUp(p.id)}
+                        disabled={active.indexOf(p) === 0}
+                      >↑</button>
+                      <button
+                        className="os-btn os-btn-sm os-btn-ghost"
+                        aria-label="下に移動"
+                        onClick={() => moveDown(p.id)}
+                        disabled={active.indexOf(p) === active.length - 1}
+                      >↓</button>
+                    </>
+                  )}
+                  <button
+                    className={`os-btn os-btn-sm ${p.inProgress ? 'os-btn-amber' : 'os-btn-ghost'}`}
+                    aria-label={p.inProgress ? '作業中を解除' : '作業中にする'}
+                    onClick={() => toggleInProgress(p.id)}
+                  >▶</button>
                   <button className="os-btn os-btn-sm os-btn-ghost" aria-label="編集" onClick={() => startEdit(p)}>
                     <EditIcon size={12} />
                   </button>
