@@ -158,6 +158,43 @@ const OneShot = ({ dark }: Props) => {
     showToast('保存しました');
   };
 
+  // --- 作業中マーカー（全体で1件のみ） ---
+  const toggleInProgress = (id: string) => {
+    setPrompts(prev => prev.map(p => ({
+      ...p,
+      inProgress: p.id === id ? !p.inProgress : false,
+    })));
+  };
+
+  // --- 並べ替え ---
+  const moveUp = (id: string) => {
+    setPrompts(prev => {
+      const activeIds = prev.filter(p => !p.trashedAt).map(p => p.id);
+      const idx = activeIds.indexOf(id);
+      if (idx <= 0) return prev;
+      const aboveId = activeIds[idx - 1];
+      const iCurr = prev.findIndex(p => p.id === id);
+      const iAbove = prev.findIndex(p => p.id === aboveId);
+      const next = [...prev];
+      [next[iCurr], next[iAbove]] = [next[iAbove], next[iCurr]];
+      return next;
+    });
+  };
+
+  const moveDown = (id: string) => {
+    setPrompts(prev => {
+      const activeIds = prev.filter(p => !p.trashedAt).map(p => p.id);
+      const idx = activeIds.indexOf(id);
+      if (idx >= activeIds.length - 1) return prev;
+      const belowId = activeIds[idx + 1];
+      const iCurr = prev.findIndex(p => p.id === id);
+      const iBelow = prev.findIndex(p => p.id === belowId);
+      const next = [...prev];
+      [next[iCurr], next[iBelow]] = [next[iBelow], next[iCurr]];
+      return next;
+    });
+  };
+
   const toggleCheckbox = (promptId: string, lineIndex: number) => {
     setPrompts(prev => prev.map(p => {
       if (p.id !== promptId) return p;
