@@ -60,11 +60,17 @@ const OneShot = ({ dark }: Props) => {
 
   const active = prompts.filter(p => !p.trashedAt);
   const trashed = prompts.filter(p => p.trashedAt);
-  const filtered = active.filter(p => {
-    if (filterMode === 'unsent') return !p.sent;
-    if (filterMode === 'sent') return p.sent;
-    return true;
-  });
+  const allTags = [...new Set(active.flatMap(p => p.tags))];
+  const filtered = active
+    .filter(p => {
+      if (filterMode === 'unsent') return !p.sent;
+      if (filterMode === 'sent') return p.sent;
+      return true;
+    })
+    .filter(p => !selectedTag || p.tags.includes(selectedTag));
+
+  // 並べ替えはフィルターなし時のみ有効（バグ防止）
+  const canReorder = filterMode === 'all' && !selectedTag;
 
   useEffect(() => { savePrompts(prompts); }, [prompts]);
 
