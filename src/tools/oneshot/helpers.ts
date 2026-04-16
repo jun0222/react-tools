@@ -14,6 +14,8 @@ export interface PromptEntry {
   createdAt: number;
   updatedAt: number;
   trashedAt?: number;
+  tags: string[];        // タグ一覧
+  inProgress?: boolean;  // 作業中マーカー（全体で1件のみ）
 }
 
 
@@ -34,7 +36,9 @@ const STORAGE_KEY = 'oneshot-prompts';
 export const loadPrompts = (): PromptEntry[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const data: Partial<PromptEntry>[] = raw ? JSON.parse(raw) : [];
+    // 旧データ互換: tags が無い場合は空配列を補完
+    return data.map(p => ({ tags: [], ...p } as PromptEntry));
   } catch {
     return [];
   }
