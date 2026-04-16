@@ -93,6 +93,7 @@ const OneShot = ({ dark }: Props) => {
     const entry: PromptEntry = {
       id: uid(), body: newBody.trim(),
       replies: [], sent: false,
+      tags: parseTags(newTags),
       createdAt: Date.now(), updatedAt: Date.now(),
     };
     setPrompts(prev => [entry, ...prev]);
