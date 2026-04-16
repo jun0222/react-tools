@@ -142,11 +142,17 @@ const OneShot = ({ dark }: Props) => {
     showToast('ゴミ箱を空にしました');
   };
 
-  const startEdit = (p: PromptEntry) => { setEditingId(p.id); setEditBody(p.body); };
+  const startEdit = (p: PromptEntry) => {
+    setEditingId(p.id);
+    setEditBody(p.body);
+    setEditTags(p.tags.join(', '));
+  };
 
   const saveEdit = (id: string) => {
     setPrompts(prev => prev.map(p =>
-      p.id === id ? { ...p, body: editBody, updatedAt: Date.now() } : p
+      p.id === id
+        ? { ...p, body: editBody, tags: parseTags(editTags), updatedAt: Date.now() }
+        : p
     ));
     setEditingId(null);
     showToast('保存しました');
