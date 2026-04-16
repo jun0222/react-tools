@@ -25,6 +25,9 @@ import './OneShot.css';
 
 type FilterMode = 'all' | 'unsent' | 'sent';
 
+const parseTags = (input: string): string[] =>
+  input.split(',').map(t => t.trim()).filter(Boolean);
+
 const OneShot = ({ dark }: Props) => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [showNewForm, setShowNewForm] = useState(false);
