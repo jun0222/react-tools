@@ -97,8 +97,11 @@ const OneShot = ({ dark }: Props) => {
       createdAt: Date.now(), updatedAt: Date.now(),
     };
     setPrompts(prev => [entry, ...prev]);
-    setNewBody(''); setShowNewForm(false);
+    setNewBody('');
+    setNewTags('');
+    setShowNewForm(false);
     setFilterMode('all');
+    setSelectedTag(null);
     showToast('プロンプト追加 ⚡');
   };
 
