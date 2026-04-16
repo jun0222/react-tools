@@ -368,7 +368,7 @@ const OneShot = ({ dark }: Props) => {
             <button className="os-btn os-btn-pink" onClick={addPrompt}>
               <ZapIcon size={14} /> 追加
             </button>
-            <button className="os-btn os-btn-ghost" onClick={() => setShowNewForm(false)}>
+            <button className="os-btn os-btn-ghost" onClick={() => { setShowNewForm(false); setNewTags(''); }}>
               キャンセル
             </button>
           </div>
