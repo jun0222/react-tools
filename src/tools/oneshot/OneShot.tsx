@@ -32,14 +32,17 @@ const OneShot = ({ dark }: Props) => {
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newBody, setNewBody] = useState('');
+  const [newTags, setNewTags] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editBody, setEditBody] = useState('');
+  const [editTags, setEditTags] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState('');
   const [showTrash, setShowTrash] = useState(false);
   const [toast, setToast] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [filterMode, setFilterMode] = useState<FilterMode>('all');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const listRef = useRef<HTMLDivElement>(null);
   const newBodyRef = useRef<HTMLTextAreaElement>(null);
