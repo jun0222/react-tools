@@ -496,3 +496,162 @@ describe('貼り付け（コピペ）', () => {
     expect(textarea.value).toBe('元テキスト追記');
   });
 });
+
+// =====================
+// タグ
+// =====================
+describe('タグ', () => {
+  it('新規フォームにタグ入力欄が表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    expect(screen.getByPlaceholderText('タグ（カンマ区切り）')).toBeInTheDocument();
+  });
+
+  it('タグ付きで追加するとバブルにタグが表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText('プロンプト本文...'), { target: { value: 'テスト' } });
+    fireEvent.change(screen.getByPlaceholderText('タグ（カンマ区切り）'), { target: { value: 'react, typescript' } });
+    await user.click(screen.getByRole('button', { name: /^追加$/ }));
+    expect(screen.getByText('react')).toBeInTheDocument();
+    expect(screen.getByText('typescript')).toBeInTheDocument();
+  });
+
+  it('タグでフィルターできる（タグなしは非表示）', async () => {
+    const { user } = setup();
+    // タグあり
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText('プロンプト本文...'), { target: { value: 'タグあり' } });
+    fireEvent.change(screen.getByPlaceholderText('タグ（カンマ区切り）'), { target: { value: 'frontend' } });
+    await user.click(screen.getByRole('button', { name: /^追加$/ }));
+    // タグなし
+    await addPrompt(user, 'タグなし');
+    // #frontend フィルターをクリック
+    await user.click(screen.getByRole('button', { name: '#frontend' }));
+    expect(screen.getByText('タグあり')).toBeInTheDocument();
+    expect(screen.queryByText('タグなし')).not.toBeInTheDocument();
+  });
+
+  it('タグフィルターをもう一度クリックすると解除される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText('プロンプト本文...'), { target: { value: 'タグあり' } });
+    fireEvent.change(screen.getByPlaceholderText('タグ（カンマ区切り）'), { target: { value: 'work' } });
+    await user.click(screen.getByRole('button', { name: /^追加$/ }));
+    await addPrompt(user, 'タグなし');
+    await user.click(screen.getByRole('button', { name: '#work' }));
+    await user.click(screen.getByRole('button', { name: '#work' }));
+    expect(screen.getByText('タグなし')).toBeInTheDocument();
+    expect(screen.getByText('タグあり')).toBeInTheDocument();
+  });
+
+  it('編集フォームにもタグ入力欄が表示され保存できる', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'タグ編集テスト');
+    await user.click(screen.getByRole('button', { name: '編集' }));
+    const tagInput = screen.getByDisplayValue('');  // editTags は初期値 ''
+    // placeholder でも取れる
+    const tagInputByPlaceholder = screen.getByPlaceholderText('タグ（カンマ区切り）');
+    fireEvent.change(tagInputByPlaceholder, { target: { value: 'edited-tag' } });
+    await user.click(screen.getByRole('button', { name: /保存/ }));
+    expect(screen.getByText('edited-tag')).toBeInTheDocument();
+    expect(tagInput).toBeDefined(); // suppress unused warning
+  });
+});
+
+// =====================
+// プログレスマーカー
+// =====================
+describe('プログレスマーカー', () => {
+  it('「作業中にする」ボタンが各バブルに表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    expect(screen.getByRole('button', { name: '作業中にする' })).toBeInTheDocument();
+  });
+
+  it('「作業中にする」でバブルに in-progress クラスが付く', async () => {
+    const { user } = setup();
+    await addPrompt(user, '作業中テスト');
+    await user.click(screen.getByRole('button', { name: '作業中にする' }));
+    expect(screen.getByText('作業中テスト').closest('.os-bubble')).toHaveClass('in-progress');
+  });
+
+  it('「作業中を解除」でクラスが外れる', async () => {
+    const { user } = setup();
+    await addPrompt(user, '解除テスト');
+    await user.click(screen.getByRole('button', { name: '作業中にする' }));
+    await user.click(screen.getByRole('button', { name: '作業中を解除' }));
+    expect(screen.getByText('解除テスト').closest('.os-bubble')).not.toHaveClass('in-progress');
+  });
+
+  it('別のプロンプトを作業中にすると前のが自動解除される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'A');
+    await addPrompt(user, 'B'); // B が先頭
+    await user.click(screen.getAllByRole('button', { name: '作業中にする' })[0]); // B を作業中
+    await user.click(screen.getByRole('button', { name: '作業中にする' })); // A を作業中（Bは解除されてボタンが1つになる）
+    expect(screen.getByText('B').closest('.os-bubble')).not.toHaveClass('in-progress');
+    expect(screen.getByText('A').closest('.os-bubble')).toHaveClass('in-progress');
+  });
+});
+
+// =====================
+// 並べ替え
+// =====================
+describe('並べ替え', () => {
+  it('フィルターなし時に上・下移動ボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    expect(screen.getByRole('button', { name: '上に移動' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '下に移動' })).toBeInTheDocument();
+  });
+
+  it('プロンプトが1件のとき上・下ボタンは両方無効', async () => {
+    const { user } = setup();
+    await addPrompt(user, '一件だけ');
+    expect(screen.getByRole('button', { name: '上に移動' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '下に移動' })).toBeDisabled();
+  });
+
+  it('先頭プロンプトの上ボタンは無効、下ボタンは有効', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'A');
+    await addPrompt(user, 'B'); // B が先頭
+    const upBtns = screen.getAllByRole('button', { name: '上に移動' });
+    const downBtns = screen.getAllByRole('button', { name: '下に移動' });
+    expect(upBtns[0]).toBeDisabled();   // B は上に行けない
+    expect(downBtns[0]).toBeEnabled();  // B は下に行ける
+    expect(upBtns[1]).toBeEnabled();    // A は上に行ける
+    expect(downBtns[1]).toBeDisabled(); // A は下に行けない
+  });
+
+  it('下ボタンクリックで先頭が2番目に移動する', async () => {
+    const { user, container } = setup();
+    await addPrompt(user, '古いプロンプト');
+    await addPrompt(user, '新しいプロンプト'); // 表示順: [新しい, 古い]
+    const downBtns = screen.getAllByRole('button', { name: '下に移動' });
+    await user.click(downBtns[0]); // 「新しいプロンプト」を下へ
+    const bodies = container.querySelectorAll('.os-bubble-body');
+    expect(bodies[0].textContent).toContain('古いプロンプト');
+    expect(bodies[1].textContent).toContain('新しいプロンプト');
+  });
+
+  it('上ボタンクリックで2番目が先頭に移動する', async () => {
+    const { user, container } = setup();
+    await addPrompt(user, '古いプロンプト');
+    await addPrompt(user, '新しいプロンプト'); // 表示順: [新しい, 古い]
+    const upBtns = screen.getAllByRole('button', { name: '上に移動' });
+    await user.click(upBtns[1]); // 「古いプロンプト」を上へ
+    const bodies = container.querySelectorAll('.os-bubble-body');
+    expect(bodies[0].textContent).toContain('古いプロンプト');
+    expect(bodies[1].textContent).toContain('新しいプロンプト');
+  });
+
+  it('フィルター中は並べ替えボタンが非表示', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    await user.click(screen.getByRole('button', { name: /^未送信$/ }));
+    expect(screen.queryByRole('button', { name: '上に移動' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '下に移動' })).not.toBeInTheDocument();
+  });
+});
