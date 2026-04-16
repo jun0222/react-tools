@@ -20,6 +20,7 @@ const makePrompt = (overrides: Partial<PromptEntry> = {}): PromptEntry => ({
   sent: false,
   createdAt: 1000,
   updatedAt: 1000,
+  tags: [],
   ...overrides,
 });
 
