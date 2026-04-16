@@ -380,8 +380,8 @@ const OneShot = ({ dark }: Props) => {
         {(['all', 'unsent', 'sent'] as FilterMode[]).map(mode => (
           <button
             key={mode}
-            className={`os-btn os-btn-sm ${filterMode === mode ? 'os-btn-purple' : 'os-btn-ghost'}`}
-            onClick={() => setFilterMode(mode)}
+            className={`os-btn os-btn-sm ${filterMode === mode && !selectedTag ? 'os-btn-purple' : 'os-btn-ghost'}`}
+            onClick={() => { setFilterMode(mode); setSelectedTag(null); }}
           >
             {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : '送信済み'}
           </button>
