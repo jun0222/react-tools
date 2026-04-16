@@ -386,6 +386,15 @@ const OneShot = ({ dark }: Props) => {
             {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : '送信済み'}
           </button>
         ))}
+        {allTags.map(tag => (
+          <button
+            key={tag}
+            className={`os-btn os-btn-sm ${selectedTag === tag ? 'os-btn-pink' : 'os-btn-ghost'}`}
+            onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+          >
+            #{tag}
+          </button>
+        ))}
       </div>
 
       {/* ===== PROMPT LIST ===== */}
