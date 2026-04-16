@@ -358,6 +358,12 @@ const OneShot = ({ dark }: Props) => {
             onPaste={e => handlePaste(setNewBody, e)}
             autoFocus
           />
+          <input
+            className="os-tag-input"
+            placeholder="タグ（カンマ区切り）"
+            value={newTags}
+            onChange={e => setNewTags(e.target.value)}
+          />
           <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
             <button className="os-btn os-btn-pink" onClick={addPrompt}>
               <ZapIcon size={14} /> 追加
