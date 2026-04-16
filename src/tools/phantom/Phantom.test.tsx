@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import * as phantom from './phantom';
+import * as phantom from './phantomCore';
 import Phantom from './Phantom';
 
 let copyTextSpy: ReturnType<typeof vi.fn>;
@@ -122,7 +122,6 @@ describe('置換ペア', () => {
     const tos = screen.getAllByPlaceholderText('変換後');
     fireEvent.change(froms[1], { target: { value: 'b' } });
     fireEvent.change(tos[1], { target: { value: 'c' } });
-    // a→b→c: 'aaa' → 'ccc'
     expect(getOutput(container)).toBe('ccc');
   });
 
@@ -148,7 +147,7 @@ describe('置換ペア', () => {
 });
 
 // =============================================
-// ランダムルール
+// ランダムルール（対象文字列マッチング）
 // =============================================
 describe('ランダムルール', () => {
   it('ランダムタブに切り替えると「ルールを追加」ボタンが表示される', async () => {
@@ -157,44 +156,55 @@ describe('ランダムルール', () => {
     expect(screen.getByRole('button', { name: /ルールを追加/ })).toBeInTheDocument();
   });
 
-  it('ルール追加で対象文字・変換先の入力が現れる', async () => {
+  it('ルール追加で対象文字列の入力が現れる', async () => {
     const { user } = setup();
     await user.click(screen.getByRole('button', { name: /ランダム/ }));
     await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
-    expect(screen.getByPlaceholderText('対象文字')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/変換先/)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/対象文字列/)).toBeInTheDocument();
   });
 
-  it('変換先が1文字のとき全対象文字がその文字に変換される', async () => {
+  it('対象文字列を入力すると一致部分だけが変換される（外側は不変）', async () => {
+    const { user, container } = setup();
+    fireEvent.change(screen.getByPlaceholderText('テキストを入力...'), {
+      target: { value: 'this is ka3afai' },
+    });
+    await user.click(screen.getByRole('button', { name: /ランダム/ }));
+    await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText(/対象文字列/), { target: { value: 'ka3afai' } });
+    const output = getOutput(container);
+    // 'this is ' の部分は変換されない
+    expect(output.substring(0, 8)).toBe('this is ');
+    // 'ka3afai' の部分が変換されている
+    expect(output).toHaveLength(15);
+    expect(output.substring(8)).not.toBe('ka3afai');
+  });
+
+  it('削除ボタンでルールが消え OUTPUT が元に戻る', async () => {
     const { user, container } = setup();
     fireEvent.change(screen.getByPlaceholderText('テキストを入力...'), {
       target: { value: 'hello' },
     });
     await user.click(screen.getByRole('button', { name: /ランダム/ }));
     await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
-    fireEvent.change(screen.getByPlaceholderText('対象文字'), { target: { value: 'aeiou' } });
-    fireEvent.change(screen.getByPlaceholderText(/変換先/), { target: { value: '★' } });
-    expect(getOutput(container)).toBe('h★ll★');
+    fireEvent.change(screen.getByPlaceholderText(/対象文字列/), { target: { value: 'hello' } });
+    expect(getOutput(container)).not.toBe('hello');
+    await user.click(screen.getByRole('button', { name: 'ルールを削除' }));
+    expect(getOutput(container)).toBe('hello');
   });
 
-  it('削除ボタンでルールが消える', async () => {
-    const { user } = setup();
+  it('置換と同時使用：置換済み文字列にランダムは反応しない', async () => {
+    const { user, container } = setup();
+    fireEvent.change(screen.getByPlaceholderText('テキストを入力...'), {
+      target: { value: 'this is ka3afai' },
+    });
+    // 置換ペア: ka3afai → hoge
+    fireEvent.change(screen.getByPlaceholderText('変換前'), { target: { value: 'ka3afai' } });
+    fireEvent.change(screen.getByPlaceholderText('変換後'), { target: { value: 'hoge' } });
+    // ランダムルール: ka3afai（置換後には存在しないので無反応）
     await user.click(screen.getByRole('button', { name: /ランダム/ }));
     await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
-    await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
-    expect(screen.getAllByPlaceholderText('対象文字')).toHaveLength(2);
-    await user.click(screen.getAllByRole('button', { name: 'ルールを削除' })[0]);
-    expect(screen.getAllByPlaceholderText('対象文字')).toHaveLength(1);
-  });
-
-  it('プリセットボタンをクリックすると変換先に文字セットが設定される', async () => {
-    const { user } = setup();
-    await user.click(screen.getByRole('button', { name: /ランダム/ }));
-    await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
-    // ?マスク プリセット
-    await user.click(screen.getByRole('button', { name: /^?$/ }));
-    expect(
-      (screen.getByPlaceholderText(/変換先/) as HTMLInputElement).value
-    ).toBe('?');
+    fireEvent.change(screen.getByPlaceholderText(/対象文字列/), { target: { value: 'ka3afai' } });
+    // 結果は 'this is hoge'（'this is' も変わらない）
+    expect(getOutput(container)).toBe('this is hoge');
   });
 });

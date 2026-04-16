@@ -5,18 +5,17 @@ const Phantom = () => {
   const {
     inputText, setInputText,
     pairs, addPair, updatePair, deletePair,
-    rules, addRule, updateRule, deleteRule, applyPreset,
+    rules, addRule, updateRule, deleteRule,
     tab, setTab,
     output,
     handleCopy,
-    presets,
   } = usePhantom();
 
   return (
     <div className="ph-root">
       <header className="ph-header">
         <div>
-          <div className="ph-logo">PHAN<span>TOM</span></div>
+          <div className="ph-logo">PHANTOM</div>
           <div className="ph-subtitle">text mask &amp; transform engine</div>
         </div>
       </header>
@@ -98,35 +97,17 @@ const Phantom = () => {
           {/* Random rules */}
           {tab === 'random' && (
             <>
+              <p className="ph-random-hint">
+                対象文字を入力すると、同じ文字種（小文字→小文字 / ひらがな→ひらがな など）の別の文字にランダムで置き換えます。
+              </p>
               {rules.map(rule => (
                 <div className="ph-rule-row" key={rule.id}>
                   <input
                     className="ph-field"
-                    placeholder="対象文字"
-                    value={rule.targetChars}
-                    onChange={e => updateRule(rule.id, 'targetChars', e.target.value)}
+                    placeholder="対象文字列（例: ka3afai）"
+                    value={rule.targetStr}
+                    onChange={e => updateRule(rule.id, e.target.value)}
                   />
-                  <span className="ph-arrow">→</span>
-                  <input
-                    className="ph-field"
-                    placeholder="変換先 (文字セット)"
-                    value={rule.charSet}
-                    onChange={e => updateRule(rule.id, 'charSet', e.target.value)}
-                  />
-                  <div className="ph-presets">
-                    {presets.map(p => (
-                      <button
-                        key={p.key}
-                        className="ph-preset-btn"
-                        onClick={() => applyPreset(rule.id, p.chars)}
-                      >
-                        {p.key === 'upper' ? 'A-Z'
-                          : p.key === 'lower' ? 'a-z'
-                          : p.key === 'digit' ? '0-9'
-                          : p.key}
-                      </button>
-                    ))}
-                  </div>
                   <button
                     className="ph-del-btn"
                     aria-label="ルールを削除"

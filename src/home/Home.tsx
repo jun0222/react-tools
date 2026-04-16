@@ -13,7 +13,7 @@ const tools = [
   {
     path: '/phantom',
     name: 'Phantom',
-    icon: '👁',
+    icon: '🪄',
     iconBg: 'linear-gradient(135deg, #00ffe7, #0a5eaa)',
     desc: 'KMP置換・LCGランダム変換によるテキストマスクツール',
     tag: 'text',
