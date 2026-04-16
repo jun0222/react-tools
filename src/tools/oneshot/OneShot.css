@@ -245,6 +245,85 @@ html[data-os-theme="light"] {
   display: flex;
   gap: 4px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* --- Tag Input --- */
+.os-tag-input {
+  width: 100%;
+  background: var(--os-surface2);
+  border: 1.5px solid var(--os-border);
+  border-radius: var(--os-radius-sm);
+  color: var(--os-text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 7px 12px;
+  box-sizing: border-box;
+  outline: none;
+  margin-top: 8px;
+  transition: border-color 0.2s;
+}
+.os-tag-input:focus {
+  border-color: var(--os-pink);
+}
+.os-tag-input::placeholder {
+  color: var(--os-text-dim);
+}
+
+/* --- Tags on bubble --- */
+.os-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.os-tag {
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: var(--os-purple);
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.os-tag:hover,
+.os-tag.os-tag-active {
+  background: var(--os-purple);
+  color: #fff;
+  border-color: var(--os-purple);
+}
+
+/* --- In-progress bubble --- */
+.os-bubble.in-progress {
+  border-left: 3px solid #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+}
+.os-bubble.in-progress::before {
+  border-left-color: #f59e0b;
+}
+
+/* --- In-progress badge --- */
+.os-inprogress-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* --- Amber button (作業中) --- */
+.os-btn-amber {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #f59e0b;
+}
+.os-btn-amber:hover {
+  background: #f59e0b;
+  color: #fff;
 }
 
 /* --- Prompt Bubbles --- */
