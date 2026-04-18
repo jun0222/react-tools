@@ -275,3 +275,116 @@
   border-color: #00ffe744;
   color: #00ffe7;
 }
+/* =============================================
+   ライトモード
+   ============================================= */
+
+.ph-root.light {
+  background: #f4f6fa;
+  color: #1a2030;
+}
+
+.ph-root.light .ph-logo {
+  color: #0077cc;
+  text-shadow: none;
+}
+
+.ph-root.light .ph-subtitle {
+  color: #6080a0;
+}
+
+.ph-root.light .ph-panel {
+  background: #ffffff;
+  border-color: #d0d8e8;
+}
+
+.ph-root.light .ph-panel-label {
+  color: #8098b8;
+}
+
+.ph-root.light .ph-input {
+  background: #f8fafc;
+  border-color: #d0d8e8;
+  color: #1a2030;
+}
+
+.ph-root.light .ph-input:focus {
+  border-color: #0077cc88;
+}
+
+.ph-root.light .ph-output {
+  background: #f0f4fa;
+  border-color: #d0d8e8;
+  color: #0077cc;
+  text-shadow: none;
+}
+
+.ph-root.light .ph-copy-btn {
+  border-color: #0077cc55;
+  color: #0077cc;
+}
+
+.ph-root.light .ph-copy-btn:hover {
+  background: #0077cc11;
+  border-color: #0077cc;
+}
+
+.ph-root.light .ph-rules-panel {
+  background: #ffffff;
+  border-color: #d0d8e8;
+}
+
+.ph-root.light .ph-tab {
+  border-color: #d0d8e8;
+  color: #8098b8;
+}
+
+.ph-root.light .ph-tab:hover {
+  border-color: #0077cc55;
+  color: #1a2030;
+}
+
+.ph-root.light .ph-tab.active {
+  border-color: #e0006a;
+  color: #e0006a;
+  text-shadow: none;
+  background: #e0006a0a;
+}
+
+.ph-root.light .ph-field {
+  background: #f8fafc;
+  border-color: #d0d8e8;
+  color: #1a2030;
+}
+
+.ph-root.light .ph-field:focus {
+  border-color: #0077cc55;
+}
+
+.ph-root.light .ph-arrow {
+  color: #8098b8;
+}
+
+.ph-root.light .ph-del-btn {
+  border-color: #e0d0d8;
+  color: #c06080;
+}
+
+.ph-root.light .ph-del-btn:hover {
+  border-color: #e0006a;
+  color: #e0006a;
+}
+
+.ph-root.light .ph-add-btn {
+  border-color: #b0c8e0;
+  color: #4080b0;
+}
+
+.ph-root.light .ph-add-btn:hover {
+  border-color: #0077cc88;
+  color: #0077cc;
+}
+
+.ph-root.light .ph-random-hint {
+  color: #6080a0;
+}

@@ -1,7 +1,9 @@
 import './Phantom.css';
 import { usePhantom } from './usePhantom';
+import { useTheme } from '../../context/ThemeContext';
 
 const Phantom = () => {
+  const { dark } = useTheme();
   const {
     inputText, setInputText,
     pairs, addPair, updatePair, deletePair,
@@ -12,7 +14,7 @@ const Phantom = () => {
   } = usePhantom();
 
   return (
-    <div className="ph-root">
+    <div className={`ph-root ${dark ? 'dark' : 'light'}`}>
       <header className="ph-header">
         <div>
           <div className="ph-logo">PHANTOM</div>
