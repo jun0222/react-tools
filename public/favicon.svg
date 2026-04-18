@@ -1,10 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff2d7b"/>
-      <stop offset="100%" stop-color="#a855f7"/>
-    </linearGradient>
-  </defs>
   <rect width="32" height="32" rx="8" fill="#0f0f14"/>
-  <polygon points="18 2 6 18 15 18 14 30 26 14 17 14 18 2" fill="url(#g)"/>
+  <!-- React atom: outer ellipses -->
+  <g fill="none" stroke="#61dafb" stroke-width="1.5">
+    <!-- horizontal ellipse -->
+    <ellipse cx="16" cy="16" rx="10" ry="3.8"/>
+    <!-- rotated 60deg -->
+    <ellipse cx="16" cy="16" rx="10" ry="3.8" transform="rotate(60 16 16)"/>
+    <!-- rotated 120deg -->
+    <ellipse cx="16" cy="16" rx="10" ry="3.8" transform="rotate(120 16 16)"/>
+  </g>
+  <!-- nucleus -->
+  <circle cx="16" cy="16" r="2" fill="#61dafb"/>
 </svg>

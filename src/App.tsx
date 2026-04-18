@@ -1,5 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { MetaProvider, useMeta } from './context/MetaContext';
+import { PAGE_META } from './config/pageMeta';
 import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
@@ -18,6 +21,16 @@ const moonIcon = (
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
   </svg>
 );
+
+const MetaManager = () => {
+  const { pathname } = useLocation();
+  const { setMeta } = useMeta();
+  useEffect(() => {
+    const m = PAGE_META[pathname] ?? PAGE_META['/'];
+    setMeta(m);
+  }, [pathname, setMeta]);
+  return null;
+};
 
 const ThemeToggleButton = () => {
   const { dark, toggleTheme } = useTheme();
@@ -52,14 +65,17 @@ const ThemeToggleButton = () => {
 function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider>
-        <ThemeToggleButton />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/oneshot" element={<OneShot />} />
-          <Route path="/phantom" element={<Phantom />} />
-        </Routes>
-      </ThemeProvider>
+      <MetaProvider>
+        <ThemeProvider>
+          <MetaManager />
+          <ThemeToggleButton />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/oneshot" element={<OneShot />} />
+            <Route path="/phantom" element={<Phantom />} />
+          </Routes>
+        </ThemeProvider>
+      </MetaProvider>
     </BrowserRouter>
   );
 }
