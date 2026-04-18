@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { ThemeProvider } from '../../context/ThemeContext';
 import * as helpers from './helpers';
 import OneShot from './OneShot';
 
@@ -9,8 +10,13 @@ import OneShot from './OneShot';
 let copyToClipboardSpy: ReturnType<typeof vi.fn>;
 
 const setup = (dark = false) => {
+  localStorage.setItem('oneshot-theme', dark ? 'dark' : 'light');
   const user = userEvent.setup();
-  const utils = render(<OneShot dark={dark} />);
+  const utils = render(
+    <ThemeProvider>
+      <OneShot />
+    </ThemeProvider>
+  );
   return { user, ...utils };
 };
 

@@ -1,14 +1,20 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
+import { ThemeProvider } from '../../context/ThemeContext';
 import * as phantom from './phantomCore';
 import Phantom from './Phantom';
 
 let copyTextSpy: ReturnType<typeof vi.fn>;
 
-const setup = () => {
+const setup = (dark = true) => {
+  localStorage.setItem('oneshot-theme', dark ? 'dark' : 'light');
   const user = userEvent.setup();
-  const utils = render(<Phantom />);
+  const utils = render(
+    <ThemeProvider>
+      <Phantom />
+    </ThemeProvider>
+  );
   return { user, ...utils };
 };
 
@@ -30,6 +36,16 @@ describe('レンダリング', () => {
   it('PHANTOM ヘッダーが表示される', () => {
     setup();
     expect(screen.getByText(/phantom/i)).toBeInTheDocument();
+  });
+
+  it('ダークモードのとき .dark クラスが付く', () => {
+    const { container } = setup(true);
+    expect(container.querySelector('.ph-root')).toHaveClass('dark');
+  });
+
+  it('ライトモードのとき .light クラスが付く', () => {
+    const { container } = setup(false);
+    expect(container.querySelector('.ph-root')).toHaveClass('light');
   });
 
   it('入力テキストエリアが表示される', () => {
