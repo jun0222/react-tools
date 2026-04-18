@@ -1,0 +1,76 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  border-bottom: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.app-header.dark {
+  background: rgba(13, 13, 20, 0.92);
+  border-color: #2e2e3e;
+  backdrop-filter: blur(8px);
+}
+
+.app-header.light {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #e0e0e8;
+  backdrop-filter: blur(8px);
+}
+
+.app-header-logo {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.app-header.dark .app-header-logo {
+  color: #e0e0e0;
+}
+
+.app-header.light .app-header-logo {
+  color: #1a1a2e;
+}
+
+.app-header-logo:hover {
+  opacity: 0.6;
+}
+
+.app-header-logo span {
+  color: #ff2d7b;
+}
+
+.app-header-theme-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.app-header.dark .app-header-theme-btn {
+  background: #1a1a24;
+  border: 1.5px solid #2e2e3e;
+  color: #e0e0e0;
+}
+
+.app-header.light .app-header-theme-btn {
+  background: #ffffff;
+  border: 1.5px solid #e0e0e8;
+  color: #1a1a2e;
+}
+
+.app-header-theme-btn:hover {
+  border-color: #ff2d7b;
+}
