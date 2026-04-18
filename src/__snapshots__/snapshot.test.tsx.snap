@@ -1,0 +1,861 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UI スナップショット > Home > ダークモード 1`] = `
+<div
+  class="home dark"
+>
+  <header
+    class="home-header"
+  >
+    <div
+      class="home-title"
+    >
+      <h1>
+        react-
+        <span>
+          tools
+        </span>
+      </h1>
+      <p>
+        2
+         tool
+        s
+         available
+      </p>
+    </div>
+  </header>
+  <div
+    class="home-grid"
+  >
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/oneshot"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+      >
+        ⚡
+      </div>
+      <div
+        class="home-card-name"
+      >
+        OneShot
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        プロンプトを保存・編集・蒸留・検証する1画面ツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        prompt
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/phantom"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+      >
+        🪄
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Phantom
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        KMP置換・LCGランダム変換によるテキストマスクツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Home > ライトモード 1`] = `
+<div
+  class="home light"
+>
+  <header
+    class="home-header"
+  >
+    <div
+      class="home-title"
+    >
+      <h1>
+        react-
+        <span>
+          tools
+        </span>
+      </h1>
+      <p>
+        2
+         tool
+        s
+         available
+      </p>
+    </div>
+  </header>
+  <div
+    class="home-grid"
+  >
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/oneshot"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+      >
+        ⚡
+      </div>
+      <div
+        class="home-card-name"
+      >
+        OneShot
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        プロンプトを保存・編集・蒸留・検証する1画面ツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        prompt
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/phantom"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+      >
+        🪄
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Phantom
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        KMP置換・LCGランダム変換によるテキストマスクツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > OneShot > ダークモード（空の状態） 1`] = `
+<div
+  class="oneshot dark"
+>
+  <header
+    class="os-header"
+  >
+    <div
+      class="os-logo"
+    >
+      <div
+        class="os-logo-icon"
+      >
+        <svg
+          fill="none"
+          height="28"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="28"
+        >
+          <polygon
+            fill="currentColor"
+            points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+          />
+        </svg>
+      </div>
+      <h1>
+        <span
+          class="accent"
+        >
+          Zero
+        </span>
+        <span
+          class="shot"
+        >
+          Shot
+        </span>
+      </h1>
+      <span
+        class="os-count-badge"
+      >
+        0
+         prompts
+      </span>
+    </div>
+    <div
+      class="os-toolbar"
+    >
+      <button
+        class="os-btn os-btn-pink"
+      >
+        <svg
+          fill="currentColor"
+          height="14"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M12 2l2.09 6.26L20.18 10l-6.09 1.74L12 18l-2.09-6.26L3.82 10l6.09-1.74L12 2z"
+          />
+          <path
+            d="M19 15l1.04 3.13L23.18 19l-3.14.87L19 23l-1.04-3.13L14.82 19l3.14-.87L19 15z"
+            opacity="0.7"
+          />
+        </svg>
+         
+        ZERO
+         DISTILL
+      </button>
+      <button
+        class="os-btn os-btn-ghost "
+        title="ゴミ箱"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <polyline
+            points="3 6 5 6 21 6"
+          />
+          <path
+            d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+          />
+        </svg>
+      </button>
+      <button
+        class="os-btn os-btn-ghost"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          />
+          <polyline
+            points="7 10 12 15 17 10"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="15"
+            y2="3"
+          />
+        </svg>
+      </button>
+      <button
+        class="os-btn os-btn-ghost"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          />
+          <polyline
+            points="17 8 12 3 7 8"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="3"
+            y2="15"
+          />
+        </svg>
+      </button>
+    </div>
+  </header>
+  <button
+    class="os-btn os-btn-purple"
+    style="margin-bottom: 16px; width: 100%; justify-content: center;"
+  >
+    <svg
+      fill="none"
+      height="14"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="14"
+    >
+      <line
+        x1="12"
+        x2="12"
+        y1="5"
+        y2="19"
+      />
+      <line
+        x1="5"
+        x2="19"
+        y1="12"
+        y2="12"
+      />
+    </svg>
+     新しいプロンプトを追加
+  </button>
+  <div
+    class="os-filter-bar"
+  >
+    <button
+      class="os-btn os-btn-sm os-btn-purple"
+    >
+      すべて
+    </button>
+    <button
+      class="os-btn os-btn-sm os-btn-ghost"
+    >
+      未送信
+    </button>
+    <button
+      class="os-btn os-btn-sm os-btn-ghost"
+    >
+      送信済み
+    </button>
+  </div>
+  <div
+    class="os-bubble-list"
+  >
+    <div
+      class="os-empty"
+    >
+      <div
+        class="os-empty-icon"
+      >
+        <svg
+          fill="none"
+          height="48"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="48"
+        >
+          <polygon
+            fill="currentColor"
+            points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+          />
+        </svg>
+      </div>
+      <p>
+        <strong>
+          プロンプトがまだありません
+        </strong>
+      </p>
+      <p>
+        上の「新しいプロンプトを追加」から始めましょう
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > OneShot > ライトモード（空の状態） 1`] = `
+<div
+  class="oneshot light"
+>
+  <header
+    class="os-header"
+  >
+    <div
+      class="os-logo"
+    >
+      <div
+        class="os-logo-icon"
+      >
+        <svg
+          fill="none"
+          height="28"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="28"
+        >
+          <polygon
+            fill="currentColor"
+            points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+          />
+        </svg>
+      </div>
+      <h1>
+        <span
+          class="accent"
+        >
+          Zero
+        </span>
+        <span
+          class="shot"
+        >
+          Shot
+        </span>
+      </h1>
+      <span
+        class="os-count-badge"
+      >
+        0
+         prompts
+      </span>
+    </div>
+    <div
+      class="os-toolbar"
+    >
+      <button
+        class="os-btn os-btn-pink"
+      >
+        <svg
+          fill="currentColor"
+          height="14"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M12 2l2.09 6.26L20.18 10l-6.09 1.74L12 18l-2.09-6.26L3.82 10l6.09-1.74L12 2z"
+          />
+          <path
+            d="M19 15l1.04 3.13L23.18 19l-3.14.87L19 23l-1.04-3.13L14.82 19l3.14-.87L19 15z"
+            opacity="0.7"
+          />
+        </svg>
+         
+        ZERO
+         DISTILL
+      </button>
+      <button
+        class="os-btn os-btn-ghost "
+        title="ゴミ箱"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <polyline
+            points="3 6 5 6 21 6"
+          />
+          <path
+            d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+          />
+        </svg>
+      </button>
+      <button
+        class="os-btn os-btn-ghost"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          />
+          <polyline
+            points="7 10 12 15 17 10"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="15"
+            y2="3"
+          />
+        </svg>
+      </button>
+      <button
+        class="os-btn os-btn-ghost"
+      >
+        <svg
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="14"
+        >
+          <path
+            d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          />
+          <polyline
+            points="17 8 12 3 7 8"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="3"
+            y2="15"
+          />
+        </svg>
+      </button>
+    </div>
+  </header>
+  <button
+    class="os-btn os-btn-purple"
+    style="margin-bottom: 16px; width: 100%; justify-content: center;"
+  >
+    <svg
+      fill="none"
+      height="14"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="14"
+    >
+      <line
+        x1="12"
+        x2="12"
+        y1="5"
+        y2="19"
+      />
+      <line
+        x1="5"
+        x2="19"
+        y1="12"
+        y2="12"
+      />
+    </svg>
+     新しいプロンプトを追加
+  </button>
+  <div
+    class="os-filter-bar"
+  >
+    <button
+      class="os-btn os-btn-sm os-btn-purple"
+    >
+      すべて
+    </button>
+    <button
+      class="os-btn os-btn-sm os-btn-ghost"
+    >
+      未送信
+    </button>
+    <button
+      class="os-btn os-btn-sm os-btn-ghost"
+    >
+      送信済み
+    </button>
+  </div>
+  <div
+    class="os-bubble-list"
+  >
+    <div
+      class="os-empty"
+    >
+      <div
+        class="os-empty-icon"
+      >
+        <svg
+          fill="none"
+          height="48"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="48"
+        >
+          <polygon
+            fill="currentColor"
+            points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+          />
+        </svg>
+      </div>
+      <p>
+        <strong>
+          プロンプトがまだありません
+        </strong>
+      </p>
+      <p>
+        上の「新しいプロンプトを追加」から始めましょう
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Phantom > ダークモード 1`] = `
+<div
+  class="ph-root dark"
+>
+  <header
+    class="ph-header"
+  >
+    <div>
+      <div
+        class="ph-logo"
+      >
+        PHANTOM
+      </div>
+      <div
+        class="ph-subtitle"
+      >
+        text mask & transform engine
+      </div>
+    </div>
+  </header>
+  <div
+    class="ph-main"
+  >
+    <div
+      class="ph-panel"
+    >
+      <div
+        class="ph-panel-label"
+      >
+        INPUT
+      </div>
+      <textarea
+        class="ph-input"
+        placeholder="テキストを入力..."
+      />
+    </div>
+    <div
+      class="ph-panel"
+    >
+      <div
+        class="ph-panel-label"
+      >
+        OUTPUT
+      </div>
+      <div
+        class="ph-output-wrap"
+      >
+        <div
+          class="ph-output"
+        />
+        <button
+          class="ph-copy-btn"
+        >
+          コピー
+        </button>
+      </div>
+    </div>
+    <div
+      class="ph-rules-panel"
+    >
+      <div
+        class="ph-tabs"
+      >
+        <button
+          class="ph-tab active"
+        >
+          置換
+        </button>
+        <button
+          class="ph-tab"
+        >
+          ランダム
+        </button>
+      </div>
+      <div
+        class="ph-pair-row"
+      >
+        <input
+          class="ph-field"
+          placeholder="変換前"
+          value=""
+        />
+        <span
+          class="ph-arrow"
+        >
+          →
+        </span>
+        <input
+          class="ph-field"
+          placeholder="変換後"
+          value=""
+        />
+        <button
+          aria-label="ペアを削除"
+          class="ph-del-btn"
+        >
+          ×
+        </button>
+      </div>
+      <button
+        class="ph-add-btn"
+      >
+        ＋ ペアを追加
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Phantom > ライトモード 1`] = `
+<div
+  class="ph-root light"
+>
+  <header
+    class="ph-header"
+  >
+    <div>
+      <div
+        class="ph-logo"
+      >
+        PHANTOM
+      </div>
+      <div
+        class="ph-subtitle"
+      >
+        text mask & transform engine
+      </div>
+    </div>
+  </header>
+  <div
+    class="ph-main"
+  >
+    <div
+      class="ph-panel"
+    >
+      <div
+        class="ph-panel-label"
+      >
+        INPUT
+      </div>
+      <textarea
+        class="ph-input"
+        placeholder="テキストを入力..."
+      />
+    </div>
+    <div
+      class="ph-panel"
+    >
+      <div
+        class="ph-panel-label"
+      >
+        OUTPUT
+      </div>
+      <div
+        class="ph-output-wrap"
+      >
+        <div
+          class="ph-output"
+        />
+        <button
+          class="ph-copy-btn"
+        >
+          コピー
+        </button>
+      </div>
+    </div>
+    <div
+      class="ph-rules-panel"
+    >
+      <div
+        class="ph-tabs"
+      >
+        <button
+          class="ph-tab active"
+        >
+          置換
+        </button>
+        <button
+          class="ph-tab"
+        >
+          ランダム
+        </button>
+      </div>
+      <div
+        class="ph-pair-row"
+      >
+        <input
+          class="ph-field"
+          placeholder="変換前"
+          value=""
+        />
+        <span
+          class="ph-arrow"
+        >
+          →
+        </span>
+        <input
+          class="ph-field"
+          placeholder="変換後"
+          value=""
+        />
+        <button
+          aria-label="ペアを削除"
+          class="ph-del-btn"
+        >
+          ×
+        </button>
+      </div>
+      <button
+        class="ph-add-btn"
+      >
+        ＋ ペアを追加
+      </button>
+    </div>
+  </div>
+</div>
+`;
