@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
-
-const THEME_KEY = 'oneshot-theme';
 
 const sunIcon = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -21,47 +19,47 @@ const moonIcon = (
   </svg>
 );
 
+const ThemeToggleButton = () => {
+  const { dark, toggleTheme } = useTheme();
+  return (
+    <button
+      onClick={toggleTheme}
+      title="テーマ切替"
+      style={{
+        position: 'fixed',
+        top: 16,
+        right: 16,
+        zIndex: 9999,
+        width: 40,
+        height: 40,
+        borderRadius: '50%',
+        border: `1.5px solid ${dark ? '#2e2e3e' : '#e0e0e8'}`,
+        background: dark ? '#1a1a24' : '#ffffff',
+        color: dark ? '#e0e0e0' : '#1a1a2e',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+        transition: 'all 0.2s',
+      }}
+    >
+      {dark ? sunIcon : moonIcon}
+    </button>
+  );
+};
+
 function App() {
-  const [dark, setDark] = useState(() => localStorage.getItem(THEME_KEY) !== 'light');
-
-  const toggleTheme = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.dataset.osTheme = next ? 'dark' : 'light';
-    localStorage.setItem(THEME_KEY, next ? 'dark' : 'light');
-  };
-
   return (
     <BrowserRouter>
-      <button
-        onClick={toggleTheme}
-        title="テーマ切替"
-        style={{
-          position: 'fixed',
-          top: 16,
-          right: 16,
-          zIndex: 9999,
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: `1.5px solid ${dark ? '#2e2e3e' : '#e0e0e8'}`,
-          background: dark ? '#1a1a24' : '#ffffff',
-          color: dark ? '#e0e0e0' : '#1a1a2e',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
-          transition: 'all 0.2s',
-        }}
-      >
-        {dark ? sunIcon : moonIcon}
-      </button>
-      <Routes>
-        <Route path="/" element={<Home dark={dark} />} />
-        <Route path="/oneshot" element={<OneShot dark={dark} />} />
-        <Route path="/phantom" element={<Phantom />} />
-      </Routes>
+      <ThemeProvider>
+        <ThemeToggleButton />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/oneshot" element={<OneShot />} />
+          <Route path="/phantom" element={<Phantom />} />
+        </Routes>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

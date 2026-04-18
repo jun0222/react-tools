@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import './Home.css';
 
 const tools = [
@@ -20,33 +21,31 @@ const tools = [
   },
 ];
 
-interface Props {
-  dark: boolean;
+const Home = () => {
+  const { dark } = useTheme();
+  return (
+    <div className={`home ${dark ? 'dark' : 'light'}`}>
+      <header className="home-header">
+        <div className="home-title">
+          <h1>react-<span>tools</span></h1>
+          <p>{tools.length} tool{tools.length !== 1 ? 's' : ''} available</p>
+        </div>
+      </header>
 
-}
-
-const Home = ({ dark }: Props) => (
-  <div className={`home ${dark ? 'dark' : 'light'}`}>
-    <header className="home-header">
-      <div className="home-title">
-        <h1>react-<span>tools</span></h1>
-        <p>{tools.length} tool{tools.length !== 1 ? 's' : ''} available</p>
+      <div className="home-grid">
+        {tools.map(tool => (
+          <Link key={tool.path} to={tool.path} className="home-card">
+            <div className="home-card-icon" style={{ background: tool.iconBg }}>
+              {tool.icon}
+            </div>
+            <div className="home-card-name">{tool.name}</div>
+            <div className="home-card-desc">{tool.desc}</div>
+            <span className="home-card-tag">{tool.tag}</span>
+          </Link>
+        ))}
       </div>
-    </header>
-
-    <div className="home-grid">
-      {tools.map(tool => (
-        <Link key={tool.path} to={tool.path} className="home-card">
-          <div className="home-card-icon" style={{ background: tool.iconBg }}>
-            {tool.icon}
-          </div>
-          <div className="home-card-name">{tool.name}</div>
-          <div className="home-card-desc">{tool.desc}</div>
-          <span className="home-card-tag">{tool.tag}</span>
-        </Link>
-      ))}
     </div>
-  </div>
-);
+  );
+};
 
 export default Home;
