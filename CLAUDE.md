@@ -38,11 +38,59 @@ describe('ThemeContext', () => {
 
 ### テスト種別と役割
 
-| 種別 | ツール | 対象 | 場所 |
-|------|--------|------|------|
-| ユニット / コンポーネント | Vitest + Testing Library | ロジック・DOM構造 | `src/**/*.test.tsx` |
-| DOM スナップショット | Vitest `toMatchSnapshot` | HTML構造の差分 | `src/snapshot.test.tsx` |
-| E2E / ビジュアルスナップショット | Playwright | 画面全体・視覚差分 | `e2e/*.spec.ts` |
+4種類のテストを使い分ける。
+
+#### 1. Vitest — BDD 振る舞いテスト
+ロジック・コンポーネントの振る舞いを日本語で記述する。ユニットテスト・インテグレーションテストの主力。
+
+- ツール: Vitest + Testing Library (`renderHook`, `render`, `userEvent`)
+- 場所: 対象ファイルと同ディレクトリ（コロケーション）
+- 命名: `describe` / `it` を日本語で、「〜のとき〜になる」形式
+
+```typescript
+describe('ThemeContext', () => {
+  it('localStorage に "light" があるときライトモードで初期化される', () => { ... });
+  it('toggleTheme でダーク→ライトに切り替わる', () => { ... });
+});
+```
+
+#### 2. Vitest — UI スナップショットテスト
+コンポーネントの HTML 構造を記録し、意図しない DOM 変更を検知する。
+
+- ツール: Vitest `toMatchSnapshot()`
+- 場所: `src/snapshot.test.tsx`（全画面を1ファイルにまとめる）
+- 検知できるもの: クラス名の変更・要素の追加削除・属性の変化
+
+```typescript
+it('ダークモード', () => {
+  const { container } = renderPage(<Home />, true);
+  expect(container.firstChild).toMatchSnapshot();
+});
+```
+
+#### 3. Playwright — E2E テスト
+実ブラウザで画面操作をシナリオとして検証する。状態遷移・ナビゲーション・ユーザー操作が対象。
+
+- ツール: Playwright (`test.describe.serial` + 共有 `page`)
+- 場所: `e2e/*.spec.ts`（スナップショット系とは別ファイル）
+- 特徴: 同一ブラウザで連続実行、`slowMo: 800` で人間が目視できる速度
+
+#### 4. Playwright — ビジュアルリグレッションテスト
+スクリーンショットをピクセル単位で比較し、CSS・レイアウトの変化を検知する。
+
+- ツール: Playwright `toHaveScreenshot()`
+- 場所: `e2e/snapshot.spec.ts`
+- 検知できるもの: 色・余白・フォント・レイアウトずれなど DOM では見えない視覚変化
+- ベースライン更新: `npx playwright test e2e/snapshot.spec.ts --update-snapshots`
+
+---
+
+| 種別 | ツール | 検知対象 | 場所 |
+|------|--------|----------|------|
+| BDD 振る舞いテスト | Vitest + Testing Library | ロジック・DOM操作の振る舞い | `src/**/*.test.tsx` |
+| UI スナップショット | Vitest `toMatchSnapshot` | HTML 構造の変化 | `src/snapshot.test.tsx` |
+| E2E | Playwright | 画面操作・状態遷移 | `e2e/*.spec.ts` |
+| ビジュアルリグレッション | Playwright `toHaveScreenshot` | 視覚的な見た目の変化 | `e2e/snapshot.spec.ts` |
 
 ### E2E テストの書き方
 
