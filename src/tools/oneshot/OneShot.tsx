@@ -5,13 +5,12 @@ import {
   exportPrompts, importPrompts, findDuplicateIds, buildGlobalDistillPrompt,
   copyToClipboard,
 } from './helpers';
-
-interface Props { dark: boolean; }
 import {
   ZapIcon, CopyIcon, PlusIcon, TrashIcon, EditIcon,
   SendIcon, CheckIcon, ReplyIcon, DownloadIcon, UploadIcon,
   SparklesIcon, RestoreIcon,
 } from './icons';
+import { useTheme } from '../../context/ThemeContext';
 import './OneShot.css';
 
 // TODO: 複数プロジェクト対応
@@ -28,7 +27,8 @@ type FilterMode = 'all' | 'unsent' | 'sent';
 const parseTags = (input: string): string[] =>
   input.split(',').map(t => t.trim()).filter(Boolean);
 
-const OneShot = ({ dark }: Props) => {
+const OneShot = () => {
+  const { dark } = useTheme();
   const [prompts, setPrompts] = useState<PromptEntry[]>(loadPrompts);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newBody, setNewBody] = useState('');
