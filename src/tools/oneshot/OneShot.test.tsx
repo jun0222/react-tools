@@ -406,6 +406,24 @@ describe('フィルタ', () => {
     expect(screen.getByText('B送信済み')).toBeInTheDocument();
   });
 
+  it('「解決済み」フィルターで解決済みプロンプトのみ表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '未解決プロンプト');
+    await addPrompt(user, '解決済みプロンプト');
+    await user.click(screen.getAllByRole('button', { name: '解決済みにする' })[0]);
+    await user.click(screen.getByRole('button', { name: /^解決済み$/ }));
+    expect(screen.getByText('解決済みプロンプト')).toBeInTheDocument();
+    expect(screen.queryByText('未解決プロンプト')).not.toBeInTheDocument();
+  });
+
+  it('「解決済み」フィルター中は折りたたまれた本文も展開されて表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '確認用プロンプト本文');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    await user.click(screen.getByRole('button', { name: /^解決済み$/ }));
+    expect(screen.getByText('確認用プロンプト本文')).toBeInTheDocument();
+  });
+
   it('フィルタ中にプロンプトを追加すると「すべて」に戻って表示される', async () => {
     const { user } = setup();
     await addPrompt(user, '既存');
@@ -659,5 +677,160 @@ describe('並べ替え', () => {
     await user.click(screen.getByRole('button', { name: /^未送信$/ }));
     expect(screen.queryByRole('button', { name: '上に移動' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '下に移動' })).not.toBeInTheDocument();
+  });
+});
+
+// =====================
+// フィルター永続化
+// =====================
+describe('フィルター永続化', () => {
+  it('フィルターを変更すると localStorage に保存される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    await user.click(screen.getByRole('button', { name: /^未送信$/ }));
+    const stored = JSON.parse(localStorage.getItem('oneshot-filter') ?? '{}');
+    expect(stored.filterMode).toBe('unsent');
+  });
+
+  it('localStorage にフィルター状態があれば起動時に復元される', () => {
+    localStorage.setItem('oneshot-filter', JSON.stringify({ filterMode: 'sent', selectedTag: null }));
+    localStorage.setItem('oneshot-prompts', JSON.stringify([
+      { id: 'a', body: 'sent-prompt', replies: [], sent: true, createdAt: 1, updatedAt: 1, tags: [] },
+      { id: 'b', body: 'unsent-prompt', replies: [], sent: false, createdAt: 2, updatedAt: 2, tags: [] },
+    ]));
+    setup();
+    expect(screen.getByText('sent-prompt')).toBeInTheDocument();
+    expect(screen.queryByText('unsent-prompt')).not.toBeInTheDocument();
+  });
+});
+
+// =====================
+// 折りたたみ
+// =====================
+describe('折りたたみ', () => {
+  it('各プロンプトに折りたたみボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    expect(screen.getByRole('button', { name: '折りたたむ' })).toBeInTheDocument();
+  });
+
+  it('折りたたみボタンをクリックすると本文が非表示になる', async () => {
+    const { user } = setup();
+    await addPrompt(user, '折りたたみテスト本文');
+    await user.click(screen.getByRole('button', { name: '折りたたむ' }));
+    expect(screen.queryByText('折りたたみテスト本文')).not.toBeInTheDocument();
+  });
+
+  it('折りたたみ後に展開ボタンをクリックすると本文が表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '折りたたみテスト本文');
+    await user.click(screen.getByRole('button', { name: '折りたたむ' }));
+    await user.click(screen.getByRole('button', { name: '展開する' }));
+    expect(screen.getByText('折りたたみテスト本文')).toBeInTheDocument();
+  });
+
+  it('全折りたたみボタンで全プロンプトが折りたたまれる', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'プロンプトA');
+    await addPrompt(user, 'プロンプトB');
+    await user.click(screen.getByRole('button', { name: '全折りたたみ' }));
+    expect(screen.queryByText('プロンプトA')).not.toBeInTheDocument();
+    expect(screen.queryByText('プロンプトB')).not.toBeInTheDocument();
+  });
+
+  it('全展開ボタンで全プロンプトが展開される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'プロンプトA');
+    await addPrompt(user, 'プロンプトB');
+    await user.click(screen.getByRole('button', { name: '全折りたたみ' }));
+    await user.click(screen.getByRole('button', { name: '全展開' }));
+    expect(screen.getByText('プロンプトA')).toBeInTheDocument();
+    expect(screen.getByText('プロンプトB')).toBeInTheDocument();
+  });
+});
+
+// =====================
+// 解決済みマーク
+// =====================
+describe('解決済みマーク', () => {
+  it('各プロンプトに「解決済みにする」ボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    expect(screen.getByRole('button', { name: '解決済みにする' })).toBeInTheDocument();
+  });
+
+  it('「解決済みにする」をクリックするとバブルに resolved クラスが付く', async () => {
+    const { user } = setup();
+    await addPrompt(user, '解決テスト');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    expect(document.querySelector('.os-bubble.resolved')).toBeInTheDocument();
+  });
+
+  it('「解決済みにする」をクリックすると自動で折りたたまれる', async () => {
+    const { user } = setup();
+    await addPrompt(user, '解決テスト本文');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    expect(screen.queryByText('解決テスト本文')).not.toBeInTheDocument();
+  });
+
+  it('「解決済みを解除」をクリックするとクラスが外れて展開される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '解除テスト');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    await user.click(screen.getByRole('button', { name: '解決済みを解除' }));
+    expect(document.querySelector('.os-bubble.resolved')).not.toBeInTheDocument();
+    expect(screen.getByText('解除テスト')).toBeInTheDocument();
+  });
+
+  it('解決済み状態が localStorage に保存される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '保存テスト');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    const stored = JSON.parse(localStorage.getItem('oneshot-prompts') ?? '[]');
+    expect(stored[0].resolved).toBe(true);
+  });
+});
+
+// =====================
+// キーボードショートカット（Cmd+Enter）
+// =====================
+describe('キーボードショートカット（Cmd+Enter）', () => {
+  it('新規フォームで Cmd+Enter を押すとプロンプトが追加される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    const textarea = screen.getByPlaceholderText('プロンプト本文...');
+    fireEvent.change(textarea, { target: { value: 'Cmd+Enterで追加' } });
+    fireEvent.keyDown(textarea, { key: 'Enter', metaKey: true });
+    expect(screen.getByText('Cmd+Enterで追加')).toBeInTheDocument();
+  });
+
+  it('編集フォームで Cmd+Enter を押すと保存される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '元テキスト');
+    await user.click(screen.getByRole('button', { name: '編集' }));
+    const textarea = screen.getByDisplayValue('元テキスト');
+    fireEvent.change(textarea, { target: { value: '更新テキスト' } });
+    fireEvent.keyDown(textarea, { key: 'Enter', metaKey: true });
+    expect(screen.getByText('更新テキスト')).toBeInTheDocument();
+  });
+});
+
+// =====================
+// プログレスマーカー スピナー
+// =====================
+describe('プログレスマーカー スピナー', () => {
+  it('作業中にするとボタンに spinning クラスが付く', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    await user.click(screen.getByRole('button', { name: '作業中にする' }));
+    expect(screen.getByRole('button', { name: '作業中を解除' })).toHaveClass('spinning');
+  });
+
+  it('作業中を解除すると spinning クラスが外れる', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    await user.click(screen.getByRole('button', { name: '作業中にする' }));
+    await user.click(screen.getByRole('button', { name: '作業中を解除' }));
+    expect(screen.getByRole('button', { name: '作業中にする' })).not.toHaveClass('spinning');
   });
 });

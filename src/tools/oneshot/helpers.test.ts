@@ -9,6 +9,8 @@ import {
   copyToClipboard,
   exportPrompts,
   importPrompts,
+  loadFilterState,
+  saveFilterState,
 } from './helpers';
 import type { PromptEntry } from './helpers';
 
@@ -208,6 +210,32 @@ describe('exportPrompts', () => {
   it('createObjectURL が呼ばれる（ファイル生成を間接的に確認）', () => {
     exportPrompts([makePrompt()]);
     expect(URL.createObjectURL).toHaveBeenCalledOnce();
+  });
+});
+
+// =====================
+// loadFilterState / saveFilterState
+// =====================
+describe('loadFilterState / saveFilterState', () => {
+  beforeEach(() => { localStorage.clear(); });
+
+  it('何も保存していないときデフォルト値を返す', () => {
+    expect(loadFilterState()).toEqual({ filterMode: 'all', selectedTag: null });
+  });
+
+  it('保存したフィルター状態を読み込める', () => {
+    saveFilterState({ filterMode: 'sent', selectedTag: 'react' });
+    expect(loadFilterState()).toEqual({ filterMode: 'sent', selectedTag: 'react' });
+  });
+
+  it('selectedTag が null のときも正しく保存・復元できる', () => {
+    saveFilterState({ filterMode: 'unsent', selectedTag: null });
+    expect(loadFilterState()).toEqual({ filterMode: 'unsent', selectedTag: null });
+  });
+
+  it('localStorage が壊れていてもデフォルト値を返す', () => {
+    localStorage.setItem('oneshot-filter', 'invalid{{{');
+    expect(loadFilterState()).toEqual({ filterMode: 'all', selectedTag: null });
   });
 });
 
