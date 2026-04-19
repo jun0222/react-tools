@@ -16,6 +16,7 @@ export interface PromptEntry {
   trashedAt?: number;
   tags: string[];        // タグ一覧
   inProgress?: boolean;  // 作業中マーカー（全体で1件のみ）
+  resolved?: boolean;    // 解決済みマーク
 }
 
 
@@ -128,6 +129,32 @@ export const buildGlobalDistillPrompt = (prompts: PromptEntry[]): string => {
 
 ${promptList}
 `;
+};
+
+// --- フィルター状態 ---
+const FILTER_KEY = 'oneshot-filter';
+
+export type FilterMode = 'all' | 'unsent' | 'sent' | 'resolved';
+
+export interface FilterState {
+  filterMode: FilterMode;
+  selectedTag: string | null;
+}
+
+const DEFAULT_FILTER: FilterState = { filterMode: 'all', selectedTag: null };
+
+export const loadFilterState = (): FilterState => {
+  try {
+    const raw = localStorage.getItem(FILTER_KEY);
+    if (!raw) return DEFAULT_FILTER;
+    return JSON.parse(raw) as FilterState;
+  } catch {
+    return DEFAULT_FILTER;
+  }
+};
+
+export const saveFilterState = (state: FilterState): void => {
+  localStorage.setItem(FILTER_KEY, JSON.stringify(state));
 };
 
 // --- クリップボード ---

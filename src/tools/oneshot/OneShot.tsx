@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { PromptEntry, Reply } from './helpers';
+import type { PromptEntry, Reply, FilterMode } from './helpers';
 import {
   getShotTitle, loadPrompts, savePrompts, uid,
   exportPrompts, importPrompts, findDuplicateIds, buildGlobalDistillPrompt,
-  copyToClipboard,
+  copyToClipboard, loadFilterState, saveFilterState,
 } from './helpers';
 import {
   ZapIcon, CopyIcon, PlusIcon, TrashIcon, EditIcon,
   SendIcon, CheckIcon, ReplyIcon, DownloadIcon, UploadIcon,
-  SparklesIcon, RestoreIcon,
+  SparklesIcon, RestoreIcon, SpinnerIcon,
 } from './icons';
 import { useTheme } from '../../context/ThemeContext';
 import './OneShot.css';
@@ -21,8 +21,6 @@ import './OneShot.css';
 // - Project 型 (id, name, color) を定義
 // - ヘッダーにプロジェクト切替セレクタを追加
 // - localStorage のキーをプロジェクトごとに分ける（例: `oneshot-prompts-${projectId}`）
-
-type FilterMode = 'all' | 'unsent' | 'sent';
 
 const parseTags = (input: string): string[] =>
   input.split(',').map(t => t.trim()).filter(Boolean);
@@ -41,8 +39,12 @@ const OneShot = () => {
   const [showTrash, setShowTrash] = useState(false);
   const [toast, setToast] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [filterMode, setFilterMode] = useState<FilterMode>('all');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [filterMode, setFilterMode] = useState<FilterMode>(() => loadFilterState().filterMode);
+  const [selectedTag, setSelectedTag] = useState<string | null>(() => loadFilterState().selectedTag);
+  const [collapsed, setCollapsed] = useState<Set<string>>(() => {
+    const resolved = loadPrompts().filter(p => p.resolved && !p.trashedAt).map(p => p.id);
+    return new Set(resolved);
+  });
 
   const listRef = useRef<HTMLDivElement>(null);
   const newBodyRef = useRef<HTMLTextAreaElement>(null);
@@ -65,6 +67,7 @@ const OneShot = () => {
     .filter(p => {
       if (filterMode === 'unsent') return !p.sent;
       if (filterMode === 'sent') return p.sent;
+      if (filterMode === 'resolved') return !!p.resolved;
       return true;
     })
     .filter(p => !selectedTag || p.tags.includes(selectedTag));
@@ -73,6 +76,7 @@ const OneShot = () => {
   const canReorder = filterMode === 'all' && !selectedTag;
 
   useEffect(() => { savePrompts(prompts); }, [prompts]);
+  useEffect(() => { saveFilterState({ filterMode, selectedTag }); }, [filterMode, selectedTag]);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -156,6 +160,34 @@ const OneShot = () => {
     ));
     setEditingId(null);
     showToast('保存しました');
+  };
+
+  // --- 折りたたみ ---
+  const toggleCollapse = (id: string) => {
+    setCollapsed(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+  const collapseAll = () => setCollapsed(new Set(filtered.map(p => p.id)));
+  const expandAll = () => setCollapsed(new Set());
+
+  // --- 解決済みマーク ---
+  const toggleResolved = (id: string) => {
+    setPrompts(prev => prev.map(p =>
+      p.id === id ? { ...p, resolved: !p.resolved } : p
+    ));
+    setCollapsed(prev => {
+      const next = new Set(prev);
+      const target = prompts.find(p => p.id === id);
+      if (target?.resolved) {
+        next.delete(id); // 解除 → 展開
+      } else {
+        next.add(id); // 解決済み → 折りたたみ
+      }
+      return next;
+    });
   };
 
   // --- 作業中マーカー（全体で1件のみ） ---
@@ -356,6 +388,7 @@ const OneShot = () => {
             value={newBody}
             onChange={e => setNewBody(e.target.value)}
             onPaste={e => handlePaste(setNewBody, e)}
+            onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') addPrompt(); }}
             autoFocus
           />
           <input
@@ -377,13 +410,13 @@ const OneShot = () => {
 
       {/* ===== FILTER BAR ===== */}
       <div className="os-filter-bar">
-        {(['all', 'unsent', 'sent'] as FilterMode[]).map(mode => (
+        {(['all', 'unsent', 'sent', 'resolved'] as FilterMode[]).map(mode => (
           <button
             key={mode}
             className={`os-btn os-btn-sm ${filterMode === mode && !selectedTag ? 'os-btn-purple' : 'os-btn-ghost'}`}
             onClick={() => { setFilterMode(mode); setSelectedTag(null); }}
           >
-            {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : '送信済み'}
+            {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : mode === 'sent' ? '送信済み' : '解決済み'}
           </button>
         ))}
         {allTags.map(tag => (
@@ -395,6 +428,12 @@ const OneShot = () => {
             #{tag}
           </button>
         ))}
+        {filtered.length > 0 && (
+          <div className="os-filter-bar-collapse">
+            <button className="os-btn os-btn-sm os-btn-ghost" onClick={collapseAll}>全折りたたみ</button>
+            <button className="os-btn os-btn-sm os-btn-ghost" onClick={expandAll}>全展開</button>
+          </div>
+        )}
       </div>
 
       {/* ===== PROMPT LIST ===== */}
@@ -407,18 +446,28 @@ const OneShot = () => {
           </div>
         )}
 
-        {filtered.map(p => (
+        {filtered.map(p => {
+          const isCollapsed = collapsed.has(p.id) && filterMode !== 'resolved';
+          return (
           <div
             key={p.id}
-            className={`os-bubble${p.sent ? ' sent' : ''}${p.inProgress ? ' in-progress' : ''}`}
+            className={`os-bubble${p.sent ? ' sent' : ''}${p.inProgress ? ' in-progress' : ''}${p.resolved ? ' resolved' : ''}`}
           >
             <div className="os-bubble-meta">
               {p.inProgress && <span className="os-inprogress-badge">▶ 作業中</span>}
+              {p.resolved && <span className="os-resolved-badge">✓ 解決済み</span>}
               {p.sent && <span className="os-sent-badge">SENT</span>}
               <span>{formatDate(p.updatedAt)}</span>
+              <button
+                className="os-btn os-btn-sm os-btn-ghost os-collapse-btn"
+                aria-label={isCollapsed ? '展開する' : '折りたたむ'}
+                onClick={() => toggleCollapse(p.id)}
+              >
+                {isCollapsed ? '▶' : '▼'}
+              </button>
             </div>
 
-            {editingId === p.id ? (
+            {!isCollapsed && (editingId === p.id ? (
               <>
                 <textarea
                   ref={editBodyRef}
@@ -426,6 +475,7 @@ const OneShot = () => {
                   value={editBody}
                   onChange={e => setEditBody(e.target.value)}
                   onPaste={e => handlePaste(setEditBody, e)}
+                  onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') saveEdit(p.id); }}
                   autoFocus
                 />
                 <input
@@ -466,7 +516,7 @@ const OneShot = () => {
                   </div>
                 )}
               </>
-            )}
+            ))}
 
             <div className="os-bubble-actions">
               {editingId === p.id ? (
@@ -497,10 +547,17 @@ const OneShot = () => {
                     </>
                   )}
                   <button
-                    className={`os-btn os-btn-sm ${p.inProgress ? 'os-btn-amber' : 'os-btn-ghost'}`}
+                    className={`os-btn os-btn-sm ${p.inProgress ? 'os-btn-amber spinning' : 'os-btn-ghost'}`}
                     aria-label={p.inProgress ? '作業中を解除' : '作業中にする'}
                     onClick={() => toggleInProgress(p.id)}
-                  >▶</button>
+                  >{p.inProgress ? <SpinnerIcon size={12} /> : '▶'}</button>
+                  <button
+                    className={`os-btn os-btn-sm ${p.resolved ? 'os-btn-green' : 'os-btn-ghost'}`}
+                    aria-label={p.resolved ? '解決済みを解除' : '解決済みにする'}
+                    onClick={() => toggleResolved(p.id)}
+                  >
+                    <CheckIcon size={12} />
+                  </button>
                   <button className="os-btn os-btn-sm os-btn-ghost" aria-label="編集" onClick={() => startEdit(p)}>
                     <EditIcon size={12} />
                   </button>
@@ -560,7 +617,8 @@ const OneShot = () => {
               </div>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {showScrollTop && (
