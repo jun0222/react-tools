@@ -134,7 +134,7 @@ ${promptList}
 // --- フィルター状態 ---
 const FILTER_KEY = 'oneshot-filter';
 
-export type FilterMode = 'all' | 'unsent' | 'sent' | 'resolved';
+export type FilterMode = 'all' | 'unsent' | 'sent' | 'resolved' | 'unresolved';
 
 export interface FilterState {
   filterMode: FilterMode;

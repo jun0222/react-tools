@@ -519,6 +519,22 @@ describe('貼り付け（コピペ）', () => {
 
     expect(textarea.value).toBe('元テキスト追記');
   });
+
+  it('新規フォームのペースト後カーソルがペーストテキスト末尾に位置する', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    const textarea = screen.getByPlaceholderText('プロンプト本文...') as HTMLTextAreaElement;
+
+    fireEvent.change(textarea, { target: { value: 'aXb' } });
+    // カーソルを先頭に設定してペースト
+    textarea.selectionStart = 1;
+    textarea.selectionEnd = 1;
+    fireEvent(textarea, makePasteEvent(textarea, 'Y'));
+
+    // value: 'aYXb', cursor should be at 2 (after 'Y')
+    expect(textarea.value).toBe('aYXb');
+    expect(textarea.selectionStart).toBe(2);
+  });
 });
 
 // =====================
@@ -832,5 +848,165 @@ describe('プログレスマーカー スピナー', () => {
     await user.click(screen.getByRole('button', { name: '作業中にする' }));
     await user.click(screen.getByRole('button', { name: '作業中を解除' }));
     expect(screen.getByRole('button', { name: '作業中にする' })).not.toHaveClass('spinning');
+  });
+});
+
+// =====================
+// 未解決フィルター
+// =====================
+describe('未解決フィルター', () => {
+  it('フィルターバーに「未解決」ボタンが表示される', () => {
+    setup();
+    expect(screen.getByRole('button', { name: /^未解決$/ })).toBeInTheDocument();
+  });
+
+  it('「未解決」フィルターで resolved でないプロンプトのみ表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '未解決プロンプト');
+    await addPrompt(user, '解決済みプロンプト');
+    // 先頭（解決済みプロンプト）を解決済みにする
+    await user.click(screen.getAllByRole('button', { name: '解決済みにする' })[0]);
+    await user.click(screen.getByRole('button', { name: /^未解決$/ }));
+    expect(screen.getByText('未解決プロンプト')).toBeInTheDocument();
+    expect(screen.queryByText('解決済みプロンプト')).not.toBeInTheDocument();
+  });
+
+  it('「未解決」フィルターで resolved なプロンプトが非表示になる', async () => {
+    const { user } = setup();
+    await addPrompt(user, 'テスト');
+    await user.click(screen.getByRole('button', { name: '解決済みにする' }));
+    await user.click(screen.getByRole('button', { name: /^未解決$/ }));
+    expect(screen.queryByText('テスト')).not.toBeInTheDocument();
+  });
+});
+
+// =====================
+// 箇条書きレンダリング（- テキスト）
+// =====================
+describe('箇条書きレンダリング', () => {
+  it('「- テキスト」形式の行が箇条書きとして表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '- アイテム1\n- アイテム2');
+    expect(screen.getByText('アイテム1')).toBeInTheDocument();
+    expect(screen.getByText('アイテム2')).toBeInTheDocument();
+  });
+
+  it('「- [ ] テキスト」はチェックボックスとして描画される（変更なし）', async () => {
+    const { user } = setup();
+    await addPrompt(user, '- [ ] チェック項目');
+    const el = screen.getByText('チェック項目').closest('.os-body-check');
+    expect(el).not.toHaveClass('checked');
+  });
+
+  it('「- テキスト」行に .os-body-bullet クラスが付く', async () => {
+    const { user } = setup();
+    await addPrompt(user, '- ブレットアイテム');
+    expect(document.querySelector('.os-body-bullet')).toBeInTheDocument();
+  });
+});
+
+// =====================
+// 行の並べ替え（↑↓ per line）
+// =====================
+describe('行の並べ替え（行単位）', () => {
+  it('複数行プロンプトに行を上に移動ボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2');
+    expect(screen.getAllByRole('button', { name: '行を上に移動' }).length).toBeGreaterThan(0);
+  });
+
+  it('1行しかないプロンプトには行移動ボタンが表示されない', async () => {
+    const { user } = setup();
+    await addPrompt(user, '一行のみ');
+    expect(screen.queryByRole('button', { name: '行を上に移動' })).not.toBeInTheDocument();
+  });
+
+  it('行を上に移動すると行順が入れ替わる', async () => {
+    const { user, container } = setup();
+    await addPrompt(user, '行A\n行B\n行C');
+    // 行Bを上に移動（インデックス1のボタン）
+    const upBtns = screen.getAllByRole('button', { name: '行を上に移動' });
+    await user.click(upBtns[1]); // 行B → 行Aと入れ替え
+    const body = container.querySelector('.os-bubble-body');
+    expect(body?.textContent).toContain('行B');
+    // 先頭に行Bが来る
+    const lines = body?.querySelectorAll('.os-body-line');
+    expect(lines?.[0].textContent).toContain('行B');
+  });
+
+  it('行を下に移動すると行順が入れ替わる', async () => {
+    const { user, container } = setup();
+    await addPrompt(user, '行A\n行B\n行C');
+    const downBtns = screen.getAllByRole('button', { name: '行を下に移動' });
+    await user.click(downBtns[0]); // 行A → 行Bと入れ替え
+    const body = container.querySelector('.os-bubble-body');
+    const lines = body?.querySelectorAll('.os-body-line');
+    expect(lines?.[0].textContent).toContain('行B');
+  });
+
+  it('先頭行の「行を上に移動」ボタンは無効', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行A\n行B');
+    const upBtns = screen.getAllByRole('button', { name: '行を上に移動' });
+    expect(upBtns[0]).toBeDisabled();
+  });
+
+  it('末尾行の「行を下に移動」ボタンは無効', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行A\n行B');
+    const downBtns = screen.getAllByRole('button', { name: '行を下に移動' });
+    expect(downBtns[downBtns.length - 1]).toBeDisabled();
+  });
+});
+
+// =====================
+// プロンプト分割
+// =====================
+describe('プロンプト分割', () => {
+  it('複数行プロンプトに「分割」ボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2');
+    expect(screen.getByRole('button', { name: '分割' })).toBeInTheDocument();
+  });
+
+  it('1行のプロンプトには「分割」ボタンが表示されない', async () => {
+    const { user } = setup();
+    await addPrompt(user, '一行のみ');
+    expect(screen.queryByRole('button', { name: '分割' })).not.toBeInTheDocument();
+  });
+
+  it('「分割」ボタンで分割モードになり分割ポイントボタンが表示される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2\n行3');
+    await user.click(screen.getByRole('button', { name: '分割' }));
+    expect(screen.getAllByRole('button', { name: /ここで分割/ }).length).toBeGreaterThan(0);
+  });
+
+  it('分割ポイントをクリックするとプロンプトが2つに増える', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2\n行3');
+    await user.click(screen.getByRole('button', { name: '分割' }));
+    const splitBtns = screen.getAllByRole('button', { name: /ここで分割/ });
+    await user.click(splitBtns[0]); // 行1の後で分割
+    expect(screen.getByText('2 prompts')).toBeInTheDocument();
+  });
+
+  it('分割後の上側プロンプトが正しい行を含む', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2\n行3');
+    await user.click(screen.getByRole('button', { name: '分割' }));
+    const splitBtns = screen.getAllByRole('button', { name: /ここで分割/ });
+    await user.click(splitBtns[0]); // 行1の後で分割
+    expect(screen.getByText('行1')).toBeInTheDocument();
+    expect(screen.getByText('行2')).toBeInTheDocument();
+    expect(screen.getByText('行3')).toBeInTheDocument();
+  });
+
+  it('「分割」ボタンを再度クリックすると分割モードが解除される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '行1\n行2');
+    await user.click(screen.getByRole('button', { name: '分割' }));
+    await user.click(screen.getByRole('button', { name: '分割' }));
+    expect(screen.queryByRole('button', { name: /ここで分割/ })).not.toBeInTheDocument();
   });
 });

@@ -46,18 +46,36 @@ const OneShot = () => {
     return new Set(resolved);
   });
 
+  const [splittingId, setSplittingId] = useState<string | null>(null);
+
   const listRef = useRef<HTMLDivElement>(null);
   const newBodyRef = useRef<HTMLTextAreaElement>(null);
   const editBodyRef = useRef<HTMLTextAreaElement>(null);
+  const newBodyCursorRef = useRef<number | null>(null);
+  const editBodyCursorRef = useRef<number | null>(null);
 
   useEffect(() => {
     const el = newBodyRef.current;
-    if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+      if (newBodyCursorRef.current !== null) {
+        el.setSelectionRange(newBodyCursorRef.current, newBodyCursorRef.current);
+        newBodyCursorRef.current = null;
+      }
+    }
   }, [newBody]);
 
   useEffect(() => {
     const el = editBodyRef.current;
-    if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+      if (editBodyCursorRef.current !== null) {
+        el.setSelectionRange(editBodyCursorRef.current, editBodyCursorRef.current);
+        editBodyCursorRef.current = null;
+      }
+    }
   }, [editBody, editingId]);
 
   const active = prompts.filter(p => !p.trashedAt);
@@ -68,6 +86,7 @@ const OneShot = () => {
       if (filterMode === 'unsent') return !p.sent;
       if (filterMode === 'sent') return p.sent;
       if (filterMode === 'resolved') return !!p.resolved;
+      if (filterMode === 'unresolved') return !p.resolved;
       return true;
     })
     .filter(p => !selectedTag || p.tags.includes(selectedTag));
@@ -111,6 +130,7 @@ const OneShot = () => {
 
   const handlePaste = (
     setter: (v: string) => void,
+    cursorRef: React.MutableRefObject<number | null>,
     e: React.ClipboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault();
@@ -118,6 +138,7 @@ const OneShot = () => {
     const el = e.currentTarget;
     const start = el.selectionStart ?? el.value.length;
     const end = el.selectionEnd ?? el.value.length;
+    cursorRef.current = start + paste.length;
     setter(el.value.slice(0, start) + paste + el.value.slice(end));
   };
 
@@ -172,6 +193,43 @@ const OneShot = () => {
   };
   const collapseAll = () => setCollapsed(new Set(filtered.map(p => p.id)));
   const expandAll = () => setCollapsed(new Set());
+
+  // --- 行単位の並べ替え ---
+  const moveLine = (promptId: string, lineIdx: number, direction: 'up' | 'down') => {
+    setPrompts(prev => prev.map(p => {
+      if (p.id !== promptId) return p;
+      const lines = p.body.split('\n');
+      const targetIdx = direction === 'up' ? lineIdx - 1 : lineIdx + 1;
+      if (targetIdx < 0 || targetIdx >= lines.length) return p;
+      const next = [...lines];
+      [next[lineIdx], next[targetIdx]] = [next[targetIdx], next[lineIdx]];
+      return { ...p, body: next.join('\n') };
+    }));
+  };
+
+  // --- プロンプト分割 ---
+  const splitPrompt = (id: string, lineIndex: number) => {
+    setPrompts(prev => {
+      const idx = prev.findIndex(p => p.id === id);
+      if (idx === -1) return prev;
+      const p = prev[idx];
+      const lines = p.body.split('\n');
+      const top = lines.slice(0, lineIndex + 1).join('\n').trim();
+      const bottom = lines.slice(lineIndex + 1).join('\n').trim();
+      if (!top || !bottom) return prev;
+      const now = Date.now();
+      const p1: PromptEntry = { ...p, body: top, updatedAt: now };
+      const p2: PromptEntry = {
+        ...p, id: uid(), body: bottom,
+        createdAt: now, updatedAt: now,
+        replies: [], sent: false, resolved: false, inProgress: false,
+      };
+      const next = [...prev];
+      next.splice(idx, 1, p1, p2);
+      return next;
+    });
+    setSplittingId(null);
+  };
 
   // --- 解決済みマーク ---
   const toggleResolved = (id: string) => {
@@ -387,7 +445,7 @@ const OneShot = () => {
             placeholder="プロンプト本文..."
             value={newBody}
             onChange={e => setNewBody(e.target.value)}
-            onPaste={e => handlePaste(setNewBody, e)}
+            onPaste={e => handlePaste(setNewBody, newBodyCursorRef, e)}
             onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') addPrompt(); }}
             autoFocus
           />
@@ -410,13 +468,17 @@ const OneShot = () => {
 
       {/* ===== FILTER BAR ===== */}
       <div className="os-filter-bar">
-        {(['all', 'unsent', 'sent', 'resolved'] as FilterMode[]).map(mode => (
+        {(['all', 'unsent', 'sent', 'resolved', 'unresolved'] as FilterMode[]).map(mode => (
           <button
             key={mode}
             className={`os-btn os-btn-sm ${filterMode === mode && !selectedTag ? 'os-btn-purple' : 'os-btn-ghost'}`}
             onClick={() => { setFilterMode(mode); setSelectedTag(null); }}
           >
-            {mode === 'all' ? 'すべて' : mode === 'unsent' ? '未送信' : mode === 'sent' ? '送信済み' : '解決済み'}
+            {mode === 'all' ? 'すべて'
+              : mode === 'unsent' ? '未送信'
+              : mode === 'sent' ? '送信済み'
+              : mode === 'resolved' ? '解決済み'
+              : '未解決'}
           </button>
         ))}
         {allTags.map(tag => (
@@ -474,7 +536,7 @@ const OneShot = () => {
                   className="os-edit-textarea"
                   value={editBody}
                   onChange={e => setEditBody(e.target.value)}
-                  onPaste={e => handlePaste(setEditBody, e)}
+                  onPaste={e => handlePaste(setEditBody, editBodyCursorRef, e)}
                   onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') saveEdit(p.id); }}
                   autoFocus
                 />
@@ -488,19 +550,71 @@ const OneShot = () => {
             ) : (
               <>
                 <div className="os-bubble-body">
-                  {p.body.split('\n').map((line, i) => {
-                    const unchecked = line.match(/^- \[ \] (.*)/);
-                    const checked = line.match(/^- \[x\] (.*)/i);
-                    if (unchecked || checked) {
-                      return (
-                        <label key={i} className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
-                          <span className="os-body-checkbox"><CheckIcon size={10} /></span>
-                          <span>{(unchecked ?? checked)![1]}</span>
-                        </label>
+                  {(() => {
+                    const lines = p.body.split('\n');
+                    const isSplitting = splittingId === p.id;
+                    return lines.map((line, i) => {
+                      const unchecked = line.match(/^- \[ \] (.*)/);
+                      const checked = line.match(/^- \[x\] (.*)/i);
+                      const bullet = !unchecked && !checked && line.match(/^- (.+)/);
+                      const lineControls = lines.length > 1 && (
+                        <span className="os-line-controls">
+                          <button
+                            className="os-btn os-btn-sm os-btn-ghost os-line-move-btn"
+                            aria-label="行を上に移動"
+                            onClick={() => moveLine(p.id, i, 'up')}
+                            disabled={i === 0}
+                          >↑</button>
+                          <button
+                            className="os-btn os-btn-sm os-btn-ghost os-line-move-btn"
+                            aria-label="行を下に移動"
+                            onClick={() => moveLine(p.id, i, 'down')}
+                            disabled={i === lines.length - 1}
+                          >↓</button>
+                        </span>
                       );
-                    }
-                    return <div key={i}>{line || '\u00A0'}</div>;
-                  })}
+                      const splitPoint = isSplitting && i < lines.length - 1 && (
+                        <button
+                          key={`split-${i}`}
+                          className="os-btn os-btn-sm os-btn-ghost os-split-point"
+                          onClick={() => splitPrompt(p.id, i)}
+                        >
+                          ÷ ここで分割
+                        </button>
+                      );
+                      if (unchecked || checked) {
+                        return (
+                          <div key={i} className="os-body-line">
+                            {lineControls}
+                            <label className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
+                              <span className="os-body-checkbox"><CheckIcon size={10} /></span>
+                              <span>{(unchecked ?? checked)![1]}</span>
+                            </label>
+                            {splitPoint}
+                          </div>
+                        );
+                      }
+                      if (bullet) {
+                        return (
+                          <div key={i} className="os-body-line">
+                            {lineControls}
+                            <div className="os-body-bullet">
+                              <span className="os-bullet-char">•</span>
+                              <span>{bullet[1]}</span>
+                            </div>
+                            {splitPoint}
+                          </div>
+                        );
+                      }
+                      return (
+                        <div key={i} className="os-body-line">
+                          {lineControls}
+                          <div>{line || '\u00A0'}</div>
+                          {splitPoint}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
                 {p.tags.length > 0 && (
                   <div className="os-tags">
@@ -558,6 +672,13 @@ const OneShot = () => {
                   >
                     <CheckIcon size={12} />
                   </button>
+                  {p.body.split('\n').length > 1 && (
+                    <button
+                      className={`os-btn os-btn-sm ${splittingId === p.id ? 'os-btn-pink' : 'os-btn-ghost'}`}
+                      aria-label="分割"
+                      onClick={() => setSplittingId(splittingId === p.id ? null : p.id)}
+                    >÷</button>
+                  )}
                   <button className="os-btn os-btn-sm os-btn-ghost" aria-label="編集" onClick={() => startEdit(p)}>
                     <EditIcon size={12} />
                   </button>
