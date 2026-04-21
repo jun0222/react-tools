@@ -15,32 +15,41 @@ const setup = () => {
 };
 
 // =====================
-// レンダリング
+// レンダリング / タブ
 // =====================
-describe('レンダリング', () => {
-  it('ヘッダーに Forge が表示される', () => {
+describe('タブ', () => {
+  beforeEach(() => { localStorage.clear(); });
+
+  it('4 つのタブが表示される', () => {
     setup();
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'ケース変換' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'MD 追記'   })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'JSON'       })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'SQL'        })).toBeInTheDocument();
   });
 
-  it('ケース変換セクションが表示される', () => {
+  it('初期タブはケース変換', () => {
     setup();
-    expect(screen.getByText('ケース変換')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'ケース変換' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByLabelText('ケース変換入力')).toBeInTheDocument();
   });
 
-  it('MD ドキュメント追記セクションが表示される', () => {
-    setup();
-    expect(screen.getByText('MD ドキュメント追記')).toBeInTheDocument();
+  it('MD 追記タブに切り替えると MD 入力エリアが表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'MD 追記' }));
+    expect(screen.getByLabelText('MDラッパー入力')).toBeInTheDocument();
   });
 
-  it('JSON 整形セクションが表示される', () => {
-    setup();
-    expect(screen.getByText('JSON 整形')).toBeInTheDocument();
+  it('JSON タブに切り替えると JSON 入力エリアが表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'JSON' }));
+    expect(screen.getByLabelText('JSON入力')).toBeInTheDocument();
   });
 
-  it('SQL 整形セクションが表示される', () => {
-    setup();
-    expect(screen.getByText('SQL 整形')).toBeInTheDocument();
+  it('SQL タブに切り替えると SQL 入力エリアが表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'SQL' }));
+    expect(screen.getByLabelText('SQL入力')).toBeInTheDocument();
   });
 });
 
@@ -48,8 +57,6 @@ describe('レンダリング', () => {
 // ケース変換
 // =====================
 describe('ケース変換', () => {
-  beforeEach(() => { localStorage.clear(); });
-
   it('入力テキストが各ケースにリアルタイム変換される', () => {
     setup();
     fireEvent.change(screen.getByLabelText('ケース変換入力'), { target: { value: 'hello world' } });
@@ -72,13 +79,13 @@ describe('ケース変換', () => {
 });
 
 // =====================
-// MD ドキュメント追記
+// MD 追記（自動フォーマット）
 // =====================
-describe('MD ドキュメント追記', () => {
-  it('ボタンをクリックすると ## + ``` ``` + --- 形式の出力が表示される', async () => {
+describe('MD 追記', () => {
+  it('入力するだけで ## + ``` ``` + --- 形式の出力が自動表示される', async () => {
     const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'MD 追記' }));
     fireEvent.change(screen.getByLabelText('MDラッパー入力'), { target: { value: 'サンプルコード' } });
-    await user.click(screen.getByRole('button', { name: 'MDドキュメントに追記' }));
     const output = screen.getByLabelText('MD変換結果');
     expect(output.textContent).toContain('## ');
     expect(output.textContent).toContain('```');
@@ -86,16 +93,17 @@ describe('MD ドキュメント追記', () => {
     expect(output.textContent).toContain('---');
   });
 
-  it('出力が表示されるとコピーボタンが現れる', async () => {
+  it('入力前は出力エリアが表示されない', async () => {
     const { user } = setup();
-    fireEvent.change(screen.getByLabelText('MDラッパー入力'), { target: { value: 'テスト' } });
-    await user.click(screen.getByRole('button', { name: 'MDドキュメントに追記' }));
-    expect(screen.getByRole('button', { name: /^コピー$/ })).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: 'MD 追記' }));
+    expect(screen.queryByLabelText('MD変換結果')).not.toBeInTheDocument();
   });
 
-  it('入力前は出力エリアが表示されない', () => {
-    setup();
-    expect(screen.queryByLabelText('MD変換結果')).not.toBeInTheDocument();
+  it('出力が表示されるとコピーボタンが現れる', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'MD 追記' }));
+    fireEvent.change(screen.getByLabelText('MDラッパー入力'), { target: { value: 'テスト' } });
+    expect(screen.getByRole('button', { name: /^コピー$/ })).toBeInTheDocument();
   });
 });
 
@@ -103,21 +111,23 @@ describe('MD ドキュメント追記', () => {
 // JSON 整形
 // =====================
 describe('JSON 整形', () => {
-  it('有効な JSON を入力すると整形結果が表示される', () => {
-    setup();
+  it('有効な JSON を入力すると整形結果が自動表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'JSON' }));
     fireEvent.change(screen.getByLabelText('JSON入力'), { target: { value: '{"a":1}' } });
     expect(screen.getByLabelText('JSON整形結果').textContent).toContain('"a": 1');
   });
 
-  it('不正な JSON を入力するとエラーが表示される', () => {
-    setup();
+  it('不正な JSON を入力するとエラーが表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'JSON' }));
     fireEvent.change(screen.getByLabelText('JSON入力'), { target: { value: 'not json' } });
     expect(screen.getByText(/不正な JSON/)).toBeInTheDocument();
-    expect(screen.queryByLabelText('JSON整形結果')).not.toBeInTheDocument();
   });
 
-  it('入力が空のとき結果エリアは表示されない', () => {
-    setup();
+  it('入力が空のとき結果エリアは表示されない', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'JSON' }));
     expect(screen.queryByLabelText('JSON整形結果')).not.toBeInTheDocument();
   });
 });
@@ -126,16 +136,18 @@ describe('JSON 整形', () => {
 // SQL 整形
 // =====================
 describe('SQL 整形', () => {
-  it('SQL を入力するとキーワードが大文字になった結果が表示される', () => {
-    setup();
+  it('SQL を入力するとキーワードが大文字の結果が自動表示される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'SQL' }));
     fireEvent.change(screen.getByLabelText('SQL入力'), { target: { value: 'select id from users' } });
     const output = screen.getByLabelText('SQL整形結果');
     expect(output.textContent).toContain('SELECT');
     expect(output.textContent).toContain('FROM');
   });
 
-  it('入力が空のとき結果エリアは表示されない', () => {
-    setup();
+  it('入力が空のとき結果エリアは表示されない', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('tab', { name: 'SQL' }));
     expect(screen.queryByLabelText('SQL整形結果')).not.toBeInTheDocument();
   });
 });

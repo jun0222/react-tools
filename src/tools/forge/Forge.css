@@ -61,22 +61,45 @@
   color: var(--fg-orange);
 }
 
-/* --- Section --- */
-.fg-section {
+/* --- Tabs --- */
+.fg-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 16px;
+  background: var(--fg-surface);
+  border: 1px solid var(--fg-border);
+  border-radius: var(--fg-radius);
+  padding: 4px;
+}
+
+.fg-tab {
+  flex: 1;
+  padding: 8px 4px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--fg-text-dim);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fg-tab:hover {
+  color: var(--fg-text);
+}
+.fg-tab-active {
+  background: var(--fg-surface2);
+  color: var(--fg-text);
+  font-weight: 600;
+}
+
+/* --- Panel --- */
+.fg-panel {
   background: var(--fg-surface);
   border: 1px solid var(--fg-border);
   border-radius: var(--fg-radius);
   padding: 20px;
-  margin-bottom: 16px;
-}
-
-.fg-section-title {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fg-text-dim);
-  margin-bottom: 12px;
 }
 
 /* --- Input --- */
