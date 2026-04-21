@@ -9,7 +9,7 @@ export interface ErdField {
   nullable: boolean;
 }
 
-export interface ErdEntityData {
+export interface ErdEntityData extends Record<string, unknown> {
   name: string;
   fields: ErdField[];
 }

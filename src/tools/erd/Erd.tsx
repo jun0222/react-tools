@@ -22,7 +22,7 @@ const Erd = () => {
   const { dark } = useTheme();
   const flowRef = useRef<HTMLDivElement>(null);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node<ErdEntityData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editData, setEditData] = useState<ErdEntityData | null>(null);
@@ -37,11 +37,11 @@ const Erd = () => {
   const addEntity = () => {
     const id = uid();
     const offset = nodes.length * 40;
-    const newNode: Node = {
+    const newNode: Node<ErdEntityData> = {
       id,
       type: 'erdEntity',
       position: { x: 80 + offset, y: 80 + offset },
-      data: { name: 'Entity', fields: [] } satisfies ErdEntityData,
+      data: { name: 'Entity', fields: [] },
     };
     setNodes(prev => [...prev, newNode]);
     // immediately open editor

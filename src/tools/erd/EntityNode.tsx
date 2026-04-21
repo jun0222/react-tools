@@ -1,8 +1,8 @@
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, type Node } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
 import type { ErdEntityData } from './helpers';
 
-const EntityNode = ({ data, selected }: NodeProps<{ data: ErdEntityData }>) => {
+const EntityNode = ({ data, selected }: NodeProps<Node<ErdEntityData>>) => {
   return (
     <div className={`erd-node${selected ? ' selected' : ''}`}>
       <Handle type="target" position={Position.Left} />
