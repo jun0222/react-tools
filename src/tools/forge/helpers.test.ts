@@ -159,6 +159,11 @@ describe('formatSql', () => {
     expect(result).toContain('FROM');
     expect(result).toContain('WHERE');
   });
+  it('LEFT JOIN が行頭にまとまって出力される', () => {
+    const result = formatSql('select id from users left join orders on users.id = orders.user_id');
+    expect(result).toContain('\nLEFT JOIN');
+    expect(result).not.toMatch(/LEFT\s*\n\s*JOIN/);
+  });
   it('空文字は空文字を返す', () => {
     expect(formatSql('')).toBe('');
   });
