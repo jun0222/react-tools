@@ -20,4 +20,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Forge - Text Transformer ⚒️',
     description: 'PascalCase / camelCase / snake_case / kebab-case 変換とMDラッパーで素早くテキスト加工。',
   },
+  '/erd': {
+    title: 'ERD - Entity Relationship Diagram 🗂',
+    description: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON にエクスポート対応。',
+  },
 };

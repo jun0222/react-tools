@@ -27,6 +27,14 @@ const tools = [
     desc: 'PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー',
     tag: 'text',
   },
+  {
+    path: '/erd',
+    name: 'ERD',
+    icon: '🗂',
+    iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
+    desc: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON でエクスポート',
+    tag: 'diagram',
+  },
 ];
 
 const Home = () => {
