@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        2
+        3
          tool
         s
          available
@@ -81,6 +81,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         text
       </span>
     </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/forge"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        ⚒️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Forge
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
   </div>
 </div>
 `;
@@ -102,7 +129,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        2
+        3
          tool
         s
          available
@@ -159,6 +186,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-desc"
       >
         KMP置換・LCGランダム変換によるテキストマスクツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/forge"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        ⚒️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Forge
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
       </div>
       <span
         class="home-card-tag"

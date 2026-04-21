@@ -19,6 +19,14 @@ const tools = [
     desc: 'KMP置換・LCGランダム変換によるテキストマスクツール',
     tag: 'text',
   },
+  {
+    path: '/forge',
+    name: 'Forge',
+    icon: '⚒️',
+    iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
+    desc: 'PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー',
+    tag: 'text',
+  },
 ];
 
 const Home = () => {

@@ -16,4 +16,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Phantom - Text Mask & Transform 🪄',
     description: 'KMP置換・LCGランダム変換によるテキストマスクツール。',
   },
+  '/forge': {
+    title: 'Forge - Text Transformer ⚒️',
+    description: 'PascalCase / camelCase / snake_case / kebab-case 変換とMDラッパーで素早くテキスト加工。',
+  },
 };

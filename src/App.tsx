@@ -7,6 +7,7 @@ import AppHeader from './AppHeader';
 import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
+import Forge from './tools/forge/Forge';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/oneshot" element={<OneShot />} />
             <Route path="/phantom" element={<Phantom />} />
+            <Route path="/forge" element={<Forge />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
