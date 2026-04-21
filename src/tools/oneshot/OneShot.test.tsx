@@ -432,6 +432,27 @@ describe('フィルタ', () => {
     expect(screen.getByText('新規追加')).toBeInTheDocument();
     expect(screen.getByText('既存')).toBeInTheDocument();
   });
+
+  it('フィルターモードとタグを同時に適用できる（複数条件）', async () => {
+    const { user } = setup();
+    // タグ付き送信済み
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText('プロンプト本文...'), { target: { value: '送信済みかつreact' } });
+    fireEvent.change(screen.getByPlaceholderText('タグ（カンマ区切り）'), { target: { value: 'react' } });
+    await user.click(screen.getByRole('button', { name: /^追加$/ }));
+    // タグなし送信済み
+    await addPrompt(user, '送信済みタグなし');
+    // 送信済みに
+    await user.click(screen.getAllByRole('button', { name: /Mark Sent/ })[0]); // 送信済みタグなし
+    await user.click(screen.getAllByRole('button', { name: /Mark Sent/ })[0]); // 送信済みかつreact
+
+    // 送信済み + #react の複合フィルタ
+    await user.click(screen.getByRole('button', { name: /^送信済み$/ }));
+    await user.click(screen.getByRole('button', { name: '#react' }));
+
+    expect(screen.getByText('送信済みかつreact')).toBeInTheDocument();
+    expect(screen.queryByText('送信済みタグなし')).not.toBeInTheDocument();
+  });
 });
 
 // =====================
@@ -828,6 +849,24 @@ describe('キーボードショートカット（Cmd+Enter）', () => {
     fireEvent.change(textarea, { target: { value: '更新テキスト' } });
     fireEvent.keyDown(textarea, { key: 'Enter', metaKey: true });
     expect(screen.getByText('更新テキスト')).toBeInTheDocument();
+  });
+
+  it('新規フォームのタグ入力欄で Cmd+Enter を押すとプロンプトが追加される', async () => {
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: /新しいプロンプトを追加/ }));
+    fireEvent.change(screen.getByPlaceholderText('プロンプト本文...'), { target: { value: 'タグ確定テスト' } });
+    fireEvent.keyDown(screen.getByPlaceholderText('タグ（カンマ区切り）'), { key: 'Enter', metaKey: true });
+    expect(screen.getByText('タグ確定テスト')).toBeInTheDocument();
+  });
+
+  it('編集フォームのタグ入力欄で Cmd+Enter を押すと保存される', async () => {
+    const { user } = setup();
+    await addPrompt(user, '編集テスト');
+    await user.click(screen.getByRole('button', { name: '編集' }));
+    const tagInput = screen.getByPlaceholderText('タグ（カンマ区切り）');
+    fireEvent.change(tagInput, { target: { value: 'newtag' } });
+    fireEvent.keyDown(tagInput, { key: 'Enter', metaKey: true });
+    expect(screen.getByText('newtag')).toBeInTheDocument();
   });
 });
 

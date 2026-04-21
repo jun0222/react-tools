@@ -454,6 +454,7 @@ const OneShot = () => {
             placeholder="タグ（カンマ区切り）"
             value={newTags}
             onChange={e => setNewTags(e.target.value)}
+            onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') addPrompt(); }}
           />
           <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
             <button className="os-btn os-btn-pink" onClick={addPrompt}>
@@ -471,8 +472,8 @@ const OneShot = () => {
         {(['all', 'unsent', 'sent', 'resolved', 'unresolved'] as FilterMode[]).map(mode => (
           <button
             key={mode}
-            className={`os-btn os-btn-sm ${filterMode === mode && !selectedTag ? 'os-btn-purple' : 'os-btn-ghost'}`}
-            onClick={() => { setFilterMode(mode); setSelectedTag(null); }}
+            className={`os-btn os-btn-sm ${filterMode === mode ? 'os-btn-purple' : 'os-btn-ghost'}`}
+            onClick={() => setFilterMode(mode)}
           >
             {mode === 'all' ? 'すべて'
               : mode === 'unsent' ? '未送信'
@@ -545,6 +546,7 @@ const OneShot = () => {
                   placeholder="タグ（カンマ区切り）"
                   value={editTags}
                   onChange={e => setEditTags(e.target.value)}
+                  onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') saveEdit(p.id); }}
                 />
               </>
             ) : (

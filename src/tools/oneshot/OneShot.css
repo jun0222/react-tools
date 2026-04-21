@@ -477,18 +477,23 @@ html[data-os-theme="light"] {
 
 /* --- Line wrapper (for line reorder controls) --- */
 .os-body-line {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 1.5em;
+  position: relative;
+  padding-left: 0;
+  transition: padding-left 0.1s;
+}
+.os-body-line:hover {
+  padding-left: 36px;
 }
 
 .os-line-controls {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-flex;
   gap: 1px;
   opacity: 0;
   transition: opacity 0.1s;
-  flex-shrink: 0;
 }
 .os-body-line:hover .os-line-controls {
   opacity: 1;
@@ -507,7 +512,7 @@ html[data-os-theme="light"] {
 
 /* --- Plain bullet line --- */
 .os-body-bullet {
-  flex: 1;
+  display: inline;
 }
 
 /* --- Split point button --- */
