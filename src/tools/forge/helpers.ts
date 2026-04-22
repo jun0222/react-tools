@@ -47,6 +47,8 @@ export const formatJson = (input: string): string | null => {
 export const formatSql = (input: string): string => {
   if (!input.trim()) return '';
   return input
+    .replace(/\s+/g, ' ')
+    .trim()
     .replace(
       /\b(select|from|where|left\s+join|right\s+join|inner\s+join|outer\s+join|join|on|group\s+by|order\s+by|having|limit|offset|union\s+all|union|insert\s+into|values|update|set|delete\s+from)\b/gi,
       (match) => '\n' + match.toUpperCase()
