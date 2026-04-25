@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
 
-const tools = [
+const tools: { path: string; name: string; icon: string; iconBg: string; desc: string; tag: string; hidden?: true }[] = [
   {
     path: '/oneshot',
     name: 'OneShot',
@@ -72,16 +72,17 @@ const tools = [
 
 const STORAGE_KEY = 'home-hidden-tools';
 
+const devHidden = new Set(tools.filter(t => t.hidden).map(t => t.path));
+
 const Home = () => {
   const { dark } = useTheme();
   const [editing, setEditing] = useState(false);
   const [hidden, setHidden] = useState<Set<string>>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return new Set(stored ? JSON.parse(stored) : []);
-    } catch {
-      return new Set();
-    }
+      if (stored) return new Set(JSON.parse(stored));
+    } catch { /* ignore */ }
+    return new Set(devHidden);
   });
 
   useEffect(() => {
