@@ -264,3 +264,37 @@
   pointer-events: none;
   z-index: 100;
 }
+/* --- Delete Targets --- */
+.fg-delete-targets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.fg-delete-target-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.fg-delete-target-input {
+  flex: 1;
+  background: var(--fg-surface2);
+  border: 1px solid var(--fg-border);
+  border-radius: var(--fg-radius-sm);
+  color: var(--fg-text);
+  padding: 6px 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.fg-delete-target-input:focus {
+  border-color: var(--fg-orange);
+}
+
+.fg-delete-remove {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  font-size: 12px;
+}

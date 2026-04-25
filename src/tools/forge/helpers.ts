@@ -56,6 +56,14 @@ export const formatSql = (input: string): string => {
     .trim();
 };
 
+// --- 文字削除 ---
+
+export const deleteChars = (input: string, targets: string[]): string => {
+  const valid = targets.filter(t => t.length > 0);
+  if (!valid.length) return input;
+  return valid.reduce((text, target) => text.split(target).join(''), input);
+};
+
 // --- スペース整形・ワンライナー ---
 
 export const normalizeSpaces = (input: string): string =>

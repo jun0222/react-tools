@@ -3,7 +3,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
   formatJson, formatSql, toOneLiner,
-  normalizeSpaces, toBulletList, addMdLineBreaks,
+  normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
 } from './helpers';
 
 // =====================
@@ -275,5 +275,35 @@ describe('formatSql', () => {
   });
   it('空文字は空文字を返す', () => {
     expect(formatSql('')).toBe('');
+  });
+});
+
+// =====================
+// 文字削除
+// =====================
+describe('deleteChars', () => {
+  it('空文字は空文字を返す', () => {
+    expect(deleteChars('', ['a'])).toBe('');
+  });
+  it('ターゲットが空配列のとき入力をそのまま返す', () => {
+    expect(deleteChars('hello', [])).toBe('hello');
+  });
+  it('1文字を全箇所から削除する', () => {
+    expect(deleteChars('hello', ['l'])).toBe('heo');
+  });
+  it('複数のターゲットをそれぞれ削除する', () => {
+    expect(deleteChars('hello world', ['l', 'o'])).toBe('he wrd');
+  });
+  it('複数文字の文字列を削除する', () => {
+    expect(deleteChars('hello world', ['llo'])).toBe('he world');
+  });
+  it('空文字ターゲットは無視する', () => {
+    expect(deleteChars('hello', ['', 'l'])).toBe('heo');
+  });
+  it('マッチしないターゲットは何も変えない', () => {
+    expect(deleteChars('hello', ['z'])).toBe('hello');
+  });
+  it('全文字を削除すると空文字になる', () => {
+    expect(deleteChars('aaa', ['a'])).toBe('');
   });
 });

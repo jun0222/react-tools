@@ -135,7 +135,19 @@ const Mermaid = () => {
         {hintsOpen && (
           <div className="mm-hints-body">
             {activeTemplate.hints.map((h, i) => (
-              <div key={i} className="mm-hint-row">
+              <div
+                key={i}
+                className="mm-hint-row mm-hint-row--clickable"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(h.syntax);
+                    showToast('カンペをコピーしました');
+                  } catch {
+                    showToast('コピー失敗');
+                  }
+                }}
+                title="クリックでコピー"
+              >
                 <span className="mm-hint-syntax">{h.syntax}</span>
                 <span className="mm-hint-desc">{h.desc}</span>
               </div>

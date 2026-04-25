@@ -3,7 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, formatJson, formatSql, toOneLiner,
-  normalizeSpaces, toBulletList, addMdLineBreaks,
+  normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
 } from './helpers';
 import './Forge.css';
 
@@ -14,7 +14,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -25,7 +25,11 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'bullet',    label: '箇条書き'     },
   { id: 'oneliner',  label: 'ワンライナー'  },
   { id: 'mdsp',      label: 'MD 末尾SP'   },
+  { id: 'delete',    label: '文字削除'     },
 ];
+
+let _delId = 0;
+const delUid = () => `del-${++_delId}`;
 
 type BulletStyle = '- [ ]' | '-' | '・';
 const BULLET_OPTIONS: { label: string; value: BulletStyle }[] = [
@@ -48,6 +52,10 @@ const Forge = () => {
   const [bulletInput, setBulletInput] = useState('');
   const [bulletStyle, setBulletStyle] = useState<BulletStyle>('- [ ]');
   const [mdspInput, setMdspInput] = useState('');
+  const [deleteInput, setDeleteInput] = useState('');
+  const [deleteTargets, setDeleteTargets] = useState<{ id: string; value: string }[]>([
+    { id: delUid(), value: '' },
+  ]);
   const [toast, setToast] = useState('');
 
   const showToast = useCallback((msg: string) => {
@@ -207,6 +215,66 @@ const Forge = () => {
             )}
           </>
         )}
+        {/* ===== DELETE CHARS ===== */}
+        {tab === 'delete' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'削除対象の文字・文字列を下のフィールドに入力し、ここにテキストを貼り付けます'}
+              value={deleteInput}
+              onChange={e => setDeleteInput(e.target.value)}
+              rows={6}
+              aria-label="文字削除入力"
+            />
+            <div className="fg-delete-targets">
+              {deleteTargets.map((t, i) => (
+                <div key={t.id} className="fg-delete-target-row">
+                  <input
+                    className="fg-delete-target-input"
+                    type="text"
+                    placeholder={`削除したい文字 ${i + 1}`}
+                    value={t.value}
+                    onChange={e => {
+                      const v = e.target.value;
+                      setDeleteTargets(prev => prev.map(x => x.id === t.id ? { ...x, value: v } : x));
+                    }}
+                    aria-label={`削除対象 ${i + 1}`}
+                  />
+                  <button
+                    className="fg-btn fg-btn-ghost fg-delete-remove"
+                    onClick={() => setDeleteTargets(prev => prev.filter(x => x.id !== t.id))}
+                    disabled={deleteTargets.length === 1}
+                    aria-label="削除対象を除去"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+              <button
+                className="fg-btn fg-btn-ghost"
+                onClick={() => setDeleteTargets(prev => [...prev, { id: delUid(), value: '' }])}
+              >
+                ＋ 追加
+              </button>
+            </div>
+            {deleteInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="文字削除結果">
+                  {deleteChars(deleteInput, deleteTargets.map(t => t.value))}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(deleteChars(deleteInput, deleteTargets.map(t => t.value)))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
         {/* ===== NORMALIZE SPACES ===== */}
         {tab === 'normalize' && (
           <>
