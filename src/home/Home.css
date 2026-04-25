@@ -136,3 +136,63 @@
   color: var(--h-text-dim);
   width: fit-content;
 }
+/* --- Edit mode --- */
+.home-edit-btn {
+  background: var(--h-surface);
+  border: 1.5px solid var(--h-border);
+  border-radius: 10px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--h-text-dim);
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.home-edit-btn:hover {
+  border-color: var(--h-pink);
+  color: var(--h-text);
+}
+
+.home-edit-btn--active {
+  border-color: var(--h-pink);
+  color: var(--h-pink);
+}
+
+.home-card--editable {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.home-card--editable:hover {
+  border-color: rgba(255, 45, 123, 0.4);
+  box-shadow: 0 0 32px rgba(255, 45, 123, 0.08);
+  transform: translateY(-2px);
+}
+
+.home-card--hidden {
+  opacity: 0.35;
+}
+
+.home-card--hidden:hover {
+  opacity: 0.6;
+}
+
+.home-card-edit-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--h-pink);
+  color: #fff;
+}
+
+.home-card--hidden .home-card-edit-badge {
+  background: var(--h-border);
+  color: var(--h-text-dim);
+}

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -69,28 +70,83 @@ const tools = [
   },
 ];
 
+const STORAGE_KEY = 'home-hidden-tools';
+
 const Home = () => {
   const { dark } = useTheme();
+  const [editing, setEditing] = useState(false);
+  const [hidden, setHidden] = useState<Set<string>>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return new Set(stored ? JSON.parse(stored) : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...hidden]));
+  }, [hidden]);
+
+  const toggleHidden = (path: string) => {
+    setHidden(prev => {
+      const next = new Set(prev);
+      next.has(path) ? next.delete(path) : next.add(path);
+      return next;
+    });
+  };
+
+  const visibleTools = editing ? tools : tools.filter(t => !hidden.has(t.path));
+
   return (
     <div className={`home ${dark ? 'dark' : 'light'}`}>
       <header className="home-header">
         <div className="home-title">
           <h1>react-<span>tools</span></h1>
-          <p>{tools.length} tool{tools.length !== 1 ? 's' : ''} available</p>
+          <p>{visibleTools.length} tool{visibleTools.length !== 1 ? 's' : ''} available</p>
         </div>
+        <button
+          className={`home-edit-btn ${editing ? 'home-edit-btn--active' : ''}`}
+          onClick={() => setEditing(v => !v)}
+          aria-pressed={editing}
+        >
+          {editing ? '完了' : '編集'}
+        </button>
       </header>
 
       <div className="home-grid">
-        {tools.map(tool => (
-          <Link key={tool.path} to={tool.path} className="home-card">
-            <div className="home-card-icon" style={{ background: tool.iconBg }}>
-              {tool.icon}
-            </div>
-            <div className="home-card-name">{tool.name}</div>
-            <div className="home-card-desc">{tool.desc}</div>
-            <span className="home-card-tag">{tool.tag}</span>
-          </Link>
-        ))}
+        {visibleTools.map(tool => {
+          const isHidden = hidden.has(tool.path);
+          if (editing) {
+            return (
+              <div
+                key={tool.path}
+                className={`home-card home-card--editable ${isHidden ? 'home-card--hidden' : ''}`}
+                onClick={() => toggleHidden(tool.path)}
+              >
+                <div className="home-card-edit-badge">
+                  {isHidden ? '非表示' : '表示中'}
+                </div>
+                <div className="home-card-icon" style={{ background: tool.iconBg }}>
+                  {tool.icon}
+                </div>
+                <div className="home-card-name">{tool.name}</div>
+                <div className="home-card-desc">{tool.desc}</div>
+                <span className="home-card-tag">{tool.tag}</span>
+              </div>
+            );
+          }
+          return (
+            <Link key={tool.path} to={tool.path} className="home-card">
+              <div className="home-card-icon" style={{ background: tool.iconBg }}>
+                {tool.icon}
+              </div>
+              <div className="home-card-name">{tool.name}</div>
+              <div className="home-card-desc">{tool.desc}</div>
+              <span className="home-card-tag">{tool.tag}</span>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
