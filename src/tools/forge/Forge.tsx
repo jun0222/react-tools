@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
-  wrapMdDoc, formatJson, formatSql,
+  wrapMdDoc, formatJson, formatSql, toOneLiner,
 } from './helpers';
 import './Forge.css';
 
@@ -13,13 +13,14 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'oneliner';
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: 'case', label: 'ケース変換' },
-  { id: 'md',   label: 'MD 追記'   },
-  { id: 'json', label: 'JSON'       },
-  { id: 'sql',  label: 'SQL'        },
+  { id: 'case',     label: 'ケース変換'  },
+  { id: 'md',       label: 'MD 追記'    },
+  { id: 'json',     label: 'JSON'        },
+  { id: 'sql',      label: 'SQL'         },
+  { id: 'oneliner', label: 'ワンライナー' },
 ];
 
 const Forge = () => {
@@ -31,6 +32,7 @@ const Forge = () => {
   const [jsonOutput, setJsonOutput] = useState<string | null>(null);
   const [sqlInput, setSqlInput] = useState('');
   const [sqlOutput, setSqlOutput] = useState('');
+  const [onelinerInput, setOnelinerInput] = useState('');
   const [toast, setToast] = useState('');
 
   const showToast = useCallback((msg: string) => {
@@ -183,6 +185,34 @@ const Forge = () => {
                 <div className="fg-md-output" aria-label="SQL整形結果">{sqlOutput}</div>
                 <div className="fg-md-actions">
                   <button className="fg-btn fg-btn-orange" onClick={() => copy(sqlOutput)}>
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+        {/* ===== ONE-LINER ===== */}
+        {tab === 'oneliner' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'改行・タブ・スペースをまとめて半角スペース1つにします\n\nSELECT\n  id, name\nFROM users'}
+              value={onelinerInput}
+              onChange={e => setOnelinerInput(e.target.value)}
+              rows={6}
+              aria-label="ワンライナー入力"
+            />
+            {onelinerInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="ワンライナー結果">
+                  {toOneLiner(onelinerInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(toOneLiner(onelinerInput))}
+                  >
                     コピー
                   </button>
                 </div>

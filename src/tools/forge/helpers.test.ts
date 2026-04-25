@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
-  formatJson, formatSql,
+  formatJson, formatSql, toOneLiner,
 } from './helpers';
 
 // =====================
@@ -146,6 +146,33 @@ describe('formatJson', () => {
   });
   it('空文字は null を返す', () => {
     expect(formatJson('')).toBeNull();
+  });
+});
+
+// =====================
+// ワンライナー
+// =====================
+describe('toOneLiner', () => {
+  it('改行を半角スペース1つに変換する', () => {
+    expect(toOneLiner('hello\nworld')).toBe('hello world');
+  });
+  it('タブを半角スペース1つに変換する', () => {
+    expect(toOneLiner('hello\tworld')).toBe('hello world');
+  });
+  it('複数の空白文字をまとめて半角スペース1つに変換する', () => {
+    expect(toOneLiner('hello   world')).toBe('hello world');
+  });
+  it('改行・タブ・スペースの混在をまとめて変換する', () => {
+    expect(toOneLiner('SELECT\n  id,\n\tname\nFROM\n  users')).toBe('SELECT id, name FROM users');
+  });
+  it('先頭・末尾の空白を除去する', () => {
+    expect(toOneLiner('  hello world  ')).toBe('hello world');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(toOneLiner('')).toBe('');
+  });
+  it('\\r\\n（Windows改行）も変換する', () => {
+    expect(toOneLiner('hello\r\nworld')).toBe('hello world');
   });
 });
 

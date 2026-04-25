@@ -56,6 +56,11 @@ export const formatSql = (input: string): string => {
     .trim();
 };
 
+// --- ワンライナー ---
+
+export const toOneLiner = (input: string): string =>
+  input.replace(/\s+/g, ' ').trim();
+
 // --- MD ラッパー ---
 
 export const wrapHeading = (text: string): string =>
