@@ -85,6 +85,13 @@ export const toBulletList = (input: string, bullet: string): string => {
     .join('\n');
 };
 
+// --- MD 末尾スペース ---
+
+export const addMdLineBreaks = (input: string): string =>
+  input.split('\n')
+    .map(line => (line.trimEnd() ? line.trimEnd() + '  ' : line))
+    .join('\n');
+
 // --- MD ラッパー ---
 
 export const wrapHeading = (text: string): string =>

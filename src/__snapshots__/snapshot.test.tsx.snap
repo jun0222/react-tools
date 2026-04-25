@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        4
+        5
          tool
         s
          available
@@ -135,6 +135,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         diagram
       </span>
     </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/mermaid"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      >
+        📊
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Mermaid
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
+      </span>
+    </a>
   </div>
 </div>
 `;
@@ -156,7 +183,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        4
+        5
          tool
         s
          available
@@ -267,6 +294,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-desc"
       >
         ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON でエクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/mermaid"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      >
+        📊
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Mermaid
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
       </div>
       <span
         class="home-card-tag"

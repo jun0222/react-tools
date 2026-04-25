@@ -24,4 +24,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'ERD - Entity Relationship Diagram 🗂',
     description: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON にエクスポート対応。',
   },
+  '/mermaid': {
+    title: 'Mermaid Editor 📊',
+    description: 'テンプレートとカンペ付きの Mermaid ダイアグラムエディタ。フロー・シーケンス・ER図など。',
+  },
 };

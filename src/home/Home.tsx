@@ -35,6 +35,14 @@ const tools = [
     desc: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON でエクスポート',
     tag: 'diagram',
   },
+  {
+    path: '/mermaid',
+    name: 'Mermaid',
+    icon: '📊',
+    iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
+    desc: 'テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類',
+    tag: 'diagram',
+  },
 ];
 
 const Home = () => {

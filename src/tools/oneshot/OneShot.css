@@ -478,10 +478,9 @@ html[data-os-theme="light"] {
 /* --- Line wrapper (for line reorder controls) --- */
 .os-body-line {
   position: relative;
-  padding-left: 0;
-  transition: padding-left 0.1s;
 }
-.os-body-line:hover {
+
+.os-body-line--moveable {
   padding-left: 36px;
 }
 

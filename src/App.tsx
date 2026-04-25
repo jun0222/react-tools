@@ -9,6 +9,7 @@ import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
 import Forge from './tools/forge/Forge';
 import Erd from './tools/erd/Erd';
+import MermaidTool from './tools/mermaid/Mermaid';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ function App() {
             <Route path="/phantom" element={<Phantom />} />
             <Route path="/forge" element={<Forge />} />
             <Route path="/erd" element={<Erd />} />
+            <Route path="/mermaid" element={<MermaidTool />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

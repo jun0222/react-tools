@@ -3,7 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, formatJson, formatSql, toOneLiner,
-  normalizeSpaces, toBulletList,
+  normalizeSpaces, toBulletList, addMdLineBreaks,
 } from './helpers';
 import './Forge.css';
 
@@ -14,7 +14,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -24,6 +24,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'normalize', label: 'スペース整形'  },
   { id: 'bullet',    label: '箇条書き'     },
   { id: 'oneliner',  label: 'ワンライナー'  },
+  { id: 'mdsp',      label: 'MD 末尾SP'   },
 ];
 
 type BulletStyle = '- [ ]' | '-' | '・';
@@ -46,6 +47,7 @@ const Forge = () => {
   const [normalizeInput, setNormalizeInput] = useState('');
   const [bulletInput, setBulletInput] = useState('');
   const [bulletStyle, setBulletStyle] = useState<BulletStyle>('- [ ]');
+  const [mdspInput, setMdspInput] = useState('');
   const [toast, setToast] = useState('');
 
   const showToast = useCallback((msg: string) => {
@@ -266,6 +268,35 @@ const Forge = () => {
                   <button
                     className="fg-btn fg-btn-orange"
                     onClick={() => copy(toBulletList(bulletInput, bulletStyle))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {/* ===== MD 末尾スペース ===== */}
+        {tab === 'mdsp' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'各行末尾に半角スペース2つを付けて Markdown の改行を保持します\n\nこの行は\nこの行と結合されません'}
+              value={mdspInput}
+              onChange={e => setMdspInput(e.target.value)}
+              rows={6}
+              aria-label="MD末尾スペース入力"
+            />
+            {mdspInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="MD末尾スペース結果">
+                  {addMdLineBreaks(mdspInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(addMdLineBreaks(mdspInput))}
                   >
                     コピー
                   </button>

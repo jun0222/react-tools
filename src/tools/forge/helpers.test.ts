@@ -3,7 +3,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
   formatJson, formatSql, toOneLiner,
-  normalizeSpaces, toBulletList,
+  normalizeSpaces, toBulletList, addMdLineBreaks,
 } from './helpers';
 
 // =====================
@@ -234,6 +234,27 @@ describe('toOneLiner', () => {
   });
   it('\\r\\n（Windows改行）も変換する', () => {
     expect(toOneLiner('hello\r\nworld')).toBe('hello world');
+  });
+});
+
+// =====================
+// MD 末尾スペース
+// =====================
+describe('addMdLineBreaks', () => {
+  it('非空行の末尾に半角スペース2つを付ける', () => {
+    expect(addMdLineBreaks('hello')).toBe('hello  ');
+  });
+  it('複数行すべての末尾にスペース2つを付ける', () => {
+    expect(addMdLineBreaks('hello\nworld')).toBe('hello  \nworld  ');
+  });
+  it('空行にはスペースを付けない', () => {
+    expect(addMdLineBreaks('hello\n\nworld')).toBe('hello  \n\nworld  ');
+  });
+  it('既存の末尾スペースはいったん除いてから2つ付ける', () => {
+    expect(addMdLineBreaks('hello   ')).toBe('hello  ');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(addMdLineBreaks('')).toBe('');
   });
 });
 

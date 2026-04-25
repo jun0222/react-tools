@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { PromptEntry, Reply, FilterMode } from './helpers';
 import {
   getShotTitle, loadPrompts, savePrompts, uid,
@@ -24,6 +24,15 @@ import './OneShot.css';
 
 const parseTags = (input: string): string[] =>
   input.split(',').map(t => t.trim()).filter(Boolean);
+
+const renderInline = (text: string): React.ReactNode => {
+  const parts = text.split(/(~~.+?~~)/g);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) => {
+    const m = part.match(/^~~(.+)~~$/);
+    return m ? <s key={i}>{m[1]}</s> : part;
+  });
+};
 
 const OneShot = () => {
   const { dark } = useTheme();
@@ -559,7 +568,8 @@ const OneShot = () => {
                       const unchecked = line.match(/^- \[ \] (.*)/);
                       const checked = line.match(/^- \[x\] (.*)/i);
                       const bullet = !unchecked && !checked && line.match(/^- (.+)/);
-                      const lineControls = lines.length > 1 && (
+                      const moveable = lines.length > 1;
+                      const lineControls = moveable && (
                         <span className="os-line-controls">
                           <button
                             className="os-btn os-btn-sm os-btn-ghost os-line-move-btn"
@@ -575,6 +585,7 @@ const OneShot = () => {
                           >↓</button>
                         </span>
                       );
+                      const lineClass = `os-body-line${moveable ? ' os-body-line--moveable' : ''}`;
                       const splitPoint = isSplitting && i < lines.length - 1 && (
                         <button
                           key={`split-${i}`}
@@ -586,11 +597,11 @@ const OneShot = () => {
                       );
                       if (unchecked || checked) {
                         return (
-                          <div key={i} className="os-body-line">
+                          <div key={i} className={lineClass}>
                             {lineControls}
                             <label className={`os-body-check ${checked ? 'checked' : ''}`} onClick={() => toggleCheckbox(p.id, i)}>
                               <span className="os-body-checkbox"><CheckIcon size={10} /></span>
-                              <span>{(unchecked ?? checked)![1]}</span>
+                              <span>{renderInline((unchecked ?? checked)![1])}</span>
                             </label>
                             {splitPoint}
                           </div>
@@ -598,20 +609,20 @@ const OneShot = () => {
                       }
                       if (bullet) {
                         return (
-                          <div key={i} className="os-body-line">
+                          <div key={i} className={lineClass}>
                             {lineControls}
                             <div className="os-body-bullet">
                               <span className="os-bullet-char">•</span>
-                              <span>{bullet[1]}</span>
+                              <span>{renderInline(bullet[1])}</span>
                             </div>
                             {splitPoint}
                           </div>
                         );
                       }
                       return (
-                        <div key={i} className="os-body-line">
+                        <div key={i} className={lineClass}>
                           {lineControls}
-                          <div>{line || '\u00A0'}</div>
+                          <div>{line ? renderInline(line) : ' '}</div>
                           {splitPoint}
                         </div>
                       );
