@@ -1,0 +1,17 @@
+{
+  "name": "react-tools",
+  "short_name": "tools",
+  "description": "テキスト処理・開発計画・スピードリーダーなど便利ツール集",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f14",
+  "theme_color": "#0f0f14",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

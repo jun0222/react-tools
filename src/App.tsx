@@ -10,6 +10,9 @@ import Phantom from './tools/phantom/Phantom';
 import Forge from './tools/forge/Forge';
 import Erd from './tools/erd/Erd';
 import MermaidTool from './tools/mermaid/Mermaid';
+import Blueprint from './tools/blueprint/Blueprint';
+import Pacer from './tools/pacer/Pacer';
+import Clips from './tools/clips/Clips';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -35,6 +38,9 @@ function App() {
             <Route path="/forge" element={<Forge />} />
             <Route path="/erd" element={<Erd />} />
             <Route path="/mermaid" element={<MermaidTool />} />
+            <Route path="/blueprint" element={<Blueprint />} />
+            <Route path="/pacer" element={<Pacer />} />
+            <Route path="/clips" element={<Clips />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

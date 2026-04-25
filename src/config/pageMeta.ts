@@ -28,4 +28,16 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Mermaid Editor 📊',
     description: 'テンプレートとカンペ付きの Mermaid ダイアグラムエディタ。フロー・シーケンス・ER図など。',
   },
+  '/blueprint': {
+    title: 'Blueprint 🗺️',
+    description: '機能要件・ブラックボックステスト・非機能要件・テスト戦略を整理するプロダクト開発計画ツール。',
+  },
+  '/pacer': {
+    title: 'Pacer ⚡',
+    description: '6秒/ページ基準のスピードリーダー。段落・行・N文字で分割して高速に読み込む。',
+  },
+  '/clips': {
+    title: 'Clips 📋',
+    description: 'コピペして使えるスニペット集。Claude スクリーンショット・DOM ダンプなどを収録。',
+  },
 };

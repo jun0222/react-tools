@@ -43,6 +43,30 @@ const tools = [
     desc: 'テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類',
     tag: 'diagram',
   },
+  {
+    path: '/blueprint',
+    name: 'Blueprint',
+    icon: '🗺️',
+    iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+    desc: '機能要件・BBテスト・非機能要件・テスト戦略を整理する開発計画ツール',
+    tag: 'plan',
+  },
+  {
+    path: '/pacer',
+    name: 'Pacer',
+    icon: '⚡',
+    iconBg: 'linear-gradient(135deg, #10b981, #0d9488)',
+    desc: 'テキストを段落/行/N文字で分割して一定ペースで読む スピードリーダー',
+    tag: 'read',
+  },
+  {
+    path: '/clips',
+    name: 'Clips',
+    icon: '📋',
+    iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+    desc: 'Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集',
+    tag: 'util',
+  },
 ];
 
 const Home = () => {

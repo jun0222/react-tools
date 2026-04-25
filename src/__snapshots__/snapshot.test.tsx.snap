@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        5
+        8
          tool
         s
          available
@@ -160,6 +160,87 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/blueprint"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #3b82f6, #6366f1);"
+      >
+        🗺️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Blueprint
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        機能要件・BBテスト・非機能要件・テスト戦略を整理する開発計画ツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        plan
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/pacer"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #10b981, #0d9488);"
+      >
+        ⚡
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Pacer
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テキストを段落/行/N文字で分割して一定ペースで読む スピードリーダー
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        read
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/clips"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
+      >
+        📋
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Clips
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>
@@ -183,7 +264,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        5
+        8
          tool
         s
          available
@@ -326,6 +407,87 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/blueprint"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #3b82f6, #6366f1);"
+      >
+        🗺️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Blueprint
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        機能要件・BBテスト・非機能要件・テスト戦略を整理する開発計画ツール
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        plan
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/pacer"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #10b981, #0d9488);"
+      >
+        ⚡
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Pacer
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テキストを段落/行/N文字で分割して一定ペースで読む スピードリーダー
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        read
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/clips"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
+      >
+        📋
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Clips
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>
