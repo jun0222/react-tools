@@ -3,6 +3,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
   formatJson, formatSql, toOneLiner,
+  normalizeSpaces, toBulletList,
 } from './helpers';
 
 // =====================
@@ -146,6 +147,66 @@ describe('formatJson', () => {
   });
   it('空文字は null を返す', () => {
     expect(formatJson('')).toBeNull();
+  });
+});
+
+// =====================
+// スペース整形
+// =====================
+describe('normalizeSpaces', () => {
+  it('行内の複数スペースを1つにまとめる', () => {
+    expect(normalizeSpaces('hello   world')).toBe('hello world');
+  });
+  it('タブを1つのスペースに変換する', () => {
+    expect(normalizeSpaces('hello\tworld')).toBe('hello world');
+  });
+  it('スペースとタブの混在を1つにまとめる', () => {
+    expect(normalizeSpaces('hello \t  world')).toBe('hello world');
+  });
+  it('全角スペースを1つの半角スペースに変換する', () => {
+    expect(normalizeSpaces('hello　world')).toBe('hello world');
+  });
+  it('改行は維持される', () => {
+    expect(normalizeSpaces('hello  world\nfoo  bar')).toBe('hello world\nfoo bar');
+  });
+  it('各行の先頭・末尾の余分なスペースを除去する', () => {
+    expect(normalizeSpaces('  hello world  \n  foo bar  ')).toBe('hello world\nfoo bar');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(normalizeSpaces('')).toBe('');
+  });
+  it('空白のみの行は空行になる', () => {
+    expect(normalizeSpaces('hello\n   \nworld')).toBe('hello\n\nworld');
+  });
+});
+
+// =====================
+// 箇条書き
+// =====================
+describe('toBulletList', () => {
+  it('各行の先頭に "- [ ] " を付ける', () => {
+    expect(toBulletList('foo\nbar', '- [ ]')).toBe('- [ ] foo\n- [ ] bar');
+  });
+  it('各行の先頭に "- " を付ける', () => {
+    expect(toBulletList('foo\nbar', '-')).toBe('- foo\n- bar');
+  });
+  it('各行の先頭に "・" を付ける', () => {
+    expect(toBulletList('foo\nbar', '・')).toBe('・foo\n・bar');
+  });
+  it('行頭の半角スペースを維持してbulletを付ける', () => {
+    expect(toBulletList('  hello', '-')).toBe('  - hello');
+  });
+  it('行頭の全角スペースを維持してbulletを付ける', () => {
+    expect(toBulletList('　hello', '-')).toBe('　- hello');
+  });
+  it('空行にはbulletを付けない', () => {
+    expect(toBulletList('foo\n\nbar', '-')).toBe('- foo\n\n- bar');
+  });
+  it('スペースのみの行にはbulletを付けない', () => {
+    expect(toBulletList('foo\n   \nbar', '-')).toBe('- foo\n   \n- bar');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(toBulletList('', '-')).toBe('');
   });
 });
 

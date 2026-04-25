@@ -235,6 +235,13 @@
   margin-top: 6px;
 }
 
+/* --- Bullet selector --- */
+.fg-bullet-selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
 /* --- Format error --- */
 .fg-format-error {
   margin-top: 8px;

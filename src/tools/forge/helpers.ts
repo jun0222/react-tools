@@ -56,10 +56,34 @@ export const formatSql = (input: string): string => {
     .trim();
 };
 
-// --- ワンライナー ---
+// --- スペース整形・ワンライナー ---
+
+export const normalizeSpaces = (input: string): string =>
+  input
+    .split('\n')
+    .map(line => line.replace(/[ \t　]+/g, ' ').trim())
+    .join('\n')
+    .trim();
 
 export const toOneLiner = (input: string): string =>
   input.replace(/\s+/g, ' ').trim();
+
+// --- 箇条書き ---
+
+export const toBulletList = (input: string, bullet: string): string => {
+  if (!input) return '';
+  const sep = bullet === '・' ? '' : ' ';
+  return input
+    .split('\n')
+    .map(line => {
+      const m = line.match(/^([ \t　]*)(.*)/);
+      if (!m) return line;
+      const [, leading, rest] = m;
+      if (!rest.trim()) return line;
+      return `${leading}${bullet}${sep}${rest}`;
+    })
+    .join('\n');
+};
 
 // --- MD ラッパー ---
 

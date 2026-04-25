@@ -3,6 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, formatJson, formatSql, toOneLiner,
+  normalizeSpaces, toBulletList,
 } from './helpers';
 import './Forge.css';
 
@@ -13,14 +14,23 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'oneliner';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner';
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: 'case',     label: 'ケース変換'  },
-  { id: 'md',       label: 'MD 追記'    },
-  { id: 'json',     label: 'JSON'        },
-  { id: 'sql',      label: 'SQL'         },
-  { id: 'oneliner', label: 'ワンライナー' },
+  { id: 'case',      label: 'ケース変換'   },
+  { id: 'md',        label: 'MD 追記'     },
+  { id: 'json',      label: 'JSON'         },
+  { id: 'sql',       label: 'SQL'          },
+  { id: 'normalize', label: 'スペース整形'  },
+  { id: 'bullet',    label: '箇条書き'     },
+  { id: 'oneliner',  label: 'ワンライナー'  },
+];
+
+type BulletStyle = '- [ ]' | '-' | '・';
+const BULLET_OPTIONS: { label: string; value: BulletStyle }[] = [
+  { label: '- [ ]', value: '- [ ]' },
+  { label: '-',     value: '-'     },
+  { label: '・',    value: '・'    },
 ];
 
 const Forge = () => {
@@ -33,6 +43,9 @@ const Forge = () => {
   const [sqlInput, setSqlInput] = useState('');
   const [sqlOutput, setSqlOutput] = useState('');
   const [onelinerInput, setOnelinerInput] = useState('');
+  const [normalizeInput, setNormalizeInput] = useState('');
+  const [bulletInput, setBulletInput] = useState('');
+  const [bulletStyle, setBulletStyle] = useState<BulletStyle>('- [ ]');
   const [toast, setToast] = useState('');
 
   const showToast = useCallback((msg: string) => {
@@ -192,6 +205,76 @@ const Forge = () => {
             )}
           </>
         )}
+        {/* ===== NORMALIZE SPACES ===== */}
+        {tab === 'normalize' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'改行を維持しつつ、行内の余分なスペース・タブ・全角スペースを整形します\n\nhello   world\n　foo　　bar'}
+              value={normalizeInput}
+              onChange={e => setNormalizeInput(e.target.value)}
+              rows={6}
+              aria-label="スペース整形入力"
+            />
+            {normalizeInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="スペース整形結果">
+                  {normalizeSpaces(normalizeInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(normalizeSpaces(normalizeInput))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {/* ===== BULLET LIST ===== */}
+        {tab === 'bullet' && (
+          <>
+            <div className="fg-bullet-selector">
+              {BULLET_OPTIONS.map(opt => (
+                <button
+                  key={opt.value}
+                  className={`fg-btn ${bulletStyle === opt.value ? 'fg-btn-orange' : 'fg-btn-ghost'}`}
+                  onClick={() => setBulletStyle(opt.value)}
+                  aria-pressed={bulletStyle === opt.value}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <textarea
+              className="fg-textarea"
+              placeholder={'各行の先頭に選択した記号を付けてコピーします\n行頭のスペース・全角スペースは維持されます\n\n  インデントもそのまま'}
+              value={bulletInput}
+              onChange={e => setBulletInput(e.target.value)}
+              rows={6}
+              aria-label="箇条書き入力"
+            />
+            {bulletInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="箇条書き結果">
+                  {toBulletList(bulletInput, bulletStyle)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(toBulletList(bulletInput, bulletStyle))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
         {/* ===== ONE-LINER ===== */}
         {tab === 'oneliner' && (
           <>
