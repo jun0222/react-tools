@@ -6,21 +6,45 @@ import './Mermaid.css';
 
 let renderSeq = 0;
 
+const STORAGE_KEY = 'mermaid-saved-codes';
+
+const loadSaved = (): Record<string, string> => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
 const Mermaid = () => {
   const { dark } = useTheme();
+
+  const [saved, setSaved] = useState<Record<string, string>>(loadSaved);
   const [activeId, setActiveId] = useState(TEMPLATES[0].id);
-  const [code, setCode] = useState(TEMPLATES[0].code);
+  const [code, setCode] = useState(() => {
+    const s = loadSaved();
+    return s[TEMPLATES[0].id] ?? TEMPLATES[0].code;
+  });
   const [error, setError] = useState<string | null>(null);
   const [hintsOpen, setHintsOpen] = useState(true);
   const [toast, setToast] = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // debounced code for rendering
   const [debouncedCode, setDebouncedCode] = useState(code);
   useEffect(() => {
     const t = setTimeout(() => setDebouncedCode(code), 400);
     return () => clearTimeout(t);
   }, [code]);
+
+  // auto-save on code change
+  useEffect(() => {
+    setSaved(prev => {
+      const next = { ...prev, [activeId]: code };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, [code, activeId]);
 
   useEffect(() => {
     if (!previewRef.current) return;
@@ -51,6 +75,12 @@ const Mermaid = () => {
   const handleTemplateSelect = (id: string) => {
     setActiveId(id);
     const tpl = TEMPLATES.find(t => t.id === id);
+    if (!tpl) return;
+    setCode(saved[id] ?? tpl.code);
+  };
+
+  const resetCode = () => {
+    const tpl = TEMPLATES.find(t => t.id === activeId);
     if (tpl) setCode(tpl.code);
   };
 
@@ -64,6 +94,7 @@ const Mermaid = () => {
   };
 
   const activeTemplate = TEMPLATES.find(t => t.id === activeId) ?? TEMPLATES[0];
+  const isDirty = code !== (TEMPLATES.find(t => t.id === activeId)?.code ?? '');
 
   return (
     <div className={`mm-root ${dark ? 'dark' : 'light'}`}>
@@ -74,17 +105,21 @@ const Mermaid = () => {
 
       {/* ===== TEMPLATE TABS ===== */}
       <div className="mm-template-tabs" role="tablist">
-        {TEMPLATES.map(t => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={activeId === t.id}
-            className={`mm-tab ${activeId === t.id ? 'mm-tab-active' : ''}`}
-            onClick={() => handleTemplateSelect(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
+        {TEMPLATES.map(t => {
+          const modified = (saved[t.id] ?? t.code) !== t.code;
+          return (
+            <button
+              key={t.id}
+              role="tab"
+              aria-selected={activeId === t.id}
+              className={`mm-tab ${activeId === t.id ? 'mm-tab-active' : ''}`}
+              onClick={() => handleTemplateSelect(t.id)}
+            >
+              {t.label}
+              {modified && <span className="mm-tab-dot" title="編集済み" />}
+            </button>
+          );
+        })}
       </div>
 
       {/* ===== SPLIT PANE ===== */}
@@ -105,7 +140,8 @@ const Mermaid = () => {
             </button>
             <button
               className="mm-btn mm-btn-ghost"
-              onClick={() => handleTemplateSelect(activeId)}
+              onClick={resetCode}
+              disabled={!isDirty}
               title="テンプレートに戻す"
             >
               リセット

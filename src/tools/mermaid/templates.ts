@@ -123,40 +123,4 @@ export const TEMPLATES: Template[] = [
       { syntax: '--',                      desc: '並行状態の区切り' },
     ],
   },
-  {
-    id: 'pie',
-    label: '円グラフ',
-    code: `pie title 言語別シェア
-    "JavaScript" : 35
-    "Python" : 25
-    "TypeScript" : 20
-    "Go" : 12
-    "その他" : 8`,
-    hints: [
-      { syntax: 'pie title タイトル', desc: 'グラフ定義' },
-      { syntax: '"ラベル" : 数値',    desc: 'データ項目（数値は相対値）' },
-    ],
-  },
-  {
-    id: 'gantt',
-    label: 'ガント',
-    code: `gantt
-    title プロジェクト計画
-    dateFormat YYYY-MM-DD
-    section 設計フェーズ
-        要件定義    : 2024-01-01, 7d
-        設計書作成  : 7d
-    section 開発フェーズ
-        実装        : 2024-01-15, 14d
-        テスト      : 7d`,
-    hints: [
-      { syntax: 'title タイトル',             desc: 'タイトル' },
-      { syntax: 'dateFormat YYYY-MM-DD',      desc: '日付フォーマット' },
-      { syntax: 'section セクション名',       desc: 'セクション' },
-      { syntax: 'タスク : 開始日, 期間d',     desc: 'タスク定義' },
-      { syntax: 'タスク : after taskId, 期間d', desc: '前タスク依存' },
-      { syntax: 'タスク : done, ...',         desc: '完了済みタスク' },
-      { syntax: 'タスク : crit, ...',         desc: 'クリティカルパス' },
-    ],
-  },
 ];

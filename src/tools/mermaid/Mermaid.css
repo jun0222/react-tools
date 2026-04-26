@@ -87,6 +87,17 @@
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
+  position: relative;
+}
+
+.mm-tab-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mm-accent);
 }
 .mm-tab:hover { color: var(--mm-text); }
 .mm-tab-active {
