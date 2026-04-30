@@ -123,4 +123,25 @@ export const TEMPLATES: Template[] = [
       { syntax: '--',                      desc: '並行状態の区切り' },
     ],
   },
+  {
+    id: 'mindmap',
+    label: 'マインドマップ',
+    code: `mindmap
+  root((中心テーマ))
+    トピックA
+      サブA1
+      サブA2
+    トピックB
+      サブB1
+      サブB2
+    トピックC`,
+    hints: [
+      { syntax: 'root((テキスト))',   desc: '中心ノード（円形）' },
+      { syntax: 'root[テキスト]',     desc: '中心ノード（四角形）' },
+      { syntax: 'root(テキスト)',      desc: '中心ノード（角丸）' },
+      { syntax: '  子ノード',         desc: 'インデントで階層を表現' },
+      { syntax: '    孫ノード',        desc: 'さらにインデントで深い階層' },
+      { syntax: '::icon(fa fa-star)', desc: 'アイコン付与（Font Awesome）' },
+    ],
+  },
 ];
