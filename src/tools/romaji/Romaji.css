@@ -118,6 +118,37 @@
   color: var(--rj-text-muted);
 }
 
+/* --- Output header --- */
+.rj-output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rj-toggle {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1.5px solid var(--rj-border);
+  background: transparent;
+  color: var(--rj-text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rj-toggle:hover {
+  border-color: var(--rj-accent);
+  color: var(--rj-text);
+}
+
+.rj-toggle--on {
+  background: var(--rj-accent);
+  border-color: var(--rj-accent);
+  color: #fff;
+}
+
 /* --- Output --- */
 .rj-output {
   background: var(--rj-surface);
