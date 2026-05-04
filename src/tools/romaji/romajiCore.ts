@@ -37,17 +37,18 @@ export const ROMAJI_TABLE: readonly [string, string][] = [
   ['ja', 'じゃ'], ['ji', 'じ'], ['ju', 'じゅ'], ['je', 'じぇ'], ['jo', 'じょ'],
   // 1-char vowels
   ['a', 'あ'], ['i', 'い'], ['u', 'う'], ['e', 'え'], ['o', 'お'],
+  // long vowel mark
+  ['-', 'ー'],
 ];
 
 const VOWELS = new Set(['a', 'i', 'u', 'e', 'o']);
 
 const isConsonant = (c: string): boolean => /^[a-z]$/.test(c) && !VOWELS.has(c);
 
-const convertSegmentText = (text: string, longVowel: boolean): string => {
+const convertSegmentText = (text: string): string => {
   const lower = text.toLowerCase();
   const len = lower.length;
   let result = '';
-  let lastVowel = '';  // last vowel sound emitted (for ー detection)
   let i = 0;
 
   while (i < len) {
@@ -59,14 +60,6 @@ const convertSegmentText = (text: string, longVowel: boolean): string => {
       lower[i] === lower[i + 1]
     ) {
       result += 'っ';
-      lastVowel = '';
-      i++;
-      continue;
-    }
-
-    // Long vowel: same vowel as previous kana → ー
-    if (longVowel && lastVowel && VOWELS.has(lower[i]) && lower[i] === lastVowel) {
-      result += 'ー';
       i++;
       continue;
     }
@@ -76,7 +69,6 @@ const convertSegmentText = (text: string, longVowel: boolean): string => {
     for (const [roman, kana] of ROMAJI_TABLE) {
       if (lower.startsWith(roman, i)) {
         result += kana;
-        lastVowel = roman[roman.length - 1]; // romaji keys always end in a vowel
         i += roman.length;
         matched = true;
         break;
@@ -89,7 +81,6 @@ const convertSegmentText = (text: string, longVowel: boolean): string => {
       const next = i + 1 < len ? lower[i + 1] : '';
       if (next === "'") {
         result += 'ん';
-        lastVowel = '';
         i += 2;
         continue;
       }
@@ -103,13 +94,11 @@ const convertSegmentText = (text: string, longVowel: boolean): string => {
           result += 'ん';
           i += 1;
         }
-        lastVowel = '';
         continue;
       }
       // n at end or before consonant (not y)
       if (next === '' || (isConsonant(next) && next !== 'y')) {
         result += 'ん';
-        lastVowel = '';
         i++;
         continue;
       }
@@ -117,7 +106,6 @@ const convertSegmentText = (text: string, longVowel: boolean): string => {
 
     // Keep as-is (non-romaji, spaces, numbers, etc.)
     result += text[i];
-    lastVowel = '';
     i++;
   }
 
@@ -181,9 +169,9 @@ export const parseSegments = (input: string, skipWords: string[]): Segment[] => 
   return result;
 };
 
-export const convertRomaji = (input: string, skipWords: string[] = [], longVowel = false): string => {
+export const convertRomaji = (input: string, skipWords: string[] = []): string => {
   if (!input.trim()) return '';
   return parseSegments(input, skipWords)
-    .map(s => s.skip ? s.text : convertSegmentText(s.text, longVowel))
+    .map(s => s.skip ? s.text : convertSegmentText(s.text))
     .join('');
 };

@@ -156,33 +156,13 @@ describe('skipWords による除外', () => {
 });
 
 // =====================
-// 長音符（ー）モード
+// ハイフン → 長音符（ー）
 // =====================
-describe('長音符モード（longVowel: true）', () => {
-  it('aa → あー', () => { expect(convertRomaji('aa', [], true)).toBe('あー'); });
-  it('ii → いー', () => { expect(convertRomaji('ii', [], true)).toBe('いー'); });
-  it('uu → うー', () => { expect(convertRomaji('uu', [], true)).toBe('うー'); });
-  it('ee → えー', () => { expect(convertRomaji('ee', [], true)).toBe('えー'); });
-  it('oo → おー', () => { expect(convertRomaji('oo', [], true)).toBe('おー'); });
-  it('aaa → あーー', () => { expect(convertRomaji('aaa', [], true)).toBe('あーー'); });
-  it('kyoo → きょー（複合かな + 同母音）', () => {
-    expect(convertRomaji('kyoo', [], true)).toBe('きょー');
-  });
-  it('yuuki → ゆーき', () => {
-    expect(convertRomaji('yuuki', [], true)).toBe('ゆーき');
-  });
-  it('異なる母音が続く場合は ー にならない', () => {
-    expect(convertRomaji('ao', [], true)).toBe('あお');
-  });
-  it('longVowel=false のとき aa → ああ（デフォルト）', () => {
-    expect(convertRomaji('aa')).toBe('ああ');
-  });
-  it('suki desu は変わらない（連続同母音なし）', () => {
-    expect(convertRomaji('suki desu', [], true)).toBe('すき です');
-  });
-  it('n のあとの同母音は ー になる（kana + ー）', () => {
-    expect(convertRomaji('naa', [], true)).toBe('なー');
-  });
+describe('ハイフン（-）の長音符変換', () => {
+  it('o-kina → おーきな', () => { expect(convertRomaji('o-kina')).toBe('おーきな'); });
+  it('su-pa- → すーぱー', () => { expect(convertRomaji('su-pa-')).toBe('すーぱー'); });
+  it('単体 - → ー', () => { expect(convertRomaji('-')).toBe('ー'); });
+  it('複数の - も変換される', () => { expect(convertRomaji('a-i-u-')).toBe('あーいーうー'); });
 });
 
 // =====================

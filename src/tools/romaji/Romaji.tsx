@@ -9,7 +9,6 @@ const uid = () => `skip-${++_id}`;
 const Romaji = () => {
   const { dark } = useTheme();
   const [input, setInput] = useState('');
-  const [longVowel, setLongVowel] = useState(false);
   const [skipWords, setSkipWords] = useState<{ id: string; value: string }[]>([
     { id: uid(), value: '' },
   ]);
@@ -21,7 +20,7 @@ const Romaji = () => {
   }, []);
 
   const output = input.trim()
-    ? convertRomaji(input, skipWords.map(s => s.value), longVowel)
+    ? convertRomaji(input, skipWords.map(s => s.value))
     : '';
 
   const copy = async () => {
@@ -64,17 +63,7 @@ const Romaji = () => {
         </div>
 
         <div className="rj-pane">
-          <div className="rj-output-header">
-            <label className="rj-label">ひらがな</label>
-            <button
-              className={`rj-toggle ${longVowel ? 'rj-toggle--on' : ''}`}
-              onClick={() => setLongVowel(v => !v)}
-              aria-pressed={longVowel}
-              title="連続する同じ母音を長音符（ー）に変換"
-            >
-              ー 長音符
-            </button>
-          </div>
+          <label className="rj-label">ひらがな</label>
           <div
             className={`rj-output${!output ? ' rj-output--empty' : ''}`}
             aria-label="ひらがな変換結果"
