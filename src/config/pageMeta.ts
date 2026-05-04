@@ -40,4 +40,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Clips 📋',
     description: 'コピペして使えるスニペット集。Claude スクリーンショット・DOM ダンプなどを収録。',
   },
+  '/romaji': {
+    title: 'ローマ字 → ひらがな',
+    description: '全探索アルゴリズムによるローマ字からひらがなへの変換。変換しない範囲を複数指定可能。',
+  },
 };

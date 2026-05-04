@@ -68,6 +68,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: 'Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集',
     tag: 'util',
   },
+  {
+    path: '/romaji',
+    name: 'Romaji',
+    icon: 'あ',
+    iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
+    desc: 'ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる',
+    tag: 'text',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';
