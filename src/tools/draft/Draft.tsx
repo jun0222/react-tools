@@ -30,6 +30,8 @@ const Draft = () => {
   const [mapCode, setMapCode] = useState(init.mapCode);
   const [debouncedMap, setDebouncedMap] = useState(mapCode);
   const [hasSvg, setHasSvg] = useState(false);
+  // React の差分更新との競合を避けるため、mermaid の描画先は ref のみで管理し
+  // JSX 側には React 管理の子要素を一切置かない
   const previewRef = useRef<HTMLDivElement>(null);
 
   const [frameworkId, setFrameworkId] = useState(FRAMEWORKS[0].id);
@@ -55,12 +57,19 @@ const Draft = () => {
   // Render mermaid mindmap
   useEffect(() => {
     if (!previewRef.current) return;
-    if (!debouncedMap.trim()) { previewRef.current.innerHTML = ''; setHasSvg(false); return; }
+    if (!debouncedMap.trim()) {
+      previewRef.current.innerHTML = '';
+      setHasSvg(false);
+      return;
+    }
     const id = `dr-svg-${++renderSeq}`;
     mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default' });
     mermaid.render(id, debouncedMap)
       .then(({ svg }) => {
-        if (previewRef.current) { previewRef.current.innerHTML = svg; setHasSvg(true); }
+        if (previewRef.current) {
+          previewRef.current.innerHTML = svg;
+          setHasSvg(true);
+        }
       })
       .catch(() => { /* keep last good SVG */ });
   }, [debouncedMap, dark]);
@@ -163,11 +172,15 @@ const Draft = () => {
               />
 
               <div className="dr-panel-title" style={{ marginBottom: 6 }}>プレビュー</div>
-              <div className="dr-preview-box" ref={previewRef}>
-                {!hasSvg && (
+              {/* previewRef div の内側には React 管理の子を置かない。
+                  React の diff が innerHTML と競合して removeChild エラーになるのを防ぐ。
+                  プレースホルダーは別要素として並置する。 */}
+              {!hasSvg && (
+                <div className="dr-preview-box">
                   <span className="dr-preview-empty">mindmap コードを入力するとここに表示されます</span>
-                )}
-              </div>
+                </div>
+              )}
+              <div ref={previewRef} className={hasSvg ? 'dr-preview-box' : ''} />
 
               <div style={{ fontSize: 11, color: 'var(--dr-text-dim)', marginTop: 6, lineHeight: 1.6 }}>
                 <strong>書き方のヒント:</strong><br />
