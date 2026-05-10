@@ -252,3 +252,120 @@
 .st-file-input {
   display: none;
 }
+
+/* --- Saved Templates --- */
+.st-saved-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.st-saved-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.st-saved-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #a855f7;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 1px 6px;
+  margin-left: 6px;
+}
+
+.st-chevron {
+  font-size: 10px;
+  color: var(--st-text-dim);
+}
+
+.st-save-input-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.st-save-name-input {
+  flex: 1;
+  background: var(--st-surface2);
+  border: 1.5px solid var(--st-border);
+  border-radius: var(--st-radius-sm);
+  color: var(--st-text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.st-save-name-input:focus {
+  border-color: #a855f7;
+}
+
+.st-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.st-saved-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--st-surface2);
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius-sm);
+  padding: 8px 10px;
+}
+
+.st-saved-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.st-saved-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--st-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.st-saved-date {
+  font-size: 10px;
+  color: var(--st-text-dim);
+}
+
+.st-saved-item-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.st-btn-danger {
+  background: var(--st-surface2);
+  border-color: var(--st-border);
+  color: #ef4444;
+}
+
+.st-btn-danger:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}

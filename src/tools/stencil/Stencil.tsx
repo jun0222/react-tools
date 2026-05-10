@@ -1,6 +1,10 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { extractPlaceholders, applyTemplate } from './stencilCore';
+import {
+  extractPlaceholders, applyTemplate,
+  loadSavedTemplates, saveTemplate, deleteSavedTemplate,
+} from './stencilCore';
+import type { SavedTemplate } from './stencilCore';
 import './Stencil.css';
 
 const STORAGE_KEY = 'stencil-state';
@@ -15,14 +19,18 @@ const loadStorage = (): { template: string; values: Record<string, string> } => 
 
 const Stencil = () => {
   const { dark } = useTheme();
-  const saved = useMemo(loadStorage, []);
-  const [template, setTemplate] = useState(saved.template);
-  const [values, setValues] = useState<Record<string, string>>(saved.values);
+  const initState = useMemo(loadStorage, []);
+  const [template, setTemplate] = useState(initState.template);
+  const [values, setValues] = useState<Record<string, string>>(initState.values);
   const [toast, setToast] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const placeholders = useMemo(() => extractPlaceholders(template), [template]);
+  const [savedList, setSavedList] = useState<SavedTemplate[]>(() => loadSavedTemplates());
+  const [showSaved, setShowSaved] = useState(false);
+  const [saveName, setSaveName] = useState('');
+  const [showSaveInput, setShowSaveInput] = useState(false);
 
+  const placeholders = useMemo(() => extractPlaceholders(template), [template]);
   const output = useMemo(
     () => (template ? applyTemplate(template, values) : ''),
     [template, values]
@@ -61,11 +69,38 @@ const Stencil = () => {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = ev => {
-      const text = ev.target?.result as string;
-      handleTemplateChange(text);
+      handleTemplateChange(ev.target?.result as string);
     };
     reader.readAsText(file);
     e.target.value = '';
+  };
+
+  const handleSave = () => {
+    const name = saveName.trim();
+    if (!name || !template) return;
+    const next = saveTemplate(name, template);
+    setSavedList(next);
+    setSaveName('');
+    setShowSaveInput(false);
+    setShowSaved(true);
+    showToast(`「${name}」を保存しました`);
+  };
+
+  const handleLoad = (item: SavedTemplate) => {
+    handleTemplateChange(item.template);
+    setShowSaved(false);
+    showToast(`「${item.name}」を読み込みました`);
+  };
+
+  const handleDelete = (id: string) => {
+    const next = deleteSavedTemplate(id);
+    setSavedList(next);
+  };
+
+  const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   };
 
   const timestamp = () => {
@@ -103,6 +138,97 @@ const Stencil = () => {
       <div className="st-layout">
         {/* ===== LEFT: template input + variables ===== */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+          {/* Saved templates panel */}
+          <div className="st-panel">
+            <div className="st-saved-header">
+              <button
+                className="st-saved-toggle"
+                onClick={() => setShowSaved(v => !v)}
+                aria-expanded={showSaved}
+              >
+                <span className="st-panel-title" style={{ marginBottom: 0 }}>
+                  保存済みテンプレート
+                  {savedList.length > 0 && (
+                    <span className="st-saved-count">{savedList.length}</span>
+                  )}
+                </span>
+                <span className="st-chevron">{showSaved ? '▲' : '▼'}</span>
+              </button>
+
+              {template && !showSaveInput && (
+                <button
+                  className="st-btn st-btn-ghost st-btn-sm"
+                  onClick={() => { setShowSaveInput(true); setShowSaved(true); }}
+                >
+                  ＋ 保存
+                </button>
+              )}
+            </div>
+
+            {showSaveInput && (
+              <div className="st-save-input-row">
+                <input
+                  className="st-save-name-input"
+                  type="text"
+                  placeholder="テンプレート名"
+                  value={saveName}
+                  onChange={e => setSaveName(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') handleSave(); if (e.key === 'Escape') { setShowSaveInput(false); setSaveName(''); } }}
+                  autoFocus
+                  aria-label="保存するテンプレート名"
+                />
+                <button
+                  className="st-btn st-btn-primary st-btn-sm"
+                  onClick={handleSave}
+                  disabled={!saveName.trim()}
+                >
+                  保存
+                </button>
+                <button
+                  className="st-btn st-btn-ghost st-btn-sm"
+                  onClick={() => { setShowSaveInput(false); setSaveName(''); }}
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            {showSaved && (
+              savedList.length === 0 ? (
+                <p className="st-empty-hint" style={{ marginTop: '10px' }}>
+                  保存済みテンプレートはまだありません。
+                </p>
+              ) : (
+                <div className="st-saved-list">
+                  {savedList.map(item => (
+                    <div key={item.id} className="st-saved-item">
+                      <div className="st-saved-item-info">
+                        <span className="st-saved-name">{item.name}</span>
+                        <span className="st-saved-date">{formatDate(item.savedAt)}</span>
+                      </div>
+                      <div className="st-saved-item-actions">
+                        <button
+                          className="st-btn st-btn-ghost st-btn-sm"
+                          onClick={() => handleLoad(item)}
+                        >
+                          呼び出す
+                        </button>
+                        <button
+                          className="st-btn st-btn-danger st-btn-sm"
+                          onClick={() => handleDelete(item.id)}
+                          aria-label={`${item.name}を削除`}
+                        >
+                          削除
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            )}
+          </div>
+
           {/* Template panel */}
           <div className="st-panel">
             <div className="st-panel-title">テンプレート</div>

@@ -1,5 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { extractPlaceholders, applyTemplate } from './stencilCore';
+import { describe, it, expect, beforeEach } from 'vitest';
+import {
+  extractPlaceholders,
+  applyTemplate,
+  loadSavedTemplates,
+  saveTemplate,
+  deleteSavedTemplate,
+} from './stencilCore';
 
 describe('extractPlaceholders', () => {
   it('%%KEY%%形式のプレースホルダを抽出する', () => {
@@ -92,5 +98,67 @@ describe('applyTemplate', () => {
   it('値が未設定の日本語キーはそのまま残す', () => {
     expect(applyTemplate('%%タイトル%% %%本文%%', { 'タイトル': '見出し' }))
       .toBe('見出し %%本文%%');
+  });
+});
+
+describe('savedTemplates (localStorage)', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('初期状態は空配列', () => {
+    expect(loadSavedTemplates()).toEqual([]);
+  });
+
+  it('saveTemplateで保存され、loadで取得できる', () => {
+    saveTemplate('議事録', '## %%タイトル%%\n\n%%本文%%');
+    const saved = loadSavedTemplates();
+    expect(saved).toHaveLength(1);
+    expect(saved[0].name).toBe('議事録');
+    expect(saved[0].template).toBe('## %%タイトル%%\n\n%%本文%%');
+  });
+
+  it('保存されたテンプレートにはidとsavedAtが付く', () => {
+    saveTemplate('テスト', '%%KEY%%');
+    const [item] = loadSavedTemplates();
+    expect(item.id).toBeTruthy();
+    expect(item.savedAt).toBeTruthy();
+  });
+
+  it('複数回saveするとすべて蓄積される', () => {
+    saveTemplate('A', 'template A');
+    saveTemplate('B', 'template B');
+    saveTemplate('C', 'template C');
+    expect(loadSavedTemplates()).toHaveLength(3);
+  });
+
+  it('保存順（古い順）で返る', () => {
+    saveTemplate('first', 'aaa');
+    saveTemplate('second', 'bbb');
+    const saved = loadSavedTemplates();
+    expect(saved[0].name).toBe('first');
+    expect(saved[1].name).toBe('second');
+  });
+
+  it('deleteSavedTemplateで指定idのみ削除される', () => {
+    saveTemplate('A', 'aaa');
+    saveTemplate('B', 'bbb');
+    const [a] = loadSavedTemplates();
+    deleteSavedTemplate(a.id);
+    const remaining = loadSavedTemplates();
+    expect(remaining).toHaveLength(1);
+    expect(remaining[0].name).toBe('B');
+  });
+
+  it('存在しないidを削除しても他は消えない', () => {
+    saveTemplate('X', 'xxx');
+    deleteSavedTemplate('nonexistent-id');
+    expect(loadSavedTemplates()).toHaveLength(1);
+  });
+
+  it('同名で複数保存できる', () => {
+    saveTemplate('議事録', 'v1');
+    saveTemplate('議事録', 'v2');
+    expect(loadSavedTemplates()).toHaveLength(2);
   });
 });
