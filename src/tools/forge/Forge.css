@@ -213,6 +213,13 @@
   margin-top: 12px;
 }
 
+/* --- MD mode selector --- */
+.fg-md-mode {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
 /* --- MD title input --- */
 .fg-md-title-input {
   width: 100%;

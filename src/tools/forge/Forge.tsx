@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
-  wrapMdDoc, formatJson, formatSql, toOneLiner,
+  wrapMdDoc, wrapMdBullet, formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
 } from './helpers';
 import './Forge.css';
@@ -44,6 +44,7 @@ const Forge = () => {
   const [tab, setTab] = useState<Tab>('case');
   const [caseInput, setCaseInput] = useState('');
   const [mdTitle, setMdTitle] = useState('');
+  const [mdMode, setMdMode] = useState<'code' | 'bullet'>('code');
   const [mdInput, setMdInput] = useState('');
   const [jsonInput, setJsonInput] = useState('');
   const [jsonOutput, setJsonOutput] = useState<string | null>(null);
@@ -75,7 +76,9 @@ const Forge = () => {
     }
   };
 
-  const mdOutput = mdInput ? wrapMdDoc(mdInput, mdTitle) : '';
+  const mdOutput = mdInput
+    ? mdMode === 'bullet' ? wrapMdBullet(mdInput, mdTitle) : wrapMdDoc(mdInput, mdTitle)
+    : '';
 
   return (
     <div className={`forge ${dark ? 'dark' : 'light'}`}>
@@ -138,6 +141,18 @@ const Forge = () => {
         {/* ===== MD DOC WRAPPER ===== */}
         {tab === 'md' && (
           <>
+            <div className="fg-md-mode">
+              {(['code', 'bullet'] as const).map(m => (
+                <button
+                  key={m}
+                  className={`fg-btn ${mdMode === m ? 'fg-btn-orange' : 'fg-btn-ghost'}`}
+                  onClick={() => setMdMode(m)}
+                  aria-pressed={mdMode === m}
+                >
+                  {m === 'code' ? 'コードブロック' : '箇条書き'}
+                </button>
+              ))}
+            </div>
             <input
               className="fg-md-title-input"
               type="text"

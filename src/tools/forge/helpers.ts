@@ -127,3 +127,9 @@ export const wrapDivider = (text: string): string =>
 /** MD ドキュメント追記用: ## + コードブロック + --- を一発で適用 */
 export const wrapMdDoc = (text: string, title = ''): string =>
   `## ${title}\n\n\`\`\`\n${text}\n\`\`\`\n\n---`;
+
+/** MD ドキュメント追記用: ## + 箇条書き + --- */
+export const wrapMdBullet = (text: string, title = ''): string => {
+  const items = text.split('\n').filter(l => l.trim()).map(l => `- ${l.trim()}`).join('\n');
+  return `## ${title}\n\n${items}\n\n---`;
+};

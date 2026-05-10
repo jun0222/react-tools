@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   toPascal, toSnake, toCamel, toKebab,
-  wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
+  wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc, wrapMdBullet,
   formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
   listToOneLiner,
@@ -118,6 +118,24 @@ describe('wrapDivider', () => {
   });
   it('空文字も囲む', () => {
     expect(wrapDivider('')).toBe('---\n\n---');
+  });
+});
+
+describe('wrapMdBullet', () => {
+  it('各行を箇条書きにして ## と --- で囲む', () => {
+    const result = wrapMdBullet('foo\nbar');
+    expect(result).toBe('## \n\n- foo\n- bar\n\n---');
+  });
+  it('タイトルが ## の後に入る', () => {
+    expect(wrapMdBullet('foo', 'Title').startsWith('## Title')).toBe(true);
+  });
+  it('空行はスキップする', () => {
+    expect(wrapMdBullet('foo\n\nbar')).toBe('## \n\n- foo\n- bar\n\n---');
+  });
+  it('出力は ## で始まり --- で終わる', () => {
+    const r = wrapMdBullet('x');
+    expect(r.startsWith('## ')).toBe(true);
+    expect(r.endsWith('---')).toBe(true);
   });
 });
 
