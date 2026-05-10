@@ -93,6 +93,12 @@ const Mermaid = () => {
     }
   };
 
+  const timestamp = () => {
+    const d = new Date();
+    const pad = (n: number, len = 2) => String(n).padStart(len, '0');
+    return `${d.getFullYear()}_${pad(d.getMonth() + 1)}_${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}_${pad(d.getSeconds())}`;
+  };
+
   const exportSvg = () => {
     const svg = getSvgContent(previewRef.current);
     if (!svg) return;
@@ -100,7 +106,7 @@ const Mermaid = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${activeId}.svg`;
+    a.download = `${activeId}_${timestamp()}.svg`;
     a.click();
     URL.revokeObjectURL(url);
   };

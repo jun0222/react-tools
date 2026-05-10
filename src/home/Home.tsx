@@ -80,6 +80,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: 'ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる',
     tag: 'text',
   },
+  {
+    path: '/stencil',
+    name: 'Stencil',
+    icon: '📋',
+    iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
+    desc: '%%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成',
+    tag: 'text',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';

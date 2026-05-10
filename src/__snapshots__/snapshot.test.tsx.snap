@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        5
+        6
          tool
         s
          available
@@ -165,6 +165,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-desc"
       >
         ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/stencil"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+      >
+        📋
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Stencil
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
       </div>
       <span
         class="home-card-tag"
@@ -193,7 +220,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        5
+        6
          tool
         s
          available
@@ -341,6 +368,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-desc"
       >
         ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/stencil"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+      >
+        📋
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Stencil
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
       </div>
       <span
         class="home-card-tag"
