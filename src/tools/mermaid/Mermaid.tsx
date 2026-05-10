@@ -17,6 +17,9 @@ const loadSaved = (): Record<string, string> => {
   }
 };
 
+const getSvgContent = (el: HTMLDivElement | null): string =>
+  el?.querySelector('svg')?.outerHTML ?? '';
+
 const Mermaid = () => {
   const { dark } = useTheme();
 
@@ -26,7 +29,7 @@ const Mermaid = () => {
     const s = loadSaved();
     return s[TEMPLATES[0].id] ?? TEMPLATES[0].code;
   });
-  const [error, setError] = useState<string | null>(null);
+  const [hasSvg, setHasSvg] = useState(false);
   const [hintsOpen, setHintsOpen] = useState(true);
   const [toast, setToast] = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
@@ -37,7 +40,6 @@ const Mermaid = () => {
     return () => clearTimeout(t);
   }, [code]);
 
-  // auto-save on code change
   useEffect(() => {
     setSaved(prev => {
       const next = { ...prev, [activeId]: code };
@@ -50,7 +52,7 @@ const Mermaid = () => {
     if (!previewRef.current) return;
     if (!debouncedCode.trim()) {
       previewRef.current.innerHTML = '';
-      setError(null);
+      setHasSvg(false);
       return;
     }
     const id = `mm-svg-${++renderSeq}`;
@@ -58,12 +60,10 @@ const Mermaid = () => {
     mermaid.render(id, debouncedCode)
       .then(({ svg }) => {
         if (previewRef.current) previewRef.current.innerHTML = svg;
-        setError(null);
+        setHasSvg(true);
       })
-      .catch((e: unknown) => {
-        const msg = e instanceof Error ? e.message : String(e);
-        setError(msg.slice(0, 200));
-        if (previewRef.current) previewRef.current.innerHTML = '';
+      .catch(() => {
+        // keep last good SVG on error — no error display
       });
   }, [debouncedCode, dark]);
 
@@ -91,6 +91,26 @@ const Mermaid = () => {
     } catch {
       showToast('コピー失敗');
     }
+  };
+
+  const exportSvg = () => {
+    const svg = getSvgContent(previewRef.current);
+    if (!svg) return;
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${activeId}.svg`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const openFullscreen = () => {
+    const svg = getSvgContent(previewRef.current);
+    if (!svg) return;
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
   };
 
   const activeTemplate = TEMPLATES.find(t => t.id === activeId) ?? TEMPLATES[0];
@@ -151,10 +171,21 @@ const Mermaid = () => {
 
         {/* Preview */}
         <div className="mm-preview-pane">
-          <span className="mm-editor-label">プレビュー</span>
+          <div className="mm-preview-label-row">
+            <span className="mm-editor-label">プレビュー</span>
+            {hasSvg && (
+              <div className="mm-preview-actions">
+                <button className="mm-btn mm-btn-ghost mm-btn-sm" onClick={exportSvg} title="SVGをダウンロード">
+                  SVG 保存
+                </button>
+                <button className="mm-btn mm-btn-ghost mm-btn-sm" onClick={openFullscreen} title="全画面で開く">
+                  全画面
+                </button>
+              </div>
+            )}
+          </div>
           <div className="mm-preview-box">
-            {error && <div className="mm-preview-error">⚠ 構文エラー<br />{error}</div>}
-            {!error && !debouncedCode.trim() && (
+            {!hasSvg && !debouncedCode.trim() && (
               <span className="mm-preview-empty">コードを入力するとここに表示されます</span>
             )}
             <div ref={previewRef} />

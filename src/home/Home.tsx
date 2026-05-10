@@ -35,6 +35,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
     desc: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON でエクスポート',
     tag: 'diagram',
+    hidden: true,
   },
   {
     path: '/mermaid',
@@ -51,6 +52,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
     desc: '機能要件・BBテスト・非機能要件・テスト戦略を整理する開発計画ツール',
     tag: 'plan',
+    hidden: true,
   },
   {
     path: '/pacer',
@@ -59,6 +61,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #10b981, #0d9488)',
     desc: 'テキストを段落/行/N文字で分割して一定ペースで読む スピードリーダー',
     tag: 'read',
+    hidden: true,
   },
   {
     path: '/clips',
@@ -67,6 +70,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
     desc: 'Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集',
     tag: 'util',
+    hidden: true,
   },
   {
     path: '/romaji',

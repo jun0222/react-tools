@@ -133,6 +133,22 @@
   color: var(--mm-text-dim);
 }
 
+.mm-preview-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mm-preview-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.mm-btn-sm {
+  padding: 3px 10px !important;
+  font-size: 11px !important;
+}
+
 .mm-textarea {
   width: 100%;
   background: var(--mm-surface2);
