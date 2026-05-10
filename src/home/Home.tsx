@@ -81,6 +81,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     tag: 'text',
   },
   {
+    path: '/draft',
+    name: 'Draft',
+    icon: '✍️',
+    iconBg: 'linear-gradient(135deg, #0d9488, #6366f1)',
+    desc: 'マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック',
+    tag: 'text',
+  },
+  {
     path: '/todo',
     name: 'Todo',
     icon: '✅',

@@ -16,6 +16,7 @@ import Clips from './tools/clips/Clips';
 import Romaji from './tools/romaji/Romaji';
 import Stencil from './tools/stencil/Stencil';
 import Todo from './tools/todo/Todo';
+import Draft from './tools/draft/Draft';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -47,6 +48,7 @@ function App() {
             <Route path="/romaji" element={<Romaji />} />
             <Route path="/stencil" element={<Stencil />} />
             <Route path="/todo" element={<Todo />} />
+            <Route path="/draft" element={<Draft />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

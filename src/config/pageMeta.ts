@@ -44,6 +44,10 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'ローマ字 → ひらがな',
     description: '全探索アルゴリズムによるローマ字からひらがなへの変換。変換しない範囲を複数指定可能。',
   },
+  '/draft': {
+    title: 'Draft - チャット下書き ✍️',
+    description: 'マインドマップで論点整理 → 文章を組み立て → チャット適性を指標でチェック。',
+  },
   '/todo': {
     title: 'Todo - todo.txt Manager ✅',
     description: 'todo.txt フォーマットで優先度・プロジェクト・コンテキストを管理するタスクマネージャー。',
