@@ -18,8 +18,13 @@ export function usePhantom() {
   const seed = useMemo(() => Date.now(), []);
 
   const output = useMemo(
-    () => processPhantom(inputText, pairs, rules, seed),
-    [inputText, pairs, rules, seed],
+    () => processPhantom(
+      inputText,
+      tab === 'replace' ? pairs : [],
+      tab === 'random'  ? rules : [],
+      seed,
+    ),
+    [inputText, pairs, rules, seed, tab],
   );
 
   // ---- Replace pairs ----

@@ -208,19 +208,21 @@ describe('ランダムルール', () => {
     expect(getOutput(container)).toBe('hello');
   });
 
-  it('置換と同時使用：置換済み文字列にランダムは反応しない', async () => {
+  it('ランダムタブでは置換ペアは適用されず、ランダムルールだけが動く', async () => {
     const { user, container } = setup();
     fireEvent.change(screen.getByPlaceholderText('テキストを入力...'), {
       target: { value: 'this is ka3afai' },
     });
-    // 置換ペア: ka3afai → hoge
+    // 置換タブで置換ペアを設定
     fireEvent.change(screen.getByPlaceholderText('変換前'), { target: { value: 'ka3afai' } });
     fireEvent.change(screen.getByPlaceholderText('変換後'), { target: { value: 'hoge' } });
-    // ランダムルール: ka3afai（置換後には存在しないので無反応）
+    // ランダムタブに切り替え → 置換ペアは無効になり、ka3afai がそのまま対象になる
     await user.click(screen.getByRole('button', { name: /ランダム/ }));
     await user.click(screen.getByRole('button', { name: /ルールを追加/ }));
     fireEvent.change(screen.getByPlaceholderText(/対象文字列/), { target: { value: 'ka3afai' } });
-    // 結果は 'this is hoge'（'this is' も変わらない）
-    expect(getOutput(container)).toBe('this is hoge');
+    // ランダムタブなので 'this is ' は変わらず、ka3afai 部分だけ変換される
+    const out = getOutput(container);
+    expect(out.substring(0, 8)).toBe('this is ');
+    expect(out.substring(8)).not.toBe('ka3afai');
   });
 });
