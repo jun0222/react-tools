@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        6
+        7
          tool
         s
          available
@@ -170,6 +170,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/todo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #3b82f6, #6366f1);"
+      >
+        ✅
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Todo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        todo.txt フォーマットで優先度・プロジェクト・コンテキスト付きタスク管理
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
     <a
@@ -220,7 +247,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        6
+        7
          tool
         s
          available
@@ -373,6 +400,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/todo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #3b82f6, #6366f1);"
+      >
+        ✅
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Todo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        todo.txt フォーマットで優先度・プロジェクト・コンテキスト付きタスク管理
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
     <a

@@ -44,6 +44,10 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'ローマ字 → ひらがな',
     description: '全探索アルゴリズムによるローマ字からひらがなへの変換。変換しない範囲を複数指定可能。',
   },
+  '/todo': {
+    title: 'Todo - todo.txt Manager ✅',
+    description: 'todo.txt フォーマットで優先度・プロジェクト・コンテキストを管理するタスクマネージャー。',
+  },
   '/stencil': {
     title: 'Stencil - Template Filler 📋',
     description: '%%PLACEHOLDER%%形式の変数を埋め込んだテンプレートに値を流し込んで、安定したフォーマットでドキュメント作成。',

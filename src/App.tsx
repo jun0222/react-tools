@@ -15,6 +15,7 @@ import Pacer from './tools/pacer/Pacer';
 import Clips from './tools/clips/Clips';
 import Romaji from './tools/romaji/Romaji';
 import Stencil from './tools/stencil/Stencil';
+import Todo from './tools/todo/Todo';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -45,6 +46,7 @@ function App() {
             <Route path="/clips" element={<Clips />} />
             <Route path="/romaji" element={<Romaji />} />
             <Route path="/stencil" element={<Stencil />} />
+            <Route path="/todo" element={<Todo />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
