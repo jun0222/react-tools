@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { convertRomaji } from './romajiCore';
+import { convertRomaji, groupLines } from './romajiCore';
 import './Romaji.css';
 
 let _id = 0;
@@ -9,6 +9,7 @@ const uid = () => `skip-${++_id}`;
 const Romaji = () => {
   const { dark } = useTheme();
   const [input, setInput] = useState('');
+  const [groupSize, setGroupSize] = useState('');
   const [skipWords, setSkipWords] = useState<{ id: string; value: string }[]>([
     { id: uid(), value: '' },
   ]);
@@ -19,9 +20,9 @@ const Romaji = () => {
     setTimeout(() => setToast(''), 1800);
   }, []);
 
-  const output = input.trim()
-    ? convertRomaji(input, skipWords.map(s => s.value))
-    : '';
+  const n = parseInt(groupSize, 10);
+  const rawOutput = input.trim() ? convertRomaji(input, skipWords.map(s => s.value)) : '';
+  const output = rawOutput && n > 0 ? groupLines(rawOutput, n) : rawOutput;
 
   const copy = async () => {
     try {
@@ -63,7 +64,21 @@ const Romaji = () => {
         </div>
 
         <div className="rj-pane">
-          <label className="rj-label">ひらがな</label>
+          <div className="rj-output-header">
+            <label className="rj-label">ひらがな</label>
+            <div className="rj-group-ctrl">
+              <input
+                className="rj-group-input"
+                type="number"
+                min="1"
+                placeholder="–"
+                value={groupSize}
+                onChange={e => setGroupSize(e.target.value)}
+                aria-label="何行ごとに改行を挿入するか"
+              />
+              <span className="rj-group-label">行ごとに改行</span>
+            </div>
+          </div>
           <div
             className={`rj-output${!output ? ' rj-output--empty' : ''}`}
             aria-label="ひらがな変換結果"

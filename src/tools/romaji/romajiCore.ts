@@ -169,6 +169,16 @@ export const parseSegments = (input: string, skipWords: string[]): Segment[] => 
   return result;
 };
 
+export const groupLines = (text: string, n: number): string => {
+  if (!text || n <= 0) return text;
+  const lines = text.split('\n');
+  const groups: string[][] = [];
+  for (let i = 0; i < lines.length; i += n) {
+    groups.push(lines.slice(i, i + n));
+  }
+  return groups.map(g => g.join('\n')).join('\n\n');
+};
+
 export const convertRomaji = (input: string, skipWords: string[] = []): string => {
   if (!input.trim()) return '';
   return parseSegments(input, skipWords)

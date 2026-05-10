@@ -123,6 +123,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+}
+
+.rj-group-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.rj-group-input {
+  width: 52px;
+  background: var(--rj-surface2);
+  border: 1.5px solid var(--rj-border);
+  border-radius: var(--rj-radius-sm);
+  color: var(--rj-text);
+  padding: 3px 6px;
+  font-size: 13px;
+  font-family: inherit;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.rj-group-input:focus {
+  border-color: var(--rj-accent);
+}
+
+.rj-group-label {
+  font-size: 11px;
+  color: var(--rj-text-dim);
+  white-space: nowrap;
 }
 
 .rj-toggle {

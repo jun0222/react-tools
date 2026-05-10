@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { convertRomaji, parseSegments } from './romajiCore';
+import { convertRomaji, parseSegments, groupLines } from './romajiCore';
 
 // =====================
 // 母音
@@ -180,5 +180,31 @@ describe('parseSegments', () => {
   it('skipWord でスキップセグメントが作られる', () => {
     const segs = parseSegments('hello world', ['world']);
     expect(segs.find(s => s.text.toLowerCase() === 'world')?.skip).toBe(true);
+  });
+});
+// =====================
+// groupLines
+// =====================
+describe('groupLines', () => {
+  it('n=1 のとき各行の間に空行が入る', () => {
+    expect(groupLines('あ\nい\nう', 1)).toBe('あ\n\nい\n\nう');
+  });
+  it('n=2 のとき2行ごとに空行が入る', () => {
+    expect(groupLines('あ\nい\nう\nえ\nお', 2)).toBe('あ\nい\n\nう\nえ\n\nお');
+  });
+  it('n=3 のとき3行ごとに空行が入る', () => {
+    expect(groupLines('a\nb\nc\nd\ne\nf', 3)).toBe('a\nb\nc\n\nd\ne\nf');
+  });
+  it('グループがちょうど割り切れる場合', () => {
+    expect(groupLines('a\nb\nc\nd', 2)).toBe('a\nb\n\nc\nd');
+  });
+  it('n=0 のとき変換しない', () => {
+    expect(groupLines('あ\nい', 0)).toBe('あ\nい');
+  });
+  it('行が1行しかない場合はそのまま', () => {
+    expect(groupLines('あ', 2)).toBe('あ');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(groupLines('', 2)).toBe('');
   });
 });
