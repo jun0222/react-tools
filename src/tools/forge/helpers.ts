@@ -56,6 +56,19 @@ export const formatSql = (input: string): string => {
     .trim();
 };
 
+// --- リスト→ワンライナー ---
+
+const BULLET_PREFIX_RE = /^\s*(?:-\s*\[[ xX]\]\s*|-\s*|\*\s*|\+\s*|\d+\.\s*|・|●\s*|○\s*|■\s*|□\s*)/;
+
+export const listToOneLiner = (input: string): string => {
+  if (!input.trim()) return '';
+  return input
+    .split('\n')
+    .map(line => line.replace(BULLET_PREFIX_RE, '').trim())
+    .filter(line => line.length > 0)
+    .join(' ');
+};
+
 // --- 文字削除 ---
 
 export const deleteChars = (input: string, targets: string[]): string => {

@@ -4,6 +4,7 @@ import {
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc,
   formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
+  listToOneLiner,
 } from './helpers';
 
 // =====================
@@ -312,5 +313,44 @@ describe('deleteChars', () => {
   });
   it('全文字を削除すると空文字になる', () => {
     expect(deleteChars('aaa', ['a'])).toBe('');
+  });
+});
+
+// =====================
+// リスト→ワンライナー
+// =====================
+describe('listToOneLiner', () => {
+  it('- 箇条書きを1行にまとめる', () => {
+    expect(listToOneLiner('- foo\n- bar\n- baz')).toBe('foo bar baz');
+  });
+  it('- [ ] チェックボックスを除去する', () => {
+    expect(listToOneLiner('- [ ] one\n- [ ] two')).toBe('one two');
+  });
+  it('- [x] チェック済みも除去する', () => {
+    expect(listToOneLiner('- [x] done\n- [X] also done')).toBe('done also done');
+  });
+  it('1. 番号付きリストを除去する', () => {
+    expect(listToOneLiner('1. first\n2. second\n10. tenth')).toBe('first second tenth');
+  });
+  it('・ 中点を除去する', () => {
+    expect(listToOneLiner('・foo\n・bar')).toBe('foo bar');
+  });
+  it('* アスタリスクを除去する', () => {
+    expect(listToOneLiner('* foo\n* bar')).toBe('foo bar');
+  });
+  it('複数スタイル混在でも1行にまとめる', () => {
+    expect(listToOneLiner('- [ ] task\n1. item\n・note')).toBe('task item note');
+  });
+  it('空行はスキップする', () => {
+    expect(listToOneLiner('- a\n\n- b')).toBe('a b');
+  });
+  it('インデント付きの箇条書きも除去する', () => {
+    expect(listToOneLiner('  - foo\n  - bar')).toBe('foo bar');
+  });
+  it('プレフィックスのない行もそのまま含める', () => {
+    expect(listToOneLiner('foo\nbar')).toBe('foo bar');
+  });
+  it('空文字は空文字を返す', () => {
+    expect(listToOneLiner('')).toBe('');
   });
 });

@@ -3,7 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, formatJson, formatSql, toOneLiner,
-  normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
+  normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
 } from './helpers';
 import './Forge.css';
 
@@ -14,7 +14,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -26,6 +26,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'oneliner',  label: 'ワンライナー'  },
   { id: 'mdsp',      label: 'MD 末尾SP'   },
   { id: 'delete',    label: '文字削除'     },
+  { id: 'listjoin',  label: 'リスト→1行'  },
 ];
 
 let _delId = 0;
@@ -54,6 +55,7 @@ const Forge = () => {
   const [bulletStyle, setBulletStyle] = useState<BulletStyle>('- [ ]');
   const [mdspInput, setMdspInput] = useState('');
   const [deleteInput, setDeleteInput] = useState('');
+  const [listjoinInput, setListjoinInput] = useState('');
   const [deleteTargets, setDeleteTargets] = useState<{ id: string; value: string }[]>([
     { id: delUid(), value: '' },
   ]);
@@ -374,6 +376,35 @@ const Forge = () => {
                   <button
                     className="fg-btn fg-btn-orange"
                     onClick={() => copy(addMdLineBreaks(mdspInput))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {/* ===== LIST JOIN ===== */}
+        {tab === 'listjoin' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'- [ ] タスクA\n- [ ] タスクB\n1. 手順1\n2. 手順2\n・メモ\n\n→ プレフィックスを除去してスペース区切り1行に'}
+              value={listjoinInput}
+              onChange={e => setListjoinInput(e.target.value)}
+              rows={7}
+              aria-label="リスト→1行入力"
+            />
+            {listjoinInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="リスト1行化結果">
+                  {listToOneLiner(listjoinInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(listToOneLiner(listjoinInput))}
                   >
                     コピー
                   </button>
