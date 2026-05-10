@@ -133,6 +133,13 @@ describe('wrapMdDoc', () => {
     expect(result.startsWith('## ')).toBe(true);
     expect(result.endsWith('---')).toBe(true);
   });
+  it('タイトルを渡すと ## の後に入る', () => {
+    const result = wrapMdDoc('code', 'My Title');
+    expect(result.startsWith('## My Title')).toBe(true);
+  });
+  it('タイトルなしのとき ## の後はスペースのみ（後方互換）', () => {
+    expect(wrapMdDoc('x').startsWith('## \n')).toBe(true);
+  });
 });
 
 // =====================

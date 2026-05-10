@@ -112,5 +112,5 @@ export const wrapDivider = (text: string): string =>
   `---\n${text}\n---`;
 
 /** MD ドキュメント追記用: ## + コードブロック + --- を一発で適用 */
-export const wrapMdDoc = (text: string): string =>
-  `## \n\n\`\`\`\n${text}\n\`\`\`\n\n---`;
+export const wrapMdDoc = (text: string, title = ''): string =>
+  `## ${title}\n\n\`\`\`\n${text}\n\`\`\`\n\n---`;

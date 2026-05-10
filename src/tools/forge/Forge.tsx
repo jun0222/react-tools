@@ -42,6 +42,7 @@ const Forge = () => {
   const { dark } = useTheme();
   const [tab, setTab] = useState<Tab>('case');
   const [caseInput, setCaseInput] = useState('');
+  const [mdTitle, setMdTitle] = useState('');
   const [mdInput, setMdInput] = useState('');
   const [jsonInput, setJsonInput] = useState('');
   const [jsonOutput, setJsonOutput] = useState<string | null>(null);
@@ -72,7 +73,7 @@ const Forge = () => {
     }
   };
 
-  const mdOutput = mdInput ? wrapMdDoc(mdInput) : '';
+  const mdOutput = mdInput ? wrapMdDoc(mdInput, mdTitle) : '';
 
   return (
     <div className={`forge ${dark ? 'dark' : 'light'}`}>
@@ -135,6 +136,14 @@ const Forge = () => {
         {/* ===== MD DOC WRAPPER ===== */}
         {tab === 'md' && (
           <>
+            <input
+              className="fg-md-title-input"
+              type="text"
+              placeholder="タイトル（## の後に入ります）"
+              value={mdTitle}
+              onChange={e => setMdTitle(e.target.value)}
+              aria-label="MDタイトル入力"
+            />
             <textarea
               className="fg-textarea"
               placeholder="囲みたいテキストを入力… ## + ``` ``` + --- で自動フォーマットします"
