@@ -23,12 +23,16 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
          available
       </p>
     </div>
-    <button
-      aria-pressed="false"
-      class="home-edit-btn "
+    <div
+      class="home-header-actions"
     >
-      編集
-    </button>
+      <button
+        aria-pressed="false"
+        class="home-edit-btn "
+      >
+        編集
+      </button>
+    </div>
   </header>
   <div
     class="home-grid"
@@ -195,12 +199,16 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
          available
       </p>
     </div>
-    <button
-      aria-pressed="false"
-      class="home-edit-btn "
+    <div
+      class="home-header-actions"
     >
-      編集
-    </button>
+      <button
+        aria-pressed="false"
+        class="home-edit-btn "
+      >
+        編集
+      </button>
+    </div>
   </header>
   <div
     class="home-grid"

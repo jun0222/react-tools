@@ -101,6 +101,11 @@ const Home = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...hidden]));
   }, [hidden]);
 
+  const resetToDefault = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setHidden(new Set(devHidden));
+  };
+
   const toggleHidden = (path: string) => {
     setHidden(prev => {
       const next = new Set(prev);
@@ -118,13 +123,20 @@ const Home = () => {
           <h1>react-<span>tools</span></h1>
           <p>{visibleTools.length} tool{visibleTools.length !== 1 ? 's' : ''} available</p>
         </div>
-        <button
-          className={`home-edit-btn ${editing ? 'home-edit-btn--active' : ''}`}
-          onClick={() => setEditing(v => !v)}
-          aria-pressed={editing}
-        >
-          {editing ? '完了' : '編集'}
-        </button>
+        <div className="home-header-actions">
+          {editing && (
+            <button className="home-reset-btn" onClick={resetToDefault}>
+              デフォルトに戻す
+            </button>
+          )}
+          <button
+            className={`home-edit-btn ${editing ? 'home-edit-btn--active' : ''}`}
+            onClick={() => setEditing(v => !v)}
+            aria-pressed={editing}
+          >
+            {editing ? '完了' : '編集'}
+          </button>
+        </div>
       </header>
 
       <div className="home-grid">
