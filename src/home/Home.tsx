@@ -111,6 +111,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
     desc: 'コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力',
     tag: 'util',
+    hidden: true,
   },
   {
     path: '/logtree',
@@ -127,6 +128,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
     desc: 'CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力',
     tag: 'util',
+    hidden: true,
   },
   {
     path: '/bookmarks',

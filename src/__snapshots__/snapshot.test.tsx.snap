@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        14
+        12
          tool
         s
          available
@@ -256,33 +256,6 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
     <a
       class="home-card"
       data-discover="true"
-      href="/minutes"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        📝
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Minutes
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
       href="/logtree"
     >
       <div
@@ -305,33 +278,6 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/visu"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
-      >
-        📈
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Visu
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
       </span>
     </a>
     <a
@@ -436,7 +382,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        14
+        12
          tool
         s
          available
@@ -675,33 +621,6 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
     <a
       class="home-card"
       data-discover="true"
-      href="/minutes"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        📝
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Minutes
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
       href="/logtree"
     >
       <div
@@ -724,33 +643,6 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/visu"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
-      >
-        📈
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Visu
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
       </span>
     </a>
     <a
