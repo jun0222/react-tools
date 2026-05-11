@@ -1,0 +1,304 @@
+/* ===== Variables ===== */
+.wordmemo {
+  --wm-bg: #0d0d14;
+  --wm-surface: #14141f;
+  --wm-border: #2a2a3a;
+  --wm-text: #e0e0e0;
+  --wm-text-dim: #888;
+  --wm-accent: #6ee7b7;
+  --wm-accent-bg: rgba(110,231,183,0.12);
+  --wm-input-bg: #1a1a2a;
+  --wm-hover: #1e1e2e;
+  --wm-toast-bg: #23233a;
+}
+
+.wordmemo.light {
+  --wm-bg: #f4f6fa;
+  --wm-surface: #fff;
+  --wm-border: #e0e0e8;
+  --wm-text: #1a2030;
+  --wm-text-dim: #888;
+  --wm-accent: #059669;
+  --wm-accent-bg: rgba(5,150,105,0.08);
+  --wm-input-bg: #f0f0f8;
+  --wm-hover: #f8f8fc;
+  --wm-toast-bg: #1a2030;
+}
+
+/* ===== Layout ===== */
+.wordmemo {
+  min-height: 100vh;
+  background: var(--wm-bg);
+  color: var(--wm-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 24px 20px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.wm-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.wm-logo {
+  font-size: 24px;
+}
+
+.wm-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--wm-text);
+}
+
+.wm-header h1 .accent {
+  color: var(--wm-accent);
+}
+
+.wm-subtitle {
+  font-size: 13px;
+  color: var(--wm-text-dim);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ===== Prompt Button ===== */
+.wm-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--wm-accent-bg);
+  border: 1px solid var(--wm-accent);
+  border-radius: 10px;
+  color: var(--wm-accent);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+  margin-bottom: 20px;
+}
+
+.wm-copy-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.wm-copy-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ===== Search ===== */
+.wm-search-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wm-search {
+  flex: 1;
+  background: var(--wm-input-bg);
+  border: 1px solid var(--wm-border);
+  border-radius: 8px;
+  color: var(--wm-text);
+  font-size: 14px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.wm-search:focus {
+  border-color: var(--wm-accent);
+}
+
+.wm-search::placeholder {
+  color: var(--wm-text-dim);
+}
+
+.wm-count {
+  font-size: 12px;
+  color: var(--wm-text-dim);
+  white-space: nowrap;
+}
+
+/* ===== Add Form ===== */
+.wm-add-form {
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wm-input {
+  background: var(--wm-input-bg);
+  border: 1px solid var(--wm-border);
+  border-radius: 8px;
+  color: var(--wm-text);
+  font-size: 14px;
+  font-family: inherit;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wm-input:focus {
+  border-color: var(--wm-accent);
+}
+
+.wm-input::placeholder {
+  color: var(--wm-text-dim);
+}
+
+.wm-add-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* ===== Buttons ===== */
+.wm-btn {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 14px;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.wm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wm-btn-primary {
+  background: var(--wm-accent);
+  color: #0d0d14;
+}
+
+.wm-btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.wm-btn-ghost {
+  background: transparent;
+  color: var(--wm-text-dim);
+  border: 1px solid var(--wm-border);
+}
+
+.wm-btn-ghost:hover:not(:disabled) {
+  background: var(--wm-hover);
+  color: var(--wm-text);
+}
+
+.wm-btn-icon {
+  background: transparent;
+  color: var(--wm-text-dim);
+  border: none;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.wm-btn-icon:hover {
+  background: var(--wm-hover);
+  color: var(--wm-text);
+}
+
+.wm-btn-open {
+  background: var(--wm-accent);
+  color: #0d0d14;
+  padding: 7px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.wordmemo.light .wm-btn-primary,
+.wordmemo.light .wm-btn-open {
+  color: #fff;
+}
+
+.wm-btn-open:hover {
+  opacity: 0.85;
+}
+
+/* ===== List ===== */
+.wm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wm-item {
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: border-color 0.15s;
+}
+
+.wm-item:hover {
+  border-color: var(--wm-accent);
+}
+
+.wm-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.wm-item-word {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wm-text);
+  margin-bottom: 2px;
+}
+
+.wm-item-notes {
+  font-size: 12px;
+  color: var(--wm-text-dim);
+}
+
+.wm-item-actions {
+  flex-shrink: 0;
+}
+
+/* ===== Empty ===== */
+.wm-empty {
+  text-align: center;
+  color: var(--wm-text-dim);
+  font-size: 14px;
+  padding: 40px 0;
+}
+
+/* ===== Toast ===== */
+.wm-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--wm-toast-bg);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}

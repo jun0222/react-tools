@@ -21,6 +21,8 @@ import Minutes from './tools/minutes/Minutes';
 import LogTree from './tools/logtree/LogTree';
 import Visu from './tools/visu/Visu';
 import Bookmarks from './tools/bookmarks/Bookmarks';
+import Snip from './tools/snip/Snip';
+import WordMemo from './tools/wordmemo/WordMemo';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -57,6 +59,8 @@ function App() {
             <Route path="/logtree" element={<LogTree />} />
             <Route path="/visu" element={<Visu />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/snip" element={<Snip />} />
+            <Route path="/wordmemo" element={<WordMemo />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

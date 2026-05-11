@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        12
+        14
          tool
         s
          available
@@ -354,6 +354,60 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-desc"
       >
         URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/snip"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
+      >
+        ✂️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Snip
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/wordmemo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #10b981, #6366f1);"
+      >
+        📚
+      </div>
+      <div
+        class="home-card-name"
+      >
+        WordMemo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
       </div>
       <span
         class="home-card-tag"
@@ -382,7 +436,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        12
+        14
          tool
         s
          available
@@ -719,6 +773,60 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-desc"
       >
         URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/snip"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
+      >
+        ✂️
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Snip
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/wordmemo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #10b981, #6366f1);"
+      >
+        📚
+      </div>
+      <div
+        class="home-card-name"
+      >
+        WordMemo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
       </div>
       <span
         class="home-card-tag"

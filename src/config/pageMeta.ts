@@ -72,4 +72,12 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Bookmarks - ブックマーク管理 🔖',
     description: 'URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート対応。',
   },
+  '/snip': {
+    title: 'Snip - スニペット管理 ✂️',
+    description: 'テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理ツール。',
+  },
+  '/wordmemo': {
+    title: 'WordMemo - 単語メモ 📚',
+    description: '気になった単語・概念をメモして、AIエージェント向け文献リサーチプロンプトを自動生成・コピー。',
+  },
 };

@@ -136,6 +136,22 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: 'URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート',
     tag: 'util',
   },
+  {
+    path: '/snip',
+    name: 'Snip',
+    icon: '✂️',
+    iconBg: 'linear-gradient(135deg, #7c6cff, #a855f7)',
+    desc: 'テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理',
+    tag: 'util',
+  },
+  {
+    path: '/wordmemo',
+    name: 'WordMemo',
+    icon: '📚',
+    iconBg: 'linear-gradient(135deg, #10b981, #6366f1)',
+    desc: '気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成',
+    tag: 'util',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';
