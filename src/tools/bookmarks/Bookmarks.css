@@ -232,11 +232,10 @@
 .bk-item-url {
   font-size: 11px;
   color: var(--bk-orange);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-all;
   margin-bottom: 4px;
   text-decoration: none;
+  display: block;
 }
 .bk-item-url:hover { text-decoration: underline; }
 
