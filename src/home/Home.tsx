@@ -95,6 +95,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
     desc: 'todo.txt フォーマットで優先度・プロジェクト・コンテキスト付きタスク管理',
     tag: 'util',
+    hidden: true,
   },
   {
     path: '/stencil',
