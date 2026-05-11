@@ -104,6 +104,38 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: '%%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成',
     tag: 'text',
   },
+  {
+    path: '/minutes',
+    name: 'Minutes',
+    icon: '📝',
+    iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
+    desc: 'コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力',
+    tag: 'util',
+  },
+  {
+    path: '/logtree',
+    name: 'LogTree',
+    icon: '🌳',
+    iconBg: 'linear-gradient(135deg, #0d9488, #6366f1)',
+    desc: 'インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応',
+    tag: 'diagram',
+  },
+  {
+    path: '/visu',
+    name: 'Visu',
+    icon: '📈',
+    iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+    desc: 'CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力',
+    tag: 'util',
+  },
+  {
+    path: '/bookmarks',
+    name: 'Bookmarks',
+    icon: '🔖',
+    iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
+    desc: 'URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート',
+    tag: 'util',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';

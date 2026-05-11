@@ -171,16 +171,19 @@ export const FRAMEWORKS: readonly Framework[] = [
     ].filter(Boolean).join('\n'),
   },
   {
-    id: 'kishotenketsu',
-    name: '起承転結',
-    desc: '導入 → 展開 → 転換 → 結論（物語・説明型）',
+    id: 'sih',
+    name: '状況・論点・仮説',
+    desc: '現状把握 → 解くべき問いの特定 → 仮の答えを立てる（コンサル型）',
     fields: [
-      { key: 'ki',    label: '起 ── 導入・きっかけ', placeholder: '話の背景・なぜ今この話をするか' },
-      { key: 'sho',   label: '承 ── 展開・詳細',     placeholder: '詳しい説明・根拠' },
-      { key: 'ten',   label: '転 ── 転換・気づき',   placeholder: '視点の転換・対比・意外性' },
-      { key: 'ketsu', label: '結 ── 結論・まとめ',   placeholder: '最終的に伝えたいこと' },
+      { key: 'situation',  label: '状況 ── 今何が起きているか',  placeholder: 'As-Is: 現状の事実・データ・背景' },
+      { key: 'issue',      label: '論点 ── 解くべき問いは何か',  placeholder: 'Key Question: 最も重要な課題・問い' },
+      { key: 'hypothesis', label: '仮説 ── 答えはこうではないか', placeholder: 'To-Be: 仮の結論・方向性・アクション案' },
     ],
-    generate: v => [v.ki, v.sho, v.ten, v.ketsu].filter(Boolean).join('\n'),
+    generate: v => [
+      v.situation  && `【状況】${v.situation}`,
+      v.issue      && `【論点】${v.issue}`,
+      v.hypothesis && `【仮説】${v.hypothesis}`,
+    ].filter(Boolean).join('\n'),
   },
 ];
 

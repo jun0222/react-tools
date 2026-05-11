@@ -1,9 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, wrapMdBullet, formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
+  applyReplaces,
 } from './helpers';
 import './Forge.css';
 
@@ -14,7 +15,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -27,10 +28,14 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'mdsp',      label: 'MD 末尾SP'   },
   { id: 'delete',    label: '文字削除'     },
   { id: 'listjoin',  label: 'リスト→1行'  },
+  { id: 'replace',   label: '文字置換'     },
 ];
 
 let _delId = 0;
 const delUid = () => `del-${++_delId}`;
+
+let _rpId = 0;
+const rpUid = () => `rp-${++_rpId}`;
 
 type BulletStyle = '- [ ]' | '-' | '・';
 const BULLET_OPTIONS: { label: string; value: BulletStyle }[] = [
@@ -57,6 +62,10 @@ const Forge = () => {
   const [mdspInput, setMdspInput] = useState('');
   const [deleteInput, setDeleteInput] = useState('');
   const [listjoinInput, setListjoinInput] = useState('');
+  const [replaceInput, setReplaceInput] = useState('');
+  const [replacePairs, setReplacePairs] = useState<{ id: string; from: string; to: string }[]>([
+    { id: rpUid(), from: '', to: '' },
+  ]);
   const [deleteTargets, setDeleteTargets] = useState<{ id: string; value: string }[]>([
     { id: delUid(), value: '' },
   ]);
@@ -67,6 +76,47 @@ const Forge = () => {
     setTimeout(() => setToast(''), 1800);
   }, []);
 
+  const mdOutput = mdInput
+    ? mdMode === 'bullet' ? wrapMdBullet(mdInput, mdTitle) : wrapMdDoc(mdInput, mdTitle)
+    : '';
+
+  const replaceOutput = applyReplaces(replaceInput, replacePairs.map(p => ({ from: p.from, to: p.to })));
+
+  const currentOutput = (() => {
+    switch (tab) {
+      case 'md':        return mdOutput;
+      case 'json':      return jsonOutput ?? '';
+      case 'sql':       return sqlOutput;
+      case 'normalize': return normalizeSpaces(normalizeInput);
+      case 'bullet':    return toBulletList(bulletInput, bulletStyle);
+      case 'oneliner':  return toOneLiner(onelinerInput);
+      case 'mdsp':      return addMdLineBreaks(mdspInput);
+      case 'delete':    return deleteChars(deleteInput, deleteTargets.map(t => t.value));
+      case 'listjoin':  return listToOneLiner(listjoinInput);
+      case 'replace':   return replaceOutput;
+      default:          return '';
+    }
+  })();
+
+  const currentOutputRef = useRef(currentOutput);
+  useEffect(() => { currentOutputRef.current = currentOutput; }, [currentOutput]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const text = currentOutputRef.current;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(
+          () => showToast('コピーしました'),
+          () => showToast('コピー失敗'),
+        );
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showToast]);
+
   const copy = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -75,10 +125,6 @@ const Forge = () => {
       showToast('コピー失敗');
     }
   };
-
-  const mdOutput = mdInput
-    ? mdMode === 'bullet' ? wrapMdBullet(mdInput, mdTitle) : wrapMdDoc(mdInput, mdTitle)
-    : '';
 
   return (
     <div className={`forge ${dark ? 'dark' : 'light'}`}>
@@ -421,6 +467,67 @@ const Forge = () => {
                     className="fg-btn fg-btn-orange"
                     onClick={() => copy(listToOneLiner(listjoinInput))}
                   >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {/* ===== REPLACE ===== */}
+        {tab === 'replace' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'置換対象のテキストを入力し、下の対応表で変換ルールを指定します'}
+              value={replaceInput}
+              onChange={e => setReplaceInput(e.target.value)}
+              rows={6}
+              aria-label="文字置換入力"
+            />
+            <div className="fg-delete-targets">
+              {replacePairs.map((p, i) => (
+                <div key={p.id} className="fg-delete-target-row">
+                  <input
+                    className="fg-delete-target-input"
+                    type="text"
+                    placeholder={`変換前 ${i + 1}`}
+                    value={p.from}
+                    onChange={e => setReplacePairs(prev => prev.map(x => x.id === p.id ? { ...x, from: e.target.value } : x))}
+                    aria-label={`変換前 ${i + 1}`}
+                  />
+                  <span className="ph-arrow" style={{ padding: '0 4px', color: 'var(--fg-text-dim)' }}>→</span>
+                  <input
+                    className="fg-delete-target-input"
+                    type="text"
+                    placeholder={`変換後 ${i + 1}`}
+                    value={p.to}
+                    onChange={e => setReplacePairs(prev => prev.map(x => x.id === p.id ? { ...x, to: e.target.value } : x))}
+                    aria-label={`変換後 ${i + 1}`}
+                  />
+                  <button
+                    className="fg-btn fg-btn-ghost fg-delete-remove"
+                    onClick={() => setReplacePairs(prev => prev.filter(x => x.id !== p.id))}
+                    disabled={replacePairs.length === 1}
+                    aria-label="置換ルールを除去"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+              <button
+                className="fg-btn fg-btn-ghost"
+                onClick={() => setReplacePairs(prev => [...prev, { id: rpUid(), from: '', to: '' }])}
+              >
+                ＋ 追加
+              </button>
+            </div>
+            {replaceInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="文字置換結果">{replaceOutput}</div>
+                <div className="fg-md-actions">
+                  <button className="fg-btn fg-btn-orange" onClick={() => copy(replaceOutput)}>
                     コピー
                   </button>
                 </div>

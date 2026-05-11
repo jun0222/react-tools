@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        8
+        12
          tool
         s
          available
@@ -251,6 +251,114 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/minutes"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+      >
+        📝
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Minutes
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/logtree"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+      >
+        🌳
+      </div>
+      <div
+        class="home-card-name"
+      >
+        LogTree
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/visu"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
+      >
+        📈
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Visu
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/bookmarks"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        🔖
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Bookmarks
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>
@@ -274,7 +382,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        8
+        12
          tool
         s
          available
@@ -508,6 +616,114 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         text
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/minutes"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+      >
+        📝
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Minutes
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/logtree"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+      >
+        🌳
+      </div>
+      <div
+        class="home-card-name"
+      >
+        LogTree
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/visu"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f59e0b, #ef4444);"
+      >
+        📈
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Visu
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/bookmarks"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        🔖
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Bookmarks
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>

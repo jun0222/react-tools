@@ -79,6 +79,25 @@ const Draft = () => {
     setTimeout(() => setToast(''), 1800);
   }, []);
 
+  const draftRef = useRef(draft);
+  useEffect(() => { draftRef.current = draft; }, [draft]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const text = draftRef.current;
+        if (!text.trim()) return;
+        navigator.clipboard.writeText(text).then(
+          () => showToast('コピーしました'),
+          () => showToast('コピー失敗'),
+        );
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showToast]);
+
   const setField = (key: string, value: string) => {
     setFieldValues(prev => ({
       ...prev,

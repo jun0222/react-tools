@@ -1,0 +1,287 @@
+/* ============================
+   Visu - Data Visualizer
+   ============================ */
+
+.visu {
+  --vs-amber: #f59e0b;
+  --vs-radius: 14px;
+  --vs-radius-sm: 8px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+}
+
+.visu.dark {
+  --vs-surface: #1a1a24;
+  --vs-surface2: #22222e;
+  --vs-border: #2e2e3e;
+  --vs-text: #e0e0e0;
+  --vs-text-dim: #666;
+}
+
+.visu.light {
+  --vs-surface: #ffffff;
+  --vs-surface2: #f0f0f4;
+  --vs-border: #e0e0e8;
+  --vs-text: #1a1a2e;
+  --vs-text-dim: #888;
+}
+
+/* Header */
+.vs-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.vs-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.vs-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--vs-text);
+  margin: 0;
+}
+
+.vs-header h1 .accent { color: var(--vs-amber); }
+
+/* Tabs */
+.vs-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--vs-surface2);
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.vs-tab {
+  padding: 6px 16px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--vs-text-dim);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.vs-tab:hover { color: var(--vs-text); }
+.vs-tab-active {
+  background: var(--vs-surface);
+  color: var(--vs-text);
+  font-weight: 600;
+}
+
+/* Panel */
+.vs-panel {
+  background: var(--vs-surface);
+  border: 1px solid var(--vs-border);
+  border-radius: var(--vs-radius);
+  padding: 16px;
+}
+
+.vs-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--vs-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Code area */
+.vs-code-area {
+  width: 100%;
+  background: var(--vs-surface2);
+  border: 1.5px solid var(--vs-border);
+  border-radius: var(--vs-radius-sm);
+  color: var(--vs-text);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 120px;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+.vs-code-area:focus { border-color: var(--vs-amber); }
+
+/* Button */
+.vs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--vs-radius-sm);
+  border: 1.5px solid transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.vs-btn-ghost {
+  background: var(--vs-surface2);
+  border-color: var(--vs-border);
+  color: var(--vs-text-dim);
+}
+.vs-btn-ghost:hover { border-color: var(--vs-amber); color: var(--vs-text); }
+
+.vs-btn-sm { padding: 3px 9px; font-size: 11px; }
+
+/* Table */
+.vs-table-wrap {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.vs-table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+}
+
+.vs-table th {
+  background: var(--vs-surface2);
+  border: 1px solid var(--vs-border);
+  padding: 6px 10px;
+  text-align: left;
+  color: var(--vs-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vs-table td {
+  border: 1px solid var(--vs-border);
+  padding: 5px 10px;
+  color: var(--vs-text);
+}
+
+.vs-table tr:nth-child(even) td {
+  background: var(--vs-surface2);
+}
+
+/* Matrix */
+.vs-matrix-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.vs-matrix-row-inputs, .vs-matrix-col-inputs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.vs-matrix-label-input {
+  background: var(--vs-surface2);
+  border: 1px solid var(--vs-border);
+  border-radius: 6px;
+  color: var(--vs-text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 4px 8px;
+  outline: none;
+  width: 100px;
+  transition: border-color 0.15s;
+}
+.vs-matrix-label-input:focus { border-color: var(--vs-amber); }
+
+.vs-matrix-table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.vs-matrix-table th {
+  background: var(--vs-surface2);
+  border: 1px solid var(--vs-border);
+  padding: 6px 8px;
+  color: var(--vs-text);
+  font-weight: 600;
+  text-align: center;
+  min-width: 90px;
+}
+
+.vs-matrix-table td {
+  border: 1px solid var(--vs-border);
+  padding: 4px;
+}
+
+.vs-matrix-cell-input {
+  background: transparent;
+  border: none;
+  color: var(--vs-text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  outline: none;
+  width: 100%;
+  text-align: center;
+}
+
+.vs-matrix-row-header {
+  background: var(--vs-surface2);
+  border: 1px solid var(--vs-border);
+  padding: 6px 10px;
+  color: var(--vs-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* SVG preview */
+.vs-svg-wrap {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+/* Error */
+.vs-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* Hint */
+.vs-hint {
+  font-size: 11px;
+  color: var(--vs-text-dim);
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* Toast */
+.vs-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--vs-amber);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 100;
+}

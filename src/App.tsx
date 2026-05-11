@@ -17,6 +17,10 @@ import Romaji from './tools/romaji/Romaji';
 import Stencil from './tools/stencil/Stencil';
 import Todo from './tools/todo/Todo';
 import Draft from './tools/draft/Draft';
+import Minutes from './tools/minutes/Minutes';
+import LogTree from './tools/logtree/LogTree';
+import Visu from './tools/visu/Visu';
+import Bookmarks from './tools/bookmarks/Bookmarks';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -49,6 +53,10 @@ function App() {
             <Route path="/stencil" element={<Stencil />} />
             <Route path="/todo" element={<Todo />} />
             <Route path="/draft" element={<Draft />} />
+            <Route path="/minutes" element={<Minutes />} />
+            <Route path="/logtree" element={<LogTree />} />
+            <Route path="/visu" element={<Visu />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

@@ -4,7 +4,7 @@ import {
   wrapHeading, wrapCodeBlock, wrapDivider, wrapMdDoc, wrapMdBullet,
   formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars,
-  listToOneLiner,
+  listToOneLiner, applyReplaces,
 } from './helpers';
 
 // =====================
@@ -370,5 +370,32 @@ describe('listToOneLiner', () => {
   });
   it('空文字は空文字を返す', () => {
     expect(listToOneLiner('')).toBe('');
+  });
+});
+
+// =====================
+// 文字置換
+// =====================
+describe('applyReplaces', () => {
+  it('単純な文字列を置換する', () => {
+    expect(applyReplaces('hello world', [{ from: 'world', to: 'Japan' }])).toBe('hello Japan');
+  });
+  it('全箇所を置換する', () => {
+    expect(applyReplaces('aaa', [{ from: 'a', to: 'b' }])).toBe('bbb');
+  });
+  it('複数ペアを順番に適用する', () => {
+    expect(applyReplaces('abc', [{ from: 'a', to: 'x' }, { from: 'b', to: 'y' }])).toBe('xyc');
+  });
+  it('from が空のペアは無視する', () => {
+    expect(applyReplaces('hello', [{ from: '', to: 'x' }])).toBe('hello');
+  });
+  it('ペアが空配列のとき入力をそのまま返す', () => {
+    expect(applyReplaces('hello', [])).toBe('hello');
+  });
+  it('日本語の置換ができる', () => {
+    expect(applyReplaces('こんにちは', [{ from: 'こんにちは', to: 'おはよう' }])).toBe('おはよう');
+  });
+  it('to が空文字のとき from を削除する', () => {
+    expect(applyReplaces('hello world', [{ from: ' world', to: '' }])).toBe('hello');
   });
 });

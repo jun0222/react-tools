@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { convertRomaji, groupLines } from './romajiCore';
 import './Romaji.css';
@@ -23,6 +23,25 @@ const Romaji = () => {
   const n = parseInt(groupSize, 10);
   const rawOutput = input.trim() ? convertRomaji(input, skipWords.map(s => s.value)) : '';
   const output = rawOutput && n > 0 ? groupLines(rawOutput, n) : rawOutput;
+
+  const outputRef = useRef(output);
+  useEffect(() => { outputRef.current = output; }, [output]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const text = outputRef.current;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(
+          () => showToast('コピーしました'),
+          () => showToast('コピー失敗'),
+        );
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showToast]);
 
   const copy = async () => {
     try {

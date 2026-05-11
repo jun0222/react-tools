@@ -109,6 +109,25 @@ const Stencil = () => {
     return `${d.getFullYear()}_${pad(d.getMonth() + 1)}_${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}_${pad(d.getSeconds())}`;
   };
 
+  const outputRef = useRef(output);
+  useEffect(() => { outputRef.current = output; }, [output]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const text = outputRef.current;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(
+          () => showToast('コピーしました'),
+          () => showToast('コピー失敗'),
+        );
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showToast]);
+
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(output);

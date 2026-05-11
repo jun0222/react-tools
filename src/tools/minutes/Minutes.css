@@ -1,0 +1,305 @@
+/* ============================
+   Minutes - Meeting Notes Tool
+   ============================ */
+
+.minutes {
+  --mn-indigo: #6366f1;
+  --mn-indigo-light: #818cf8;
+  --mn-radius: 14px;
+  --mn-radius-sm: 8px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+}
+
+.minutes.dark {
+  --mn-surface: #1a1a24;
+  --mn-surface2: #22222e;
+  --mn-border: #2e2e3e;
+  --mn-text: #e0e0e0;
+  --mn-text-dim: #666;
+}
+
+.minutes.light {
+  --mn-surface: #ffffff;
+  --mn-surface2: #f0f0f4;
+  --mn-border: #e0e0e8;
+  --mn-text: #1a1a2e;
+  --mn-text-dim: #888;
+}
+
+/* Header */
+.mn-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mn-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.mn-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--mn-text);
+  margin: 0;
+}
+
+.mn-header h1 .accent { color: var(--mn-indigo); }
+
+/* Layout */
+.mn-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .mn-layout { grid-template-columns: 1fr; }
+}
+
+/* Panel */
+.mn-panel {
+  background: var(--mn-surface);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-radius);
+  padding: 16px;
+}
+
+.mn-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--mn-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Form fields */
+.mn-field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.mn-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mn-indigo);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  letter-spacing: 0.03em;
+}
+
+.mn-input {
+  width: 100%;
+  background: var(--mn-surface2);
+  border: 1.5px solid var(--mn-border);
+  border-radius: var(--mn-radius-sm);
+  color: var(--mn-text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+.mn-input:focus { border-color: var(--mn-indigo); }
+.mn-input::placeholder { color: var(--mn-text-dim); }
+
+.mn-textarea {
+  width: 100%;
+  background: var(--mn-surface2);
+  border: 1.5px solid var(--mn-border);
+  border-radius: var(--mn-radius-sm);
+  color: var(--mn-text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 56px;
+  transition: border-color 0.15s;
+  line-height: 1.5;
+}
+.mn-textarea:focus { border-color: var(--mn-indigo); }
+.mn-textarea::placeholder { color: var(--mn-text-dim); }
+
+/* Buttons */
+.mn-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--mn-radius-sm);
+  border: 1.5px solid transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.mn-btn-ghost {
+  background: var(--mn-surface2);
+  border-color: var(--mn-border);
+  color: var(--mn-text-dim);
+}
+.mn-btn-ghost:hover { border-color: var(--mn-indigo); color: var(--mn-text); }
+
+.mn-btn-primary {
+  background: var(--mn-indigo);
+  color: #fff;
+}
+.mn-btn-primary:hover { opacity: 0.85; }
+
+.mn-btn-danger {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.3);
+  color: #ef4444;
+}
+.mn-btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+.mn-btn-sm { padding: 3px 8px; font-size: 11px; }
+
+/* Agenda items */
+.mn-agenda-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mn-agenda-item {
+  background: var(--mn-surface);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-radius);
+  padding: 14px;
+}
+
+.mn-agenda-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mn-agenda-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mn-indigo);
+  flex-shrink: 0;
+}
+
+.mn-agenda-item-header .mn-input {
+  flex: 1;
+}
+
+/* Action rows */
+.mn-action-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mn-action-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 28px;
+  gap: 4px;
+  align-items: center;
+}
+
+.mn-action-input {
+  background: var(--mn-surface2);
+  border: 1px solid var(--mn-border);
+  border-radius: 6px;
+  color: var(--mn-text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 5px 8px;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.mn-action-input:focus { border-color: var(--mn-indigo); }
+.mn-action-input::placeholder { color: var(--mn-text-dim); }
+
+.mn-action-header {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 28px;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.mn-action-header span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--mn-text-dim);
+  letter-spacing: 0.05em;
+  padding: 0 2px;
+}
+
+.mn-remove-btn {
+  background: none;
+  border: none;
+  color: var(--mn-text-dim);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+.mn-remove-btn:hover { color: #ef4444; }
+.mn-remove-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* Output */
+.mn-output-box {
+  background: var(--mn-surface2);
+  border: 1.5px solid var(--mn-border);
+  border-radius: var(--mn-radius-sm);
+  padding: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--mn-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 200px;
+  line-height: 1.6;
+}
+
+.mn-output-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Toast */
+.mn-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--mn-indigo);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 100;
+}

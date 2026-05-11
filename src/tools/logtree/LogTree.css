@@ -1,0 +1,185 @@
+/* ============================
+   LogTree - Logic Tree Visualizer
+   ============================ */
+
+.logtree {
+  --lt-teal: #0d9488;
+  --lt-radius: 14px;
+  --lt-radius-sm: 8px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+}
+
+.logtree.dark {
+  --lt-surface: #1a1a24;
+  --lt-surface2: #22222e;
+  --lt-border: #2e2e3e;
+  --lt-text: #e0e0e0;
+  --lt-text-dim: #666;
+}
+
+.logtree.light {
+  --lt-surface: #ffffff;
+  --lt-surface2: #f0f0f4;
+  --lt-border: #e0e0e8;
+  --lt-text: #1a1a2e;
+  --lt-text-dim: #888;
+}
+
+/* Header */
+.lt-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lt-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #0d9488, #6366f1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.lt-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lt-text);
+  margin: 0;
+}
+
+.lt-header h1 .accent { color: var(--lt-teal); }
+
+/* Layout */
+.lt-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .lt-layout { grid-template-columns: 1fr; }
+}
+
+/* Panel */
+.lt-panel {
+  background: var(--lt-surface);
+  border: 1px solid var(--lt-border);
+  border-radius: var(--lt-radius);
+  padding: 16px;
+}
+
+.lt-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--lt-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Code area */
+.lt-code-area {
+  width: 100%;
+  background: var(--lt-surface2);
+  border: 1.5px solid var(--lt-border);
+  border-radius: var(--lt-radius-sm);
+  color: var(--lt-text);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 200px;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+.lt-code-area:focus { border-color: var(--lt-teal); }
+
+/* Buttons */
+.lt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--lt-radius-sm);
+  border: 1.5px solid transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.lt-btn-ghost {
+  background: var(--lt-surface2);
+  border-color: var(--lt-border);
+  color: var(--lt-text-dim);
+}
+.lt-btn-ghost:hover { border-color: var(--lt-teal); color: var(--lt-text); }
+.lt-btn-ghost.active {
+  border-color: var(--lt-teal);
+  color: var(--lt-teal);
+  background: rgba(13,148,136,0.08);
+}
+
+.lt-btn-sm { padding: 3px 9px; font-size: 11px; }
+
+/* Direction toggle */
+.lt-dir-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+/* Preview */
+.lt-preview {
+  background: var(--lt-surface2);
+  border: 1px solid var(--lt-border);
+  border-radius: var(--lt-radius-sm);
+  overflow: auto;
+  min-height: 200px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.lt-preview-empty {
+  color: var(--lt-text-dim);
+  font-size: 12px;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* Hint box */
+.lt-hint {
+  font-size: 11px;
+  color: var(--lt-text-dim);
+  line-height: 1.7;
+  margin-top: 10px;
+}
+
+/* Toast */
+.lt-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lt-teal);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 100;
+}

@@ -208,3 +208,31 @@ describe('groupLines', () => {
     expect(groupLines('', 2)).toBe('');
   });
 });
+
+// =====================
+// 小文字かな（l/x プレフィックス）
+// =====================
+describe('小文字かなの変換', () => {
+  it('la → ぁ', () => { expect(convertRomaji('la')).toBe('ぁ'); });
+  it('li → ぃ', () => { expect(convertRomaji('li')).toBe('ぃ'); });
+  it('lu → ぅ', () => { expect(convertRomaji('lu')).toBe('ぅ'); });
+  it('le → ぇ', () => { expect(convertRomaji('le')).toBe('ぇ'); });
+  it('lo → ぉ', () => { expect(convertRomaji('lo')).toBe('ぉ'); });
+  it('xa → ぁ', () => { expect(convertRomaji('xa')).toBe('ぁ'); });
+  it('xi → ぃ', () => { expect(convertRomaji('xi')).toBe('ぃ'); });
+  it('xu → ぅ', () => { expect(convertRomaji('xu')).toBe('ぅ'); });
+  it('xe → ぇ', () => { expect(convertRomaji('xe')).toBe('ぇ'); });
+  it('xo → ぉ', () => { expect(convertRomaji('xo')).toBe('ぉ'); });
+  it('lya → ゃ', () => { expect(convertRomaji('lya')).toBe('ゃ'); });
+  it('lyu → ゅ', () => { expect(convertRomaji('lyu')).toBe('ゅ'); });
+  it('lyo → ょ', () => { expect(convertRomaji('lyo')).toBe('ょ'); });
+  it('xya → ゃ', () => { expect(convertRomaji('xya')).toBe('ゃ'); });
+  it('xyu → ゅ', () => { expect(convertRomaji('xyu')).toBe('ゅ'); });
+  it('xyo → ょ', () => { expect(convertRomaji('xyo')).toBe('ょ'); });
+  it('ltu → っ', () => { expect(convertRomaji('ltu')).toBe('っ'); });
+  it('xtu → っ', () => { expect(convertRomaji('xtu')).toBe('っ'); });
+  it('ltsu → っ', () => { expect(convertRomaji('ltsu')).toBe('っ'); });
+  it('xtsu → っ', () => { expect(convertRomaji('xtsu')).toBe('っ'); });
+  it('文中でも使える（tela → てぁ）', () => { expect(convertRomaji('tela')).toBe('てぁ'); });
+  it('きゃ → ki+ya でなく kya で変換される', () => { expect(convertRomaji('kya')).toBe('きゃ'); });
+});

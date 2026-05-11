@@ -106,6 +106,16 @@ export const toBulletList = (input: string, bullet: string): string => {
     .join('\n');
 };
 
+// --- 文字置換 ---
+
+export const applyReplaces = (
+  text: string,
+  pairs: { from: string; to: string }[],
+): string => {
+  const valid = pairs.filter(p => p.from.length > 0);
+  return valid.reduce((t, { from, to }) => t.split(from).join(to), text);
+};
+
 // --- MD 末尾スペース ---
 
 export const addMdLineBreaks = (input: string): string =>

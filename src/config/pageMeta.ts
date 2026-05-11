@@ -56,4 +56,20 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Stencil - Template Filler 📋',
     description: '%%PLACEHOLDER%%形式の変数を埋め込んだテンプレートに値を流し込んで、安定したフォーマットでドキュメント作成。',
   },
+  '/minutes': {
+    title: 'Minutes - 議事録ツール 📝',
+    description: 'コンサル型議事録。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力。MECE/So What観点を補助。',
+  },
+  '/logtree': {
+    title: 'LogTree - ロジックツリー 🌳',
+    description: 'インデントされたテキストを右向き・下向きのロジックツリーSVGに変換して可視化する。',
+  },
+  '/visu': {
+    title: 'Visu - データ可視化 📈',
+    description: 'CSVを棒グラフ・テーブルに変換。比較マトリクスをMarkdown形式でコピー。',
+  },
+  '/bookmarks': {
+    title: 'Bookmarks - ブックマーク管理 🔖',
+    description: 'URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート対応。',
+  },
 };

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import {
   uid,
   processPhantom,
@@ -47,7 +47,7 @@ export function usePhantom() {
   const deleteRule = (id: string) =>
     setRules(prev => prev.filter(r => r.id !== id));
 
-  const handleCopy = () => copyText(output);
+  const handleCopy = useCallback(() => copyText(output), [output]);
 
   return {
     inputText, setInputText,

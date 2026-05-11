@@ -3,9 +3,14 @@ export interface Segment {
   skip: boolean;
 }
 
-// Longest-first ordering ensures greedy match (3-char before 2-char before 1-char)
+// Longest-first ordering ensures greedy match (4-char before 3-char before 2-char before 1-char)
 export const ROMAJI_TABLE: readonly [string, string][] = [
+  // 4-char (small tsu via l/x prefix)
+  ['ltsu', 'っ'], ['xtsu', 'っ'],
   // 3-char
+  ['lya', 'ゃ'], ['lyu', 'ゅ'], ['lyo', 'ょ'],
+  ['xya', 'ゃ'], ['xyu', 'ゅ'], ['xyo', 'ょ'],
+  ['ltu', 'っ'], ['xtu', 'っ'],
   ['sha', 'しゃ'], ['shi', 'し'], ['shu', 'しゅ'], ['she', 'しぇ'], ['sho', 'しょ'],
   ['cha', 'ちゃ'], ['chi', 'ち'], ['chu', 'ちゅ'], ['che', 'ちぇ'], ['cho', 'ちょ'],
   ['tsu', 'つ'],
@@ -18,6 +23,9 @@ export const ROMAJI_TABLE: readonly [string, string][] = [
   ['mya', 'みゃ'], ['myu', 'みゅ'], ['myo', 'みょ'],
   ['rya', 'りゃ'], ['ryu', 'りゅ'], ['ryo', 'りょ'],
   ['jya', 'じゃ'], ['jyu', 'じゅ'], ['jyo', 'じょ'],
+  // 2-char small kana (l/x prefix)
+  ['la', 'ぁ'], ['li', 'ぃ'], ['lu', 'ぅ'], ['le', 'ぇ'], ['lo', 'ぉ'],
+  ['xa', 'ぁ'], ['xi', 'ぃ'], ['xu', 'ぅ'], ['xe', 'ぇ'], ['xo', 'ぉ'],
   // 2-char
   ['ka', 'か'], ['ki', 'き'], ['ku', 'く'], ['ke', 'け'], ['ko', 'こ'],
   ['sa', 'さ'], ['si', 'し'], ['su', 'す'], ['se', 'せ'], ['so', 'そ'],

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './Phantom.css';
 import { usePhantom } from './usePhantom';
 import { useTheme } from '../../context/ThemeContext';
@@ -12,6 +13,17 @@ const Phantom = () => {
     output,
     handleCopy,
   } = usePhantom();
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        handleCopy();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [handleCopy]);
 
   return (
     <div className={`ph-root ${dark ? 'dark' : 'light'}`}>

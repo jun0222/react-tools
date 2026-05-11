@@ -84,6 +84,25 @@ const Mermaid = () => {
     if (tpl) setCode(tpl.code);
   };
 
+  const codeRef = useRef(code);
+  useEffect(() => { codeRef.current = code; }, [code]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const text = codeRef.current;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(
+          () => showToast('コードをコピーしました'),
+          () => showToast('コピー失敗'),
+        );
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showToast]);
+
   const copyCode = async () => {
     try {
       await navigator.clipboard.writeText(code);
