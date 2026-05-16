@@ -1,60 +1,3 @@
-export interface ErrorRecord {
-  id: string;
-  title: string;
-  errorText: string;
-  response: string;
-  createdAt: string;
-}
-
-const STORAGE_KEY = 'errlog-data';
-
-let _seq = 0;
-const newId = () => `el-${Date.now()}-${++_seq}`;
-
-export const loadRecords = (): ErrorRecord[] => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-};
-
-export const saveRecords = (items: ErrorRecord[]): void => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  } catch { /* ignore */ }
-};
-
-export const createRecord = (
-  errorText: string,
-  title: string,
-  response: string,
-): ErrorRecord => ({
-  id: newId(),
-  title: title.trim() || errorText.slice(0, 60).replace(/\n/g, ' '),
-  errorText,
-  response,
-  createdAt: new Date().toISOString(),
-});
-
-export const addRecord = (items: ErrorRecord[], r: ErrorRecord): ErrorRecord[] =>
-  [r, ...items];
-
-export const deleteRecord = (items: ErrorRecord[], id: string): ErrorRecord[] =>
-  items.filter(r => r.id !== id);
-
-export const filterRecords = (items: ErrorRecord[], query: string): ErrorRecord[] => {
-  if (!query.trim()) return items;
-  const q = query.toLowerCase();
-  return items.filter(
-    r =>
-      r.title.toLowerCase().includes(q) ||
-      r.errorText.toLowerCase().includes(q) ||
-      r.response.toLowerCase().includes(q),
-  );
-};
-
 export const generatePrompt = (errorText: string): string =>
   `以下のエラーを分析し、次の形式で回答してください。
 
@@ -98,4 +41,35 @@ flowchart TD
 export const extractMermaid = (response: string): string | null => {
   const m = response.match(/```mermaid\s*\n([\s\S]*?)```/);
   return m ? m[1].trim() : null;
+};
+
+export const generateFilename = (): string => {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `errlog-${d.getFullYear()}_${pad(d.getMonth() + 1)}_${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}_${pad(d.getSeconds())}.md`;
+};
+
+export const generateMarkdown = (
+  title: string,
+  errorText: string,
+  response: string,
+): string => {
+  const displayTitle = title.trim() || errorText.slice(0, 60).replace(/\n/g, ' ');
+  const now = new Date().toISOString();
+  return `# ${displayTitle}
+
+## エラー内容
+
+\`\`\`
+${errorText}
+\`\`\`
+
+## LLM の返答
+
+${response}
+
+---
+
+*記録日時: ${now}*
+`;
 };
