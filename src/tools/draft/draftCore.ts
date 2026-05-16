@@ -180,10 +180,10 @@ export const FRAMEWORKS: readonly Framework[] = [
       { key: 'hypothesis', label: '仮説 ── 答えはこうではないか', placeholder: 'To-Be: 仮の結論・方向性・アクション案' },
     ],
     generate: v => [
-      v.situation  && `【状況】${v.situation}`,
-      v.issue      && `【論点】${v.issue}`,
-      v.hypothesis && `【仮説】${v.hypothesis}`,
-    ].filter(Boolean).join('\n'),
+      v.situation  && `【状況】\n${v.situation}`,
+      v.issue      && `【論点】\n${v.issue}`,
+      v.hypothesis && `【仮説】\n${v.hypothesis}`,
+    ].filter(Boolean).join('\n\n'),
   },
 ];
 
