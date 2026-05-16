@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        11
+        12
          tool
         s
          available
@@ -332,6 +332,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/errlog"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #ef4444, #f97316);"
+      >
+        🐛
+      </div>
+      <div
+        class="home-card-name"
+      >
+        ErrLog
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        dev
       </span>
     </a>
   </div>
@@ -355,7 +382,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        11
+        12
          tool
         s
          available
@@ -670,6 +697,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         util
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/errlog"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #ef4444, #f97316);"
+      >
+        🐛
+      </div>
+      <div
+        class="home-card-name"
+      >
+        ErrLog
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        dev
       </span>
     </a>
   </div>

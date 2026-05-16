@@ -23,6 +23,7 @@ import Visu from './tools/visu/Visu';
 import Bookmarks from './tools/bookmarks/Bookmarks';
 import Snip from './tools/snip/Snip';
 import WordMemo from './tools/wordmemo/WordMemo';
+import ErrLog from './tools/errlog/ErrLog';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -61,6 +62,7 @@ function App() {
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/snip" element={<Snip />} />
             <Route path="/wordmemo" element={<WordMemo />} />
+            <Route path="/errlog" element={<ErrLog />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

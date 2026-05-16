@@ -80,4 +80,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'WordMemo - 単語メモ 📚',
     description: '気になった単語・概念をメモして、AIエージェント向け文献リサーチプロンプトを自動生成・コピー。',
   },
+  '/errlog': {
+    title: 'ErrLog - エラー管理 🐛',
+    description: 'エラーを貼り付けてLLM向けプロンプトを生成。Mermaidフローチャート付きの返答を記録・検索・再利用。',
+  },
 };

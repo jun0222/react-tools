@@ -1,0 +1,365 @@
+.errlog {
+  --el-bg: #0d0d14;
+  --el-surface: #14141f;
+  --el-surface2: #1a1a2a;
+  --el-border: #2a2a3a;
+  --el-text: #e0e0e0;
+  --el-text-dim: #777;
+  --el-accent: #f87171;
+  --el-accent-bg: rgba(248,113,113,0.1);
+  --el-accent-border: rgba(248,113,113,0.35);
+  --el-green: #34d399;
+  --el-green-bg: rgba(52,211,153,0.1);
+  --el-input-bg: #111120;
+  --el-hover: #1e1e2e;
+  --el-code-bg: #0d0d18;
+  --el-toast-bg: #1a1a2a;
+}
+
+.errlog.light {
+  --el-bg: #f4f6fa;
+  --el-surface: #fff;
+  --el-surface2: #f0f0f8;
+  --el-border: #e0e0ec;
+  --el-text: #1a1a30;
+  --el-text-dim: #999;
+  --el-accent: #dc2626;
+  --el-accent-bg: rgba(220,38,38,0.06);
+  --el-accent-border: rgba(220,38,38,0.25);
+  --el-green: #059669;
+  --el-green-bg: rgba(5,150,105,0.08);
+  --el-input-bg: #f8f8fc;
+  --el-hover: #f0f0f8;
+  --el-code-bg: #1a1a2a;
+  --el-toast-bg: #1a1a2a;
+}
+
+/* ===== Layout ===== */
+.errlog {
+  min-height: 100vh;
+  background: var(--el-bg);
+  color: var(--el-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 24px 20px 80px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.el-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.el-logo { font-size: 24px; }
+
+.el-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.el-header h1 .accent { color: var(--el-accent); }
+
+/* ===== Panel ===== */
+.el-panel {
+  background: var(--el-surface);
+  border: 1px solid var(--el-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.el-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--el-text-dim);
+  margin-bottom: 10px;
+}
+
+/* ===== Textarea ===== */
+.el-textarea {
+  width: 100%;
+  background: var(--el-input-bg);
+  border: 1px solid var(--el-border);
+  border-radius: 8px;
+  color: var(--el-text);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.el-textarea:focus { border-color: var(--el-accent); }
+.el-textarea::placeholder { color: var(--el-text-dim); font-family: inherit; }
+
+/* ===== Input ===== */
+.el-input {
+  width: 100%;
+  background: var(--el-input-bg);
+  border: 1px solid var(--el-border);
+  border-radius: 8px;
+  color: var(--el-text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.el-input:focus { border-color: var(--el-accent); }
+.el-input::placeholder { color: var(--el-text-dim); }
+
+/* ===== Buttons ===== */
+.el-btn {
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 14px;
+  transition: opacity 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.el-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.el-btn-primary {
+  background: var(--el-accent);
+  color: #fff;
+  font-weight: 600;
+}
+.el-btn-primary:hover:not(:disabled) { opacity: 0.85; }
+
+.el-btn-green {
+  background: var(--el-green);
+  color: #0d0d14;
+  font-weight: 600;
+}
+.el-btn-green:hover:not(:disabled) { opacity: 0.85; }
+
+.el-btn-ghost {
+  background: transparent;
+  color: var(--el-text-dim);
+  border: 1px solid var(--el-border);
+}
+.el-btn-ghost:hover:not(:disabled) { background: var(--el-hover); color: var(--el-text); }
+
+.el-btn-sm { padding: 4px 10px; font-size: 12px; }
+
+/* ===== Copy prompt button ===== */
+.el-copy-prompt-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--el-accent-bg);
+  border: 1px solid var(--el-accent-border);
+  border-radius: 8px;
+  color: var(--el-accent);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-top: 10px;
+}
+.el-copy-prompt-btn:hover:not(:disabled) { opacity: 0.8; }
+.el-copy-prompt-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ===== Step row ===== */
+.el-step-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--el-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.el-step-divider {
+  border: none;
+  border-top: 1px dashed var(--el-border);
+  margin: 16px 0;
+}
+
+/* ===== Mermaid preview ===== */
+.el-mermaid-wrap {
+  background: var(--el-surface2);
+  border: 1px solid var(--el-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.el-mermaid-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--el-text-dim);
+  margin-bottom: 8px;
+}
+
+/* ===== Save row ===== */
+.el-save-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.el-save-row .el-input { flex: 1; }
+
+/* ===== Search ===== */
+.el-search-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.el-search { flex: 1; }
+
+.el-count {
+  font-size: 12px;
+  color: var(--el-text-dim);
+  white-space: nowrap;
+}
+
+/* ===== Record list ===== */
+.el-record {
+  background: var(--el-surface2);
+  border: 1px solid var(--el-border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.el-record:hover { border-color: var(--el-accent); }
+
+.el-record-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.el-record-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--el-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.el-record-date {
+  font-size: 11px;
+  color: var(--el-text-dim);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.el-record-chevron {
+  font-size: 11px;
+  color: var(--el-text-dim);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.el-record-chevron.open { transform: rotate(180deg); }
+
+/* ===== Record detail ===== */
+.el-record-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--el-border);
+}
+
+.el-record-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--el-text-dim);
+  margin: 12px 0 6px;
+}
+
+.el-record-error {
+  background: var(--el-input-bg);
+  border: 1px solid var(--el-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--el-text);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.el-record-response {
+  background: var(--el-input-bg);
+  border: 1px solid var(--el-border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--el-text);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.el-record-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* ===== Empty ===== */
+.el-empty {
+  text-align: center;
+  color: var(--el-text-dim);
+  font-size: 14px;
+  padding: 32px 0;
+}
+
+/* ===== Toast ===== */
+.el-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--el-toast-bg);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}

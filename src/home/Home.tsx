@@ -155,6 +155,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: '気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成',
     tag: 'util',
   },
+  {
+    path: '/errlog',
+    name: 'ErrLog',
+    icon: '🐛',
+    iconBg: 'linear-gradient(135deg, #ef4444, #f97316)',
+    desc: 'エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用',
+    tag: 'dev',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';
