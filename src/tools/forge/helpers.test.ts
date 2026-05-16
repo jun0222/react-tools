@@ -399,3 +399,23 @@ describe('applyReplaces', () => {
     expect(applyReplaces('hello world', [{ from: ' world', to: '' }])).toBe('hello');
   });
 });
+
+import { addSlackSuffix } from './helpers';
+
+describe('addSlackSuffix', () => {
+  it('URLの末尾に半角スペース+全角スペースを付ける', () => {
+    expect(addSlackSuffix('http://localhost:5173/')).toBe('http://localhost:5173/ 　');
+  });
+
+  it('複数行それぞれに付ける', () => {
+    expect(addSlackSuffix('http://a.com\nhttp://b.com')).toBe('http://a.com 　\nhttp://b.com 　');
+  });
+
+  it('空行はそのまま（スペースを付けない）', () => {
+    expect(addSlackSuffix('http://a.com\n\nhttp://b.com')).toBe('http://a.com 　\n\nhttp://b.com 　');
+  });
+
+  it('空文字は空文字を返す', () => {
+    expect(addSlackSuffix('')).toBe('');
+  });
+});

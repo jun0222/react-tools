@@ -143,3 +143,10 @@ export const wrapMdBullet = (text: string, title = ''): string => {
   const items = text.split('\n').filter(l => l.trim()).map(l => `- ${l.trim()}`).join('\n');
   return `## ${title}\n\n${items}\n\n---`;
 };
+
+/** Slack のリンクプレビュー（unfurl）を抑制するため、各行末尾に半角+全角スペースを付ける */
+export const addSlackSuffix = (text: string): string =>
+  text
+    .split('\n')
+    .map(line => (line.trim() ? line + ' 　' : line))
+    .join('\n');

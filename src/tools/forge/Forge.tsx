@@ -4,7 +4,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, wrapMdBullet, formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
-  applyReplaces,
+  applyReplaces, addSlackSuffix,
 } from './helpers';
 import './Forge.css';
 
@@ -15,7 +15,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace' | 'slackurl';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -29,6 +29,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'delete',    label: '文字削除'     },
   { id: 'listjoin',  label: 'リスト→1行'  },
   { id: 'replace',   label: '文字置換'     },
+  { id: 'slackurl',  label: 'Slack URL'   },
 ];
 
 let _delId = 0;
@@ -63,6 +64,7 @@ const Forge = () => {
   const [deleteInput, setDeleteInput] = useState('');
   const [listjoinInput, setListjoinInput] = useState('');
   const [replaceInput, setReplaceInput] = useState('');
+  const [slackInput, setSlackInput] = useState('');
   const [replacePairs, setReplacePairs] = useState<{ id: string; from: string; to: string }[]>([
     { id: rpUid(), from: '', to: '' },
   ]);
@@ -94,6 +96,7 @@ const Forge = () => {
       case 'delete':    return deleteChars(deleteInput, deleteTargets.map(t => t.value));
       case 'listjoin':  return listToOneLiner(listjoinInput);
       case 'replace':   return replaceOutput;
+      case 'slackurl':  return addSlackSuffix(slackInput);
       default:          return '';
     }
   })();
@@ -528,6 +531,35 @@ const Forge = () => {
                 <div className="fg-md-output" aria-label="文字置換結果">{replaceOutput}</div>
                 <div className="fg-md-actions">
                   <button className="fg-btn fg-btn-orange" onClick={() => copy(replaceOutput)}>
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {/* ===== SLACK URL ===== */}
+        {tab === 'slackurl' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'URLを1行ずつ入力すると、末尾に半角スペース＋全角スペースを付けてコピーできます。\nSlack がリンクプレビュー（unfurl）を展開するのを防ぎます。\n\nhttp://localhost:5173/\nhttps://example.com/path?q=1'}
+              value={slackInput}
+              onChange={e => setSlackInput(e.target.value)}
+              rows={6}
+              aria-label="Slack URL入力"
+            />
+            {slackInput.trim() && (
+              <>
+                <div className="fg-md-output" aria-label="Slack URL結果">
+                  {addSlackSuffix(slackInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(addSlackSuffix(slackInput))}
+                  >
                     コピー
                   </button>
                 </div>
