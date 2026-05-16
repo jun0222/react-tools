@@ -17,9 +17,9 @@ const STORAGE_KEY = 'draft-state';
 const loadState = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as { draft: string; mapCode: string };
+    if (raw) return JSON.parse(raw) as { draft: string; mapCode: string; input?: string };
   } catch { /* ignore */ }
-  return { draft: '', mapCode: DEFAULT_MINDMAP };
+  return { draft: '', mapCode: DEFAULT_MINDMAP, input: '' };
 };
 
 const Draft = () => {
@@ -38,6 +38,7 @@ const Draft = () => {
   const [fieldValues, setFieldValues] = useState<Record<string, Record<string, string>>>({});
 
   const [draft, setDraft] = useState(init.draft);
+  const [input, setInput] = useState(init.input ?? '');
   const [toast, setToast] = useState('');
 
   const activeFramework = FRAMEWORKS.find(f => f.id === frameworkId) ?? FRAMEWORKS[0];
@@ -45,8 +46,8 @@ const Draft = () => {
 
   // Persist draft + map
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode })); } catch { /* ignore */ }
-  }, [draft, mapCode]);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode, input })); } catch { /* ignore */ }
+  }, [draft, mapCode, input]);
 
   // Debounce mindmap
   useEffect(() => {
@@ -258,8 +259,25 @@ const Draft = () => {
           )}
         </div>
 
-        {/* ===== RIGHT: Draft + Metrics ===== */}
+        {/* ===== RIGHT: Input + Draft + Metrics ===== */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div className="dr-panel">
+            <div className="dr-panel-title">インプット</div>
+            <textarea
+              className="dr-draft-textarea"
+              placeholder={'参考にしたい文章・資料・メモをここに置いておきます。'}
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              rows={6}
+              aria-label="インプット"
+            />
+            {input && (
+              <div className="dr-draft-actions">
+                <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={() => setInput('')}>クリア</button>
+              </div>
+            )}
+          </div>
+
           <div className="dr-panel">
             <div className="dr-panel-title">下書き</div>
             <textarea
