@@ -4,13 +4,11 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   countChars, countSentences, avgSentenceLength, estimateReadingTimeSec,
   getChatLevel, getSentenceLengthInfo, getSentenceCountInfo,
-  FRAMEWORKS, DEFAULT_MINDMAP, generateSlimPrompt,
+  FRAMEWORKS, DEFAULT_FLOWCHART, generateSlimPrompt,
 } from './draftCore';
 import './Draft.css';
 
 let renderSeq = 0;
-
-type StructureTab = 'mindmap' | 'framework';
 
 const STORAGE_KEY = 'draft-state';
 
@@ -19,19 +17,38 @@ const loadState = () => {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as { draft: string; mapCode: string; input?: string };
   } catch { /* ignore */ }
-  return { draft: '', mapCode: DEFAULT_MINDMAP, input: '' };
+  return { draft: '', mapCode: DEFAULT_FLOWCHART, input: '' };
 };
+
+// Auto-insert <br> every WRAP_CHARS characters in flowchart node labels
+// so long Japanese labels wrap inside the box
+const WRAP_CHARS = 7;
+const wrapFlowchartLabels = (code: string): string =>
+  code
+    .replace(/\[([^\]"<]+)\]/g, (_, label) => {
+      if (label.length <= WRAP_CHARS) return `[${label}]`;
+      const chunks = label.match(/[\s\S]{1,7}/g) ?? [label];
+      return `["${chunks.join('<br>')}"]`;
+    })
+    .replace(/\(([^)"<]+)\)/g, (_, label) => {
+      if (label.length <= WRAP_CHARS) return `(${label})`;
+      const chunks = label.match(/[\s\S]{1,7}/g) ?? [label];
+      return `("${chunks.join('<br>')}")`;
+    })
+    .replace(/\{([^}"<]+)\}/g, (_, label) => {
+      if (label.length <= WRAP_CHARS) return `{${label}}`;
+      const chunks = label.match(/[\s\S]{1,7}/g) ?? [label];
+      return `{"${chunks.join('<br>')}"}`;
+    });
 
 const Draft = () => {
   const { dark } = useTheme();
 
   const init = useMemo(loadState, []);
-  const [structTab, setStructTab] = useState<StructureTab>('mindmap');
   const [mapCode, setMapCode] = useState(init.mapCode);
   const [debouncedMap, setDebouncedMap] = useState(mapCode);
   const [hasSvg, setHasSvg] = useState(false);
-  // React の差分更新との競合を避けるため、mermaid の描画先は ref のみで管理し
-  // JSX 側には React 管理の子要素を一切置かない
+  // previewRef の内側に React 管理の子を置かない（mermaid との競合を防ぐ）
   const previewRef = useRef<HTMLDivElement>(null);
 
   const [frameworkId, setFrameworkId] = useState(FRAMEWORKS[0].id);
@@ -44,18 +61,17 @@ const Draft = () => {
   const activeFramework = FRAMEWORKS.find(f => f.id === frameworkId) ?? FRAMEWORKS[0];
   const currentFields = fieldValues[frameworkId] ?? {};
 
-  // Persist draft + map
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode, input })); } catch { /* ignore */ }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode, input }));
+    } catch { /* ignore */ }
   }, [draft, mapCode, input]);
 
-  // Debounce mindmap
   useEffect(() => {
     const t = setTimeout(() => setDebouncedMap(mapCode), 500);
     return () => clearTimeout(t);
   }, [mapCode]);
 
-  // Render mermaid mindmap
   useEffect(() => {
     if (!previewRef.current) return;
     if (!debouncedMap.trim()) {
@@ -65,7 +81,7 @@ const Draft = () => {
     }
     const id = `dr-svg-${++renderSeq}`;
     mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default' });
-    mermaid.render(id, debouncedMap)
+    mermaid.render(id, wrapFlowchartLabels(debouncedMap))
       .then(({ svg }) => {
         if (previewRef.current) {
           previewRef.current.innerHTML = svg;
@@ -138,10 +154,7 @@ const Draft = () => {
 
   const gaugeMax = 1500;
   const gaugePct = Math.min((chars / gaugeMax) * 100, 100);
-
-  const readLabel = readSec < 60
-    ? `${readSec}秒`
-    : `${Math.round(readSec / 60)}分`;
+  const readLabel = readSec < 60 ? `${readSec}秒` : `${Math.round(readSec / 60)}分`;
 
   return (
     <div className={`draft ${dark ? 'dark' : 'light'}`}>
@@ -151,129 +164,112 @@ const Draft = () => {
       </div>
 
       <div className="dr-layout">
-        {/* ===== LEFT: Structure tools ===== */}
-        <div className="dr-panel">
-          <div className="dr-tabs">
-            <button
-              className={`dr-tab ${structTab === 'mindmap' ? 'dr-tab-active' : ''}`}
-              onClick={() => setStructTab('mindmap')}
-            >
-              🗺 マインドマップ
-            </button>
-            <button
-              className={`dr-tab ${structTab === 'framework' ? 'dr-tab-active' : ''}`}
-              onClick={() => setStructTab('framework')}
-            >
-              📐 論点整理
-            </button>
+        {/* ===== LEFT ===== */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+          {/* 論点整理 */}
+          <div className="dr-panel">
+            <div className="dr-panel-title">論点整理</div>
+
+            <div className="dr-framework-selector">
+              {FRAMEWORKS.map(f => (
+                <button
+                  key={f.id}
+                  className={`dr-framework-chip ${frameworkId === f.id ? 'dr-framework-chip-active' : ''}`}
+                  onClick={() => setFrameworkId(f.id)}
+                >
+                  {f.name}
+                </button>
+              ))}
+            </div>
+
+            <div className="dr-framework-desc">{activeFramework.desc}</div>
+
+            <div className="dr-fields">
+              {activeFramework.fields.map(field => (
+                <div key={field.key} className="dr-field-row">
+                  <label className="dr-field-label" htmlFor={`field-${field.key}`}>
+                    {field.label}
+                  </label>
+                  <textarea
+                    id={`field-${field.key}`}
+                    className="dr-field-textarea"
+                    placeholder={field.placeholder}
+                    value={currentFields[field.key] ?? ''}
+                    onChange={e => setField(field.key, e.target.value)}
+                    rows={2}
+                    aria-label={field.label}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="dr-framework-apply-row">
+              <button
+                className="dr-btn dr-btn-primary"
+                onClick={applyFramework}
+                disabled={Object.values(currentFields).every(v => !v?.trim())}
+              >
+                ドラフトに追記 →
+              </button>
+            </div>
           </div>
 
-          {/* ===== Mindmap ===== */}
-          {structTab === 'mindmap' && (
-            <div className="dr-map-editor">
-              <div className="dr-map-actions">
-                <button
-                  className="dr-btn dr-btn-ghost dr-btn-sm"
-                  onClick={() => setMapCode(DEFAULT_MINDMAP)}
-                >
-                  テンプレートに戻す
-                </button>
-                <button
-                  className="dr-btn dr-btn-ghost dr-btn-sm"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(mapCode).catch(() => {});
-                    showToast('コピーしました');
-                  }}
-                >
-                  コード コピー
-                </button>
-              </div>
-
-              <textarea
-                className="dr-code-area"
-                value={mapCode}
-                onChange={e => setMapCode(e.target.value)}
-                rows={10}
-                spellCheck={false}
-                aria-label="マインドマップコード"
-                placeholder={DEFAULT_MINDMAP}
-              />
-
-              <div className="dr-panel-title" style={{ marginBottom: 6 }}>プレビュー</div>
-              {/* previewRef div の内側には React 管理の子を置かない。
-                  React の diff が innerHTML と競合して removeChild エラーになるのを防ぐ。
-                  プレースホルダーは別要素として並置する。 */}
-              {!hasSvg && (
-                <div className="dr-preview-box">
-                  <span className="dr-preview-empty">mindmap コードを入力するとここに表示されます</span>
-                </div>
-              )}
-              <div ref={previewRef} className={hasSvg ? 'dr-preview-box' : ''} />
-
-              <div style={{ fontSize: 11, color: 'var(--dr-text-dim)', marginTop: 6, lineHeight: 1.6 }}>
-                <strong>書き方のヒント:</strong><br />
-                <code>mindmap</code> の次の行から 2 スペースインデントでノードを追加。<br />
-                <code>root((中心テーマ))</code> が中心、<code>ノード名</code> でサブトピック。
-              </div>
+          {/* フロー図 */}
+          <div className="dr-panel">
+            <div className="dr-panel-title">フロー図</div>
+            <div className="dr-map-actions">
+              <button
+                className="dr-btn dr-btn-ghost dr-btn-sm"
+                onClick={() => setMapCode(DEFAULT_FLOWCHART)}
+              >
+                テンプレートに戻す
+              </button>
+              <button
+                className="dr-btn dr-btn-ghost dr-btn-sm"
+                onClick={async () => {
+                  await navigator.clipboard.writeText(wrapFlowchartLabels(mapCode)).catch(() => {});
+                  showToast('コピーしました');
+                }}
+              >
+                コード コピー
+              </button>
             </div>
-          )}
 
-          {/* ===== Framework ===== */}
-          {structTab === 'framework' && (
-            <>
-              <div className="dr-framework-selector">
-                {FRAMEWORKS.map(f => (
-                  <button
-                    key={f.id}
-                    className={`dr-framework-chip ${frameworkId === f.id ? 'dr-framework-chip-active' : ''}`}
-                    onClick={() => setFrameworkId(f.id)}
-                  >
-                    {f.name}
-                  </button>
-                ))}
+            <textarea
+              className="dr-code-area"
+              value={mapCode}
+              onChange={e => setMapCode(e.target.value)}
+              rows={8}
+              spellCheck={false}
+              aria-label="フロー図コード"
+              placeholder={DEFAULT_FLOWCHART}
+            />
+
+            <div className="dr-panel-title" style={{ marginBottom: 6, marginTop: 10 }}>プレビュー</div>
+            {!hasSvg && (
+              <div className="dr-preview-box">
+                <span className="dr-preview-empty">コードを入力するとここに表示されます</span>
               </div>
+            )}
+            <div ref={previewRef} className={hasSvg ? 'dr-preview-box' : ''} />
 
-              <div className="dr-framework-desc">{activeFramework.desc}</div>
-
-              <div className="dr-fields">
-                {activeFramework.fields.map(field => (
-                  <div key={field.key} className="dr-field-row">
-                    <label className="dr-field-label" htmlFor={`field-${field.key}`}>
-                      {field.label}
-                    </label>
-                    <textarea
-                      id={`field-${field.key}`}
-                      className="dr-field-textarea"
-                      placeholder={field.placeholder}
-                      value={currentFields[field.key] ?? ''}
-                      onChange={e => setField(field.key, e.target.value)}
-                      rows={2}
-                      aria-label={field.label}
-                    />
-                  </div>
-                ))}
-              </div>
-
-              <div className="dr-framework-apply-row">
-                <button
-                  className="dr-btn dr-btn-primary"
-                  onClick={applyFramework}
-                  disabled={Object.values(currentFields).every(v => !v?.trim())}
-                >
-                  ドラフトに追記 →
-                </button>
-              </div>
-            </>
-          )}
+            <div style={{ fontSize: 11, color: 'var(--dr-text-dim)', marginTop: 8, lineHeight: 1.7 }}>
+              <strong>書き方:</strong>{' '}
+              <code>flowchart TD</code> で開始 →{' '}
+              <code>A[ラベル] --- B[ラベル]</code> で接続。
+              ラベルが7文字を超えるとプレビュー・コピー時に自動折り返し。
+            </div>
+          </div>
         </div>
 
-        {/* ===== RIGHT: Input + Draft + Metrics ===== */}
+        {/* ===== RIGHT ===== */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div className="dr-panel">
             <div className="dr-panel-title">インプット</div>
             <textarea
               className="dr-draft-textarea"
-              placeholder={'参考にしたい文章・資料・メモをここに置いておきます。'}
+              placeholder="参考にしたい文章・資料・メモをここに置いておきます。"
               value={input}
               onChange={e => setInput(e.target.value)}
               rows={6}
@@ -307,23 +303,18 @@ const Draft = () => {
             </div>
           </div>
 
-          {/* Metrics panel */}
+          {/* Metrics */}
           <div className="dr-panel">
             <div className="dr-panel-title">チャット指標</div>
 
-            {/* Gauge */}
             <div className="dr-metric-row" style={{ marginBottom: 6 }}>
               <span className="dr-metric-label">文字数</span>
               <span className={`dr-metric-value chars-${chatLevel.level}`}>{chars}</span>
             </div>
             <div className="dr-gauge-wrap" style={{ marginBottom: 12 }}>
-              <div
-                className={`dr-gauge-fill ${chatLevel.level}`}
-                style={{ width: `${gaugePct}%` }}
-              />
+              <div className={`dr-gauge-fill ${chatLevel.level}`} style={{ width: `${gaugePct}%` }} />
             </div>
 
-            {/* Channel suggestion */}
             <div className="dr-suggestion" style={{ marginBottom: 12 }}>
               <span className="dr-suggestion-emoji">{chatLevel.emoji}</span>
               <strong className={`chars-${chatLevel.level}`}>{chatLevel.label}</strong>
@@ -331,7 +322,6 @@ const Draft = () => {
               {chatLevel.suggestion}
             </div>
 
-            {/* Detail metrics */}
             <div className="dr-metric-row">
               <span className="dr-metric-label">文の数</span>
               <span className={`dr-info-label ${sentCountInfo.level}`}>{sentCountInfo.label}</span>

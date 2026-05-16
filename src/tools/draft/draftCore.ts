@@ -110,6 +110,21 @@ export interface Framework {
 
 export const FRAMEWORKS: readonly Framework[] = [
   {
+    id: 'sih',
+    name: '状況・論点・仮説',
+    desc: '現状把握 → 解くべき問いの特定 → 仮の答えを立てる（コンサル型）',
+    fields: [
+      { key: 'situation',  label: '状況 ── 今何が起きているか',  placeholder: 'As-Is: 現状の事実・データ・背景' },
+      { key: 'issue',      label: '論点 ── 解くべき問いは何か',  placeholder: 'Key Question: 最も重要な課題・問い' },
+      { key: 'hypothesis', label: '仮説 ── 答えはこうではないか', placeholder: 'To-Be: 仮の結論・方向性・アクション案' },
+    ],
+    generate: v => [
+      v.situation  && `【状況】\n${v.situation}`,
+      v.issue      && `【論点】\n${v.issue}`,
+      v.hypothesis && `【仮説】\n${v.hypothesis}`,
+    ].filter(Boolean).join('\n\n'),
+  },
+  {
     id: 'prep',
     name: 'PREP',
     desc: '結論 → 理由 → 具体例 → 結論（説得力のある主張）',
@@ -170,21 +185,6 @@ export const FRAMEWORKS: readonly Framework[] = [
       v.solution && `【解決策】${v.solution}`,
     ].filter(Boolean).join('\n'),
   },
-  {
-    id: 'sih',
-    name: '状況・論点・仮説',
-    desc: '現状把握 → 解くべき問いの特定 → 仮の答えを立てる（コンサル型）',
-    fields: [
-      { key: 'situation',  label: '状況 ── 今何が起きているか',  placeholder: 'As-Is: 現状の事実・データ・背景' },
-      { key: 'issue',      label: '論点 ── 解くべき問いは何か',  placeholder: 'Key Question: 最も重要な課題・問い' },
-      { key: 'hypothesis', label: '仮説 ── 答えはこうではないか', placeholder: 'To-Be: 仮の結論・方向性・アクション案' },
-    ],
-    generate: v => [
-      v.situation  && `【状況】\n${v.situation}`,
-      v.issue      && `【論点】\n${v.issue}`,
-      v.hypothesis && `【仮説】\n${v.hypothesis}`,
-    ].filter(Boolean).join('\n\n'),
-  },
 ];
 
 // ---- Mindmap default template ----
@@ -220,12 +220,11 @@ ${draft}
 ## 案5: 90%削減`;
 };
 
-export const DEFAULT_MINDMAP = `mindmap
-  root((テーマ))
-    論点A
-      根拠・詳細
-      根拠・詳細
-    論点B
-      根拠・詳細
-    論点C
-      根拠・詳細`;
+export const DEFAULT_FLOWCHART = `flowchart TD
+  A[中心テーマ] --- B[論点A]
+  A --- C[論点B]
+  A --- D[論点C]
+  B --- E[根拠・詳細]
+  B --- F[根拠・詳細]
+  C --- G[根拠・詳細]
+  D --- H[根拠・詳細]`;
