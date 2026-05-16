@@ -200,6 +200,7 @@ export const generateSlimPrompt = (draft: string): string => {
 - 重複・言い換え表現を統合
 - 受動態より能動態を優先
 - 事実と意見・推測を分離
+- 【状況】【論点】【仮説】などの構造ラベルは除去し、自然な文章に統合する
 
 【元の文章】（${n}文字）
 ${draft}
