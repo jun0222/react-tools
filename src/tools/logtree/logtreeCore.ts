@@ -51,10 +51,29 @@ export const parseTree = (text: string): TreeNode | null => {
   return root;
 };
 
+// ---- Text wrapping ----
+
+const LINE_H = 16;
+const BOX_V_PAD = 10;
+
+// Characters per line for each direction (Japanese glyph ≈ 11px at font-size 11)
+const CHARS_PER_LINE_H = 10;  // BOX_W=140, usable ~120px → ~10 chars
+const CHARS_PER_LINE_V = 9;   // BOX_W_V=120, usable ~100px → ~9 chars
+
+const wrapLabel = (label: string, cpl: number): string[] => {
+  const lines: string[] = [];
+  for (let i = 0; i < label.length; i += cpl) {
+    lines.push(label.slice(i, i + cpl));
+  }
+  return lines.length ? lines : [''];
+};
+
+const computeBoxH = (label: string, cpl: number): number =>
+  BOX_V_PAD * 2 + LINE_H * wrapLabel(label, cpl).length;
+
 // ---- Layout (right direction) ----
 
 const BOX_W = 140;
-const BOX_H = 36;
 const H_GAP = 50;
 const V_GAP = 12;
 
@@ -63,59 +82,75 @@ export const countLeaves = (node: TreeNode): number => {
   return node.children.reduce((s, c) => s + countLeaves(c), 0);
 };
 
+// Total vertical span a node's subtree claims (including trailing V_GAP for leaf slots)
+const slotVSpan = (node: TreeNode, cpl: number): number => {
+  if (!node.children.length) return computeBoxH(node.label, cpl) + V_GAP;
+  return node.children.reduce((s, c) => s + slotVSpan(c, cpl), 0);
+};
+
 const layoutH = (
   node: TreeNode,
   depth: number,
   startY: number,
 ): PositionedNode => {
-  const slotH = BOX_H + V_GAP;
-  const leaves = countLeaves(node);
-  const totalH = leaves * slotH - V_GAP;
-  const y = startY + (totalH - BOX_H) / 2;
+  const cpl = CHARS_PER_LINE_H;
+  const h = computeBoxH(node.label, cpl);
+  const span = slotVSpan(node, cpl);
+  // Center box in span, accounting for trailing V_GAP that isn't visual content
+  const y = startY + (span - V_GAP - h) / 2;
   const x = 20 + depth * (BOX_W + H_GAP);
 
   let childY = startY;
   const children = node.children.map(child => {
     const positioned = layoutH(child, depth + 1, childY);
-    childY += countLeaves(child) * slotH;
+    childY += slotVSpan(child, cpl);
     return positioned;
   });
 
-  return { label: node.label, x, y, w: BOX_W, h: BOX_H, children };
+  return { label: node.label, x, y, w: BOX_W, h, children };
 };
 
 // ---- Layout (down direction) ----
 
 const BOX_W_V = 120;
-const BOX_H_V = 36;
 const V_GAP_V = 50;
 const H_GAP_V = 14;
 
-const countLeavesForV = (node: TreeNode): number => countLeaves(node);
+// Find the tallest node in the tree to use as a uniform slot height for V layout
+const maxBoxHInTree = (node: TreeNode, cpl: number): number => {
+  const h = computeBoxH(node.label, cpl);
+  if (!node.children.length) return h;
+  return Math.max(h, ...node.children.map(c => maxBoxHInTree(c, cpl)));
+};
 
 const layoutV = (
   node: TreeNode,
   depth: number,
   startX: number,
+  slotH: number,
 ): PositionedNode => {
+  const cpl = CHARS_PER_LINE_V;
+  const h = computeBoxH(node.label, cpl);
   const slotW = BOX_W_V + H_GAP_V;
-  const leaves = countLeavesForV(node);
+  const leaves = countLeaves(node);
   const totalW = leaves * slotW - H_GAP_V;
   const x = startX + (totalW - BOX_W_V) / 2;
-  const y = 20 + depth * (BOX_H_V + V_GAP_V);
+  const y = 20 + depth * (slotH + V_GAP_V);
 
   let childX = startX;
   const children = node.children.map(child => {
-    const positioned = layoutV(child, depth + 1, childX);
+    const positioned = layoutV(child, depth + 1, childX, slotH);
     childX += countLeaves(child) * slotW;
     return positioned;
   });
 
-  return { label: node.label, x, y, w: BOX_W_V, h: BOX_H_V, children };
+  return { label: node.label, x, y, w: BOX_W_V, h, children };
 };
 
 export const layoutTree = (node: TreeNode, direction: Direction): PositionedNode =>
-  direction === 'right' ? layoutH(node, 0, 20) : layoutV(node, 0, 20);
+  direction === 'right'
+    ? layoutH(node, 0, 20)
+    : layoutV(node, 0, 20, maxBoxHInTree(node, CHARS_PER_LINE_V));
 
 // ---- SVG generation ----
 
@@ -137,11 +172,27 @@ const collectEdges = (node: PositionedNode): [PositionedNode, PositionedNode][] 
   return result;
 };
 
+const renderNodeText = (
+  n: PositionedNode,
+  cpl: number,
+  txtColor: string,
+): string => {
+  const lines = wrapLabel(n.label, cpl);
+  const cx = n.x + n.w / 2;
+  // Center the text block vertically within the box
+  const firstLineY = n.y + n.h / 2 - ((lines.length - 1) * LINE_H) / 2;
+  const tspans = lines.map((line, i) =>
+    `<tspan x="${cx}" ${i === 0 ? `y="${firstLineY}"` : `dy="${LINE_H}"`}>${escapeXml(line)}</tspan>`,
+  );
+  return `<text text-anchor="middle" dominant-baseline="central" fill="${txtColor}" font-size="11" font-family="system-ui,sans-serif">${tspans.join('')}</text>`;
+};
+
 export const generateSVG = (
   root: PositionedNode,
   dark: boolean,
   direction: Direction,
 ): string => {
+  const cpl = direction === 'right' ? CHARS_PER_LINE_H : CHARS_PER_LINE_V;
   const allNodes = collectNodes(root);
   const edges = collectEdges(root);
 
@@ -182,11 +233,9 @@ export const generateSVG = (
     const fill = isRootNode ? accentStroke : boxFill;
     const stroke = isRootNode ? accentStroke : boxStroke;
     const txtColor = isRootNode ? '#fff' : textColor;
-    // truncate long labels for display
-    const label = n.label.length > 18 ? n.label.slice(0, 17) + '…' : n.label;
     return `<g>
   <rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-  <text x="${n.x + n.w / 2}" y="${n.y + n.h / 2}" text-anchor="middle" dominant-baseline="middle" fill="${txtColor}" font-size="11" font-family="system-ui,sans-serif">${escapeXml(label)}</text>
+  ${renderNodeText(n, cpl, txtColor)}
 </g>`;
   });
 
