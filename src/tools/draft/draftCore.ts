@@ -189,6 +189,36 @@ export const FRAMEWORKS: readonly Framework[] = [
 
 // ---- Mindmap default template ----
 
+export const generateSlimPrompt = (draft: string): string => {
+  const n = countChars(draft);
+  return `以下の文章を「理科系の作文技術」の原則に従い、削減率ごとに5案書き直してください。
+
+【原則】
+- 一文一義（1文に1つの情報のみ）
+- 主語・述語を明確に
+- 冗長な言い回しを削除（「〜ということ」「〜という形で」「〜かと思います」「〜させていただきます」等）
+- 重複・言い換え表現を統合
+- 受動態より能動態を優先
+- 事実と意見・推測を分離
+
+【元の文章】（${n}文字）
+${draft}
+
+---
+
+各案の末尾に必ず「${n}文字 → X文字（削減率X%）」の形式で報告してください。
+
+## 案1: 10%削減
+
+## 案2: 30%削減
+
+## 案3: 50%削減
+
+## 案4: 70%削減
+
+## 案5: 90%削減`;
+};
+
 export const DEFAULT_MINDMAP = `mindmap
   root((テーマ))
     論点A

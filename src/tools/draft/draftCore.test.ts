@@ -7,6 +7,7 @@ import {
   getChatLevel,
   getSentenceLengthInfo,
   getSentenceCountInfo,
+  generateSlimPrompt,
 } from './draftCore';
 
 describe('countChars', () => {
@@ -84,4 +85,41 @@ describe('getSentenceCountInfo', () => {
   it('3以下はgreen', () => { expect(getSentenceCountInfo(3).level).toBe('green'); });
   it('4〜7はyellow', () => { expect(getSentenceCountInfo(4).level).toBe('yellow'); });
   it('8以上はred', () => { expect(getSentenceCountInfo(8).level).toBe('red'); });
+});
+
+describe('generateSlimPrompt', () => {
+  it('元の文章が含まれる', () => {
+    const p = generateSlimPrompt('テスト文章です。');
+    expect(p).toContain('テスト文章です。');
+  });
+
+  it('元の文字数が含まれる', () => {
+    const draft = 'あいうえお';
+    const p = generateSlimPrompt(draft);
+    expect(p).toContain('5文字');
+  });
+
+  it('5案の見出しが含まれる', () => {
+    const p = generateSlimPrompt('test');
+    expect(p).toContain('案1');
+    expect(p).toContain('案2');
+    expect(p).toContain('案3');
+    expect(p).toContain('案4');
+    expect(p).toContain('案5');
+  });
+
+  it('削減率の指定が含まれる', () => {
+    const p = generateSlimPrompt('test');
+    expect(p).toContain('10%');
+    expect(p).toContain('30%');
+    expect(p).toContain('50%');
+    expect(p).toContain('70%');
+    expect(p).toContain('90%');
+  });
+
+  it('文字数の報告形式の指示が含まれる', () => {
+    const p = generateSlimPrompt('てすと');
+    expect(p).toContain('削減率');
+    expect(p).toContain('3文字 → X文字');
+  });
 });

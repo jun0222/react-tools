@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   countChars, countSentences, avgSentenceLength, estimateReadingTimeSec,
   getChatLevel, getSentenceLengthInfo, getSentenceCountInfo,
-  FRAMEWORKS, DEFAULT_MINDMAP,
+  FRAMEWORKS, DEFAULT_MINDMAP, generateSlimPrompt,
 } from './draftCore';
 import './Draft.css';
 
@@ -117,6 +117,14 @@ const Draft = () => {
     if (!draft.trim()) return;
     try { await navigator.clipboard.writeText(draft); showToast('コピーしました'); }
     catch { showToast('コピー失敗'); }
+  };
+
+  const copySlim = async () => {
+    if (!draft.trim()) return;
+    try {
+      await navigator.clipboard.writeText(generateSlimPrompt(draft));
+      showToast('削減プロンプトをコピーしました');
+    } catch { showToast('コピー失敗'); }
   };
 
   // Metrics
@@ -292,6 +300,7 @@ const Draft = () => {
               {draft && (
                 <>
                   <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={() => setDraft('')}>クリア</button>
+                  <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={copySlim} title="理科系の作文技術に則り10/30/50/70/90%削減の5案を出すプロンプトをコピー">✂️ 削減5案</button>
                   <button className="dr-btn dr-btn-primary dr-btn-sm" onClick={copy}>コピー</button>
                 </>
               )}
