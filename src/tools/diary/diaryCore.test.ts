@@ -194,6 +194,22 @@ describe('generateTxtContent', () => {
     expect(txt).toContain('調査ノート');
   });
 
+  it('studyモードは勉強振り返りヘッダー', () => {
+    const txt = generateTxtContent(date, bullets, summary, keywords, 'study');
+    expect(txt).toContain('勉強振り返り');
+  });
+
+  it('nippoモードは```で囲まれる', () => {
+    const txt = generateTxtContent(date, bullets, summary, keywords, 'nippo');
+    expect(txt.startsWith('```')).toBe(true);
+    expect(txt.trimEnd().endsWith('```')).toBe(true);
+  });
+
+  it('nippoモードは日報ヘッダーを含む', () => {
+    const txt = generateTxtContent(date, bullets, summary, keywords, 'nippo');
+    expect(txt).toContain('日報');
+  });
+
   it('本文セクションに箇条書きが含まれる', () => {
     const txt = generateTxtContent(date, bullets, summary, keywords, 'diary');
     expect(txt).toContain('・晴れた');
@@ -240,6 +256,14 @@ describe('generateFilename', () => {
     expect(generateFilename('research').startsWith('research_')).toBe(true);
   });
 
+  it('nippoはnippo_で始まる', () => {
+    expect(generateFilename('nippo').startsWith('nippo_')).toBe(true);
+  });
+
+  it('studyはstudy_で始まる', () => {
+    expect(generateFilename('study').startsWith('study_')).toBe(true);
+  });
+
   it('.txt拡張子', () => {
     expect(generateFilename('diary').endsWith('.txt')).toBe(true);
   });
@@ -247,15 +271,41 @@ describe('generateFilename', () => {
   it('タイムスタンプ形式 YYYYMMDD_HHMM', () => {
     expect(generateFilename('diary')).toMatch(/diary_\d{8}_\d{4}\.txt/);
   });
+
+  it('book_memoにタイトルとページ範囲が含まれる', () => {
+    const name = generateFilename('book_memo', { bookTitle: '思考の整理学', startPage: '1', endPage: '50' });
+    expect(name).toMatch(/^book_memo_思考の整理学_001-050_\d{8}_\d{4}\.txt$/);
+  });
+
+  it('book_memoのページは3桁ゼロ埋め', () => {
+    const name = generateFilename('book_memo', { bookTitle: '本', startPage: '5', endPage: '100' });
+    expect(name).toContain('_005-100_');
+  });
+
+  it('book_memoのタイトルなしは通常形式', () => {
+    expect(generateFilename('book_memo').startsWith('book_memo_')).toBe(true);
+    expect(generateFilename('book_memo')).toMatch(/^book_memo_\d{8}_\d{4}\.txt$/);
+  });
+
+  it('studyに分野名が含まれる', () => {
+    const name = generateFilename('study', { subject: '数学' });
+    expect(name).toMatch(/^study_数学_\d{8}_\d{4}\.txt$/);
+  });
+
+  it('studyの分野名なしはstudy_タイムスタンプ形式', () => {
+    expect(generateFilename('study')).toMatch(/^study_\d{8}_\d{4}\.txt$/);
+  });
 });
 
 // ---- MODE_CONFIG ----
 
 describe('MODE_CONFIG', () => {
-  it('diary・book_memo・researchの3モードが存在する', () => {
+  it('diary・book_memo・research・nippo・studyの5モードが存在する', () => {
     expect(MODE_CONFIG.diary).toBeDefined();
     expect(MODE_CONFIG.book_memo).toBeDefined();
     expect(MODE_CONFIG.research).toBeDefined();
+    expect(MODE_CONFIG.nippo).toBeDefined();
+    expect(MODE_CONFIG.study).toBeDefined();
   });
 
   it('各モードにname・txtLabel・placeholderが存在する', () => {

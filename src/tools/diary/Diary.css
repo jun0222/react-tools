@@ -94,6 +94,38 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
+/* --- Meta row (book_memo / study) --- */
+.dy-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.dy-meta-input {
+  background: var(--dy-surface2);
+  border: 1.5px solid var(--dy-border);
+  border-radius: var(--dy-radius-sm);
+  color: var(--dy-text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 5px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.dy-meta-input:focus { border-color: var(--dy-amber); }
+.dy-meta-input::placeholder { color: var(--dy-text-dim); }
+
+.dy-meta-title { flex: 1; }
+.dy-meta-page  { width: 60px; text-align: center; }
+
+.dy-meta-label,
+.dy-meta-sep {
+  font-size: 13px;
+  color: var(--dy-text-dim);
+  flex-shrink: 0;
+}
+
 /* --- Layout --- */
 .dy-layout {
   display: grid;

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   type DiaryMode,
+  type FileMeta,
   MODE_CONFIG,
   toBullets,
   formatBullets,
@@ -14,19 +15,42 @@ import {
 import './Diary.css';
 
 const MODES = Object.keys(MODE_CONFIG) as DiaryMode[];
-const STORAGE_KEY = 'diary-state-v2';
+const STORAGE_KEY = 'diary-state-v4';
 
-type ModeState = { text: string; llmResponse: string };
+type ModeState = {
+  text: string;
+  llmResponse: string;
+  bookTitle: string;
+  startPage: string;
+  endPage: string;
+  subject: string;
+};
 type AllState = Record<DiaryMode, ModeState>;
 
-const EMPTY_MODE: ModeState = { text: '', llmResponse: '' };
+const EMPTY_MODE: ModeState = { text: '', llmResponse: '', bookTitle: '', startPage: '', endPage: '', subject: '' };
+
+const DEFAULT_STATE: AllState = {
+  diary:     { ...EMPTY_MODE },
+  book_memo: { ...EMPTY_MODE },
+  research:  { ...EMPTY_MODE },
+  nippo:     { ...EMPTY_MODE },
+  study:     { ...EMPTY_MODE },
+};
 
 const loadState = (): AllState => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as AllState;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<AllState>;
+      return {
+        ...DEFAULT_STATE,
+        ...Object.fromEntries(
+          MODES.map(m => [m, { ...EMPTY_MODE, ...(parsed[m] ?? {}) }])
+        ),
+      } as AllState;
+    }
   } catch { /* ignore */ }
-  return { diary: { ...EMPTY_MODE }, book_memo: { ...EMPTY_MODE }, research: { ...EMPTY_MODE } };
+  return { ...DEFAULT_STATE };
 };
 
 const Diary = () => {
@@ -35,20 +59,28 @@ const Diary = () => {
   const [allState, setAllState] = useState<AllState>(loadState);
   const [toast, setToast] = useState('');
 
-  const text        = allState[mode].text;
-  const llmResponse = allState[mode].llmResponse;
-  const setText        = (v: string) => setAllState(prev => ({ ...prev, [mode]: { ...prev[mode], text: v } }));
-  const setLlmResponse = (v: string) => setAllState(prev => ({ ...prev, [mode]: { ...prev[mode], llmResponse: v } }));
+  const ms = allState[mode];
+  const text        = ms.text;
+  const llmResponse = ms.llmResponse;
+
+  const setField = <K extends keyof ModeState>(key: K, val: ModeState[K]) =>
+    setAllState(prev => ({ ...prev, [mode]: { ...prev[mode], [key]: val } }));
 
   const dateLabel = getDateLabel();
   const bullets = toBullets(text);
   const bulletsText = formatBullets(bullets);
   const { summary, keywords } = parseLLMResponse(llmResponse);
 
+  const fileMeta: FileMeta = {
+    bookTitle: ms.bookTitle,
+    startPage: ms.startPage,
+    endPage:   ms.endPage,
+    subject:   ms.subject,
+  };
+  const filename = generateFilename(mode, fileMeta);
+
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(allState));
-    } catch { /* ignore */ }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(allState)); } catch { /* ignore */ }
   }, [allState]);
 
   const showToast = useCallback((msg: string) => {
@@ -72,7 +104,7 @@ const Diary = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = generateFilename(mode);
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
     showToast('.txtを保存しました');
@@ -100,20 +132,64 @@ const Diary = () => {
         ))}
       </div>
 
+      {/* book_memo: 本タイトル・ページ範囲 */}
+      {mode === 'book_memo' && (
+        <div className="dy-meta-row">
+          <input
+            className="dy-meta-input dy-meta-title"
+            placeholder="本のタイトル"
+            value={ms.bookTitle}
+            onChange={e => setField('bookTitle', e.target.value)}
+            aria-label="本のタイトル"
+          />
+          <span className="dy-meta-label">p.</span>
+          <input
+            className="dy-meta-input dy-meta-page"
+            placeholder="001"
+            value={ms.startPage}
+            onChange={e => setField('startPage', e.target.value.replace(/\D/g, ''))}
+            maxLength={4}
+            aria-label="開始ページ"
+          />
+          <span className="dy-meta-sep">–</span>
+          <input
+            className="dy-meta-input dy-meta-page"
+            placeholder="050"
+            value={ms.endPage}
+            onChange={e => setField('endPage', e.target.value.replace(/\D/g, ''))}
+            maxLength={4}
+            aria-label="終了ページ"
+          />
+        </div>
+      )}
+
+      {/* study: 分野名 */}
+      {mode === 'study' && (
+        <div className="dy-meta-row">
+          <input
+            className="dy-meta-input dy-meta-title"
+            placeholder="学習分野（例: 線形代数・React・英語）"
+            value={ms.subject}
+            onChange={e => setField('subject', e.target.value)}
+            aria-label="学習分野"
+          />
+        </div>
+      )}
+
       <div className="dy-layout">
 
         {/* ===== LEFT: 入力 + 箇条書き ===== */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
           <div className="dy-panel">
-            <div className="dy-panel-title">日記を書く</div>
+            <div className="dy-panel-title">テキスト入力</div>
             <textarea
               className="dy-textarea dy-input-area"
               placeholder={MODE_CONFIG[mode].placeholder}
               value={text}
-              onChange={e => setText(e.target.value)}
+              onChange={e => setField('text', e.target.value)}
               rows={10}
-              aria-label="日記入力"
+              aria-label="テキスト入力"
             />
           </div>
 
@@ -125,7 +201,7 @@ const Diary = () => {
             {bullets.length > 0 ? (
               <pre className="dy-bullets-preview">{bulletsText}</pre>
             ) : (
-              <div className="dy-empty">日記を書くとここに表示されます</div>
+              <div className="dy-empty">書くとここに表示されます</div>
             )}
             <div className="dy-actions">
               <button
@@ -154,14 +230,14 @@ const Diary = () => {
               className="dy-textarea dy-llm-area"
               placeholder={"【サマリ】\n（LLMの要約がここに入ります）\n\n【キーワード】\n・キーワード1\n・キーワード2"}
               value={llmResponse}
-              onChange={e => setLlmResponse(e.target.value)}
+              onChange={e => setField('llmResponse', e.target.value)}
               rows={12}
               aria-label="LLM返答"
             />
             {llmResponse && (
               <button
                 className="dy-btn dy-btn-ghost dy-btn-sm"
-                onClick={() => setLlmResponse('')}
+                onClick={() => setField('llmResponse', '')}
                 style={{ marginTop: 6 }}
               >
                 クリア
@@ -201,7 +277,9 @@ const Diary = () => {
           <div className="dy-panel">
             <div className="dy-panel-title">.txt として保存</div>
             <div className="dy-hint">
-              ASCII art形式で本文・サマリ・キーワードを1ファイルにまとめて保存します。
+              {mode === 'nippo'
+                ? '```で囲んだ形式で本文・サマリ・キーワードを保存します。'
+                : 'ASCII art形式で本文・サマリ・キーワードを1ファイルにまとめて保存します。'}
             </div>
             <div className="dy-actions">
               <button
@@ -209,11 +287,10 @@ const Diary = () => {
                 onClick={exportTxt}
                 disabled={bullets.length === 0}
               >
-                💾 {generateFilename()} を保存
+                💾 {filename} を保存
               </button>
             </div>
 
-            {/* .txt preview */}
             {bullets.length > 0 && (
               <details className="dy-preview-details">
                 <summary className="dy-preview-summary">ファイルプレビュー</summary>

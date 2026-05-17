@@ -1,6 +1,6 @@
 // ---- Mode ----
 
-export type DiaryMode = 'diary' | 'book_memo' | 'research';
+export type DiaryMode = 'diary' | 'book_memo' | 'research' | 'nippo' | 'study';
 
 export const MODE_CONFIG: Record<DiaryMode, { name: string; txtLabel: string; placeholder: string }> = {
   diary: {
@@ -17,6 +17,16 @@ export const MODE_CONFIG: Record<DiaryMode, { name: string; txtLabel: string; pl
     name: '調査ノート',
     txtLabel: '調査ノート',
     placeholder: '調査した内容・参考情報・気になった点を書いてください。\n句点（。）や改行で自動的に箇条書きに変換されます。',
+  },
+  nippo: {
+    name: '日報',
+    txtLabel: '日報',
+    placeholder: '今日の業務内容・成果・課題を書いてください。\n句点（。）や改行で自動的に箇条書きに変換されます。',
+  },
+  study: {
+    name: '勉強振り返り',
+    txtLabel: '勉強振り返り',
+    placeholder: '今日学んだことを書いてください。\n句点（。）や改行で自動的に箇条書きに変換されます。',
   },
 };
 
@@ -131,7 +141,7 @@ export const generateTxtContent = (
     hour: '2-digit', minute: '2-digit',
   });
 
-  return [
+  const body = [
     SEP_MAJOR,
     `  ${modeLabel}  ${dateLabel}`,
     SEP_MAJOR,
@@ -158,6 +168,8 @@ export const generateTxtContent = (
     `  記録: ${recorded}`,
     SEP_MAJOR,
   ].join('\n');
+
+  return mode === 'nippo' ? `\`\`\`\n${body}\n\`\`\`` : body;
 };
 
 // ---- Utilities ----
@@ -172,9 +184,32 @@ export const getDateLabel = (): string => {
   return `${y}年${mo}月${da}日（${dow}）`;
 };
 
-export const generateFilename = (mode: DiaryMode = 'diary'): string => {
+export interface FileMeta {
+  bookTitle?: string;
+  startPage?: string;
+  endPage?: string;
+  subject?: string;
+}
+
+const sanitizeName = (s: string) =>
+  s.replace(/[<>:"/\\|?*\s]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40);
+
+export const generateFilename = (mode: DiaryMode = 'diary', meta?: FileMeta): string => {
   const d = new Date();
   const pad = (n: number) => String(n).padStart(2, '0');
   const ts = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+
+  if (mode === 'book_memo' && meta?.bookTitle) {
+    const title = sanitizeName(meta.bookTitle);
+    const s = (meta.startPage ?? '').padStart(3, '0');
+    const e = (meta.endPage ?? '').padStart(3, '0');
+    const pages = s || e ? `_${s}-${e}` : '';
+    return `book_memo_${title}${pages}_${ts}.txt`;
+  }
+
+  if (mode === 'study' && meta?.subject) {
+    return `study_${sanitizeName(meta.subject)}_${ts}.txt`;
+  }
+
   return `${mode}_${ts}.txt`;
 };
