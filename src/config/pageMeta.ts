@@ -92,6 +92,10 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Sketch - ビジュアル思考 🖊',
     description: 'フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGエクスポート対応。',
   },
+  '/commit': {
+    title: 'Commit Message 🔖',
+    description: 'type(scope): description 形式のコミットメッセージを組み立てるツール。履歴をJSON保存・エクスポート対応。',
+  },
   '/pad': {
     title: 'Pad 📄',
     description: 'ただのテキストパッド。',

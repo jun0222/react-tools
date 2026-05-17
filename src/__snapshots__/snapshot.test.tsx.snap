@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        15
+        16
          tool
         s
          available
@@ -413,6 +413,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/commit"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #15803d, #22c55e);"
+      >
+        🔖
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Commit
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        dev
       </span>
     </a>
     <a
@@ -463,7 +490,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        15
+        16
          tool
         s
          available
@@ -859,6 +886,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/commit"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #15803d, #22c55e);"
+      >
+        🔖
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Commit
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        dev
       </span>
     </a>
     <a

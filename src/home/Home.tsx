@@ -180,6 +180,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     tag: 'diagram',
   },
   {
+    path: '/commit',
+    name: 'Commit',
+    icon: '🔖',
+    iconBg: 'linear-gradient(135deg, #15803d, #22c55e)',
+    desc: 'type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存',
+    tag: 'dev',
+  },
+  {
     path: '/pad',
     name: 'Pad',
     icon: '📄',

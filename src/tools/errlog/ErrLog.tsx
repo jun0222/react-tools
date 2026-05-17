@@ -102,7 +102,7 @@ const ErrLog = () => {
 
       {/* ===== STEP 2 ===== */}
       <div className="el-panel">
-        <div className="el-step-label">② LLM の返答を記録する</div>
+        <div className="el-step-label">② 解決方法を記録する</div>
         <textarea
           className="el-textarea"
           placeholder={'LLM から受け取った返答をここに貼り付けてください。\nMermaid ダイアグラムが含まれていれば自動でプレビューされます。'}
