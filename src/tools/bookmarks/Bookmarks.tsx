@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { Bookmark } from 'lucide-react';
+import { Bookmark as BookmarkIcon } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   loadBookmarks, saveBookmarks, createBookmark,
@@ -85,7 +85,7 @@ const Bookmarks = () => {
   return (
     <div className={`bookmarks ${dark ? 'dark' : 'light'}`}>
       <div className="bk-header">
-        <div className="bk-logo-icon"><Bookmark size={22} color="white" /></div>
+        <div className="bk-logo-icon"><BookmarkIcon size={22} color="white" /></div>
         <h1><span className="accent">Bookmarks</span></h1>
       </div>
 
