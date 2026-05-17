@@ -163,6 +163,14 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     desc: 'エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用',
     tag: 'dev',
   },
+  {
+    path: '/sketch',
+    name: 'Sketch',
+    icon: '🖊',
+    iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+    desc: 'フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート',
+    tag: 'diagram',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';

@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        12
+        13
          tool
         s
          available
@@ -359,6 +359,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         dev
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/sketch"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+      >
+        🖊
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Sketch
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
       </span>
     </a>
   </div>
@@ -382,7 +409,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        12
+        13
          tool
         s
          available
@@ -724,6 +751,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         dev
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/sketch"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+      >
+        🖊
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Sketch
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        diagram
       </span>
     </a>
   </div>
