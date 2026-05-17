@@ -45,8 +45,31 @@ export const formatBullets = (bullets: string[]): string =>
 
 // ---- LLM prompt ----
 
-export const generateLLMPrompt = (bullets: string[]): string => {
+export const generateLLMPrompt = (bullets: string[], mode: DiaryMode = 'diary'): string => {
   const content = bullets.map(b => `・${b}`).join('\n');
+
+  if (mode === 'book_memo') {
+    return `以下の読書メモを「理科系の作文技術」に則り、要約してください。
+
+【読書メモ】
+${content}
+
+【要求】
+1. 【サマリ】として3〜5文で要約してください。
+   原則: 一文一義・主語述語を明確に・冗長な表現なし・受動態より能動態
+2. 【キーワード】として重要な概念・用語・主張を5〜10個挙げ、それぞれ1〜2文で解説してください。
+
+必ず以下の形式で出力してください:
+
+【サマリ】
+（要約文）
+
+【キーワード】
+・キーワード1 — 解説（1〜2文）
+・キーワード2 — 解説（1〜2文）
+（以下続く）`;
+  }
+
   return `以下の日記を「理科系の作文技術」に則り、要約してください。
 
 【日記本文】

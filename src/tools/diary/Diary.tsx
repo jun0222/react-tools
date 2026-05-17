@@ -91,7 +91,7 @@ const Diary = () => {
   const copyPrompt = async () => {
     if (!bullets.length) return;
     try {
-      await navigator.clipboard.writeText(generateLLMPrompt(bullets));
+      await navigator.clipboard.writeText(generateLLMPrompt(bullets, mode));
       showToast('プロンプトをコピーしました');
     } catch {
       showToast('コピー失敗');

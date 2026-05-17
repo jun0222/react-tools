@@ -103,6 +103,16 @@ describe('generateLLMPrompt', () => {
     expect(prompt).toContain('・晴れ');
     expect(prompt).toContain('・散歩');
   });
+
+  it('book_memoモードはキーワード解説を求める', () => {
+    const prompt = generateLLMPrompt(['test'], 'book_memo');
+    expect(prompt).toContain('解説');
+  });
+
+  it('book_memo以外は20文字以内の短い説明を求める', () => {
+    const prompt = generateLLMPrompt(['test'], 'diary');
+    expect(prompt).toContain('20文字以内');
+  });
 });
 
 // ---- parseLLMResponse ----
