@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        13
+        15
          tool
         s
          available
@@ -364,6 +364,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
     <a
       class="home-card"
       data-discover="true"
+      href="/diary"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #d97706, #f59e0b);"
+      >
+        📔
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Diary
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        write
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
       href="/sketch"
     >
       <div
@@ -386,6 +413,33 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/pad"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
+      >
+        📄
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Pad
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        ただのテキストパッド。書いた内容は自動保存される。
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        write
       </span>
     </a>
   </div>
@@ -409,7 +463,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        13
+        15
          tool
         s
          available
@@ -756,6 +810,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
     <a
       class="home-card"
       data-discover="true"
+      href="/diary"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #d97706, #f59e0b);"
+      >
+        📔
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Diary
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        write
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
       href="/sketch"
     >
       <div
@@ -778,6 +859,33 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/pad"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
+      >
+        📄
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Pad
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        ただのテキストパッド。書いた内容は自動保存される。
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        write
       </span>
     </a>
   </div>

@@ -25,6 +25,8 @@ import Snip from './tools/snip/Snip';
 import WordMemo from './tools/wordmemo/WordMemo';
 import ErrLog from './tools/errlog/ErrLog';
 import Sketch from './tools/sketch/Sketch';
+import Diary from './tools/diary/Diary';
+import Pad from './tools/pad/Pad';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -65,6 +67,8 @@ function App() {
             <Route path="/wordmemo" element={<WordMemo />} />
             <Route path="/errlog" element={<ErrLog />} />
             <Route path="/sketch" element={<Sketch />} />
+            <Route path="/diary" element={<Diary />} />
+            <Route path="/pad" element={<Pad />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

@@ -164,12 +164,28 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
     tag: 'dev',
   },
   {
+    path: '/diary',
+    name: 'Diary',
+    icon: '📔',
+    iconBg: 'linear-gradient(135deg, #d97706, #f59e0b)',
+    desc: '日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存',
+    tag: 'write',
+  },
+  {
     path: '/sketch',
     name: 'Sketch',
     icon: '🖊',
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
     desc: 'フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート',
     tag: 'diagram',
+  },
+  {
+    path: '/pad',
+    name: 'Pad',
+    icon: '📄',
+    iconBg: 'linear-gradient(135deg, #6b7280, #9ca3af)',
+    desc: 'ただのテキストパッド。書いた内容は自動保存される。',
+    tag: 'write',
   },
 ];
 

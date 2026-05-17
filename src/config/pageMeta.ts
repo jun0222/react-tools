@@ -84,8 +84,16 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'ErrLog - エラー管理 🐛',
     description: 'エラーを貼り付けてLLM向けプロンプトを生成。Mermaidフローチャート付きの返答を記録・検索・再利用。',
   },
+  '/diary': {
+    title: 'Diary - 日記ツール 📔',
+    description: '日記を箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtとして保存。',
+  },
   '/sketch': {
     title: 'Sketch - ビジュアル思考 🖊',
     description: 'フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGエクスポート対応。',
+  },
+  '/pad': {
+    title: 'Pad 📄',
+    description: 'ただのテキストパッド。',
   },
 };
