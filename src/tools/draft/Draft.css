@@ -403,6 +403,54 @@
   margin-right: 6px;
 }
 
+/* ============================
+   INPUT PANELS
+   ============================ */
+
+.dr-input-panel {
+  padding: 10px 14px;
+}
+
+.dr-input-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  padding-bottom: 8px;
+}
+
+.dr-input-collapse-icon {
+  font-size: 9px;
+  color: var(--dr-text-dim);
+  flex-shrink: 0;
+}
+
+.dr-input-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--dr-text-dim);
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.dr-input-controls {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.dr-input-textarea {
+  min-height: unset;
+  margin-top: 0;
+}
+
+.dr-input-add-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* --- Toast --- */
 .dr-toast {
   position: fixed;

@@ -15,10 +15,15 @@ const STORAGE_KEY = 'draft-state';
 const loadState = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as { draft: string; mapCode: string; input?: string };
+    if (raw) return JSON.parse(raw) as { draft: string; mapCode: string };
   } catch { /* ignore */ }
-  return { draft: '', mapCode: DEFAULT_FLOWCHART, input: '' };
+  return { draft: '', mapCode: DEFAULT_FLOWCHART };
 };
+
+type InputSize = 'sm' | 'md' | 'lg';
+interface InputPanel { id: number; text: string; collapsed: boolean; size: InputSize }
+const SIZE_ROWS: Record<InputSize, number> = { sm: 3, md: 6, lg: 12 };
+const SIZE_NEXT: Record<InputSize, InputSize> = { sm: 'md', md: 'lg', lg: 'sm' };
 
 // Auto-insert <br> every WRAP_CHARS characters in flowchart node labels
 // so long Japanese labels wrap inside the box
@@ -55,7 +60,10 @@ const Draft = () => {
   const [fieldValues, setFieldValues] = useState<Record<string, Record<string, string>>>({});
 
   const [draft, setDraft] = useState(init.draft);
-  const [input, setInput] = useState(init.input ?? '');
+  const nextPanelId = useRef(2);
+  const [inputPanels, setInputPanels] = useState<InputPanel[]>([
+    { id: 1, text: '', collapsed: false, size: 'md' },
+  ]);
   const [toast, setToast] = useState('');
 
   const activeFramework = FRAMEWORKS.find(f => f.id === frameworkId) ?? FRAMEWORKS[0];
@@ -63,9 +71,17 @@ const Draft = () => {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode, input }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, mapCode }));
     } catch { /* ignore */ }
-  }, [draft, mapCode, input]);
+  }, [draft, mapCode]);
+
+  const addPanel = () => {
+    setInputPanels(prev => [...prev, { id: nextPanelId.current++, text: '', collapsed: false, size: 'md' }]);
+  };
+  const removePanel = (id: number) => setInputPanels(prev => prev.filter(p => p.id !== id));
+  const updatePanel = (id: number, text: string) => setInputPanels(prev => prev.map(p => p.id === id ? { ...p, text } : p));
+  const toggleCollapse = (id: number) => setInputPanels(prev => prev.map(p => p.id === id ? { ...p, collapsed: !p.collapsed } : p));
+  const cycleSize = (id: number) => setInputPanels(prev => prev.map(p => p.id === id ? { ...p, size: SIZE_NEXT[p.size] } : p));
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedMap(mapCode), 500);
@@ -265,21 +281,46 @@ const Draft = () => {
 
         {/* ===== RIGHT ===== */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div className="dr-panel">
-            <div className="dr-panel-title">インプット</div>
-            <textarea
-              className="dr-draft-textarea"
-              placeholder="参考にしたい文章・資料・メモをここに置いておきます。"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              rows={6}
-              aria-label="インプット"
-            />
-            {input && (
-              <div className="dr-draft-actions">
-                <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={() => setInput('')}>クリア</button>
+          {inputPanels.map((panel, idx) => (
+            <div key={panel.id} className="dr-panel dr-input-panel">
+              <div className="dr-input-header" onClick={() => toggleCollapse(panel.id)}>
+                <span className="dr-input-collapse-icon">{panel.collapsed ? '▶' : '▼'}</span>
+                <span className="dr-input-title">インプット {idx + 1}</span>
+                <div className="dr-input-controls" onClick={e => e.stopPropagation()}>
+                  <button
+                    className="dr-btn dr-btn-ghost dr-btn-sm"
+                    onClick={() => cycleSize(panel.id)}
+                    title="高さを切り替え (S/M/L)"
+                  >
+                    {panel.size.toUpperCase()}
+                  </button>
+                  {inputPanels.length > 1 && (
+                    <button
+                      className="dr-btn dr-btn-ghost dr-btn-sm"
+                      onClick={() => removePanel(panel.id)}
+                      title="削除"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
               </div>
-            )}
+              {!panel.collapsed && (
+                <textarea
+                  className="dr-draft-textarea dr-input-textarea"
+                  placeholder="参考にしたい文章・資料・メモをここに置いておきます。"
+                  value={panel.text}
+                  onChange={e => updatePanel(panel.id, e.target.value)}
+                  rows={SIZE_ROWS[panel.size]}
+                  aria-label={`インプット ${idx + 1}`}
+                />
+              )}
+            </div>
+          ))}
+          <div className="dr-input-add-row">
+            <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={addPanel}>
+              + 追加
+            </button>
           </div>
 
           <div className="dr-panel">
