@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Timer } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { splitText } from './pacerCore';
 import type { SplitMode } from './pacerCore';
@@ -84,7 +85,7 @@ const Pacer = () => {
   return (
     <div className={`pc-root ${dark ? 'dark' : 'light'}`}>
       <header className="pc-header">
-        <div className="pc-logo-icon">⚡</div>
+        <div className="pc-logo-icon"><Timer size={22} color="white" /></div>
         <h1><span className="accent">Pacer</span></h1>
       </header>
 

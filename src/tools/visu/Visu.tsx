@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import { TrendingUp } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   parseCsv, extractBarData, generateBarSVG,
@@ -88,7 +89,7 @@ const Visu = () => {
   return (
     <div className={`visu ${dark ? 'dark' : 'light'}`}>
       <div className="vs-header">
-        <div className="vs-logo-icon">📈</div>
+        <div className="vs-logo-icon"><TrendingUp size={22} color="white" /></div>
         <h1><span className="accent">Visu</span></h1>
       </div>
 

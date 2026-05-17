@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import { FileText, FolderOpen } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   extractPlaceholders, applyTemplate,
@@ -150,7 +151,7 @@ const Stencil = () => {
   return (
     <div className={`stencil ${dark ? 'dark' : 'light'}`}>
       <header className="st-header">
-        <div className="st-logo-icon">📋</div>
+        <div className="st-logo-icon"><FileText size={22} color="white" /></div>
         <h1><span className="accent">Stencil</span></h1>
       </header>
 
@@ -256,7 +257,7 @@ const Stencil = () => {
                 className="st-btn st-btn-ghost st-btn-sm"
                 onClick={() => fileInputRef.current?.click()}
               >
-                📂 ファイルを開く
+                <FolderOpen size={14} /> ファイルを開く
               </button>
               <input
                 ref={fileInputRef}

@@ -28,6 +28,7 @@ import Sketch from './tools/sketch/Sketch';
 import Diary from './tools/diary/Diary';
 import Pad from './tools/pad/Pad';
 import Commit from './tools/commit/Commit';
+import Args from './tools/args/Args';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -69,6 +70,7 @@ function App() {
             <Route path="/errlog" element={<ErrLog />} />
             <Route path="/sketch" element={<Sketch />} />
             <Route path="/diary" element={<Diary />} />
+            <Route path="/args" element={<Args />} />
             <Route path="/pad" element={<Pad />} />
             <Route path="/commit" element={<Commit />} />
           </Routes>

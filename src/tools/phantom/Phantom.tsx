@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Wand2 } from 'lucide-react';
 import './Phantom.css';
 import { usePhantom } from './usePhantom';
 import { useTheme } from '../../context/ThemeContext';
@@ -28,9 +29,12 @@ const Phantom = () => {
   return (
     <div className={`ph-root ${dark ? 'dark' : 'light'}`}>
       <header className="ph-header">
-        <div>
-          <div className="ph-logo">PHANTOM</div>
-          <div className="ph-subtitle">text mask &amp; transform engine</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Wand2 size={22} color="white" />
+          <div>
+            <div className="ph-logo">PHANTOM</div>
+            <div className="ph-subtitle">text mask &amp; transform engine</div>
+          </div>
         </div>
       </header>
 

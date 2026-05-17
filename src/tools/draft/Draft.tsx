@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import mermaid from 'mermaid';
+import { PenLine, Scissors } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   countChars, countSentences, avgSentenceLength, estimateReadingTimeSec,
@@ -175,7 +176,7 @@ const Draft = () => {
   return (
     <div className={`draft ${dark ? 'dark' : 'light'}`}>
       <div className="dr-header">
-        <div className="dr-logo-icon">✍️</div>
+        <div className="dr-logo-icon"><PenLine size={22} color="white" /></div>
         <h1><span className="accent">Draft</span></h1>
       </div>
 
@@ -337,7 +338,7 @@ const Draft = () => {
               {draft && (
                 <>
                   <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={() => setDraft('')}>クリア</button>
-                  <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={copySlim} title="理科系の作文技術に則り10/30/50/70/90%削減の5案を出すプロンプトをコピー">✂️ 削減5案</button>
+                  <button className="dr-btn dr-btn-ghost dr-btn-sm" onClick={copySlim} title="理科系の作文技術に則り10/30/50/70/90%削減の5案を出すプロンプトをコピー"><Scissors size={14} /> 削減5案</button>
                   <button className="dr-btn dr-btn-primary dr-btn-sm" onClick={copy}>コピー</button>
                 </>
               )}

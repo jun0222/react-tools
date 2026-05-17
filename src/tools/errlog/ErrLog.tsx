@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import mermaid from 'mermaid';
+import { Bug, Clipboard } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   generatePrompt, extractMermaid,
@@ -76,7 +77,7 @@ const ErrLog = () => {
   return (
     <div className={`errlog ${dark ? 'dark' : 'light'}`}>
       <header className="el-header">
-        <div className="el-logo">🐛</div>
+        <div className="el-logo"><Bug size={22} color="white" /></div>
         <h1><span className="accent">ErrLog</span></h1>
       </header>
 
@@ -96,7 +97,7 @@ const ErrLog = () => {
           onClick={handleCopyPrompt}
           disabled={!errorText.trim()}
         >
-          📋 プロンプトをコピーして LLM に聞く
+          <Clipboard size={14} /> プロンプトをコピーして LLM に聞く
         </button>
       </div>
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import mermaid from 'mermaid';
+import { PenTool } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   type DiagramType,
@@ -151,7 +152,7 @@ const Sketch = () => {
   return (
     <div className={`sketch-tool ${dark ? 'dark' : 'light'}`}>
       <div className="sk-header">
-        <div className="sk-logo-icon">🖊</div>
+        <div className="sk-logo-icon"><PenTool size={22} color="white" /></div>
         <h1><span className="accent">Sketch</span></h1>
       </div>
 

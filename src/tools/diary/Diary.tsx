@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { NotebookPen, Clipboard, Save } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   type DiaryMode,
@@ -113,7 +114,7 @@ const Diary = () => {
   return (
     <div className={`diary-tool ${dark ? 'dark' : 'light'}`}>
       <div className="dy-header">
-        <div className="dy-logo-icon">📔</div>
+        <div className="dy-logo-icon"><NotebookPen size={22} color="white" /></div>
         <div>
           <h1><span className="accent">Diary</span></h1>
           <div className="dy-date">{dateLabel}</div>
@@ -210,7 +211,7 @@ const Diary = () => {
                 disabled={bullets.length === 0}
                 title="LLMに貼り付けてサマリ・キーワードを生成させてください"
               >
-                📋 プロンプトをコピー
+                <Clipboard size={14} /> プロンプトをコピー
               </button>
             </div>
           </div>
@@ -287,7 +288,7 @@ const Diary = () => {
                 onClick={exportTxt}
                 disabled={bullets.length === 0}
               >
-                💾 {filename} を保存
+                <Save size={14} /> {filename} を保存
               </button>
             </div>
 

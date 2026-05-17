@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { Languages } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { convertRomaji, groupLines } from './romajiCore';
 import './Romaji.css';
@@ -64,7 +65,7 @@ const Romaji = () => {
   return (
     <div className={`rj-root ${dark ? 'dark' : 'light'}`}>
       <header className="rj-header">
-        <div className="rj-logo-icon">あ</div>
+        <div className="rj-logo-icon"><Languages size={22} color="white" /></div>
         <h1>ローマ字 <span className="accent">→ ひらがな</span></h1>
       </header>
 

@@ -11,6 +11,7 @@ import {
   uid, toMermaid, toDrawIo, downloadText,
   type ErdEntityData, type ErdField, type ErdNode, type ErdEdge,
 } from './helpers';
+import { Database } from 'lucide-react';
 import EntityNode from './EntityNode';
 import './Erd.css';
 
@@ -166,7 +167,7 @@ const Erd = () => {
     <div className={`erd-page ${dark ? 'dark' : 'light'}`}>
       <header className="erd-header">
         <div className="erd-logo">
-          <div className="erd-logo-icon">🗂</div>
+          <div className="erd-logo-icon"><Database size={22} color="white" /></div>
           <h1><span className="accent">ERD</span></h1>
         </div>
         <div className="erd-toolbar">

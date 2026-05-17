@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { ListTodo, FolderOpen } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   parseTodoTxt, serializeTodoItem, serializeTodoTxt,
@@ -175,13 +176,13 @@ const Todo = () => {
       {/* Header */}
       <div className="td-header">
         <div className="td-header-left">
-          <div className="td-logo-icon">✅</div>
+          <div className="td-logo-icon"><ListTodo size={22} color="white" /></div>
           <h1><span className="accent">Todo</span></h1>
           <span className="td-summary">{counts.active} / {counts.all} 件</span>
         </div>
         <div className="td-header-actions">
           <button className="td-btn td-btn-ghost td-btn-sm" onClick={() => fileInputRef.current?.click()}>
-            📂 開く
+            <FolderOpen size={14} /> 開く
           </button>
           <input ref={fileInputRef} type="file" className="td-file-input" accept=".txt,text/plain" onChange={handleFileUpload} />
           <button className="td-btn td-btn-ghost td-btn-sm" onClick={handleExport}>エクスポート</button>

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { Scissors } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   loadSnippets, saveSnippets, createSnippet,
@@ -50,7 +51,7 @@ const Snip = () => {
   return (
     <div className={`snip ${dark ? 'dark' : 'light'}`}>
       <header className="sn-header">
-        <div className="sn-logo">✂️</div>
+        <div className="sn-logo"><Scissors size={22} color="white" /></div>
         <h1><span className="accent">Snip</span></h1>
       </header>
 

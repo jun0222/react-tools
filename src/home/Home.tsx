@@ -1,13 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Zap, Wand2, Hammer, Database, BarChart3, Map, Timer, Clipboard,
+  Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
+  TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
+  PenTool, GitCommit, StickyNote, Terminal, Search, X,
+} from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
 
-const tools: { path: string; name: string; icon: string; iconBg: string; desc: string; tag: string; hidden?: true }[] = [
+interface Tool {
+  path: string;
+  name: string;
+  icon: ReactNode;
+  iconBg: string;
+  desc: string;
+  tag: string;
+  hidden?: true;
+}
+
+const tools: Tool[] = [
   {
     path: '/oneshot',
     name: 'OneShot',
-    icon: '⚡',
+    icon: <Zap size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #ff2d7b, #a855f7)',
     desc: 'プロンプトを保存・編集・蒸留・検証する1画面ツール',
     tag: 'prompt',
@@ -15,7 +31,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/phantom',
     name: 'Phantom',
-    icon: '🪄',
+    icon: <Wand2 size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #00ffe7, #0a5eaa)',
     desc: 'KMP置換・LCGランダム変換によるテキストマスクツール',
     tag: 'text',
@@ -23,7 +39,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/forge',
     name: 'Forge',
-    icon: '⚒️',
+    icon: <Hammer size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
     desc: 'PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー',
     tag: 'text',
@@ -31,7 +47,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/erd',
     name: 'ERD',
-    icon: '🗂',
+    icon: <Database size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
     desc: 'ReactFlow で ER図を作成。Mermaid / DrawIO / SVG / JSON でエクスポート',
     tag: 'diagram',
@@ -40,7 +56,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/mermaid',
     name: 'Mermaid',
-    icon: '📊',
+    icon: <BarChart3 size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
     desc: 'テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類',
     tag: 'diagram',
@@ -48,7 +64,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/blueprint',
     name: 'Blueprint',
-    icon: '🗺️',
+    icon: <Map size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
     desc: '機能要件・BBテスト・非機能要件・テスト戦略を整理する開発計画ツール',
     tag: 'plan',
@@ -57,7 +73,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/pacer',
     name: 'Pacer',
-    icon: '⚡',
+    icon: <Timer size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #10b981, #0d9488)',
     desc: 'テキストを段落/行/N文字で分割して一定ペースで読む スピードリーダー',
     tag: 'read',
@@ -66,7 +82,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/clips',
     name: 'Clips',
-    icon: '📋',
+    icon: <Clipboard size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
     desc: 'Claude スクリーンショット・DOM ダンプなど すぐ使えるスニペット集',
     tag: 'util',
@@ -75,7 +91,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/romaji',
     name: 'Romaji',
-    icon: 'あ',
+    icon: <Languages size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
     desc: 'ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる',
     tag: 'text',
@@ -83,7 +99,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/draft',
     name: 'Draft',
-    icon: '✍️',
+    icon: <PenLine size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #0d9488, #6366f1)',
     desc: 'マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック',
     tag: 'text',
@@ -91,7 +107,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/todo',
     name: 'Todo',
-    icon: '✅',
+    icon: <ListTodo size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
     desc: 'todo.txt フォーマットで優先度・プロジェクト・コンテキスト付きタスク管理',
     tag: 'util',
@@ -100,7 +116,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/stencil',
     name: 'Stencil',
-    icon: '📋',
+    icon: <FileText size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
     desc: '%%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成',
     tag: 'text',
@@ -108,7 +124,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/minutes',
     name: 'Minutes',
-    icon: '📝',
+    icon: <ClipboardList size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
     desc: 'コンサル型議事録ツール。アジェンダ・決定事項・ネクストアクション（担当者/期日）をMarkdownで出力',
     tag: 'util',
@@ -117,7 +133,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/logtree',
     name: 'LogTree',
-    icon: '🌳',
+    icon: <Network size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #0d9488, #6366f1)',
     desc: 'インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応',
     tag: 'diagram',
@@ -125,7 +141,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/visu',
     name: 'Visu',
-    icon: '📈',
+    icon: <TrendingUp size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
     desc: 'CSVをグラフ・テーブルに、比較マトリクスをMarkdownで出力',
     tag: 'util',
@@ -134,7 +150,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/bookmarks',
     name: 'Bookmarks',
-    icon: '🔖',
+    icon: <Bookmark size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
     desc: 'URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート',
     tag: 'util',
@@ -142,7 +158,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/snip',
     name: 'Snip',
-    icon: '✂️',
+    icon: <Scissors size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #7c6cff, #a855f7)',
     desc: 'テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理',
     tag: 'util',
@@ -150,7 +166,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/wordmemo',
     name: 'WordMemo',
-    icon: '📚',
+    icon: <BookOpen size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #10b981, #6366f1)',
     desc: '気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成',
     tag: 'util',
@@ -158,7 +174,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/errlog',
     name: 'ErrLog',
-    icon: '🐛',
+    icon: <Bug size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #ef4444, #f97316)',
     desc: 'エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用',
     tag: 'dev',
@@ -166,7 +182,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/diary',
     name: 'Diary',
-    icon: '📔',
+    icon: <NotebookPen size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #d97706, #f59e0b)',
     desc: '日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存',
     tag: 'write',
@@ -174,7 +190,7 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/sketch',
     name: 'Sketch',
-    icon: '🖊',
+    icon: <PenTool size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
     desc: 'フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート',
     tag: 'diagram',
@@ -182,15 +198,23 @@ const tools: { path: string; name: string; icon: string; iconBg: string; desc: s
   {
     path: '/commit',
     name: 'Commit',
-    icon: '🔖',
+    icon: <GitCommit size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #15803d, #22c55e)',
     desc: 'type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存',
     tag: 'dev',
   },
   {
+    path: '/args',
+    name: 'Args',
+    icon: <Terminal size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #1d4ed8, #3b82f6)',
+    desc: 'コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き',
+    tag: 'dev',
+  },
+  {
     path: '/pad',
     name: 'Pad',
-    icon: '📄',
+    icon: <StickyNote size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #6b7280, #9ca3af)',
     desc: 'ただのテキストパッド。書いた内容は自動保存される。',
     tag: 'write',
@@ -204,6 +228,7 @@ const devHidden = new Set(tools.filter(t => t.hidden).map(t => t.path));
 const Home = () => {
   const { dark } = useTheme();
   const [editing, setEditing] = useState(false);
+  const [query,   setQuery]   = useState('');
   const [hidden, setHidden] = useState<Set<string>>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -229,7 +254,15 @@ const Home = () => {
     });
   };
 
-  const visibleTools = editing ? tools : tools.filter(t => !hidden.has(t.path));
+  const baseTools = editing ? tools : tools.filter(t => !hidden.has(t.path));
+  const q = query.trim().toLowerCase();
+  const visibleTools = q
+    ? baseTools.filter(t =>
+        t.name.toLowerCase().includes(q) ||
+        t.desc.toLowerCase().includes(q) ||
+        t.tag.toLowerCase().includes(q)
+      )
+    : baseTools;
 
   return (
     <div className={`home ${dark ? 'dark' : 'light'}`}>
@@ -239,6 +272,21 @@ const Home = () => {
           <p>{visibleTools.length} tool{visibleTools.length !== 1 ? 's' : ''} available</p>
         </div>
         <div className="home-header-actions">
+          <div className="home-search-wrap">
+            <Search size={13} className="home-search-icon" />
+            <input
+              className="home-search"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="検索..."
+              aria-label="ツール検索"
+            />
+            {query && (
+              <button className="home-search-clear" onClick={() => setQuery('')} aria-label="クリア">
+                <X size={12} />
+              </button>
+            )}
+          </div>
           {editing && (
             <button className="home-reset-btn" onClick={resetToDefault}>
               デフォルトに戻す
@@ -287,6 +335,9 @@ const Home = () => {
             </Link>
           );
         })}
+        {visibleTools.length === 0 && (
+          <p className="home-no-results">「{query}」に一致するツールはありません</p>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
+import { GitCommit, Clipboard, Download, Upload } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   formatCommit,
@@ -113,7 +114,7 @@ const Commit = () => {
   return (
     <div className={`commit-tool ${dark ? 'dark' : 'light'}`}>
       <div className="cm-header">
-        <div className="cm-logo">🔖</div>
+        <div className="cm-logo"><GitCommit size={22} color="white" /></div>
         <div>
           <h1>Commit <span className="cm-accent">Message</span></h1>
           <p className="cm-sub">type(scope): description</p>
@@ -177,7 +178,7 @@ const Commit = () => {
           onClick={commit}
           disabled={!message}
         >
-          📋 コピー & 保存
+          <Clipboard size={14} /> コピー & 保存
         </button>
       </div>
 
@@ -218,10 +219,10 @@ const Commit = () => {
       {/* ===== エクスポート / インポート ===== */}
       <div className="cm-io-row">
         <button className="cm-btn cm-btn-ghost" onClick={handleExport}>
-          ⬇ JSON エクスポート
+          <Download size={14} /> JSON エクスポート
         </button>
         <button className="cm-btn cm-btn-ghost" onClick={() => importRef.current?.click()}>
-          ⬆ JSON インポート
+          <Upload size={14} /> JSON インポート
         </button>
         <input
           ref={importRef}

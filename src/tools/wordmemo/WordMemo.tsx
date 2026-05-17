@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { BookOpen, Clipboard } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   loadMemos, saveMemos, createMemo,
@@ -52,7 +53,7 @@ const WordMemo = () => {
   return (
     <div className={`wordmemo ${dark ? 'dark' : 'light'}`}>
       <header className="wm-header">
-        <div className="wm-logo">📚</div>
+        <div className="wm-logo"><BookOpen size={22} color="white" /></div>
         <h1><span className="accent">WordMemo</span></h1>
       </header>
       <p className="wm-subtitle">
@@ -65,7 +66,7 @@ const WordMemo = () => {
         disabled={items.length === 0}
         aria-label="プロンプトをコピー"
       >
-        📋 プロンプトをコピー（{items.length}件）
+        <Clipboard size={14} /> プロンプトをコピー（{items.length}件）
       </button>
 
       <div className="wm-search-row">

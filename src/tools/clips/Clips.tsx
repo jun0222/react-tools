@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Clipboard } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { BUILTIN_SNIPPETS } from './builtinSnippets';
 import type { Snippet } from './builtinSnippets';
@@ -86,7 +87,7 @@ const Clips = () => {
     <div className={`cl-root ${dark ? 'dark' : 'light'}`}>
       <div className="cl-header">
         <div className="cl-header-left">
-          <div className="cl-logo-icon">📋</div>
+          <div className="cl-logo-icon"><Clipboard size={22} color="white" /></div>
           <h1><span className="accent">Clips</span></h1>
         </div>
         <button className="cl-btn cl-btn-accent" onClick={() => setShowAddForm(v => !v)}>

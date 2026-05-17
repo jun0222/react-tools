@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import mermaid from 'mermaid';
 import { useTheme } from '../../context/ThemeContext';
+import { BarChart3 } from 'lucide-react';
 import { TEMPLATES } from './templates';
 import './Mermaid.css';
 
@@ -144,7 +145,7 @@ const Mermaid = () => {
   return (
     <div className={`mm-root ${dark ? 'dark' : 'light'}`}>
       <header className="mm-header">
-        <div className="mm-logo-icon">📊</div>
+        <div className="mm-logo-icon"><BarChart3 size={22} color="white" /></div>
         <h1><span className="accent">Mermaid</span> Editor</h1>
       </header>
 

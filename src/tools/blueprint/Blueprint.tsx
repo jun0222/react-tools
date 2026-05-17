@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Map } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   exportToMarkdown, DEFAULT_NFRS, DEFAULT_STRATEGIES,
@@ -77,7 +78,7 @@ const Blueprint = () => {
       {/* Header */}
       <div className="bp-header">
         <div className="bp-title-area">
-          <div className="bp-logo-icon">🗺️</div>
+          <div className="bp-logo-icon"><Map size={22} color="white" /></div>
           <h1><span className="accent">Blueprint</span></h1>
         </div>
         <button className="bp-btn bp-btn-blue" onClick={handleExport}>

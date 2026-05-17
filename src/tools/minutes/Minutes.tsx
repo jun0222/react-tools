@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { ClipboardList } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   emptyMeeting, newAgendaItem, newAction, generateMarkdown,
@@ -121,7 +122,7 @@ const Minutes = () => {
   return (
     <div className={`minutes ${dark ? 'dark' : 'light'}`}>
       <div className="mn-header">
-        <div className="mn-logo-icon">📝</div>
+        <div className="mn-logo-icon"><ClipboardList size={22} color="white" /></div>
         <h1><span className="accent">Minutes</span></h1>
       </div>
 

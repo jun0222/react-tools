@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { Hammer } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   toPascal, toSnake, toCamel, toKebab,
@@ -132,7 +133,7 @@ const Forge = () => {
   return (
     <div className={`forge ${dark ? 'dark' : 'light'}`}>
       <header className="fg-header">
-        <div className="fg-logo-icon">⚒️</div>
+        <div className="fg-logo-icon"><Hammer size={22} color="white" /></div>
         <h1><span className="accent">Forge</span></h1>
       </header>
 

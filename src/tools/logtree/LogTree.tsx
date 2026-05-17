@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Network } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { parseTree, layoutTree, generateSVG } from './logtreeCore';
 import type { Direction } from './logtreeCore';
@@ -70,7 +71,7 @@ const LogTree = () => {
   return (
     <div className={`logtree ${dark ? 'dark' : 'light'}`}>
       <div className="lt-header">
-        <div className="lt-logo-icon">🌳</div>
+        <div className="lt-logo-icon"><Network size={22} color="white" /></div>
         <h1><span className="accent">LogTree</span></h1>
       </div>
 

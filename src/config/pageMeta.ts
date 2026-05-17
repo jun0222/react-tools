@@ -96,6 +96,10 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Commit Message 🔖',
     description: 'type(scope): description 形式のコミットメッセージを組み立てるツール。履歴をJSON保存・エクスポート対応。',
   },
+  '/args': {
+    title: 'Args - コマンド変数エディタ 🖥',
+    description: 'コマンドをスペースで分割しインデックス指定でトークンを置換。Diff確認付き。',
+  },
   '/pad': {
     title: 'Pad 📄',
     description: 'ただのテキストパッド。',
