@@ -85,18 +85,11 @@ const Commit = () => {
     reader.onload = ev => {
       const result = importHistoryJson(ev.target?.result as string);
       if (!result) { showToast('読み込み失敗'); return; }
-      const merged: CommitHistory = {
-        types:  addToHistory(result.types,  ...history.types  as []),
-        scopes: addToHistory(result.scopes, ...history.scopes as []),
-        descs:  addToHistory(result.descs,  ...history.descs  as []),
-      };
-      // simple merge: concat + dedupe
       const mergedClean: CommitHistory = {
         types:  [...new Set([...result.types,  ...history.types])].slice(0, 20),
         scopes: [...new Set([...result.scopes, ...history.scopes])].slice(0, 20),
         descs:  [...new Set([...result.descs,  ...history.descs])].slice(0, 20),
       };
-      void merged;
       setHistory(mergedClean);
       saveHistory(mergedClean);
       showToast('インポートしました');

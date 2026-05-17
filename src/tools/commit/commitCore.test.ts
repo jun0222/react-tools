@@ -77,9 +77,10 @@ describe('importHistoryJson', () => {
   it('正しいJSONからhistoryを復元する', () => {
     const json = JSON.stringify({ types: ['feat'], scopes: ['ui'], descs: ['add btn'] });
     const result = importHistoryJson(json);
-    expect(result.types).toEqual(['feat']);
-    expect(result.scopes).toEqual(['ui']);
-    expect(result.descs).toEqual(['add btn']);
+    expect(result).not.toBeNull();
+    expect(result!.types).toEqual(['feat']);
+    expect(result!.scopes).toEqual(['ui']);
+    expect(result!.descs).toEqual(['add btn']);
   });
 
   it('不正なJSONはnullを返す', () => {
