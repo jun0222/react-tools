@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import mermaid from 'mermaid';
 import { useTheme } from '../../context/ThemeContext';
 import {
-  DiagramType, DIAGRAM_CONFIGS, FLOW_DEFAULT, STATE_DEFAULT, GRAPH_DEFAULT, generateFilename,
+  type DiagramType,
+  DIAGRAM_CONFIGS,
+  FLOW_DEFAULT,
+  STATE_DEFAULT,
+  GRAPH_DEFAULT,
+  generateFilename,
+  parseSimpleNotation,
 } from './sketchCore';
 import './Sketch.css';
 
@@ -30,13 +36,18 @@ const Sketch = () => {
   const currentCode = codes[activeType];
   const config = DIAGRAM_CONFIGS[activeType];
 
+  // Convert simple notation → Mermaid (debounced)
+  const generatedMermaid = useMemo(
+    () => parseSimpleNotation(debouncedCode, activeType),
+    [debouncedCode, activeType],
+  );
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(codes));
     } catch { /* ignore */ }
   }, [codes]);
 
-  // Reset SVG flag when switching diagram types
   useEffect(() => { setHasSvg(false); }, [activeType]);
 
   useEffect(() => {
@@ -53,17 +64,15 @@ const Sketch = () => {
     }
     const id = `sk-svg-${++sketchRenderSeq}`;
     mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default' });
-    mermaid.render(id, debouncedCode)
+    mermaid.render(id, generatedMermaid)
       .then(({ svg }) => {
         if (previewRef.current) {
           previewRef.current.innerHTML = svg;
           setHasSvg(true);
         }
       })
-      .catch(() => {
-        setHasSvg(false);
-      });
-  }, [debouncedCode, dark]);
+      .catch(() => { setHasSvg(false); });
+  }, [generatedMermaid, dark]);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg);
@@ -75,21 +84,20 @@ const Sketch = () => {
 
   const insertSnippet = (snippetCode: string) => {
     const ta = textareaRef.current;
-    if (!ta) { setCode(currentCode + '\n  ' + snippetCode); return; }
+    if (!ta) { setCode(currentCode + '\n' + snippetCode); return; }
     const pos = ta.selectionStart ?? currentCode.length;
-    const newCode = currentCode.slice(0, pos) + '\n  ' + snippetCode + currentCode.slice(pos);
+    const newCode = currentCode.slice(0, pos) + '\n' + snippetCode + currentCode.slice(pos);
     setCode(newCode);
     requestAnimationFrame(() => {
       ta.focus();
-      ta.selectionStart = ta.selectionEnd = pos + snippetCode.length + 3;
+      ta.selectionStart = ta.selectionEnd = pos + snippetCode.length + 1;
     });
   };
 
   const exportSvg = () => {
     const svgEl = previewRef.current?.querySelector('svg');
     if (!svgEl) return;
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgEl);
+    const svgString = new XMLSerializer().serializeToString(svgEl);
     const blob = new Blob([svgString], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -176,20 +184,28 @@ const Sketch = () => {
             <button
               className="sk-snippet-btn sk-snippet-reset"
               onClick={() => setCode(config.defaultCode)}
-              title="デフォルトコードに戻す"
+              title="デフォルトに戻す"
             >
               リセット
             </button>
           </div>
+
           <textarea
             ref={textareaRef}
             className="sk-code-area"
             value={currentCode}
             onChange={e => setCode(e.target.value)}
             spellCheck={false}
-            rows={22}
-            aria-label="ダイアグラムコード"
+            rows={16}
+            aria-label="ダイアグラム記法"
+            placeholder={`例:\nあれ → それ ← これ\n{判断} →[はい] 処理A\n{判断} →[いいえ] 処理B`}
           />
+
+          {/* Generated Mermaid toggle */}
+          <details className="sk-generated-details">
+            <summary className="sk-generated-summary">生成されたMermaidコード</summary>
+            <pre className="sk-generated-code">{generatedMermaid}</pre>
+          </details>
         </div>
 
         {/* ===== PREVIEW ===== */}

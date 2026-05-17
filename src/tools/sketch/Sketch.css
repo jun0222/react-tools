@@ -166,6 +166,42 @@
 
 .sk-code-area:focus { border-color: var(--sk-purple); }
 
+/* --- Generated Mermaid toggle --- */
+.sk-generated-details {
+  margin-top: 10px;
+}
+
+.sk-generated-summary {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-text-dim);
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: 0.04em;
+  list-style: none;
+}
+.sk-generated-summary::before {
+  content: '▶ ';
+  font-size: 9px;
+}
+.sk-generated-details[open] .sk-generated-summary::before {
+  content: '▼ ';
+}
+
+.sk-generated-code {
+  margin: 6px 0 0;
+  padding: 10px 12px;
+  background: var(--sk-surface2);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-sm);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--sk-text-dim);
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
 /* --- Preview panel --- */
 .sk-preview-panel {
   display: flex;
