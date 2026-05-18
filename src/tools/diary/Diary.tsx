@@ -278,9 +278,7 @@ const Diary = () => {
           <div className="dy-panel">
             <div className="dy-panel-title">.txt として保存</div>
             <div className="dy-hint">
-              {mode === 'nippo'
-                ? '```で囲んだ形式で本文・サマリ・キーワードを保存します。'
-                : 'ASCII art形式で本文・サマリ・キーワードを1ファイルにまとめて保存します。'}
+                ASCII art形式で本文・サマリ・キーワードを1ファイルにまとめて保存します。
             </div>
             <div className="dy-actions">
               <button

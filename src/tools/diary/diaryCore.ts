@@ -192,7 +192,7 @@ export const generateTxtContent = (
     SEP_MAJOR,
   ].join('\n');
 
-  return mode === 'nippo' ? `\`\`\`\n${body}\n\`\`\`` : body;
+  return body;
 };
 
 // ---- Utilities ----

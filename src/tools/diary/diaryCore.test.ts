@@ -209,12 +209,6 @@ describe('generateTxtContent', () => {
     expect(txt).toContain('勉強振り返り');
   });
 
-  it('nippoモードは```で囲まれる', () => {
-    const txt = generateTxtContent(date, bullets, summary, keywords, 'nippo');
-    expect(txt.startsWith('```')).toBe(true);
-    expect(txt.trimEnd().endsWith('```')).toBe(true);
-  });
-
   it('nippoモードは日報ヘッダーを含む', () => {
     const txt = generateTxtContent(date, bullets, summary, keywords, 'nippo');
     expect(txt).toContain('日報');
