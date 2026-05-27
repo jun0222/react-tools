@@ -1,4 +1,13 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+
+const useDebounce = <T,>(value: T, ms: number): T => {
+  const [val, setVal] = useState(value);
+  useEffect(() => {
+    const id = setTimeout(() => setVal(value), ms);
+    return () => clearTimeout(id);
+  }, [value, ms]);
+  return val;
+};
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { Layout, Download, Upload, ChevronUp, ChevronDown, X, Plus } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
@@ -240,6 +249,9 @@ const Slideshow = () => {
   const [toast, setToast] = useState('');
   const importRef = useRef<HTMLInputElement>(null);
 
+  const pdfData = useDebounce(data, 700);
+  const pdfDoc  = useMemo(() => <PresentationDoc data={pdfData} />, [pdfData]);
+
   const slides = data.slides;
   const selectedSlide = slides.find(s => s.id === selectedId) ?? null;
   const selectedIndex = slides.findIndex(s => s.id === selectedId);
@@ -317,7 +329,7 @@ const Slideshow = () => {
           </button>
           {slides.length > 0 ? (
             <PDFDownloadLink
-              document={<PresentationDoc data={data} />}
+              document={pdfDoc}
               fileName={`${safe}.pdf`}
               className="sw-btn sw-btn-primary"
             >
