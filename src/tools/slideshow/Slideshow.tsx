@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
-import { Layout, Download, Upload, Save, ChevronUp, ChevronDown, X } from 'lucide-react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { Layout, Download, Upload, ChevronUp, ChevronDown, X, Plus } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   type Slide,
@@ -10,14 +11,13 @@ import {
   addSlide,
   removeSlide,
   moveSlide,
-  generateAsciiSlide,
-  generateAsciiPresentation,
   exportJson,
   importJson,
 } from './slideshowCore';
+import { PresentationDoc } from './PresentationDoc';
 import './Slideshow.css';
 
-const STORAGE_KEY = 'slideshow-state-v1';
+const STORAGE_KEY = 'slideshow-state-v2';
 const DEFAULT_DATA: SlideshowData = { presentationTitle: '', slides: [] };
 
 const loadData = (): SlideshowData => {
@@ -31,26 +31,81 @@ const loadData = (): SlideshowData => {
   return DEFAULT_DATA;
 };
 
-// ---- Slide thumbnail ----
+// ---- スライドプレビュー（CSS） ----
+
+const SlidePreview = ({ slide }: { slide: Slide }) => {
+  const layout = slide.layout;
+  return (
+    <div className={`sw-preview sw-preview-${layout.replace('-', '_')}`}>
+      {layout === 'title' && (
+        <div className="sw-pv-title-inner">
+          <div className="sw-pv-title-text">{slide.title || 'タイトル'}</div>
+          <div className="sw-pv-title-sep" />
+          {slide.body && <div className="sw-pv-subtitle-text">{slide.body}</div>}
+        </div>
+      )}
+      {layout === 'section' && (
+        <div className="sw-pv-section-inner">
+          <div className="sw-pv-sec-line" />
+          <div className="sw-pv-sec-text">{slide.title || 'セクション'}</div>
+          <div className="sw-pv-sec-line" />
+        </div>
+      )}
+      {layout === 'content' && (
+        <>
+          <div className="sw-pv-topbar" />
+          <div className="sw-pv-content-inner">
+            <div className="sw-pv-slide-title">{slide.title || 'タイトル'}</div>
+            <div className="sw-pv-slide-sep" />
+            <div className="sw-pv-body">{slide.body}</div>
+          </div>
+        </>
+      )}
+      {layout === 'two-col' && (
+        <>
+          <div className="sw-pv-topbar" />
+          <div className="sw-pv-content-inner">
+            <div className="sw-pv-slide-title">{slide.title || 'タイトル'}</div>
+            <div className="sw-pv-slide-sep" />
+            <div className="sw-pv-twocol">
+              <div className="sw-pv-col">
+                <div className="sw-pv-col-label">左</div>
+                <div className="sw-pv-body">{slide.body}</div>
+              </div>
+              <div className="sw-pv-col-div" />
+              <div className="sw-pv-col">
+                <div className="sw-pv-col-label">右</div>
+                <div className="sw-pv-body">{slide.bodyRight}</div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+// ---- スライドサムネイル（リスト用） ----
 
 const SlideThumbnail = ({ layout }: { layout: SlideLayout }) => (
   <div className={`sw-thumb sw-thumb-${layout.replace('-', '_')}`}>
     {layout === 'title' && (
-      <div className="sw-thumb-inner sw-thumb-title-inner">
+      <div className="sw-thumb-title-inner">
         <div className="sw-thumb-title-bar" />
         <div className="sw-thumb-title-sep" />
         <div className="sw-thumb-title-sub" />
       </div>
     )}
     {layout === 'section' && (
-      <div className="sw-thumb-inner sw-thumb-section-inner">
+      <div className="sw-thumb-section-inner">
         <div className="sw-thumb-sec-line" />
         <div className="sw-thumb-sec-text" />
         <div className="sw-thumb-sec-line" />
       </div>
     )}
     {layout === 'content' && (
-      <div className="sw-thumb-inner sw-thumb-content-inner">
+      <div className="sw-thumb-content-inner">
+        <div className="sw-thumb-topbar" />
         <div className="sw-thumb-cnt-title" />
         <div className="sw-thumb-cnt-sep" />
         <div className="sw-thumb-cnt-line" />
@@ -59,7 +114,8 @@ const SlideThumbnail = ({ layout }: { layout: SlideLayout }) => (
       </div>
     )}
     {layout === 'two-col' && (
-      <div className="sw-thumb-inner sw-thumb-twocol-inner">
+      <div className="sw-thumb-twocol-inner">
+        <div className="sw-thumb-topbar" />
         <div className="sw-thumb-tc-title" />
         <div className="sw-thumb-tc-sep" />
         <div className="sw-thumb-tc-cols">
@@ -78,113 +134,102 @@ const SlideThumbnail = ({ layout }: { layout: SlideLayout }) => (
   </div>
 );
 
-// ---- Slide editor ----
+// ---- スライドエディタ ----
 
 interface EditorProps {
   slide: Slide;
-  index: number;
-  total: number;
   onChange: (patch: Partial<Slide>) => void;
 }
 
-const SlideEditor = ({ slide, index, total, onChange }: EditorProps) => {
-  const ascii = generateAsciiSlide(slide, index, total);
+const SlideEditor = ({ slide, onChange }: EditorProps) => (
+  <div className="sw-edit-wrap">
+    {/* レイアウト */}
+    <div className="sw-edit-section">
+      <div className="sw-edit-label">レイアウト</div>
+      <div className="sw-layout-picker">
+        {LAYOUTS.map(l => (
+          <button
+            key={l}
+            className={`sw-layout-btn ${slide.layout === l ? 'sw-layout-btn-active' : ''}`}
+            onClick={() => onChange({ layout: l })}
+          >
+            {LAYOUT_CONFIG[l].name}
+          </button>
+        ))}
+      </div>
+    </div>
 
-  return (
-    <div className="sw-edit-wrap">
+    {/* タイトル */}
+    {slide.layout !== 'blank' && (
       <div className="sw-edit-section">
-        <div className="sw-edit-label">レイアウト</div>
-        <div className="sw-layout-picker">
-          {LAYOUTS.map(l => (
-            <button
-              key={l}
-              className={`sw-layout-btn ${slide.layout === l ? 'sw-layout-btn-active' : ''}`}
-              onClick={() => onChange({ layout: l })}
-            >
-              {LAYOUT_CONFIG[l].name}
-            </button>
-          ))}
+        <div className="sw-edit-label">
+          {slide.layout === 'title' ? 'メインタイトル' :
+           slide.layout === 'section' ? 'セクション名' : 'スライドタイトル'}
+        </div>
+        <input
+          className="sw-edit-input"
+          value={slide.title}
+          onChange={e => onChange({ title: e.target.value })}
+          placeholder={
+            slide.layout === 'title' ? 'プレゼンテーションのタイトル' :
+            slide.layout === 'section' ? 'セクション名' : 'スライドのタイトル'
+          }
+          aria-label="タイトル"
+        />
+      </div>
+    )}
+
+    {/* コンテンツ本文 */}
+    {(slide.layout === 'title' || slide.layout === 'content') && (
+      <div className="sw-edit-section">
+        <div className="sw-edit-label">
+          {slide.layout === 'title' ? 'サブタイトル' : '本文'}
+        </div>
+        <textarea
+          className="sw-edit-textarea"
+          value={slide.body}
+          onChange={e => onChange({ body: e.target.value })}
+          placeholder={slide.layout === 'title' ? 'サブタイトル・発表者名など' : '内容を書いてください'}
+          rows={slide.layout === 'title' ? 2 : 6}
+          aria-label={slide.layout === 'title' ? 'サブタイトル' : '本文'}
+        />
+      </div>
+    )}
+
+    {/* 2カラム */}
+    {slide.layout === 'two-col' && (
+      <div className="sw-edit-section">
+        <div className="sw-edit-label">本文</div>
+        <div className="sw-edit-two-col">
+          <div>
+            <div className="sw-edit-sublabel">左</div>
+            <textarea
+              className="sw-edit-textarea"
+              value={slide.body}
+              onChange={e => onChange({ body: e.target.value })}
+              placeholder="左カラムの内容"
+              rows={5}
+              aria-label="左カラム"
+            />
+          </div>
+          <div>
+            <div className="sw-edit-sublabel">右</div>
+            <textarea
+              className="sw-edit-textarea"
+              value={slide.bodyRight}
+              onChange={e => onChange({ bodyRight: e.target.value })}
+              placeholder="右カラムの内容"
+              rows={5}
+              aria-label="右カラム"
+            />
+          </div>
         </div>
       </div>
+    )}
+  </div>
+);
 
-      {slide.layout !== 'blank' && (
-        <div className="sw-edit-section">
-          <div className="sw-edit-label">
-            {slide.layout === 'title' ? 'タイトル' :
-             slide.layout === 'section' ? 'セクション名' : 'スライドタイトル'}
-          </div>
-          <input
-            className="sw-edit-input"
-            value={slide.title}
-            onChange={e => onChange({ title: e.target.value })}
-            placeholder={
-              slide.layout === 'title' ? 'プレゼンテーションのタイトル' :
-              slide.layout === 'section' ? 'セクション名' : 'スライドのタイトル'
-            }
-            aria-label="スライドタイトル"
-          />
-        </div>
-      )}
-
-      {(slide.layout === 'title' || slide.layout === 'content') && (
-        <div className="sw-edit-section">
-          <div className="sw-edit-label">
-            {slide.layout === 'title' ? 'サブタイトル' : '本文（1行1ポイント）'}
-          </div>
-          <textarea
-            className="sw-edit-textarea"
-            value={slide.body}
-            onChange={e => onChange({ body: e.target.value })}
-            placeholder={
-              slide.layout === 'title'
-                ? 'サブタイトル・発表者名など'
-                : '・ポイント1\n・ポイント2\n・ポイント3'
-            }
-            rows={slide.layout === 'title' ? 3 : 6}
-            aria-label="本文"
-          />
-        </div>
-      )}
-
-      {slide.layout === 'two-col' && (
-        <div className="sw-edit-section">
-          <div className="sw-edit-label">本文（2カラム）</div>
-          <div className="sw-edit-two-col">
-            <div className="sw-edit-col">
-              <div className="sw-edit-sublabel">左カラム</div>
-              <textarea
-                className="sw-edit-textarea"
-                value={slide.body}
-                onChange={e => onChange({ body: e.target.value })}
-                placeholder="左の内容"
-                rows={5}
-                aria-label="左カラム"
-              />
-            </div>
-            <div className="sw-edit-col">
-              <div className="sw-edit-sublabel">右カラム</div>
-              <textarea
-                className="sw-edit-textarea"
-                value={slide.bodyRight}
-                onChange={e => onChange({ bodyRight: e.target.value })}
-                placeholder="右の内容"
-                rows={5}
-                aria-label="右カラム"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      <details className="sw-ascii-details">
-        <summary className="sw-ascii-summary">ASCIIプレビュー</summary>
-        <pre className="sw-ascii-pre">{ascii}</pre>
-      </details>
-    </div>
-  );
-};
-
-// ---- Main component ----
+// ---- メインコンポーネント ----
 
 const Slideshow = () => {
   const { dark } = useTheme();
@@ -213,9 +258,9 @@ const Slideshow = () => {
     persist({ ...data, slides: slides.map(s => s.id === id ? { ...s, ...patch } : s) });
 
   const handleAddSlide = (layout: SlideLayout) => {
-    const idx = selectedIndex >= 0 ? selectedIndex : slides.length - 1;
-    const newSlides = addSlide(slides, layout, idx >= 0 ? idx : undefined);
-    const newSlide = newSlides[idx >= 0 ? idx + 1 : newSlides.length - 1];
+    const after = selectedIndex >= 0 ? selectedIndex : slides.length - 1;
+    const newSlides = addSlide(slides, layout, after >= 0 ? after : undefined);
+    const newSlide = newSlides[after >= 0 ? after + 1 : newSlides.length - 1];
     persist({ ...data, slides: newSlides });
     setSelectedId(newSlide.id);
   };
@@ -226,26 +271,13 @@ const Slideshow = () => {
     if (newSlides.length === 0) {
       setSelectedId(null);
     } else if (selectedId === id) {
-      const idx = Math.min(selectedIndex, newSlides.length - 1);
-      setSelectedId(newSlides[Math.max(0, idx)]?.id ?? null);
+      const idx = Math.max(0, Math.min(selectedIndex, newSlides.length - 1));
+      setSelectedId(newSlides[idx]?.id ?? null);
     }
   };
 
   const handleMoveSlide = (id: string, direction: 'up' | 'down') =>
     persist({ ...data, slides: moveSlide(slides, id, direction) });
-
-  const handleExportJson = () => {
-    const json = exportJson(data);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const safe = (data.presentationTitle || 'untitled').replace(/[<>:"/\\|?*\s]+/g, '_');
-    a.download = `slideshow_${safe}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('JSONをエクスポートしました');
-  };
 
   const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -262,47 +294,42 @@ const Slideshow = () => {
     e.target.value = '';
   };
 
-  const handleExportTxt = () => {
-    const content = generateAsciiPresentation(data);
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const safe = (data.presentationTitle || 'untitled').replace(/[<>:"/\\|?*\s]+/g, '_');
-    a.download = `slideshow_${safe}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('.txtを保存しました');
-  };
+  const safe = (data.presentationTitle || 'untitled').replace(/[<>:"/\\|?*\s]+/g, '_');
 
   return (
     <div className={`slideshow-tool ${dark ? 'dark' : 'light'}`}>
+      {/* ヘッダー */}
       <div className="sw-header">
         <div className="sw-logo"><Layout size={22} color="white" /></div>
         <div className="sw-title-area">
           <h1>Slide<span className="sw-accent">show</span></h1>
           <input
             className="sw-pres-title"
-            placeholder="プレゼンテーションのタイトル"
+            placeholder="プレゼンテーションタイトル"
             value={data.presentationTitle}
             onChange={e => persist({ ...data, presentationTitle: e.target.value })}
             aria-label="プレゼンテーションタイトル"
           />
         </div>
         <div className="sw-header-actions">
-          <button className="sw-btn sw-btn-ghost" onClick={handleExportJson}>
-            <Download size={13} /> JSON
-          </button>
           <button className="sw-btn sw-btn-ghost" onClick={() => importRef.current?.click()}>
-            <Upload size={13} /> インポート
+            <Upload size={13} /> JSONインポート
           </button>
-          <button
-            className="sw-btn sw-btn-primary"
-            onClick={handleExportTxt}
-            disabled={slides.length === 0}
-          >
-            <Save size={13} /> .txt保存
-          </button>
+          {slides.length > 0 ? (
+            <PDFDownloadLink
+              document={<PresentationDoc data={data} />}
+              fileName={`${safe}.pdf`}
+              className="sw-btn sw-btn-primary"
+            >
+              {({ loading }) => (
+                <><Download size={13} /> {loading ? '生成中…' : 'PDF を保存'}</>
+              )}
+            </PDFDownloadLink>
+          ) : (
+            <button className="sw-btn sw-btn-primary" disabled>
+              <Download size={13} /> PDF を保存
+            </button>
+          )}
           <input
             ref={importRef}
             type="file"
@@ -313,8 +340,9 @@ const Slideshow = () => {
         </div>
       </div>
 
+      {/* メイン */}
       <div className="sw-main">
-        {/* left: slide list */}
+        {/* 左：スライドリスト */}
         <div className="sw-list">
           <div className="sw-list-slides">
             {slides.length === 0 && (
@@ -330,9 +358,7 @@ const Slideshow = () => {
                 <SlideThumbnail layout={slide.layout} />
                 <div className="sw-slide-info">
                   <span className="sw-slide-layout-badge">{LAYOUT_CONFIG[slide.layout].name}</span>
-                  <span className="sw-slide-title-text">
-                    {slide.title || '（無題）'}
-                  </span>
+                  <span className="sw-slide-title-text">{slide.title || '（無題）'}</span>
                 </div>
                 <div className="sw-slide-controls">
                   <button
@@ -340,32 +366,32 @@ const Slideshow = () => {
                     onClick={e => { e.stopPropagation(); handleMoveSlide(slide.id, 'up'); }}
                     disabled={i === 0}
                     aria-label="上へ"
-                  ><ChevronUp size={12} /></button>
+                  ><ChevronUp size={11} /></button>
                   <button
                     className="sw-ctrl-btn"
                     onClick={e => { e.stopPropagation(); handleMoveSlide(slide.id, 'down'); }}
                     disabled={i === slides.length - 1}
                     aria-label="下へ"
-                  ><ChevronDown size={12} /></button>
+                  ><ChevronDown size={11} /></button>
                   <button
                     className="sw-ctrl-btn sw-ctrl-del"
                     onClick={e => { e.stopPropagation(); handleRemoveSlide(slide.id); }}
                     aria-label="削除"
-                  ><X size={12} /></button>
+                  ><X size={11} /></button>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="sw-add-bar">
-            <div className="sw-add-label">スライドを追加</div>
+            <div className="sw-add-label"><Plus size={10} /> スライドを追加</div>
             <div className="sw-add-btns">
               {LAYOUTS.map(layout => (
                 <button
                   key={layout}
                   className="sw-add-btn"
                   onClick={() => handleAddSlide(layout)}
-                  title={`${LAYOUT_CONFIG[layout].name}スライドを追加`}
+                  title={`${LAYOUT_CONFIG[layout].name}を追加`}
                 >
                   {LAYOUT_CONFIG[layout].name}
                 </button>
@@ -374,20 +400,33 @@ const Slideshow = () => {
           </div>
         </div>
 
-        {/* right: editor */}
-        <div className="sw-editor">
+        {/* 中央：エディタ */}
+        <div className="sw-editor-panel">
           {selectedSlide ? (
             <SlideEditor
               slide={selectedSlide}
-              index={selectedIndex}
-              total={slides.length}
               onChange={patch => updateSlide(selectedSlide.id, patch)}
             />
           ) : (
             <div className="sw-editor-empty">
-              <Layout size={40} className="sw-editor-empty-icon" />
-              <p>左のパネルからスライドを選択するか<br />「スライドを追加」で始めましょう</p>
+              <Layout size={36} className="sw-editor-empty-icon" />
+              <p>スライドを選択するか<br />左下のボタンで追加してください</p>
             </div>
+          )}
+        </div>
+
+        {/* 右：CSSプレビュー */}
+        <div className="sw-preview-panel">
+          <div className="sw-preview-label">プレビュー</div>
+          {selectedSlide ? (
+            <div className="sw-preview-wrap">
+              <SlidePreview slide={selectedSlide} />
+              <div className="sw-preview-caption">
+                {selectedIndex + 1} / {slides.length} &nbsp;·&nbsp; {LAYOUT_CONFIG[selectedSlide.layout].name}
+              </div>
+            </div>
+          ) : (
+            <div className="sw-preview-placeholder">スライドを選択</div>
           )}
         </div>
       </div>
