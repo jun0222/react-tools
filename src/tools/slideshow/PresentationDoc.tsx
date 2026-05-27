@@ -2,12 +2,12 @@ import { Document, Page, View, Text, StyleSheet, Font } from '@react-pdf/rendere
 import type { SlideshowData, Slide } from './slideshowCore';
 import { DiagramBlock } from './DiagramPDF';
 
-// 日本語フォント登録（public/fonts/ に配置したローカルファイルを使用）
+const _base = typeof window !== 'undefined' ? window.location.origin : '';
 Font.register({
   family: 'NotoSansJP',
   fonts: [
-    { src: '/fonts/NotoSansJP-Regular.woff2', fontWeight: 'normal' },
-    { src: '/fonts/NotoSansJP-Bold.woff2',    fontWeight: 'bold'   },
+    { src: `${_base}/fonts/NotoSansJP-Regular.ttf`, fontWeight: 'normal' },
+    { src: `${_base}/fonts/NotoSansJP-Bold.ttf`,    fontWeight: 'bold'   },
   ],
 });
 
