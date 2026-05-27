@@ -104,4 +104,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Pad 📄',
     description: 'ただのテキストパッド。',
   },
+  '/slideshow': {
+    title: 'Slideshow - スライドアウトライン',
+    description: 'スライドショーのアウトラインをグラフィカルに編集。JSON保存・エクスポート、ASCIIアート書き出し対応。',
+  },
 };

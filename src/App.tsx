@@ -29,6 +29,7 @@ import Diary from './tools/diary/Diary';
 import Pad from './tools/pad/Pad';
 import Commit from './tools/commit/Commit';
 import Args from './tools/args/Args';
+import Slideshow from './tools/slideshow/Slideshow';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -73,6 +74,7 @@ function App() {
             <Route path="/args" element={<Args />} />
             <Route path="/pad" element={<Pad />} />
             <Route path="/commit" element={<Commit />} />
+            <Route path="/slideshow" element={<Slideshow />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

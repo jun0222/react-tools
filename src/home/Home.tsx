@@ -4,7 +4,7 @@ import {
   Zap, Wand2, Hammer, Database, BarChart3, Map, Timer, Clipboard,
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
-  PenTool, GitCommit, StickyNote, Terminal, Search, X,
+  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -217,6 +217,14 @@ const tools: Tool[] = [
     icon: <StickyNote size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #6b7280, #9ca3af)',
     desc: 'ただのテキストパッド。書いた内容は自動保存される。',
+    tag: 'write',
+  },
+  {
+    path: '/slideshow',
+    name: 'Slideshow',
+    icon: <Layout size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+    desc: 'スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応',
     tag: 'write',
   },
 ];
