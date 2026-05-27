@@ -1,5 +1,6 @@
 import { Document, Page, View, Text, StyleSheet, Font } from '@react-pdf/renderer';
 import type { SlideshowData, Slide } from './slideshowCore';
+import { DiagramBlock } from './DiagramPDF';
 
 // 日本語フォント登録（public/fonts/ に配置したローカルファイルを使用）
 Font.register({
@@ -213,6 +214,22 @@ const SlideContent = ({ slide, index, total }: { slide: Slide; index: number; to
               <Text style={s.colLabel}>右</Text>
               <Text style={s.bodyText}>{slide.bodyRight}</Text>
             </View>
+          </View>
+        </View>
+        {num}
+      </Page>
+    );
+  }
+
+  if (slide.layout === 'diagram') {
+    return (
+      <Page size={[960, 540]} style={s.page}>
+        <View style={s.topBar} />
+        <View style={{ ...s.inner, flex: 1 }}>
+          {slide.title ? <Text style={s.slideTitle}>{slide.title}</Text> : null}
+          {slide.title ? <View style={s.slideSep} /> : null}
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {slide.diagram ? <DiagramBlock diagram={slide.diagram} /> : null}
           </View>
         </View>
         {num}

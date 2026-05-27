@@ -8,6 +8,9 @@ import {
   importJson,
   LAYOUT_CONFIG,
   LAYOUTS,
+  DIAGRAM_KINDS,
+  DIAGRAM_KIND_NAMES,
+  DEFAULT_DIAGRAMS,
   type Slide,
   type SlideshowData,
 } from './slideshowCore';
@@ -24,6 +27,7 @@ describe('createSlide', () => {
     expect(createSlide('section').layout).toBe('section');
     expect(createSlide('two-col').layout).toBe('two-col');
     expect(createSlide('blank').layout).toBe('blank');
+    expect(createSlide('diagram').layout).toBe('diagram');
   });
 
   it('idが生成される', () => {
@@ -196,15 +200,38 @@ describe('importJson', () => {
     expect(result!.presentationTitle).toBe('RT');
     expect(result!.slides[1].bodyRight).toBe('R');
   });
+
+  it('diagramフィールドが保持される', () => {
+    const data: SlideshowData = {
+      presentationTitle: 'Diag',
+      slides: [{
+        id: 'd1',
+        layout: 'diagram',
+        title: 'ベン図',
+        body: '',
+        bodyRight: '',
+        diagram: { kind: 'venn', leftLabel: 'A', rightLabel: 'B', overlapLabel: 'C', leftColor: '#f00', rightColor: '#00f' },
+      }],
+    };
+    const result = importJson(exportJson(data));
+    expect(result!.slides[0].diagram?.kind).toBe('venn');
+  });
+
+  it('diagramなしスライドのdiagramはundefined', () => {
+    const data: SlideshowData = { presentationTitle: 'X', slides: [{ id: '1', layout: 'content', title: '', body: '', bodyRight: '' }] };
+    const result = importJson(exportJson(data));
+    expect(result!.slides[0].diagram).toBeUndefined();
+  });
 });
 
 // ---- LAYOUT_CONFIG / LAYOUTS ----
 
 describe('LAYOUT_CONFIG', () => {
-  it('5種類が存在する', () => {
-    expect(Object.keys(LAYOUT_CONFIG)).toHaveLength(5);
+  it('6種類が存在する', () => {
+    expect(Object.keys(LAYOUT_CONFIG)).toHaveLength(6);
     expect(LAYOUT_CONFIG.title).toBeDefined();
     expect(LAYOUT_CONFIG['two-col']).toBeDefined();
+    expect(LAYOUT_CONFIG.diagram).toBeDefined();
   });
 
   it('各レイアウトにnameが存在する', () => {
@@ -215,7 +242,115 @@ describe('LAYOUT_CONFIG', () => {
 });
 
 describe('LAYOUTS', () => {
-  it('5要素の配列', () => {
-    expect(LAYOUTS.length).toBe(5);
+  it('6要素の配列', () => {
+    expect(LAYOUTS.length).toBe(6);
+  });
+});
+
+// ---- DIAGRAM_KINDS / DIAGRAM_KIND_NAMES ----
+
+describe('DIAGRAM_KINDS', () => {
+  it('9種類が存在する', () => {
+    expect(DIAGRAM_KINDS).toHaveLength(9);
+  });
+
+  it('必要な種別が含まれる', () => {
+    expect(DIAGRAM_KINDS).toContain('venn');
+    expect(DIAGRAM_KINDS).toContain('matrix4');
+    expect(DIAGRAM_KINDS).toContain('matrix9');
+    expect(DIAGRAM_KINDS).toContain('pyramid');
+    expect(DIAGRAM_KINDS).toContain('flowchart');
+    expect(DIAGRAM_KINDS).toContain('logic-tree');
+    expect(DIAGRAM_KINDS).toContain('bar-chart');
+    expect(DIAGRAM_KINDS).toContain('line-chart');
+    expect(DIAGRAM_KINDS).toContain('image');
+  });
+});
+
+describe('DIAGRAM_KIND_NAMES', () => {
+  it('全種別に日本語名がある', () => {
+    for (const kind of DIAGRAM_KINDS) {
+      expect(DIAGRAM_KIND_NAMES[kind]).toBeTruthy();
+    }
+  });
+});
+
+// ---- DEFAULT_DIAGRAMS ----
+
+describe('DEFAULT_DIAGRAMS', () => {
+  it('全9種別のデフォルトデータが存在する', () => {
+    for (const kind of DIAGRAM_KINDS) {
+      expect(DEFAULT_DIAGRAMS[kind]).toBeDefined();
+      expect(DEFAULT_DIAGRAMS[kind].kind).toBe(kind);
+    }
+  });
+
+  it('vennのデフォルトは必要なフィールドを持つ', () => {
+    const d = DEFAULT_DIAGRAMS.venn;
+    expect(d.kind).toBe('venn');
+    if (d.kind === 'venn') {
+      expect(typeof d.leftLabel).toBe('string');
+      expect(typeof d.rightLabel).toBe('string');
+      expect(typeof d.overlapLabel).toBe('string');
+    }
+  });
+
+  it('matrix4のセルは4つ', () => {
+    const d = DEFAULT_DIAGRAMS.matrix4;
+    if (d.kind === 'matrix4') {
+      expect(d.cells).toHaveLength(4);
+    }
+  });
+
+  it('matrix9のセルは9つ', () => {
+    const d = DEFAULT_DIAGRAMS.matrix9;
+    if (d.kind === 'matrix9') {
+      expect(d.cells).toHaveLength(9);
+    }
+  });
+
+  it('pyramidのlayersは配列', () => {
+    const d = DEFAULT_DIAGRAMS.pyramid;
+    if (d.kind === 'pyramid') {
+      expect(Array.isArray(d.layers)).toBe(true);
+      expect(d.layers.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('flowchartのnodesは配列', () => {
+    const d = DEFAULT_DIAGRAMS.flowchart;
+    if (d.kind === 'flowchart') {
+      expect(Array.isArray(d.nodes)).toBe(true);
+      expect(d.nodes.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('logic-treeのbranchesは配列', () => {
+    const d = DEFAULT_DIAGRAMS['logic-tree'];
+    if (d.kind === 'logic-tree') {
+      expect(Array.isArray(d.branches)).toBe(true);
+    }
+  });
+
+  it('bar-chartのvaluesとxLabelsは同じ長さ', () => {
+    const d = DEFAULT_DIAGRAMS['bar-chart'];
+    if (d.kind === 'bar-chart') {
+      expect(d.values.length).toBe(d.xLabels.length);
+    }
+  });
+
+  it('line-chartのseriesは配列', () => {
+    const d = DEFAULT_DIAGRAMS['line-chart'];
+    if (d.kind === 'line-chart') {
+      expect(Array.isArray(d.series)).toBe(true);
+      expect(d.series.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('imageのsrcは文字列', () => {
+    const d = DEFAULT_DIAGRAMS.image;
+    if (d.kind === 'image') {
+      expect(typeof d.src).toBe('string');
+    }
   });
 });

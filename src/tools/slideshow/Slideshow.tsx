@@ -17,6 +17,7 @@ import {
   type SlideshowData,
   LAYOUT_CONFIG,
   LAYOUTS,
+  DEFAULT_DIAGRAMS,
   addSlide,
   removeSlide,
   moveSlide,
@@ -24,6 +25,7 @@ import {
   importJson,
 } from './slideshowCore';
 import { PresentationDoc } from './PresentationDoc';
+import { DiagramEditorPanel } from './DiagramEditor';
 import './Slideshow.css';
 
 const STORAGE_KEY = 'slideshow-state-v2';
@@ -90,6 +92,18 @@ const SlidePreview = ({ slide }: { slide: Slide }) => {
           </div>
         </>
       )}
+      {layout === 'diagram' && (
+        <>
+          <div className="sw-pv-topbar" />
+          <div className="sw-pv-content-inner">
+            {slide.title && <div className="sw-pv-slide-title">{slide.title}</div>}
+            {slide.title && <div className="sw-pv-slide-sep" />}
+            <div className="sw-pv-diagram-placeholder">
+              {slide.diagram ? `[${slide.diagram.kind}]` : 'ダイアグラム'}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -138,6 +152,14 @@ const SlideThumbnail = ({ layout }: { layout: SlideLayout }) => (
             <div className="sw-thumb-tc-line" />
           </div>
         </div>
+      </div>
+    )}
+    {layout === 'diagram' && (
+      <div className="sw-thumb-content-inner">
+        <div className="sw-thumb-topbar" />
+        <div className="sw-thumb-cnt-title" />
+        <div className="sw-thumb-cnt-sep" />
+        <div className="sw-thumb-diagram-icon" />
       </div>
     )}
   </div>
@@ -206,7 +228,7 @@ const SlideEditor = ({ slide, onChange }: EditorProps) => (
     )}
 
     {/* 2カラム */}
-    {slide.layout === 'two-col' && (
+    {slide.layout !== 'diagram' && slide.layout === 'two-col' && (
       <div className="sw-edit-section">
         <div className="sw-edit-label">本文</div>
         <div className="sw-edit-two-col">
@@ -267,13 +289,25 @@ const Slideshow = () => {
     setTimeout(() => setToast(''), 1800);
   }, []);
 
-  const updateSlide = (id: string, patch: Partial<Slide>) =>
-    persist({ ...data, slides: slides.map(s => s.id === id ? { ...s, ...patch } : s) });
+  const updateSlide = (id: string, patch: Partial<Slide>) => {
+    const resolved = slides.map(s => {
+      if (s.id !== id) return s;
+      const merged = { ...s, ...patch };
+      if (patch.layout === 'diagram' && !merged.diagram) {
+        merged.diagram = DEFAULT_DIAGRAMS['bar-chart'];
+      }
+      return merged;
+    });
+    persist({ ...data, slides: resolved });
+  };
 
   const handleAddSlide = (layout: SlideLayout) => {
     const after = selectedIndex >= 0 ? selectedIndex : slides.length - 1;
     const newSlides = addSlide(slides, layout, after >= 0 ? after : undefined);
     const newSlide = newSlides[after >= 0 ? after + 1 : newSlides.length - 1];
+    if (layout === 'diagram') {
+      newSlide.diagram = { ...DEFAULT_DIAGRAMS['bar-chart'] };
+    }
     persist({ ...data, slides: newSlides });
     setSelectedId(newSlide.id);
   };
@@ -429,10 +463,18 @@ const Slideshow = () => {
         {/* 中央：エディタ */}
         <div className="sw-editor-panel">
           {selectedSlide ? (
-            <SlideEditor
-              slide={selectedSlide}
-              onChange={patch => updateSlide(selectedSlide.id, patch)}
-            />
+            <>
+              <SlideEditor
+                slide={selectedSlide}
+                onChange={patch => updateSlide(selectedSlide.id, patch)}
+              />
+              {selectedSlide.layout === 'diagram' && (
+                <DiagramEditorPanel
+                  diagram={selectedSlide.diagram ?? DEFAULT_DIAGRAMS['bar-chart']}
+                  onChange={d => updateSlide(selectedSlide.id, { diagram: d })}
+                />
+              )}
+            </>
           ) : (
             <div className="sw-editor-empty">
               <Layout size={36} className="sw-editor-empty-icon" />
