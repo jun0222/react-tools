@@ -249,6 +249,7 @@ const Slideshow = () => {
   const [toast, setToast] = useState('');
   const importRef = useRef<HTMLInputElement>(null);
 
+  const safe    = (data.presentationTitle || 'untitled').replace(/[<>:"/\\|?*\s]+/g, '_');
   const pdfData = useDebounce(data, 700);
   const pdfDoc  = useMemo(() => <PresentationDoc data={pdfData} />, [pdfData]);
 
@@ -291,6 +292,18 @@ const Slideshow = () => {
   const handleMoveSlide = (id: string, direction: 'up' | 'down') =>
     persist({ ...data, slides: moveSlide(slides, id, direction) });
 
+  const handleExportJson = () => {
+    const json = exportJson(data);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safe}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('JSONをエクスポートしました');
+  };
+
   const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -305,8 +318,6 @@ const Slideshow = () => {
     reader.readAsText(file);
     e.target.value = '';
   };
-
-  const safe = (data.presentationTitle || 'untitled').replace(/[<>:"/\\|?*\s]+/g, '_');
 
   return (
     <div className={`slideshow-tool ${dark ? 'dark' : 'light'}`}>
@@ -324,6 +335,9 @@ const Slideshow = () => {
           />
         </div>
         <div className="sw-header-actions">
+          <button className="sw-btn sw-btn-ghost" onClick={handleExportJson} disabled={slides.length === 0}>
+            <Download size={13} /> JSONエクスポート
+          </button>
           <button className="sw-btn sw-btn-ghost" onClick={() => importRef.current?.click()}>
             <Upload size={13} /> JSONインポート
           </button>

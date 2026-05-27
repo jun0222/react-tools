@@ -1,19 +1,12 @@
 import { Document, Page, View, Text, StyleSheet, Font } from '@react-pdf/renderer';
 import type { SlideshowData, Slide } from './slideshowCore';
 
-// 日本語フォント登録
-// jsDelivr 経由で Noto Sans JP を使用。オフライン環境では文字化けする場合がある。
+// 日本語フォント登録（public/fonts/ に配置したローカルファイルを使用）
 Font.register({
   family: 'NotoSansJP',
   fonts: [
-    {
-      src: 'https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5/files/noto-sans-jp-japanese-400-normal.woff2',
-      fontWeight: 'normal',
-    },
-    {
-      src: 'https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5/files/noto-sans-jp-japanese-700-normal.woff2',
-      fontWeight: 'bold',
-    },
+    { src: '/fonts/NotoSansJP-Regular.woff2', fontWeight: 'normal' },
+    { src: '/fonts/NotoSansJP-Bold.woff2',    fontWeight: 'bold'   },
   ],
 });
 
