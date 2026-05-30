@@ -48,6 +48,7 @@ export const GENRES: Genre[] = [
     labels: [
       { id: 'bluebacks', name: 'ブルーバックス', publisher: '講談社', star: true },
       { id: 'science-eye', name: 'サイエンス・アイ新書', publisher: 'SBクリエイティブ' },
+      { id: 'oreilly', name: "O'Reilly", publisher: "O'Reilly Media" },
     ],
   },
   {
