@@ -16,9 +16,36 @@ export const GENRES: Genre[] = [
     id: 'top3',
     name: '3大新書',
     labels: [
-      { id: 'iwanami', name: '岩波新書', publisher: '岩波書店' },
-      { id: 'chuko', name: '中公新書', publisher: '中央公論新社' },
-      { id: 'kodansha-gendai', name: '講談社現代新書', publisher: '講談社' },
+      { id: 'iwanami', name: '岩波新書', publisher: '岩波書店', star: true },
+      { id: 'chuko', name: '中公新書', publisher: '中央公論新社', star: true },
+      { id: 'kodansha-gendai', name: '講談社現代新書', publisher: '講談社', star: true },
+    ],
+  },
+    {
+        id: 'junior-top',
+        name: 'ジュニア・別格（岩波・ちくま系）',
+        labels: [
+            { id: 'chikuma-prima', name: 'ちくまプリマー新書', publisher: '筑摩書房', star: true },
+            { id: 'iwanami-junior', name: '岩波ジュニア新書', publisher: '岩波書店', star: true },
+            { id: 'iwanami-shonen', name: '岩波少年文庫', publisher: '岩波書店', star: true },
+        ],
+    },
+  {
+    id: 'science',
+    name: 'サイエンス・テクノロジー系',
+    labels: [
+      { id: 'bluebacks', name: 'ブルーバックス', publisher: '講談社', star: true },
+      { id: 'oreilly', name: "O'Reilly", publisher: "O'Reilly Media" },
+      { id: 'science-eye', name: 'サイエンス・アイ新書', publisher: 'SBクリエイティブ' },
+    ],
+  },
+  {
+    id: 'edge',
+    name: 'エッジ・教養カルチャー系',
+    labels: [
+      { id: 'chikuma-sensho', name: '筑摩選書', publisher: '筑摩書房', star: true },
+      { id: 'hayakawa', name: 'ハヤカワ新書', publisher: '早川書房' },
+      { id: 'seikaisha', name: '星海社新書', publisher: '星海社' },
     ],
   },
   {
@@ -35,38 +62,11 @@ export const GENRES: Genre[] = [
     id: 'middle',
     name: '中堅・洗練系',
     labels: [
-      { id: 'chikuma', name: 'ちくま新書', publisher: '筑摩書房' },
-      { id: 'shinchosha', name: '新潮新書', publisher: '新潮社' },
-      { id: 'bunshun', name: '文春新書', publisher: '文藝春秋' },
-      { id: 'shueisha', name: '集英社新書', publisher: '集英社' },
-      { id: 'heibonsha', name: '平凡社新書', publisher: '平凡社' },
-    ],
-  },
-  {
-    id: 'science',
-    name: 'サイエンス・テクノロジー系',
-    labels: [
-      { id: 'bluebacks', name: 'ブルーバックス', publisher: '講談社', star: true },
-      { id: 'science-eye', name: 'サイエンス・アイ新書', publisher: 'SBクリエイティブ' },
-      { id: 'oreilly', name: "O'Reilly", publisher: "O'Reilly Media" },
-    ],
-  },
-  {
-    id: 'edge',
-    name: 'エッジ・教養カルチャー系',
-    labels: [
-      { id: 'chikuma-sensho', name: '筑摩選書', publisher: '筑摩書房', star: true },
-      { id: 'hayakawa', name: 'ハヤカワ新書', publisher: '早川書房' },
-      { id: 'seikaisha', name: '星海社新書', publisher: '星海社' },
-    ],
-  },
-  {
-    id: 'junior-top',
-    name: 'ジュニア・別格（岩波・ちくま系）',
-    labels: [
-      { id: 'chikuma-prima', name: 'ちくまプリマー新書', publisher: '筑摩書房', star: true },
-      { id: 'iwanami-junior', name: '岩波ジュニア新書', publisher: '岩波書店', star: true },
-      { id: 'iwanami-shonen', name: '岩波少年文庫', publisher: '岩波書店', star: true },
+      { id: 'chikuma', name: 'ちくま新書', publisher: '筑摩書房', star: true },
+      { id: 'shinchosha', name: '新潮新書', publisher: '新潮社', star: true },
+      { id: 'bunshun', name: '文春新書', publisher: '文藝春秋', star: true },
+      { id: 'shueisha', name: '集英社新書', publisher: '集英社', star: true },
+      { id: 'heibonsha', name: '平凡社新書', publisher: '平凡社', star: true },
     ],
   },
   {

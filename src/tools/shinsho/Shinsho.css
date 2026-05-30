@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 24px 20px 16px;
+  padding: 24px 32px 16px;
 }
 
 .sh-logo-icon {
@@ -57,39 +57,21 @@
   font-weight: 700;
   color: var(--sh-text);
   margin: 0;
+  flex: 1;
 }
 
 .sh-accent {
   color: var(--sh-green);
 }
 
-/* --- Two-column layout --- */
-.sh-layout {
-  display: flex;
-  flex: 1;
-  gap: 0;
-}
-
-/* --- Left column --- */
-.sh-left {
-  width: 340px;
-  flex-shrink: 0;
-  min-height: calc(100vh - 60px);
-  border-right: 1px solid var(--sh-border);
+/* --- Body --- */
+.sh-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 0 16px 32px;
-  overflow-y: auto;
-}
-
-/* --- Right column --- */
-.sh-right {
-  flex: 1;
-  min-height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px 32px;
+  gap: 20px;
+  padding: 0 32px 40px;
+  max-width: 900px;
+  width: 100%;
 }
 
 /* --- Query textarea --- */
@@ -100,28 +82,32 @@
   border-radius: var(--sh-radius-sm);
   color: var(--sh-text);
   font-family: inherit;
-  font-size: 14px;
-  padding: 10px 12px;
+  font-size: 16px;
+  padding: 14px 16px;
   resize: vertical;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.15s;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 .sh-query:focus { border-color: var(--sh-green); }
 .sh-query::placeholder { color: var(--sh-text-muted); }
 
 /* --- Genre sections --- */
 .sh-genres {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .sh-genre {
+  background: var(--sh-surface);
+  border: 1px solid var(--sh-border);
+  border-radius: var(--sh-radius);
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .sh-genre-header {
@@ -142,7 +128,7 @@
 .sh-genre-toggle {
   font-size: 10px;
   font-weight: 600;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 10px;
   border: 1px solid var(--sh-border);
   background: var(--sh-surface2);
@@ -161,18 +147,18 @@
 .sh-labels {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
 }
 
 .sh-label-pill {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 4px 10px;
+  gap: 4px;
+  padding: 6px 12px;
   border-radius: 20px;
   border: 1.5px solid transparent;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
@@ -200,36 +186,23 @@
 
 .sh-star {
   color: #f59e0b;
-  font-size: 10px;
-}
-
-/* --- Preview (right column) --- */
-.sh-preview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 0 10px;
-}
-
-.sh-preview-title {
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--sh-text-muted);
-  text-transform: uppercase;
 }
 
+/* --- Copy button (in header) --- */
 .sh-copy-btn {
-  padding: 5px 14px;
+  padding: 8px 20px;
   border-radius: var(--sh-radius-sm);
   border: 1.5px solid var(--sh-border);
   background: var(--sh-surface2);
   color: var(--sh-text);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .sh-copy-btn:hover:not(:disabled) {
   border-color: var(--sh-green);
@@ -240,38 +213,14 @@
   cursor: default;
 }
 
-.sh-preview {
-  flex: 1;
-  background: var(--sh-surface);
-  border: 1.5px solid var(--sh-border);
-  border-radius: var(--sh-radius);
-  padding: 16px;
-  font-family: inherit;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--sh-text);
-  white-space: pre-wrap;
-  word-break: break-word;
-  margin: 0;
-  min-height: 200px;
-}
-
-.sh-preview--placeholder {
-  color: var(--sh-text-muted);
-  font-style: italic;
-}
-
-@media (max-width: 720px) {
-  .sh-layout {
-    flex-direction: column;
+@media (max-width: 600px) {
+  .sh-header {
+    padding: 16px 16px 12px;
   }
-  .sh-left {
-    width: 100%;
-    min-height: unset;
-    border-right: none;
-    border-bottom: 1px solid var(--sh-border);
+  .sh-body {
+    padding: 0 16px 32px;
   }
-  .sh-right {
-    min-height: unset;
+  .sh-genres {
+    grid-template-columns: 1fr;
   }
 }
