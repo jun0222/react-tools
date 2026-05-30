@@ -30,6 +30,18 @@ export const GENRES: Genre[] = [
             { id: 'iwanami-shonen', name: '岩波少年文庫', publisher: '岩波書店', star: true },
         ],
     },
+    {
+        id: 'middle',
+        name: '中堅・洗練系',
+        labels: [
+            { id: 'chikuma', name: 'ちくま新書', publisher: '筑摩書房', star: true },
+            { id: 'shinchosha', name: '新潮新書', publisher: '新潮社', star: true },
+            { id: 'bunshun', name: '文春新書', publisher: '文藝春秋', star: true },
+            { id: 'shueisha', name: '集英社新書', publisher: '集英社', star: true },
+            { id: 'heibonsha', name: '平凡社新書', publisher: '平凡社', star: true },
+            { id: 'koubunsha', name: '光文社新書', publisher: '光文社', star: true },
+        ],
+    },
   {
     id: 'science',
     name: 'サイエンス・テクノロジー系',
@@ -56,17 +68,6 @@ export const GENRES: Genre[] = [
       { id: 'kodansha-gakujutsu', name: '講談社学術文庫', publisher: '講談社' },
       { id: 'heibonsha-library', name: '平凡社ライブラリー', publisher: '平凡社' },
       { id: 'kobunsha-koten', name: '光文社古典新訳文庫', publisher: '光文社' },
-    ],
-  },
-  {
-    id: 'middle',
-    name: '中堅・洗練系',
-    labels: [
-      { id: 'chikuma', name: 'ちくま新書', publisher: '筑摩書房', star: true },
-      { id: 'shinchosha', name: '新潮新書', publisher: '新潮社', star: true },
-      { id: 'bunshun', name: '文春新書', publisher: '文藝春秋', star: true },
-      { id: 'shueisha', name: '集英社新書', publisher: '集英社', star: true },
-      { id: 'heibonsha', name: '平凡社新書', publisher: '平凡社', star: true },
     ],
   },
   {
