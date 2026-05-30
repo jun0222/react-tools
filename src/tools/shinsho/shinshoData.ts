@@ -61,14 +61,20 @@ export const GENRES: Genre[] = [
     ],
   },
   {
-    id: 'junior',
-    name: 'ジュニア・子ども向け',
+    id: 'junior-top',
+    name: 'ジュニア・別格（岩波・ちくま系）',
     labels: [
-      { id: 'chikuma-prima', name: 'ちくまプリマー新書', publisher: '筑摩書房' },
-      { id: 'iwanami-junior', name: '岩波ジュニア新書', publisher: '岩波書店' },
+      { id: 'chikuma-prima', name: 'ちくまプリマー新書', publisher: '筑摩書房', star: true },
+      { id: 'iwanami-junior', name: '岩波ジュニア新書', publisher: '岩波書店', star: true },
+      { id: 'iwanami-shonen', name: '岩波少年文庫', publisher: '岩波書店', star: true },
+    ],
+  },
+  {
+    id: 'junior-other',
+    name: 'ジュニア・エッジ系',
+    labels: [
       { id: '14sai', name: '14歳の世渡り術', publisher: '河出書房新社' },
       { id: 'yorimichi', name: 'よりみちパン!セ', publisher: '新曜社' },
-      { id: 'iwanami-shonen', name: '岩波少年文庫', publisher: '岩波書店' },
       { id: 'fukuinkan', name: '福音館文庫', publisher: '福音館書店' },
     ],
   },
