@@ -108,4 +108,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Slideshow - スライドアウトライン',
     description: 'スライドショーのアウトラインをグラフィカルに編集。JSON保存・エクスポート、ASCIIアート書き出し対応。',
   },
+  '/shinsho': {
+    title: 'Shinsho - 書籍プロンプト 📚',
+    description: '信頼できる新書・文庫レーベルを絞り込んでLLMに渡すプロンプトを生成するツール。',
+  },
 };

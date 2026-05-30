@@ -227,6 +227,14 @@ const tools: Tool[] = [
     desc: 'スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応',
     tag: 'write',
   },
+  {
+    path: '/shinsho',
+    name: 'Shinsho',
+    icon: <BookOpen size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #10b981, #3b82f6)',
+    desc: '信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成',
+    tag: 'prompt',
+  },
 ];
 
 const STORAGE_KEY = 'home-hidden-tools';

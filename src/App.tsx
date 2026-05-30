@@ -30,6 +30,7 @@ import Pad from './tools/pad/Pad';
 import Commit from './tools/commit/Commit';
 import Args from './tools/args/Args';
 import Slideshow from './tools/slideshow/Slideshow';
+import Shinsho from './tools/shinsho/Shinsho';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -75,6 +76,7 @@ function App() {
             <Route path="/pad" element={<Pad />} />
             <Route path="/commit" element={<Commit />} />
             <Route path="/slideshow" element={<Slideshow />} />
+            <Route path="/shinsho" element={<Shinsho />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
