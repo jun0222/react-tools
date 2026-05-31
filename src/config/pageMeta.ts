@@ -112,4 +112,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Shinsho - 書籍プロンプト 📚',
     description: '信頼できる新書・文庫レーベルを絞り込んでLLMに渡すプロンプトを生成するツール。',
   },
+  '/prose': {
+    title: 'Prose - 文書構成ツール ✍️',
+    description: '貼り付けた文書をLLMで書き直すプロンプトを生成。90/70/50/30%の4案を出力。',
+  },
 };

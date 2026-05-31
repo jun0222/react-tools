@@ -4,7 +4,7 @@ import {
   Zap, Wand2, Hammer, Database, BarChart3, Map, Timer, Clipboard,
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
-  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X,
+  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -234,6 +234,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #10b981, #3b82f6)',
     desc: '信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成',
     tag: 'prompt',
+  },
+  {
+    path: '/prose',
+    name: 'Prose',
+    icon: <AlignLeft size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+    desc: '文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案',
+    tag: 'write',
   },
 ];
 

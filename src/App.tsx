@@ -31,6 +31,7 @@ import Commit from './tools/commit/Commit';
 import Args from './tools/args/Args';
 import Slideshow from './tools/slideshow/Slideshow';
 import Shinsho from './tools/shinsho/Shinsho';
+import Prose from './tools/prose/Prose';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -77,6 +78,7 @@ function App() {
             <Route path="/commit" element={<Commit />} />
             <Route path="/slideshow" element={<Slideshow />} />
             <Route path="/shinsho" element={<Shinsho />} />
+            <Route path="/prose" element={<Prose />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
