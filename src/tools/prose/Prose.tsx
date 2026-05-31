@@ -90,7 +90,7 @@ const Prose = () => {
 
   useEffect(() => { localStorage.setItem(SK_CUSTOM,  JSON.stringify(customRules)); }, [customRules]);
   useEffect(() => { localStorage.setItem(SK_ENABLED, JSON.stringify(enabled));     }, [enabled]);
-  useEffect(() => { localStorage.setItem(SK_TEXT,    text);                        }, [text]);
+  useEffect(() => { localStorage.setItem(SK_TEXT,    JSON.stringify(text));        }, [text]);
 
   const toggle = (id: string) =>
     setEnabled(prev => ({ ...prev, [id]: !prev[id] }));
