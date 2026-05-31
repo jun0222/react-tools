@@ -18,6 +18,14 @@ const loadCustomRules = (): CustomRule[] => {
   } catch { return []; }
 };
 
+const ALL_PRINCIPLES: string[] = CHECKLIST.flatMap(s => {
+  if (!s.groupLabel) return s.items.map(i => `・${i.label}`);
+  return [
+    `・${s.groupLabel}`,
+    ...s.items.map(i => `　- ${i.label}`),
+  ];
+});
+
 const buildPrompt = (
   text: string,
   enabled: Record<string, boolean>,
@@ -25,24 +33,27 @@ const buildPrompt = (
 ): string => {
   if (!text.trim()) return '（文書を貼り付けてください）';
 
-  const builtinLines = CHECKLIST
+  const checkedBuiltin = CHECKLIST
     .flatMap(s => s.items)
     .filter(i => enabled[i.id])
     .map(i => `・${i.reviewCriteria}`);
 
-  const customLines = customRules
+  const checkedCustom = customRules
     .filter(r => enabled[`c__${r.id}`])
     .map(r => `・${r.label}`);
 
-  const checkedLines = [...builtinLines, ...customLines];
+  const checkedLines = [...checkedBuiltin, ...checkedCustom];
   if (checkedLines.length === 0) return '（観点を1つ以上チェックしてください）';
+
+  const customPrincipleLines = customRules.map(r => `・${r.label}`);
+  const allPrincipleLines = [...ALL_PRINCIPLES, ...customPrincipleLines].join('\n');
 
   return `以下の文書をレビューしてください。
 
-【前提：全体像の把握】
-まず文書全体を通読し、構成・論理の流れ・文体の一貫性を把握した上でレビューしてください。
+【この文書が従っている指針】
+${allPrincipleLines}
 
-【今回の重点観点】
+【今回のレビュー観点】
 ${checkedLines.join('\n')}
 
 【出力形式】
