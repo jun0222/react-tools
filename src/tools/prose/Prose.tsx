@@ -6,17 +6,21 @@ import './Prose.css';
 
 type CustomRule = { id: string; label: string };
 
-const STORAGE_KEY = 'prose-custom-rules';
+const SK_CUSTOM  = 'prose-custom-rules';
+const SK_ENABLED = 'prose-enabled';
+const SK_TEXT    = 'prose-text';
 
 const allItemIds = CHECKLIST.flatMap(s => s.items.map(i => i.id));
 const initialEnabled = Object.fromEntries(allItemIds.map(id => [id, true]));
 
-const loadCustomRules = (): CustomRule[] => {
+const load = <T,>(key: string, fallback: T): T => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch { return fallback; }
 };
+
+const loadCustomRules = (): CustomRule[] => load<CustomRule[]>(SK_CUSTOM, []);
 
 const ALL_PRINCIPLES: string[] = CHECKLIST.flatMap(s => {
   if (!s.groupLabel) return s.items.map(i => `・${i.label}`);
@@ -72,20 +76,21 @@ ${text}`;
 
 const Prose = () => {
   const { dark } = useTheme();
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>(() => load<string>(SK_TEXT, ''));
   const [customRules, setCustomRules] = useState<CustomRule[]>(loadCustomRules);
   const [enabled, setEnabled] = useState<Record<string, boolean>>(() => {
     const saved = loadCustomRules();
     const customEnabled = Object.fromEntries(saved.map(r => [`c__${r.id}`, true]));
-    return { ...initialEnabled, ...customEnabled };
+    const savedEnabled = load<Record<string, boolean>>(SK_ENABLED, {});
+    return { ...initialEnabled, ...customEnabled, ...savedEnabled };
   });
   const [customInput, setCustomInput] = useState('');
   const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customRules));
-  }, [customRules]);
+  useEffect(() => { localStorage.setItem(SK_CUSTOM,  JSON.stringify(customRules)); }, [customRules]);
+  useEffect(() => { localStorage.setItem(SK_ENABLED, JSON.stringify(enabled));     }, [enabled]);
+  useEffect(() => { localStorage.setItem(SK_TEXT,    text);                        }, [text]);
 
   const toggle = (id: string) =>
     setEnabled(prev => ({ ...prev, [id]: !prev[id] }));
@@ -225,7 +230,7 @@ const Prose = () => {
               </div>
             </div>
             {customRules.map(rule => (
-              <div key={rule.id} className="pr-check-row pr-check-row--child pr-custom-row">
+              <label key={rule.id} className="pr-check-row pr-check-row--child pr-custom-row">
                 <input
                   type="checkbox"
                   className="pr-checkbox"
@@ -235,12 +240,12 @@ const Prose = () => {
                 <span className="pr-check-label">{rule.label}</span>
                 <button
                   className="pr-custom-remove"
-                  onClick={() => removeCustomRule(rule.id)}
+                  onClick={e => { e.preventDefault(); removeCustomRule(rule.id); }}
                   aria-label="削除"
                 >
                   <X size={12} />
                 </button>
-              </div>
+              </label>
             ))}
           </div>
         </div>
