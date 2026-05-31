@@ -4,7 +4,7 @@ import {
   Zap, Wand2, Hammer, Database, BarChart3, Map, Timer, Clipboard,
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
-  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft,
+  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -242,6 +242,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
     desc: '文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案',
     tag: 'write',
+  },
+  {
+    path: '/meal',
+    name: 'Meal',
+    icon: <Salad size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #10b981, #0d9488)',
+    desc: '食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存',
+    tag: 'util',
   },
 ];
 

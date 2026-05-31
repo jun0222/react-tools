@@ -61,6 +61,17 @@ export const GENRES: Genre[] = [
     ],
   },
   {
+    id: 'bunko',
+    name: 'スタンダード文庫',
+    labels: [
+      { id: 'iwanami-bunko',     name: '岩波文庫',       publisher: '岩波書店' },
+      { id: 'chikuma-bunko',     name: 'ちくま文庫',     publisher: '筑摩書房' },
+      { id: 'kodansha-geijutsu', name: '講談社文芸文庫', publisher: '講談社' },
+      { id: 'shincho-bunko',     name: '新潮文庫',       publisher: '新潮社' },
+      { id: 'chuko-bunko',       name: '中公文庫',       publisher: '中央公論新社' },
+    ],
+  },
+  {
     id: 'classic',
     name: '古典・学術系',
     labels: [

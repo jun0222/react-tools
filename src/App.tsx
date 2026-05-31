@@ -32,6 +32,7 @@ import Args from './tools/args/Args';
 import Slideshow from './tools/slideshow/Slideshow';
 import Shinsho from './tools/shinsho/Shinsho';
 import Prose from './tools/prose/Prose';
+import Meal from './tools/meal/Meal';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -79,6 +80,7 @@ function App() {
             <Route path="/slideshow" element={<Slideshow />} />
             <Route path="/shinsho" element={<Shinsho />} />
             <Route path="/prose" element={<Prose />} />
+            <Route path="/meal" element={<Meal />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
