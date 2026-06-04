@@ -53,8 +53,8 @@ export const INSIGHT_SECTIONS: InsightSection[] = [
       },
       {
         id: 'moderation',
-        label: '極論ではなく中庸',
-        instruction: '両極端の立場を避け、実態に即した複雑で中間的な見方を示す。単純化が何を失わせているかを明示する',
+        label: 'アウフヘーベン（極論→中庸）',
+        instruction: 'まず対立する2つの極論（肯定側の極論・否定側の極論）をそれぞれ明確に述べる。次にその両者を止揚（アウフヘーベン）し、どちらも一面的であることを示しながら、より高次の中庸な洞察を導く。極論・中庸の3つをすべて出力すること',
       },
       {
         id: 'experience-depth',
