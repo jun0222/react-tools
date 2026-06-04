@@ -37,16 +37,6 @@ export const INSIGHT_SECTIONS: InsightSection[] = [
     groupLabel: '氷山の一角',
     items: [
       {
-        id: 'hidden-input',
-        label: 'アウトプットしないインプットの多さ',
-        instruction: '表面に出ていない前提・暗黙知・背景にある膨大なインプットを明示し、見えていない部分の大きさを示す',
-      },
-      {
-        id: 'connections',
-        label: '知識と知識の繋がり',
-        instruction: '一見無関係な分野・概念・事象と結びつけ、共通するパターンや構造・法則を示す',
-      },
-      {
         id: 'universal',
         label: '普遍的なもの',
         instruction: '時代・文化・文脈を超えて共通する本質・原理を抽出する。なぜそれが普遍的なのかも説明する',
@@ -55,11 +45,6 @@ export const INSIGHT_SECTIONS: InsightSection[] = [
         id: 'moderation',
         label: 'アウフヘーベン（極論→中庸）',
         instruction: 'まず対立する2つの極論（肯定側の極論・否定側の極論）をそれぞれ明確に述べる。次にその両者を止揚（アウフヘーベン）し、どちらも一面的であることを示しながら、より高次の中庸な洞察を導く。極論・中庸の3つをすべて出力すること',
-      },
-      {
-        id: 'experience-depth',
-        label: '体験の濃さ',
-        instruction: 'ネットで見た情報・本・一次情報・直接経験・複数の経験を統合した普遍性の洞察、という深さの段階を意識し、どの深さの知識から語れるかを示す',
       },
       {
         id: 'foresight',
