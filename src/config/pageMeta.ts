@@ -116,6 +116,10 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Prose - 文書構成ツール ✍️',
     description: '貼り付けた文書をLLMで書き直すプロンプトを生成。90/70/50/30%の4案を出力。',
   },
+  '/insight': {
+    title: 'Insight - 洞察プロンプト 💡',
+    description: 'テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成するツール。',
+  },
   '/meal': {
     title: 'Meal - 食事ログ & アドバイス 🥗',
     description: '食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをセットでASCIIアートのテキストファイルに保存。',

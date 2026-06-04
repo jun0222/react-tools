@@ -4,7 +4,7 @@ import {
   Zap, Wand2, Hammer, Database, BarChart3, Map, Timer, Clipboard,
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
-  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad,
+  PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -242,6 +242,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
     desc: '文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案',
     tag: 'write',
+  },
+  {
+    path: '/insight',
+    name: 'Insight',
+    icon: <Lightbulb size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #f59e0b, #f97316)',
+    desc: 'テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成',
+    tag: 'prompt',
   },
   {
     path: '/meal',

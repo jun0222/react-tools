@@ -1,0 +1,211 @@
+/* ============================
+   Insight - 洞察プロンプトジェネレータ
+   ============================ */
+
+.ins-root {
+  --ins-amber: #f59e0b;
+  --ins-orange: #f97316;
+  --ins-radius: 12px;
+  --ins-radius-sm: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 60px);
+  font-family: inherit;
+}
+
+.ins-root.dark {
+  --ins-surface:  #1a1a24;
+  --ins-surface2: #22222e;
+  --ins-border:   #2e2e3e;
+  --ins-text:     #e0e0e0;
+  --ins-muted:    #666;
+  background: #0d0d14;
+  color: #e0e0e0;
+}
+
+.ins-root.light {
+  --ins-surface:  #ffffff;
+  --ins-surface2: #f5f4f0;
+  --ins-border:   #e8e4d8;
+  --ins-text:     #1a1a2e;
+  --ins-muted:    #888;
+  background: #faf8f2;
+  color: #1a1a2e;
+}
+
+/* --- Header --- */
+.ins-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 32px 16px;
+}
+
+.ins-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ins-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ins-text);
+  margin: 0;
+  flex: 1;
+}
+
+.ins-accent { color: var(--ins-amber); }
+
+/* --- Body --- */
+.ins-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 32px 40px;
+  max-width: 760px;
+  width: 100%;
+}
+
+/* --- Textarea --- */
+.ins-input {
+  width: 100%;
+  background: var(--ins-surface);
+  border: 1.5px solid var(--ins-border);
+  border-radius: var(--ins-radius-sm);
+  color: var(--ins-text);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 14px 16px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+  line-height: 1.75;
+}
+.ins-input:focus { border-color: var(--ins-amber); }
+.ins-input::placeholder { color: var(--ins-muted); }
+
+/* --- Checklist --- */
+.ins-checklist {
+  background: var(--ins-surface);
+  border: 1px solid var(--ins-border);
+  border-radius: var(--ins-radius);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Check row --- */
+.ins-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.1s;
+  user-select: none;
+}
+.ins-check-row:hover { background: var(--ins-surface2); }
+.ins-check-row--child { padding-left: 44px; }
+
+/* --- Checkbox --- */
+.ins-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--ins-border);
+  border-radius: 4px;
+  background: var(--ins-surface2);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: all 0.15s;
+}
+.ins-checkbox:checked {
+  background: var(--ins-amber);
+  border-color: var(--ins-amber);
+}
+.ins-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+.ins-checkbox:indeterminate {
+  background: var(--ins-surface2);
+  border-color: var(--ins-amber);
+}
+.ins-checkbox:indeterminate::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  width: 8px;
+  height: 2px;
+  background: var(--ins-amber);
+  border-radius: 1px;
+}
+
+/* --- Labels --- */
+.ins-check-label {
+  font-size: 14px;
+  color: var(--ins-text);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.ins-group-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ins-text);
+}
+
+/* --- Group section --- */
+.ins-group-section { display: flex; flex-direction: column; }
+
+.ins-group-row {
+  border-top: 1px solid var(--ins-border);
+  margin-top: 4px;
+}
+
+.ins-group-children { display: flex; flex-direction: column; }
+
+/* --- Copy button --- */
+.ins-copy-btn {
+  padding: 8px 20px;
+  border-radius: var(--ins-radius-sm);
+  border: 1.5px solid var(--ins-border);
+  background: var(--ins-surface2);
+  color: var(--ins-text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ins-copy-btn:hover:not(:disabled) {
+  border-color: var(--ins-amber);
+  color: var(--ins-amber);
+}
+.ins-copy-btn:disabled { opacity: 0.4; cursor: default; }
+
+@media (max-width: 600px) {
+  .ins-header { padding: 16px 16px 12px; }
+  .ins-body   { padding: 0 16px 32px; }
+}
