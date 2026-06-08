@@ -74,10 +74,50 @@ describe('renderFlowSVG', () => {
     expect(svg).toContain('終了');
   });
 
+  it('五角形(polygon)を使用する', () => {
+    const r = parseFlowDSL('A -> B');
+    const svg = renderFlowSVG(r, false);
+    expect(svg).toContain('<polygon');
+  });
+
+  it('矢印線を描画しない（五角形が重なって直接接続）', () => {
+    const r = parseFlowDSL('A -> B\nB -> C');
+    const svg = renderFlowSVG(r, false);
+    expect(svg).not.toContain('<line');
+    expect(svg).not.toContain('marker-end');
+    expect(svg).not.toContain('<defs>');
+  });
+
+  it('ノード数分のpolygonを描画する', () => {
+    const r = parseFlowDSL('A -> B\nB -> C');
+    const svg = renderFlowSVG(r, false);
+    const count = (svg.match(/<polygon/g) ?? []).length;
+    expect(count).toBe(3);
+  });
+
+  it('カラーがSVGに反映される', () => {
+    const r = parseFlowDSL('A [blue]');
+    const svg = renderFlowSVG(r, false);
+    expect(svg).toContain('#3b82f6');
+  });
+
   it('ダークモードで異なる背景色を使用する', () => {
     const r = parseFlowDSL('A -> B');
     const light = renderFlowSVG(r, false);
     const dark  = renderFlowSVG(r, true);
     expect(light).not.toBe(dark);
+  });
+
+  it('エッジラベルをSVGに含める', () => {
+    const r = parseFlowDSL('A -> B : 承認');
+    const svg = renderFlowSVG(r, false);
+    expect(svg).toContain('承認');
+  });
+
+  it('ラベルなしエッジではpath/line要素を生成しない', () => {
+    const r = parseFlowDSL('A -> B');
+    const svg = renderFlowSVG(r, false);
+    expect(svg).not.toContain('<path');
+    expect(svg).not.toContain('<line');
   });
 });

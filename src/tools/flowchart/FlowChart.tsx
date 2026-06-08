@@ -6,22 +6,19 @@ import './FlowChart.css';
 
 const STORAGE_KEY = 'flowchart-code';
 
-const DEFAULT_CODE = `# シンプルなフロー図 — 書き方: NodeA -> NodeB : ラベル(任意)
-# 色指定: NodeName [blue|green|red|orange|purple|cyan]
+const DEFAULT_CODE = `# 書き方: A -> B : ラベル(任意)  /  色: NodeName [blue|green|red|orange]
 
 START [green]
 完了 [green]
-判断? [orange]
-修正 [red]
+バグ修正 [red]
 
 START -> 要件定義
 要件定義 -> 設計 : 承認
 設計 -> 実装
 実装 -> テスト
-テスト -> 判断?
-判断? -> 完了 : PASS
-判断? -> 修正 : FAIL
-修正 -> 実装`;
+テスト -> 完了 : PASS
+テスト -> バグ修正 : FAIL
+バグ修正 -> 実装`;
 
 const CHEATSHEET = [
   ['接続', 'A -> B'],

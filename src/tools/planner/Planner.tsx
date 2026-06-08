@@ -249,7 +249,7 @@ const Planner = () => {
       </div>
 
       <div className="pl-body">
-        {/* Left: input */}
+        {/* Left: notes input */}
         <div className="pl-input-col">
           <div className="pl-section-label">雑なメモ / TODO</div>
           <textarea
@@ -262,15 +262,6 @@ const Planner = () => {
           <button className="pl-btn pl-btn-primary" onClick={copyPrompt} disabled={!notes.trim()}>
             プロンプトをコピー
           </button>
-
-          <div className="pl-section-label" style={{ marginTop: 8 }}>LLM出力を貼り付け</div>
-          <textarea
-            className="pl-textarea"
-            rows={10}
-            placeholder="LLMが ## LOGIC / ## FLOW / ## GANTT 形式で出力した結果をここに貼り付け"
-            value={output}
-            onChange={e => setOutput(e.target.value)}
-          />
         </div>
 
         {/* Right: preview */}
@@ -315,6 +306,18 @@ const Planner = () => {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Output paste — full width, resizable both ways */}
+      <div className="pl-output-row">
+        <div className="pl-section-label">LLM出力を貼り付け</div>
+        <textarea
+          className="pl-textarea pl-textarea-output"
+          rows={8}
+          placeholder="LLMが ## LOGIC / ## FLOW / ## GANTT 形式で出力した結果をここに貼り付け"
+          value={output}
+          onChange={e => setOutput(e.target.value)}
+        />
       </div>
 
       {toast && <div className="pl-toast">{toast}</div>}
