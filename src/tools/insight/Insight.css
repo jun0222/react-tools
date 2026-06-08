@@ -184,7 +184,34 @@
 
 .ins-group-children { display: flex; flex-direction: column; }
 
-/* --- Copy button --- */
+/* --- General mode toggle --- */
+.ins-general-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--ins-surface);
+  border: 1px solid var(--ins-border);
+  border-radius: var(--ins-radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s;
+}
+.ins-general-toggle:hover { border-color: var(--ins-amber); }
+
+.ins-general-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ins-text);
+  white-space: nowrap;
+}
+
+.ins-general-desc {
+  font-size: 12px;
+  color: var(--ins-muted);
+}
+
+/* --- Copy buttons --- */
 .ins-copy-btn {
   padding: 8px 20px;
   border-radius: var(--ins-radius-sm);
@@ -204,6 +231,16 @@
   color: var(--ins-amber);
 }
 .ins-copy-btn:disabled { opacity: 0.4; cursor: default; }
+
+.ins-copy-btn--followup {
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(249,115,22,0.1));
+  border-color: rgba(245,158,11,0.35);
+}
+.ins-copy-btn--followup:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(249,115,22,0.2));
+  border-color: var(--ins-amber);
+  color: var(--ins-amber);
+}
 
 @media (max-width: 600px) {
   .ins-header { padding: 16px 16px 12px; }
