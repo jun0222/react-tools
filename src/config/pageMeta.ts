@@ -140,4 +140,16 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'RTodo - メモ→TODO変換 ✅',
     description: '雑なメモをtodo.txt形式に変換するLLMプロンプトを生成するツール。',
   },
+  '/flowchart': {
+    title: 'FlowChart - シンプルフロー図 🔀',
+    description: 'シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート対応。',
+  },
+  '/testdata': {
+    title: 'TestData - テストデータ生成 🧪',
+    description: 'テーマを入力してLLMにテストデータを生成させ、ローカルストレージに保存するツール。',
+  },
+  '/planner': {
+    title: 'Planner - メモ→計画図 🗂',
+    description: '雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに変換するメガツール。',
+  },
 };

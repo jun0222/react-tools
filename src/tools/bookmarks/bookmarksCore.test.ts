@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   createBookmark, addBookmark, deleteBookmark, updateBookmark,
   filterBookmarks, allTags, exportJson, importJson, parseTags,
+  moveToPending, moveToTrash, restoreToActive, emptyTrash, getByStatus,
 } from './bookmarksCore';
 import type { Bookmark } from './bookmarksCore';
 
@@ -138,5 +139,83 @@ describe('parseTags', () => {
 
   it('空文字は空配列を返す', () => {
     expect(parseTags('')).toEqual([]);
+  });
+});
+
+describe('moveToPending', () => {
+  it('対象をpendingにする', () => {
+    const b = bm({ id: 'x' });
+    const result = moveToPending([b], 'x');
+    expect(result[0].status).toBe('pending');
+    expect(result[0].pendingAt).toBeDefined();
+  });
+
+  it('他のアイテムは変更しない', () => {
+    const b1 = bm({ id: '1' });
+    const b2 = bm({ id: '2' });
+    const result = moveToPending([b1, b2], '1');
+    expect(result[1].status).toBeUndefined();
+  });
+});
+
+describe('moveToTrash', () => {
+  it('対象をtrashにする', () => {
+    const b = bm({ id: 'x' });
+    const result = moveToTrash([b], 'x');
+    expect(result[0].status).toBe('trash');
+    expect(result[0].trashedAt).toBeDefined();
+  });
+});
+
+describe('restoreToActive', () => {
+  it('statusをactiveに戻す', () => {
+    const b = bm({ id: 'x', status: 'trash', trashedAt: Date.now() });
+    const result = restoreToActive([b], 'x');
+    expect(result[0].status).toBe('active');
+  });
+
+  it('pendingAtとtrashedAtをクリアする', () => {
+    const b = bm({ id: 'x', status: 'pending', pendingAt: Date.now() });
+    const result = restoreToActive([b], 'x');
+    expect(result[0].pendingAt).toBeUndefined();
+    expect(result[0].trashedAt).toBeUndefined();
+  });
+});
+
+describe('emptyTrash', () => {
+  it('trashアイテムをすべて削除する', () => {
+    const items = [
+      bm({ id: '1', status: 'active' }),
+      bm({ id: '2', status: 'trash' }),
+      bm({ id: '3', status: 'pending' }),
+    ];
+    const result = emptyTrash(items);
+    expect(result).toHaveLength(2);
+    expect(result.every(b => b.status !== 'trash')).toBe(true);
+  });
+});
+
+describe('getByStatus', () => {
+  it('statusがundefinedのアイテムをactiveとして扱う', () => {
+    const b = bm({ id: '1' });
+    expect(getByStatus([b], 'active')).toHaveLength(1);
+  });
+
+  it('pendingアイテムのみ返す', () => {
+    const items = [
+      bm({ id: '1' }),
+      bm({ id: '2', status: 'pending' }),
+    ];
+    expect(getByStatus(items, 'pending')).toHaveLength(1);
+    expect(getByStatus(items, 'pending')[0].id).toBe('2');
+  });
+
+  it('trashアイテムのみ返す', () => {
+    const items = [
+      bm({ id: '1' }),
+      bm({ id: '2', status: 'trash' }),
+      bm({ id: '3', status: 'pending' }),
+    ];
+    expect(getByStatus(items, 'trash')).toHaveLength(1);
   });
 });

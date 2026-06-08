@@ -38,6 +38,9 @@ import Gantt from './tools/gantt/Gantt';
 import Fishbone from './tools/fishbone/Fishbone';
 import Convmap from './tools/convmap/Convmap';
 import RTodo from './tools/rtodo/RTodo';
+import FlowChart from './tools/flowchart/FlowChart';
+import TestData from './tools/testdata/TestData';
+import Planner from './tools/planner/Planner';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -91,6 +94,9 @@ function App() {
             <Route path="/fishbone" element={<Fishbone />} />
             <Route path="/convmap" element={<Convmap />} />
             <Route path="/rtodo" element={<RTodo />} />
+            <Route path="/flowchart" element={<FlowChart />} />
+            <Route path="/testdata" element={<TestData />} />
+            <Route path="/planner" element={<Planner />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

@@ -5,7 +5,7 @@ import {
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
-  CalendarDays, Fish, MessageSquare, CheckSquare,
+  CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -291,6 +291,30 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #10b981, #059669)',
     desc: '雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き',
     tag: 'prompt',
+  },
+  {
+    path: '/flowchart',
+    name: 'FlowChart',
+    icon: <GitFork size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+    desc: 'シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート・別タブ表示対応',
+    tag: 'diagram',
+  },
+  {
+    path: '/testdata',
+    name: 'TestData',
+    icon: <FlaskConical size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #10b981, #06b6d4)',
+    desc: 'テーマを入力してLLMにテストデータを生成させ、JSONをローカルストレージに保存',
+    tag: 'util',
+  },
+  {
+    path: '/planner',
+    name: 'Planner',
+    icon: <LayoutDashboard size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #6366f1, #a855f7)',
+    desc: '雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに自動変換するメガツール',
+    tag: 'diagram',
   },
 ];
 

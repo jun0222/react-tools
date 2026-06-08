@@ -241,6 +241,13 @@
 
 .cm-btn-sm { padding: 4px 10px; font-size: 11px; }
 
+.cm-btn-primary {
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #fff;
+  border: none;
+}
+.cm-btn-primary:hover:not(:disabled) { opacity: 0.85; }
+
 .cm-btn-ghost {
   background: transparent;
   color: var(--cm-muted);
