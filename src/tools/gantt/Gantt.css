@@ -1,0 +1,316 @@
+/* ============================
+   Gantt - ガントチャートエディタ
+   ============================ */
+
+.gantt-root {
+  --gt-cyan: #06b6d4;
+  --gt-indigo: #6366f1;
+  --gt-radius: 12px;
+  --gt-radius-sm: 8px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+  min-height: calc(100vh - 60px);
+}
+
+.gantt-root.dark {
+  --gt-surface:  #1a1a24;
+  --gt-surface2: #22222e;
+  --gt-border:   #2e2e3e;
+  --gt-text:     #e0e0e0;
+  --gt-muted:    #666;
+  background: #0d0d14;
+  color: #e0e0e0;
+}
+
+.gantt-root.light {
+  --gt-surface:  #ffffff;
+  --gt-surface2: #f4f4f8;
+  --gt-border:   #e0e0e8;
+  --gt-text:     #1a1a2e;
+  --gt-muted:    #888;
+  background: #f4f6fa;
+  color: #1a1a2e;
+}
+
+/* --- Header --- */
+.gt-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.gt-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #06b6d4, #6366f1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gt-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--gt-text);
+}
+
+.gt-accent { color: var(--gt-cyan); }
+
+/* --- Layout --- */
+.gt-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .gt-layout { grid-template-columns: 1fr; }
+}
+
+/* --- Panel --- */
+.gt-panel {
+  background: var(--gt-surface);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gt-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gt-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+/* --- Form --- */
+.gt-input {
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  color: var(--gt-text);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 10px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.gt-input:focus { border-color: var(--gt-cyan); }
+.gt-input::placeholder { color: var(--gt-muted); }
+
+.gt-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.gt-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gt-text);
+}
+
+.gt-section-name {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.gt-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 12px;
+}
+
+.gt-task-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--gt-text);
+}
+
+.gt-task-item-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gt-task-item-meta { color: var(--gt-muted); font-size: 11px; white-space: nowrap; }
+
+/* --- Buttons --- */
+.gt-btn {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  padding: 5px 12px;
+  transition: opacity 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.gt-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.gt-btn-primary {
+  background: linear-gradient(135deg, #06b6d4, #6366f1);
+  color: #fff;
+}
+
+.gt-btn-primary:hover:not(:disabled) { opacity: 0.85; }
+
+.gt-btn-ghost {
+  background: transparent;
+  color: var(--gt-muted);
+  border: 1px solid var(--gt-border);
+}
+
+.gt-btn-ghost:hover:not(:disabled) {
+  background: var(--gt-surface2);
+  color: var(--gt-text);
+}
+
+.gt-btn-danger {
+  background: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.gt-btn-danger:hover:not(:disabled) { background: rgba(239,68,68,0.1); }
+
+/* --- Textarea (code view) --- */
+.gt-code-area {
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  color: var(--gt-text);
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  padding: 10px;
+  resize: vertical;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.gt-code-area:focus { border-color: var(--gt-cyan); }
+
+/* --- Preview --- */
+.gt-preview {
+  background: var(--gt-surface);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius);
+  padding: 16px;
+  min-height: 200px;
+  overflow: auto;
+}
+
+.gt-preview-empty {
+  color: var(--gt-muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.gt-preview svg { max-width: 100%; height: auto; }
+
+/* --- Tab toggle --- */
+.gt-view-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  padding: 3px;
+}
+
+.gt-view-btn {
+  flex: 1;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: var(--gt-muted);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gt-view-btn.active {
+  background: var(--gt-surface);
+  color: var(--gt-text);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* --- Section list --- */
+.gt-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Export buttons --- */
+.gt-export-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* --- Toast --- */
+.gt-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #23233a;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* --- Add form --- */
+.gt-add-form {
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gt-form-label {
+  font-size: 11px;
+  color: var(--gt-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}

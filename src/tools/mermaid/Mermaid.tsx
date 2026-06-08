@@ -235,6 +235,9 @@ const Mermaid = () => {
                 <button className="mm-btn mm-btn-ghost mm-btn-sm" onClick={exportSvg} title="SVGをダウンロード">
                   SVG 保存
                 </button>
+                <button className="mm-btn mm-btn-ghost mm-btn-sm" onClick={exportPng} title="PNGをダウンロード">
+                  PNG 保存
+                </button>
                 <button className="mm-btn mm-btn-ghost mm-btn-sm" onClick={openFullscreen} title="全画面で開く">
                   全画面
                 </button>

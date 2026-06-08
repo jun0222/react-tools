@@ -5,7 +5,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, wrapMdBullet, formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
-  applyReplaces, addSlackSuffix,
+  applyReplaces, addSlackSuffix, wrapAtChars,
 } from './helpers';
 import './Forge.css';
 
@@ -16,7 +16,7 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace' | 'slackurl';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace' | 'slackurl' | 'linebreak';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
@@ -31,6 +31,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'listjoin',  label: 'リスト→1行'  },
   { id: 'replace',   label: '文字置換'     },
   { id: 'slackurl',  label: 'Slack URL'   },
+  { id: 'linebreak', label: '改行挿入'     },
 ];
 
 let _delId = 0;
@@ -66,6 +67,8 @@ const Forge = () => {
   const [listjoinInput, setListjoinInput] = useState('');
   const [replaceInput, setReplaceInput] = useState('');
   const [slackInput, setSlackInput] = useState('');
+  const [linebreakInput, setLinebreakInput] = useState('');
+  const [linebreakN, setLinebreakN] = useState('30');
   const [replacePairs, setReplacePairs] = useState<{ id: string; from: string; to: string }[]>([
     { id: rpUid(), from: '', to: '' },
   ]);
@@ -566,6 +569,47 @@ const Forge = () => {
                 </div>
               </>
             )}
+          </>
+        )}
+
+        {/* ===== 改行挿入 ===== */}
+        {tab === 'linebreak' && (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: 'var(--fg-text-dim)', whiteSpace: 'nowrap' }}>N文字ごとに改行</span>
+              <input
+                type="number"
+                min="1"
+                value={linebreakN}
+                onChange={e => setLinebreakN(e.target.value)}
+                style={{ width: 70, padding: '4px 8px', borderRadius: 6, border: '1px solid var(--fg-border)', background: 'var(--fg-surface2)', color: 'var(--fg-text)', fontSize: 13, outline: 'none' }}
+                aria-label="改行を挿入する文字数"
+              />
+            </div>
+            <textarea
+              className="fg-textarea"
+              placeholder={'長い1行のテキストをN文字ごとに改行します\n\nここに長い文章を入力してください...'}
+              value={linebreakInput}
+              onChange={e => setLinebreakInput(e.target.value)}
+              rows={6}
+              aria-label="改行挿入入力"
+            />
+            {linebreakInput.trim() && (() => {
+              const n = parseInt(linebreakN, 10);
+              const result = wrapAtChars(linebreakInput, n);
+              return (
+                <>
+                  <div className="fg-md-output" aria-label="改行挿入結果">
+                    {result}
+                  </div>
+                  <div className="fg-md-actions">
+                    <button className="fg-btn fg-btn-orange" onClick={() => copy(result)}>
+                      コピー
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
           </>
         )}
 

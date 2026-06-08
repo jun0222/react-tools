@@ -1,0 +1,229 @@
+/* ============================
+   Fishbone - 特性要因図
+   ============================ */
+
+.fishbone-root {
+  --fb-red: #ef4444;
+  --fb-orange: #f97316;
+  --fb-radius: 12px;
+  --fb-radius-sm: 8px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+  min-height: calc(100vh - 60px);
+}
+
+.fishbone-root.dark {
+  --fb-surface:  #1a1a24;
+  --fb-surface2: #22222e;
+  --fb-border:   #2e2e3e;
+  --fb-text:     #e0e0e0;
+  --fb-muted:    #666;
+  background: #0d0d14;
+  color: #e0e0e0;
+}
+
+.fishbone-root.light {
+  --fb-surface:  #ffffff;
+  --fb-surface2: #f4f4f8;
+  --fb-border:   #e0e0e8;
+  --fb-text:     #1a1a2e;
+  --fb-muted:    #888;
+  background: #f4f6fa;
+  color: #1a1a2e;
+}
+
+/* --- Header --- */
+.fb-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.fb-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fb-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fb-text);
+}
+
+.fb-accent { color: var(--fb-red); }
+
+/* --- Layout --- */
+.fb-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .fb-layout { grid-template-columns: 1fr; }
+}
+
+/* --- Panel --- */
+.fb-panel {
+  background: var(--fb-surface);
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fb-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fb-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Inputs --- */
+.fb-input {
+  background: var(--fb-surface2);
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-sm);
+  color: var(--fb-text);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 10px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.fb-input:focus { border-color: var(--fb-red); }
+.fb-input::placeholder { color: var(--fb-muted); }
+
+/* --- Buttons --- */
+.fb-btn {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  padding: 5px 12px;
+  transition: opacity 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.fb-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.fb-btn-primary {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #fff;
+}
+.fb-btn-primary:hover:not(:disabled) { opacity: 0.85; }
+
+.fb-btn-ghost {
+  background: transparent;
+  color: var(--fb-muted);
+  border: 1px solid var(--fb-border);
+}
+.fb-btn-ghost:hover:not(:disabled) { background: var(--fb-surface2); color: var(--fb-text); }
+
+.fb-btn-danger {
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  padding: 2px 6px;
+  font-size: 11px;
+}
+.fb-btn-danger:hover { color: #b91c1c; }
+
+/* --- Cause category --- */
+.fb-category {
+  background: var(--fb-surface2);
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius-sm);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fb-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.fb-category-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fb-text);
+  flex: 1;
+}
+
+.fb-causes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 10px;
+}
+
+.fb-cause-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--fb-text);
+}
+
+.fb-cause-item span { flex: 1; }
+
+.fb-cause-add-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* --- Preview --- */
+.fb-preview {
+  background: var(--fb-surface);
+  border: 1px solid var(--fb-border);
+  border-radius: var(--fb-radius);
+  padding: 16px;
+  overflow: auto;
+}
+
+.fb-preview svg { max-width: 100%; height: auto; }
+
+/* --- Export row --- */
+.fb-export-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* --- Toast --- */
+.fb-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #23233a;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 999;
+}

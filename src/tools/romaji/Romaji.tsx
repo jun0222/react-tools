@@ -53,6 +53,16 @@ const Romaji = () => {
     }
   };
 
+  const copyWithPrompt = async () => {
+    const text = `以下のひらがなで歌ってください。\n\n${output}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('プロンプト付きでコピーしました');
+    } catch {
+      showToast('コピー失敗');
+    }
+  };
+
   const updateWord = (id: string, value: string) =>
     setSkipWords(prev => prev.map(s => s.id === id ? { ...s, value } : s));
 
@@ -106,9 +116,14 @@ const Romaji = () => {
             {output || '変換結果がここに表示されます'}
           </div>
           {output && (
-            <button className="rj-btn rj-btn-accent" onClick={copy}>
-              コピー
-            </button>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button className="rj-btn rj-btn-accent" onClick={copy}>
+                コピー
+              </button>
+              <button className="rj-btn rj-btn-ghost" onClick={copyWithPrompt}>
+                プロンプト付きコピー
+              </button>
+            </div>
           )}
         </div>
       </div>

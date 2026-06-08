@@ -150,3 +150,16 @@ export const addSlackSuffix = (text: string): string =>
     .split('\n')
     .map(line => (line.trim() ? line + ' 　' : line))
     .join('\n');
+
+// --- 改行挿入 ---
+
+/** 各行をN文字ごとに改行で折り返す */
+export const wrapAtChars = (text: string, n: number): string => {
+  if (n <= 0 || !text) return text;
+  return text.split('\n').map(line => {
+    if (line.length <= n) return line;
+    const chunks: string[] = [];
+    for (let i = 0; i < line.length; i += n) chunks.push(line.slice(i, i + n));
+    return chunks.join('\n');
+  }).join('\n');
+};

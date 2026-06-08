@@ -5,6 +5,7 @@ import {
   Languages, PenLine, ListTodo, FileText, ClipboardList, Network,
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
+  CalendarDays, Fish, MessageSquare, CheckSquare,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -258,6 +259,38 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #10b981, #0d9488)',
     desc: '食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存',
     tag: 'util',
+  },
+  {
+    path: '/gantt',
+    name: 'Gantt',
+    icon: <CalendarDays size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #06b6d4, #6366f1)',
+    desc: 'フォームでセクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応',
+    tag: 'diagram',
+  },
+  {
+    path: '/fishbone',
+    name: 'Fishbone',
+    icon: <Fish size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #ef4444, #f97316)',
+    desc: '原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応',
+    tag: 'diagram',
+  },
+  {
+    path: '/convmap',
+    name: 'Convmap',
+    icon: <MessageSquare size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #a855f7, #6366f1)',
+    desc: 'LLMとの会話をMermaid図と一緒に記録・閲覧。プロンプトも残せてMarkdownでダウンロード',
+    tag: 'util',
+  },
+  {
+    path: '/rtodo',
+    name: 'RTodo',
+    icon: <CheckSquare size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #10b981, #059669)',
+    desc: '雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き',
+    tag: 'prompt',
   },
 ];
 

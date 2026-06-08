@@ -37,10 +37,33 @@ flowchart TD
 ## 4. 再発防止策
 （1〜2行）`;
 
-// Extract the first ```mermaid ... ``` block from an LLM response
+const MERMAID_START = /^(flowchart|graph\s+[A-Z]+|sequenceDiagram|classDiagram|stateDiagram(-v2)?|erDiagram|gantt|pie(\s+title)?|gitGraph|mindmap|journey|quadrantChart|timeline|xychart)/i;
+
+// Extract the first mermaid block from an LLM response.
+// Handles: ```mermaid ... ```, ``` ... ``` where content starts with mermaid keyword,
+// and raw mermaid content without code fences.
 export const extractMermaid = (response: string): string | null => {
   const m = response.match(/```mermaid\s*\n([\s\S]*?)```/);
-  return m ? m[1].trim() : null;
+  if (m) return m[1].trim();
+
+  for (const block of response.matchAll(/```[^\n]*\n([\s\S]*?)```/g)) {
+    const inner = block[1].trim();
+    if (MERMAID_START.test(inner)) return inner;
+  }
+
+  const lines = response.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    if (!MERMAID_START.test(lines[i].trim())) continue;
+    const collected: string[] = [];
+    for (let j = i; j < lines.length; j++) {
+      if (collected.length > 2 && lines[j].startsWith('#')) break;
+      if (collected.length > 0 && lines[j] === '' && lines[j - 1] === '') break;
+      collected.push(lines[j]);
+    }
+    const result = collected.join('\n').trim();
+    if (result) return result;
+  }
+  return null;
 };
 
 export const generateFilename = (): string => {

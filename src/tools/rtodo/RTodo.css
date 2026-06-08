@@ -1,0 +1,188 @@
+/* ============================
+   RTodo - メモ → TODO変換ツール
+   ============================ */
+
+.rtodo-root {
+  --rt-green: #10b981;
+  --rt-emerald: #059669;
+  --rt-radius: 12px;
+  --rt-radius-sm: 8px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: inherit;
+  min-height: calc(100vh - 60px);
+}
+
+.rtodo-root.dark {
+  --rt-surface:  #1a1a24;
+  --rt-surface2: #22222e;
+  --rt-border:   #2e2e3e;
+  --rt-text:     #e0e0e0;
+  --rt-muted:    #666;
+  background: #0d0d14;
+  color: #e0e0e0;
+}
+
+.rtodo-root.light {
+  --rt-surface:  #ffffff;
+  --rt-surface2: #f4f4f8;
+  --rt-border:   #e0e0e8;
+  --rt-text:     #1a1a2e;
+  --rt-muted:    #888;
+  background: #f4f6fa;
+  color: #1a1a2e;
+}
+
+/* --- Header --- */
+.rt-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.rt-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rt-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+  color: var(--rt-text);
+}
+
+.rt-accent { color: var(--rt-green); }
+
+/* --- Body --- */
+.rt-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Panel --- */
+.rt-panel {
+  background: var(--rt-surface);
+  border: 1px solid var(--rt-border);
+  border-radius: var(--rt-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rt-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rt-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Textarea --- */
+.rt-textarea {
+  background: var(--rt-surface2);
+  border: 1.5px solid var(--rt-border);
+  border-radius: var(--rt-radius-sm);
+  color: var(--rt-text);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.75;
+  transition: border-color 0.15s;
+}
+
+.rt-textarea:focus { border-color: var(--rt-green); }
+.rt-textarea::placeholder { color: var(--rt-muted); }
+
+/* --- Prompt preview --- */
+.rt-prompt-preview {
+  background: var(--rt-surface2);
+  border: 1px solid var(--rt-border);
+  border-radius: var(--rt-radius-sm);
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--rt-text);
+  white-space: pre-wrap;
+  line-height: 1.7;
+  max-height: 320px;
+  overflow: auto;
+  font-family: inherit;
+}
+
+/* --- Format hint --- */
+.rt-format-hint {
+  background: var(--rt-surface2);
+  border: 1px solid var(--rt-border);
+  border-radius: var(--rt-radius-sm);
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--rt-muted);
+  line-height: 1.75;
+  font-family: 'Menlo', 'Consolas', monospace;
+}
+
+/* --- Buttons --- */
+.rt-btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: opacity 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.rt-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.rt-btn-primary {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+}
+.rt-btn-primary:hover:not(:disabled) { opacity: 0.85; }
+
+.rt-btn-ghost {
+  background: transparent;
+  color: var(--rt-muted);
+  border: 1px solid var(--rt-border);
+}
+.rt-btn-ghost:hover:not(:disabled) { background: var(--rt-surface2); color: var(--rt-text); }
+
+/* --- Toast --- */
+.rt-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #23233a;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* --- Action row --- */
+.rt-action-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}

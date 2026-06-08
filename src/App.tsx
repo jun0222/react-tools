@@ -34,6 +34,10 @@ import Shinsho from './tools/shinsho/Shinsho';
 import Prose from './tools/prose/Prose';
 import Meal from './tools/meal/Meal';
 import Insight from './tools/insight/Insight';
+import Gantt from './tools/gantt/Gantt';
+import Fishbone from './tools/fishbone/Fishbone';
+import Convmap from './tools/convmap/Convmap';
+import RTodo from './tools/rtodo/RTodo';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -83,6 +87,10 @@ function App() {
             <Route path="/prose" element={<Prose />} />
             <Route path="/meal" element={<Meal />} />
             <Route path="/insight" element={<Insight />} />
+            <Route path="/gantt" element={<Gantt />} />
+            <Route path="/fishbone" element={<Fishbone />} />
+            <Route path="/convmap" element={<Convmap />} />
+            <Route path="/rtodo" element={<RTodo />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

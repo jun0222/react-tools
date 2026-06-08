@@ -124,4 +124,20 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Meal - 食事ログ & アドバイス 🥗',
     description: '食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをセットでASCIIアートのテキストファイルに保存。',
   },
+  '/gantt': {
+    title: 'Gantt - ガントチャートエディタ 📅',
+    description: 'セクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応。',
+  },
+  '/fishbone': {
+    title: 'Fishbone - 特性要因図 🐟',
+    description: '原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応。',
+  },
+  '/convmap': {
+    title: 'Convmap - LLM会話ビューワー 🗺️',
+    description: 'LLMとの会話をMermaid図と一緒に記録・閲覧・管理。Markdownファイルでダウンロード対応。',
+  },
+  '/rtodo': {
+    title: 'RTodo - メモ→TODO変換 ✅',
+    description: '雑なメモをtodo.txt形式に変換するLLMプロンプトを生成するツール。',
+  },
 };
