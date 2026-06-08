@@ -7,7 +7,7 @@ import {
   allTags, exportJson, importJson, parseTags,
   moveToPending, moveToTrash, restoreToActive, emptyTrash, getByStatus,
 } from './bookmarksCore';
-import type { Bookmark, BookmarkStatus } from './bookmarksCore';
+import type { Bookmark } from './bookmarksCore';
 import './Bookmarks.css';
 
 const SK_TAG_HISTORY = 'bookmarks-tag-history';

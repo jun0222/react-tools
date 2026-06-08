@@ -153,9 +153,8 @@ export const renderFlowSVG = (parsed: FlowParsed, dark: boolean): string => {
   const W = maxX + PAD;
   const H = maxY + PAD;
 
-  const bg        = dark ? '#0d0d14' : '#f4f6fa';
-  const edgeColor = dark ? '#4b5563' : '#9ca3af';
-  const defText   = dark ? '#e0e0e0' : '#1a1a2e';
+  const bg      = dark ? '#0d0d14' : '#f4f6fa';
+  const defText = dark ? '#e0e0e0' : '#1a1a2e';
   const defBg     = dark ? '#374151' : '#dde1ea';
 
   const svgLines: string[] = [

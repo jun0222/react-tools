@@ -37,7 +37,7 @@ const Gantt = () => {
   const [toast, setToast] = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
   const svgCache = useRef('');
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => { localStorage.setItem(STORAGE_KEY, code); }, [code]);
 

@@ -85,9 +85,7 @@ const renderLogicSVG = (text: string, dark: boolean): string => {
     stack.push(node);
   }
 
-  // Assign positions (BFS left-to-right)
   const allNodes: TNode[] = [];
-  const queue: Array<{ node: TNode; col: number; row: number }> = [];
   let maxRow = 0;
   const colCounts = new Map<number, number>();
 
