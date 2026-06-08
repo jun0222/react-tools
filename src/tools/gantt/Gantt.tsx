@@ -11,7 +11,6 @@ interface GanttTask {
   name: string;
   start: string;
   duration: string;
-  done?: boolean;
   crit?: boolean;
 }
 
@@ -65,8 +64,7 @@ const buildCode = (data: GanttData): string => {
   for (const sec of data.sections) {
     lines.push(`    section ${sec.name}`);
     for (const task of sec.tasks) {
-      const flags = [task.crit ? 'crit' : '', task.done ? 'done' : ''].filter(Boolean).join(', ');
-      const prefix = flags ? `${flags}, ` : '';
+      const prefix = task.crit ? 'crit, ' : '';
       lines.push(`    ${task.name} :${prefix}${task.start}, ${task.duration}`);
     }
   }
@@ -78,22 +76,18 @@ let renderSeq = 0;
 const Gantt = () => {
   const { dark } = useTheme();
   const [data, setData] = useState<GanttData>(load);
-  const [view, setView] = useState<'form' | 'code'>('form');
-  const [codeEdit, setCodeEdit] = useState('');
+  const [hasSvg, setHasSvg] = useState(false);
   const [toast, setToast] = useState('');
   const [showAddSection, setShowAddSection] = useState(false);
   const [newSecName, setNewSecName] = useState('');
   const [addTaskFor, setAddTaskFor] = useState<string | null>(null);
   const [newTask, setNewTask] = useState({ name: '', start: '', duration: '3d', crit: false });
   const previewRef = useRef<HTMLDivElement>(null);
+  const svgCache = useRef('');
 
   useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }, [data]);
 
-  const code = useMemo(() => view === 'code' ? codeEdit : buildCode(data), [data, view, codeEdit]);
-
-  useEffect(() => {
-    if (view === 'code') setCodeEdit(buildCode(data));
-  }, [view, data]);
+  const code = useMemo(() => buildCode(data), [data]);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg); setTimeout(() => setToast(''), 1800);
@@ -107,12 +101,29 @@ const Gantt = () => {
 
   useEffect(() => {
     if (!previewRef.current) return;
-    if (!debounced.trim()) { previewRef.current.innerHTML = ''; return; }
+    if (!debounced.trim()) {
+      previewRef.current.innerHTML = '';
+      svgCache.current = '';
+      setHasSvg(false);
+      return;
+    }
     const id = `gt-svg-${++renderSeq}`;
     mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default' });
     mermaid.render(id, debounced)
-      .then(({ svg }) => { if (previewRef.current) previewRef.current.innerHTML = svg; })
-      .catch(() => { if (previewRef.current) previewRef.current.innerHTML = '<span style="color:#f87171;font-size:12px">Syntax error</span>'; });
+      .then(({ svg }) => {
+        if (previewRef.current) {
+          previewRef.current.innerHTML = svg;
+          svgCache.current = svg;
+          setHasSvg(true);
+        }
+      })
+      .catch(() => {
+        if (previewRef.current) {
+          previewRef.current.innerHTML = '<span style="color:#f87171;font-size:12px">Syntax error</span>';
+          svgCache.current = '';
+          setHasSvg(false);
+        }
+      });
   }, [debounced, dark]);
 
   const addSection = () => {
@@ -135,10 +146,8 @@ const Gantt = () => {
   const removeTask = (sid: string, tid: string) =>
     setData(prev => ({ ...prev, sections: prev.sections.map(s => s.id === sid ? { ...s, tasks: s.tasks.filter(t => t.id !== tid) } : s) }));
 
-  const getSvg = () => previewRef.current?.querySelector('svg')?.outerHTML ?? '';
-
   const exportSvg = () => {
-    const svg = getSvg(); if (!svg) return;
+    const svg = svgCache.current; if (!svg) return;
     const blob = new Blob([svg], { type: 'image/svg+xml' });
     const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'gantt.svg' });
     a.click(); URL.revokeObjectURL(a.href);
@@ -146,9 +155,9 @@ const Gantt = () => {
   };
 
   const exportPng = useCallback(() => {
-    const svg = getSvg(); if (!svg) return;
+    const svg = svgCache.current; if (!svg) return;
     const wm = svg.match(/width="(\d+(?:\.\d+)?)"/), hm = svg.match(/height="(\d+(?:\.\d+)?)"/);
-    const w = wm ? parseFloat(wm[1]) : 800, h = hm ? parseFloat(hm[1]) : 400, scale = 2;
+    const w = wm ? parseFloat(wm[1]) : 900, h = hm ? parseFloat(hm[1]) : 400, scale = 2;
     const svgUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
     const img = new Image();
     img.onload = () => {
@@ -168,112 +177,87 @@ const Gantt = () => {
     img.src = svgUrl;
   }, [showToast]);
 
-  const hasSvg = !!getSvg();
-
   return (
     <div className={`gantt-root ${dark ? 'dark' : 'light'}`}>
       <div className="gt-header">
         <div className="gt-logo-icon"><CalendarDays size={22} color="white" /></div>
         <h1><span className="gt-accent">Gantt</span> Chart</h1>
+        {hasSvg && (
+          <div className="gt-export-row">
+            <button className="gt-btn gt-btn-ghost" onClick={exportSvg}>SVG</button>
+            <button className="gt-btn gt-btn-ghost" onClick={exportPng}>PNG</button>
+            <button className="gt-btn gt-btn-ghost" onClick={() => { navigator.clipboard.writeText(code); showToast('コピーしました'); }}>コードをコピー</button>
+          </div>
+        )}
       </div>
 
-      <div className="gt-layout">
-        {/* ===== LEFT: Editor ===== */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="gt-panel">
-            <div className="gt-panel-title">設定</div>
-            <input className="gt-input" placeholder="タイトル" value={data.title} onChange={e => setData(prev => ({ ...prev, title: e.target.value }))} />
-            <div className="gt-row">
-              <span style={{ fontSize: 12, color: 'var(--gt-muted)', whiteSpace: 'nowrap' }}>日付形式</span>
-              <input className="gt-input" value={data.dateFormat} onChange={e => setData(prev => ({ ...prev, dateFormat: e.target.value }))} />
-            </div>
+      {/* ===== BIG PREVIEW — top half ===== */}
+      <div className="gt-preview-wrap">
+        {!hasSvg && <div className="gt-preview-empty">ガントチャートがここに表示されます</div>}
+        {/* No React children here — mermaid owns this div */}
+        <div ref={previewRef} className="gt-preview-inner" />
+      </div>
+
+      {/* ===== FORM — bottom half ===== */}
+      <div className="gt-form-area">
+        <div className="gt-form-row">
+          <div className="gt-form-group">
+            <span className="gt-form-label">タイトル</span>
+            <input className="gt-input" value={data.title} onChange={e => setData(prev => ({ ...prev, title: e.target.value }))} />
           </div>
-
-          <div className="gt-view-toggle">
-            <button className={`gt-view-btn ${view === 'form' ? 'active' : ''}`} onClick={() => setView('form')}>フォーム</button>
-            <button className={`gt-view-btn ${view === 'code' ? 'active' : ''}`} onClick={() => setView('code')}>コード</button>
+          <div className="gt-form-group">
+            <span className="gt-form-label">日付形式</span>
+            <input className="gt-input" value={data.dateFormat} onChange={e => setData(prev => ({ ...prev, dateFormat: e.target.value }))} style={{ width: 140 }} />
           </div>
-
-          {view === 'form' && (
-            <div className="gt-panel">
-              <div className="gt-panel-title">セクション & タスク</div>
-              <div className="gt-sections">
-                {data.sections.map(sec => (
-                  <div key={sec.id} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <div className="gt-section-header">
-                      <span className="gt-section-name">{sec.name}</span>
-                      <div style={{ display: 'flex', gap: 4 }}>
-                        <button className="gt-btn gt-btn-ghost" style={{ fontSize: 11, padding: '2px 8px' }} onClick={() => setAddTaskFor(addTaskFor === sec.id ? null : sec.id)}>+ タスク</button>
-                        <button className="gt-btn gt-btn-danger" style={{ fontSize: 11, padding: '2px 8px' }} onClick={() => removeSection(sec.id)}>✕</button>
-                      </div>
-                    </div>
-                    <div className="gt-task-list">
-                      {sec.tasks.map(task => (
-                        <div key={task.id} className="gt-task-item">
-                          {task.crit && <span style={{ color: '#ef4444', fontSize: 10 }}>●</span>}
-                          <span className="gt-task-item-name">{task.name}</span>
-                          <span className="gt-task-item-meta">{task.start} / {task.duration}</span>
-                          <button className="gt-btn gt-btn-ghost" style={{ fontSize: 10, padding: '1px 6px' }} onClick={() => removeTask(sec.id, task.id)}>✕</button>
-                        </div>
-                      ))}
-                      {addTaskFor === sec.id && (
-                        <div className="gt-add-form">
-                          <span className="gt-form-label">タスクを追加</span>
-                          <input className="gt-input" placeholder="タスク名" value={newTask.name} onChange={e => setNewTask(p => ({ ...p, name: e.target.value }))} />
-                          <div className="gt-row">
-                            <input className="gt-input" placeholder="開始日 (例: 2024-01-01)" value={newTask.start} onChange={e => setNewTask(p => ({ ...p, start: e.target.value }))} />
-                            <input className="gt-input" placeholder="期間 (例: 3d)" value={newTask.duration} onChange={e => setNewTask(p => ({ ...p, duration: e.target.value }))} style={{ width: 80 }} />
-                          </div>
-                          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--gt-text)', cursor: 'pointer' }}>
-                            <input type="checkbox" checked={newTask.crit} onChange={e => setNewTask(p => ({ ...p, crit: e.target.checked }))} />
-                            クリティカル
-                          </label>
-                          <div className="gt-row" style={{ justifyContent: 'flex-end' }}>
-                            <button className="gt-btn gt-btn-ghost" onClick={() => setAddTaskFor(null)}>キャンセル</button>
-                            <button className="gt-btn gt-btn-primary" onClick={() => addTask(sec.id)} disabled={!newTask.name.trim() || !newTask.start.trim()}>追加</button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {showAddSection ? (
-                <div className="gt-add-form">
-                  <input className="gt-input" placeholder="セクション名" value={newSecName} onChange={e => setNewSecName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addSection()} autoFocus />
-                  <div className="gt-row" style={{ justifyContent: 'flex-end' }}>
-                    <button className="gt-btn gt-btn-ghost" onClick={() => setShowAddSection(false)}>キャンセル</button>
-                    <button className="gt-btn gt-btn-primary" onClick={addSection} disabled={!newSecName.trim()}>追加</button>
-                  </div>
-                </div>
-              ) : (
-                <button className="gt-btn gt-btn-ghost" style={{ width: '100%' }} onClick={() => setShowAddSection(true)}>+ セクションを追加</button>
-              )}
-            </div>
-          )}
-
-          {view === 'code' && (
-            <div className="gt-panel">
-              <div className="gt-panel-title">Mermaidコード</div>
-              <textarea className="gt-code-area" rows={20} value={codeEdit} onChange={e => setCodeEdit(e.target.value)} spellCheck={false} />
-            </div>
-          )}
         </div>
 
-        {/* ===== RIGHT: Preview ===== */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="gt-panel">
-            <div className="gt-panel-title">プレビュー</div>
-            <div ref={previewRef} className="gt-preview" style={{ minHeight: 200 }}>
-              {!hasSvg && <div className="gt-preview-empty">ガントチャートがここに表示されます</div>}
+        <div className="gt-sections">
+          {data.sections.map(sec => (
+            <div key={sec.id} className="gt-section-block">
+              <div className="gt-section-header">
+                <span className="gt-section-name">● {sec.name}</span>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <button className="gt-btn gt-btn-ghost gt-btn-xs" onClick={() => setAddTaskFor(addTaskFor === sec.id ? null : sec.id)}>+ タスク</button>
+                  <button className="gt-btn gt-btn-danger gt-btn-xs" onClick={() => removeSection(sec.id)}>✕</button>
+                </div>
+              </div>
+
+              <div className="gt-task-list">
+                {sec.tasks.map(task => (
+                  <div key={task.id} className="gt-task-item">
+                    {task.crit && <span style={{ color: '#ef4444', fontSize: 10, marginRight: 3 }}>●</span>}
+                    <span className="gt-task-name">{task.name}</span>
+                    <span className="gt-task-meta">{task.start} / {task.duration}</span>
+                    <button className="gt-btn gt-btn-ghost gt-btn-xs" onClick={() => removeTask(sec.id, task.id)}>✕</button>
+                  </div>
+                ))}
+
+                {addTaskFor === sec.id && (
+                  <div className="gt-add-task-form">
+                    <input className="gt-input" placeholder="タスク名" value={newTask.name} onChange={e => setNewTask(p => ({ ...p, name: e.target.value }))} />
+                    <input className="gt-input" placeholder="開始日 (2024-01-01)" value={newTask.start} onChange={e => setNewTask(p => ({ ...p, start: e.target.value }))} style={{ width: 150 }} />
+                    <input className="gt-input" placeholder="期間 (3d)" value={newTask.duration} onChange={e => setNewTask(p => ({ ...p, duration: e.target.value }))} style={{ width: 80 }} />
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--gt-muted)', cursor: 'pointer' }}>
+                      <input type="checkbox" checked={newTask.crit} onChange={e => setNewTask(p => ({ ...p, crit: e.target.checked }))} />
+                      crit
+                    </label>
+                    <button className="gt-btn gt-btn-primary" onClick={() => addTask(sec.id)} disabled={!newTask.name.trim() || !newTask.start.trim()}>追加</button>
+                    <button className="gt-btn gt-btn-ghost" onClick={() => setAddTaskFor(null)}>✕</button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="gt-export-row">
-            <button className="gt-btn gt-btn-ghost" onClick={exportSvg} disabled={!hasSvg}>SVG 保存</button>
-            <button className="gt-btn gt-btn-ghost" onClick={exportPng} disabled={!hasSvg}>PNG 保存</button>
-            <button className="gt-btn gt-btn-ghost" onClick={() => { navigator.clipboard.writeText(code); showToast('コードをコピーしました'); }}>コードをコピー</button>
-          </div>
+          ))}
+
+          {showAddSection ? (
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              <input className="gt-input" placeholder="セクション名" value={newSecName} onChange={e => setNewSecName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addSection()} autoFocus style={{ maxWidth: 260 }} />
+              <button className="gt-btn gt-btn-primary" onClick={addSection} disabled={!newSecName.trim()}>追加</button>
+              <button className="gt-btn gt-btn-ghost" onClick={() => setShowAddSection(false)}>キャンセル</button>
+            </div>
+          ) : (
+            <button className="gt-btn gt-btn-ghost" style={{ alignSelf: 'flex-start' }} onClick={() => setShowAddSection(true)}>+ セクションを追加</button>
+          )}
         </div>
       </div>
 

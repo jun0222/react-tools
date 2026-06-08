@@ -7,11 +7,14 @@
   --gt-indigo: #6366f1;
   --gt-radius: 12px;
   --gt-radius-sm: 8px;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 20px 80px;
+  padding: 20px 20px 80px;
   font-family: inherit;
   min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .gantt-root.dark {
@@ -39,12 +42,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 24px;
+  flex-shrink: 0;
 }
 
 .gt-logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, #06b6d4, #6366f1);
   border-radius: 12px;
   display: flex;
@@ -54,7 +57,7 @@
 }
 
 .gt-header h1 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   margin: 0;
   color: var(--gt-text);
@@ -62,20 +65,49 @@
 
 .gt-accent { color: var(--gt-cyan); }
 
-/* --- Layout --- */
-.gt-layout {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 20px;
-  align-items: start;
+.gt-export-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 
-@media (max-width: 800px) {
-  .gt-layout { grid-template-columns: 1fr; }
+/* --- Preview (top half) --- */
+.gt-preview-wrap {
+  position: relative;
+  height: 46vh;
+  min-height: 240px;
+  background: var(--gt-surface);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius);
+  overflow: auto;
+  flex-shrink: 0;
 }
 
-/* --- Panel --- */
-.gt-panel {
+.gt-preview-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gt-muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.gt-preview-inner {
+  padding: 16px;
+  min-height: 100%;
+}
+
+.gt-preview-inner svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --- Form area (bottom half) --- */
+.gt-form-area {
   background: var(--gt-surface);
   border: 1px solid var(--gt-border);
   border-radius: var(--gt-radius);
@@ -83,18 +115,32 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  max-height: 50vh;
 }
 
-.gt-panel-title {
-  font-size: 13px;
-  font-weight: 700;
+.gt-form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.gt-form-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.gt-form-label {
+  font-size: 11px;
   color: var(--gt-muted);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
+  white-space: nowrap;
 }
 
-/* --- Form --- */
+/* --- Input --- */
 .gt-input {
   background: var(--gt-surface2);
   border: 1px solid var(--gt-border);
@@ -112,23 +158,29 @@
 .gt-input:focus { border-color: var(--gt-cyan); }
 .gt-input::placeholder { color: var(--gt-muted); }
 
-.gt-row {
+/* --- Sections --- */
+.gt-sections {
   display: flex;
-  gap: 6px;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gt-section-block {
+  background: var(--gt-surface2);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-sm);
+  overflow: hidden;
 }
 
 .gt-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 10px;
-  background: var(--gt-surface2);
-  border: 1px solid var(--gt-border);
-  border-radius: var(--gt-radius-sm);
+  padding: 7px 10px;
   font-size: 13px;
   font-weight: 600;
   color: var(--gt-text);
+  border-bottom: 1px solid var(--gt-border);
 }
 
 .gt-section-name {
@@ -140,7 +192,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding-left: 12px;
+  padding: 8px;
 }
 
 .gt-task-item {
@@ -148,15 +200,37 @@
   align-items: center;
   gap: 6px;
   padding: 5px 8px;
-  background: var(--gt-surface2);
+  background: var(--gt-surface);
   border: 1px solid var(--gt-border);
   border-radius: 6px;
   font-size: 12px;
   color: var(--gt-text);
 }
 
-.gt-task-item-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.gt-task-item-meta { color: var(--gt-muted); font-size: 11px; white-space: nowrap; }
+.gt-task-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-task-meta {
+  color: var(--gt-muted);
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gt-add-task-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px;
+  background: var(--gt-surface);
+  border-top: 1px solid var(--gt-border);
+}
 
 /* --- Buttons --- */
 .gt-btn {
@@ -165,12 +239,17 @@
   cursor: pointer;
   font-size: 12px;
   font-family: inherit;
-  padding: 5px 12px;
+  padding: 6px 13px;
   transition: opacity 0.15s, background 0.15s;
   white-space: nowrap;
 }
 
 .gt-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.gt-btn-xs {
+  padding: 3px 8px;
+  font-size: 11px;
+}
 
 .gt-btn-primary {
   background: linear-gradient(135deg, #06b6d4, #6366f1);
@@ -198,89 +277,6 @@
 
 .gt-btn-danger:hover:not(:disabled) { background: rgba(239,68,68,0.1); }
 
-/* --- Textarea (code view) --- */
-.gt-code-area {
-  background: var(--gt-surface2);
-  border: 1px solid var(--gt-border);
-  border-radius: var(--gt-radius-sm);
-  color: var(--gt-text);
-  font-family: 'Menlo', 'Consolas', monospace;
-  font-size: 12px;
-  padding: 10px;
-  resize: vertical;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-  line-height: 1.6;
-}
-
-.gt-code-area:focus { border-color: var(--gt-cyan); }
-
-/* --- Preview --- */
-.gt-preview {
-  background: var(--gt-surface);
-  border: 1px solid var(--gt-border);
-  border-radius: var(--gt-radius);
-  padding: 16px;
-  min-height: 200px;
-  overflow: auto;
-}
-
-.gt-preview-empty {
-  color: var(--gt-muted);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 150px;
-}
-
-.gt-preview svg { max-width: 100%; height: auto; }
-
-/* --- Tab toggle --- */
-.gt-view-toggle {
-  display: flex;
-  gap: 4px;
-  background: var(--gt-surface2);
-  border: 1px solid var(--gt-border);
-  border-radius: var(--gt-radius-sm);
-  padding: 3px;
-}
-
-.gt-view-btn {
-  flex: 1;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: none;
-  background: transparent;
-  color: var(--gt-muted);
-  font-size: 12px;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.gt-view-btn.active {
-  background: var(--gt-surface);
-  color: var(--gt-text);
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-/* --- Section list --- */
-.gt-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* --- Export buttons --- */
-.gt-export-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
 /* --- Toast --- */
 .gt-toast {
   position: fixed;
@@ -295,22 +291,4 @@
   pointer-events: none;
   z-index: 999;
   box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-}
-
-/* --- Add form --- */
-.gt-add-form {
-  background: var(--gt-surface2);
-  border: 1px solid var(--gt-border);
-  border-radius: var(--gt-radius-sm);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.gt-form-label {
-  font-size: 11px;
-  color: var(--gt-muted);
-  font-weight: 600;
-  text-transform: uppercase;
 }

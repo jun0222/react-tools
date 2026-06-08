@@ -1,5 +1,7 @@
 // ---- Types ----
 
+export type BookmarkStatus = 'active' | 'pending' | 'trash';
+
 export interface Bookmark {
   id: string;
   url: string;
@@ -7,6 +9,9 @@ export interface Bookmark {
   description: string;
   tags: string[];
   createdAt: string;
+  status?: BookmarkStatus;
+  pendingAt?: number;
+  trashedAt?: number;
 }
 
 const STORAGE_KEY = 'bookmarks-data';
@@ -16,10 +21,23 @@ const newId = () => `bm-${Date.now()}-${++_seq}`;
 
 // ---- CRUD ----
 
+const PENDING_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+const processPendingExpiry = (items: Bookmark[]): Bookmark[] => {
+  const now = Date.now();
+  return items.map(b => {
+    if (b.status === 'pending' && b.pendingAt && now - b.pendingAt > PENDING_EXPIRY_MS) {
+      return { ...b, status: 'trash' as BookmarkStatus, trashedAt: now };
+    }
+    return b;
+  });
+};
+
 export const loadBookmarks = (): Bookmark[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return [];
+    return processPendingExpiry(JSON.parse(raw));
   } catch {
     return [];
   }
@@ -53,6 +71,24 @@ export const deleteBookmark = (items: Bookmark[], id: string): Bookmark[] =>
 
 export const updateBookmark = (items: Bookmark[], updated: Bookmark): Bookmark[] =>
   items.map(b => b.id === updated.id ? updated : b);
+
+export const moveToPending = (items: Bookmark[], id: string): Bookmark[] =>
+  items.map(b => b.id === id ? { ...b, status: 'pending' as BookmarkStatus, pendingAt: Date.now() } : b);
+
+export const moveToTrash = (items: Bookmark[], id: string): Bookmark[] =>
+  items.map(b => b.id === id ? { ...b, status: 'trash' as BookmarkStatus, trashedAt: Date.now() } : b);
+
+export const restoreToActive = (items: Bookmark[], id: string): Bookmark[] =>
+  items.map(b => b.id === id ? { ...b, status: 'active' as BookmarkStatus, pendingAt: undefined, trashedAt: undefined } : b);
+
+export const emptyTrash = (items: Bookmark[]): Bookmark[] =>
+  items.filter(b => b.status !== 'trash');
+
+export const getByStatus = (items: Bookmark[], status: BookmarkStatus | 'active'): Bookmark[] =>
+  items.filter(b => {
+    const s = b.status ?? 'active';
+    return s === status;
+  });
 
 // ---- Filter ----
 
