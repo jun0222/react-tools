@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Scissors } from 'lucide-react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { Scissors, Trash2 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import {
   loadSnippets, saveSnippets, createSnippet,
   addSnippet, deleteSnippet, filterSnippets, displayTitle,
 } from './snipCore';
+import type { Snippet } from './snipCore';
 import './Snip.css';
 
 const Snip = () => {
@@ -12,9 +13,11 @@ const Snip = () => {
   const [items, setItems] = useState(() => loadSnippets());
   const [query, setQuery] = useState('');
   const [showAdd, setShowAdd] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   const [newText, setNewText] = useState('');
   const [newTitle, setNewTitle] = useState('');
   const [toast, setToast] = useState('');
+  const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { saveSnippets(items); }, [items]);
 
@@ -35,6 +38,13 @@ const Snip = () => {
   const handleDelete = (id: string) => {
     setItems(prev => deleteSnippet(prev, id));
     showToast('削除しました');
+  };
+
+  const handleDuplicate = (sn: Snippet) => {
+    setNewText(sn.text);
+    setNewTitle(sn.title ?? '');
+    setShowAdd(true);
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
 
   const handleCopy = async (text: string) => {
@@ -65,6 +75,13 @@ const Snip = () => {
         />
         <span className="sn-count">{filtered.length} 件</span>
         <button
+          className={`sn-btn sn-btn-sm ${deleteMode ? 'sn-btn-danger' : 'sn-btn-ghost'}`}
+          onClick={() => setDeleteMode(v => !v)}
+        >
+          <Trash2 size={13} style={{ marginRight: 4 }} />
+          {deleteMode ? '削除モード中' : '削除モード'}
+        </button>
+        <button
           className="sn-btn sn-btn-open"
           onClick={() => setShowAdd(v => !v)}
         >
@@ -73,7 +90,7 @@ const Snip = () => {
       </div>
 
       {showAdd && (
-        <div className="sn-add-form">
+        <div className="sn-add-form" ref={formRef}>
           <textarea
             className="sn-textarea"
             placeholder="登録するテキストを入力..."
@@ -126,11 +143,20 @@ const Snip = () => {
               </button>
               <button
                 className="sn-btn sn-btn-icon"
-                onClick={() => handleDelete(sn.id)}
-                aria-label="削除"
+                onClick={() => handleDuplicate(sn)}
+                aria-label="複製"
               >
-                削除
+                複製
               </button>
+              {deleteMode && (
+                <button
+                  className="sn-btn sn-btn-icon sn-btn-danger-icon"
+                  onClick={() => handleDelete(sn.id)}
+                  aria-label="削除"
+                >
+                  削除
+                </button>
+              )}
             </div>
           </div>
         ))}

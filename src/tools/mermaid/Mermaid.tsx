@@ -131,6 +131,37 @@ const Mermaid = () => {
     URL.revokeObjectURL(url);
   };
 
+  const exportPng = useCallback(() => {
+    const svg = getSvgContent(previewRef.current);
+    if (!svg) return;
+    const wMatch = svg.match(/width="(\d+(?:\.\d+)?)"/);
+    const hMatch = svg.match(/height="(\d+(?:\.\d+)?)"/);
+    const w = wMatch ? parseFloat(wMatch[1]) : 800;
+    const h = hMatch ? parseFloat(hMatch[1]) : 600;
+    const scale = 2;
+    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = w * scale; canvas.height = h * scale;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(svgUrl);
+      canvas.toBlob(pngBlob => {
+        if (!pngBlob) return;
+        const pngUrl = URL.createObjectURL(pngBlob);
+        const a = document.createElement('a');
+        a.href = pngUrl; a.download = `${activeId}_${timestamp()}.png`; a.click();
+        URL.revokeObjectURL(pngUrl);
+        showToast('PNGを保存しました');
+      }, 'image/png');
+    };
+    img.src = svgUrl;
+  }, [activeId, showToast]);
+
   const openFullscreen = () => {
     const svg = getSvgContent(previewRef.current);
     if (!svg) return;

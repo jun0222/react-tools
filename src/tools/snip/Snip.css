@@ -219,6 +219,27 @@
   opacity: 0.85;
 }
 
+.sn-btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sn-btn-danger {
+  background: var(--sn-danger);
+  color: #fff;
+  border: none;
+}
+
+.sn-btn-danger:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.sn-btn-danger-icon {
+  color: var(--sn-danger);
+}
+
 /* ===== List ===== */
 .sn-list {
   display: flex;

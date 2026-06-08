@@ -53,20 +53,51 @@ const LogTree = () => {
     containerRef.current.innerHTML = svgContent || '';
   }, [svgContent]);
 
-  const exportSvg = () => {
-    if (!svgContent) return;
+  const makeTs = () => {
     const d = new Date();
     const p = (n: number) => String(n).padStart(2, '0');
-    const ts = `${d.getFullYear()}_${p(d.getMonth()+1)}_${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}_${p(d.getSeconds())}`;
+    return `${d.getFullYear()}_${p(d.getMonth()+1)}_${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}_${p(d.getSeconds())}`;
+  };
+
+  const exportSvg = () => {
+    if (!svgContent) return;
     const blob = new Blob([svgContent], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `logtree_${ts}.svg`;
-    a.click();
+    a.href = url; a.download = `logtree_${makeTs()}.svg`; a.click();
     URL.revokeObjectURL(url);
     showToast('SVGを保存しました');
   };
+
+  const exportPng = useCallback(() => {
+    if (!svgContent) return;
+    const wMatch = svgContent.match(/width="(\d+(?:\.\d+)?)"/);
+    const hMatch = svgContent.match(/height="(\d+(?:\.\d+)?)"/);
+    const w = wMatch ? parseFloat(wMatch[1]) : 800;
+    const h = hMatch ? parseFloat(hMatch[1]) : 600;
+    const scale = 2;
+    const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = w * scale; canvas.height = h * scale;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(svgUrl);
+      canvas.toBlob(pngBlob => {
+        if (!pngBlob) return;
+        const pngUrl = URL.createObjectURL(pngBlob);
+        const a = document.createElement('a');
+        a.href = pngUrl; a.download = `logtree_${makeTs()}.png`; a.click();
+        URL.revokeObjectURL(pngUrl);
+        showToast('PNGを保存しました');
+      }, 'image/png');
+    };
+    img.src = svgUrl;
+  }, [svgContent, showToast]);
 
   return (
     <div className={`logtree ${dark ? 'dark' : 'light'}`}>
@@ -112,11 +143,10 @@ const LogTree = () => {
             <button className="lt-btn lt-btn-ghost lt-btn-sm" onClick={() => setText(DEFAULT_TEXT)}>
               サンプルに戻す
             </button>
-            {svgContent && (
-              <button className="lt-btn lt-btn-ghost lt-btn-sm" onClick={exportSvg}>
-                SVG 保存
-              </button>
-            )}
+            {svgContent && (<>
+              <button className="lt-btn lt-btn-ghost lt-btn-sm" onClick={exportSvg}>SVG 保存</button>
+              <button className="lt-btn lt-btn-ghost lt-btn-sm" onClick={exportPng}>PNG 保存</button>
+            </>)}
           </div>
         </div>
 

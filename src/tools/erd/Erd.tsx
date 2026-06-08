@@ -4,7 +4,7 @@ import {
   useNodesState, useEdgesState, addEdge,
   type Connection, type Node, type Edge,
 } from '@xyflow/react';
-import { toSvg } from 'html-to-image';
+import { toSvg, toPng } from 'html-to-image';
 import '@xyflow/react/dist/style.css';
 import { useTheme } from '../../context/ThemeContext';
 import {
@@ -157,6 +157,19 @@ const Erd = () => {
     }
   };
 
+  const exportPng = async () => {
+    const el = flowRef.current?.querySelector('.react-flow__viewport') as HTMLElement | null;
+    if (!el) return;
+    try {
+      const url = await toPng(el, { backgroundColor: dark ? '#0f0f14' : '#f5f5f8', pixelRatio: 2 });
+      const a = document.createElement('a');
+      a.href = url; a.download = 'erd.png'; a.click();
+      showToast('PNG をエクスポートしました');
+    } catch {
+      showToast('PNG エクスポート失敗');
+    }
+  };
+
   const exportJson = () => {
     const data = getExportData();
     downloadText(JSON.stringify(data, null, 2), 'erd.json', 'application/json');
@@ -178,6 +191,7 @@ const Erd = () => {
             <button className="erd-btn erd-btn-ghost" onClick={exportMermaid} title="Mermaid (.md)">Mermaid</button>
             <button className="erd-btn erd-btn-ghost" onClick={exportDrawIo} title="DrawIO (.drawio)">DrawIO</button>
             <button className="erd-btn erd-btn-ghost" onClick={exportSvg} title="SVG (.svg)">SVG</button>
+            <button className="erd-btn erd-btn-ghost" onClick={exportPng} title="PNG (.png)">PNG</button>
             <button className="erd-btn erd-btn-ghost" onClick={exportJson} title="JSON (.json)">JSON</button>
           </div>
         </div>
