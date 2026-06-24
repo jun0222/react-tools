@@ -6,6 +6,7 @@ import {
   addBookmark, deleteBookmark, filterBookmarks,
   allTags, exportJson, importJson, parseTags,
   moveToPending, moveToTrash, restoreToActive, emptyTrash, getByStatus,
+  updateBookmark,
 } from './bookmarksCore';
 import type { Bookmark } from './bookmarksCore';
 import './Bookmarks.css';
@@ -36,6 +37,11 @@ const Bookmarks = () => {
   const [newTags,    setNewTags]    = useState('');
   const [importText, setImportText] = useState('');
   const [toast,      setToast]      = useState('');
+  const [editingId,  setEditingId]  = useState<string | null>(null);
+  const [editUrl,    setEditUrl]    = useState('');
+  const [editTitle,  setEditTitle]  = useState('');
+  const [editDesc,   setEditDesc]   = useState('');
+  const [editTags,   setEditTags]   = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef      = useRef<HTMLDivElement>(null);
 
@@ -93,6 +99,32 @@ const Bookmarks = () => {
     showToast('ゴミ箱を空にしました');
   };
 
+  const startEdit = (bm: Bookmark) => {
+    setEditingId(bm.id);
+    setEditUrl(bm.url);
+    setEditTitle(bm.title === bm.url ? '' : bm.title);
+    setEditDesc(bm.description);
+    setEditTags(bm.tags.join(', '));
+  };
+
+  const cancelEdit = () => setEditingId(null);
+
+  const handleSaveEdit = (bm: Bookmark) => {
+    const url = editUrl.trim();
+    if (!url) return;
+    const tags = parseTags(editTags);
+    setItems(prev => updateBookmark(prev, { ...bm, url, title: editTitle.trim() || url, description: editDesc.trim(), tags }));
+    if (tags.length > 0) {
+      setTagHistory(prev => {
+        const set = new Set(prev);
+        const added = tags.filter(t => !set.has(t));
+        return added.length ? [...prev, ...added] : prev;
+      });
+    }
+    setEditingId(null);
+    showToast('変更を保存しました');
+  };
+
   const appendTag = (tag: string) => {
     setNewTags(prev => {
       const existing = parseTags(prev);
@@ -113,6 +145,31 @@ const Bookmarks = () => {
     a.href = url; a.download = 'bookmarks.json'; a.click();
     URL.revokeObjectURL(url);
     showToast('エクスポートしました');
+  };
+
+  const handleHtmlExport = () => {
+    const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const active = getByStatus(items, 'active');
+    const byTag: Record<string, Bookmark[]> = {};
+    const noTag: Bookmark[] = [];
+    active.forEach(bm => {
+      if (bm.tags.length === 0) { noTag.push(bm); return; }
+      bm.tags.forEach(t => { (byTag[t] ??= []).push(bm); });
+    });
+    const renderList = (bms: Bookmark[]) =>
+      bms.map(bm => `    <li><a href="${esc(bm.url)}">${esc(bm.title || bm.url)}</a>${bm.description ? ` <span style="color:#888">— ${esc(bm.description)}</span>` : ''}</li>`).join('\n');
+    const sections = [
+      ...Object.entries(byTag).sort(([a], [b]) => a.localeCompare(b)).map(([tag, bms]) =>
+        `  <h2>${esc(tag)}</h2>\n  <ul>\n${renderList(bms)}\n  </ul>`),
+      ...(noTag.length ? [`  <h2>タグなし</h2>\n  <ul>\n${renderList(noTag)}\n  </ul>`] : []),
+    ].join('\n');
+    const html = `<!DOCTYPE html>\n<html lang="ja">\n<head><meta charset="utf-8"><title>Bookmarks</title><style>body{font-family:sans-serif;max-width:800px;margin:40px auto;padding:0 20px}a{color:#f97316}h2{margin-top:24px;font-size:15px;color:#666}li{margin:6px 0}</style></head>\n<body>\n<h1>Bookmarks</h1>\n${sections}\n</body>\n</html>`;
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'bookmarks.html'; a.click();
+    URL.revokeObjectURL(url);
+    showToast('HTMLエクスポートしました');
   };
 
   const handleImport = () => {
@@ -203,6 +260,7 @@ const Bookmarks = () => {
         <div className="bk-panel">
           <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
             <button className="bk-btn bk-btn-ghost bk-btn-sm" onClick={handleExport}>JSONエクスポート</button>
+            <button className="bk-btn bk-btn-ghost bk-btn-sm" onClick={handleHtmlExport}>HTMLエクスポート</button>
             <button className="bk-btn bk-btn-ghost bk-btn-sm" onClick={() => fileInputRef.current?.click()}>ファイルを開く</button>
             <input ref={fileInputRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleFileImport} />
           </div>
@@ -262,28 +320,46 @@ const Bookmarks = () => {
             )}
             {filtered.map(bm => (
               <div key={bm.id} className="bk-card">
-                <div className="bk-card-body">
-                  <a className="bk-card-title" href={bm.url} target="_blank" rel="noopener noreferrer">
-                    {hasTitle(bm) ? bm.title : bm.url}
-                  </a>
-                  {hasTitle(bm) && (
-                    <div className="bk-card-url">{bm.url}</div>
-                  )}
-                  {bm.description && <div className="bk-card-desc">{bm.description}</div>}
-                  {bm.tags.length > 0 && (
-                    <div className="bk-card-tags">
-                      {bm.tags.map(t => <span key={t} className="bk-tag">{t}</span>)}
+                {editingId === bm.id ? (
+                  <div className="bk-add-form">
+                    <input className="bk-input" placeholder="URL（必須）" value={editUrl} onChange={e => setEditUrl(e.target.value)} autoFocus />
+                    <div className="bk-add-row">
+                      <input className="bk-input" placeholder="タイトル" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
+                      <input className="bk-input" placeholder="タグ（カンマ区切り）" value={editTags} onChange={e => setEditTags(e.target.value)} />
                     </div>
-                  )}
-                </div>
-                <div className="bk-card-actions">
-                  <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={async () => {
-                    try { await navigator.clipboard.writeText(bm.url); showToast('URLをコピーしました'); }
-                    catch { showToast('コピー失敗'); }
-                  }}>コピー</button>
-                  <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handlePending(bm.id)}>最近見ていない</button>
-                  <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleTrash(bm.id)}>🗑</button>
-                </div>
+                    <input className="bk-input" placeholder="メモ（任意）" value={editDesc} onChange={e => setEditDesc(e.target.value)} />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={cancelEdit}>キャンセル</button>
+                      <button className="bk-btn bk-btn-primary bk-btn-xs" onClick={() => handleSaveEdit(bm)} disabled={!editUrl.trim()}>保存</button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="bk-card-body">
+                      <a className="bk-card-title" href={bm.url} target="_blank" rel="noopener noreferrer">
+                        {hasTitle(bm) ? bm.title : bm.url}
+                      </a>
+                      {hasTitle(bm) && (
+                        <div className="bk-card-url">{bm.url}</div>
+                      )}
+                      {bm.description && <div className="bk-card-desc">{bm.description}</div>}
+                      {bm.tags.length > 0 && (
+                        <div className="bk-card-tags">
+                          {bm.tags.map(t => <span key={t} className="bk-tag">{t}</span>)}
+                        </div>
+                      )}
+                    </div>
+                    <div className="bk-card-actions">
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={async () => {
+                        try { await navigator.clipboard.writeText(bm.url); showToast('URLをコピーしました'); }
+                        catch { showToast('コピー失敗'); }
+                      }}>コピー</button>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => startEdit(bm)}>編集</button>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handlePending(bm.id)}>最近見ていない</button>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleTrash(bm.id)}>🗑</button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -299,23 +375,41 @@ const Bookmarks = () => {
             const daysLeft = 30 - days;
             return (
               <div key={bm.id} className="bk-card bk-card-pending">
-                <div className="bk-card-body">
-                  <a className="bk-card-title" href={bm.url} target="_blank" rel="noopener noreferrer">
-                    {hasTitle(bm) ? bm.title : bm.url}
-                  </a>
-                  {hasTitle(bm) && <div className="bk-card-url">{bm.url}</div>}
-                  {bm.description && <div className="bk-card-desc">{bm.description}</div>}
-                  {bm.tags.length > 0 && (
-                    <div className="bk-card-tags">
-                      {bm.tags.map(t => <span key={t} className="bk-tag">{t}</span>)}
+                {editingId === bm.id ? (
+                  <div className="bk-add-form">
+                    <input className="bk-input" placeholder="URL（必須）" value={editUrl} onChange={e => setEditUrl(e.target.value)} autoFocus />
+                    <div className="bk-add-row">
+                      <input className="bk-input" placeholder="タイトル" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
+                      <input className="bk-input" placeholder="タグ（カンマ区切り）" value={editTags} onChange={e => setEditTags(e.target.value)} />
                     </div>
-                  )}
-                  <div className="bk-card-expiry">{daysLeft > 0 ? `あと${daysLeft}日でゴミ箱へ` : 'まもなくゴミ箱へ'}</div>
-                </div>
-                <div className="bk-card-actions">
-                  <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleRestore(bm.id)}>戻す</button>
-                  <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleTrash(bm.id)}>🗑</button>
-                </div>
+                    <input className="bk-input" placeholder="メモ（任意）" value={editDesc} onChange={e => setEditDesc(e.target.value)} />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={cancelEdit}>キャンセル</button>
+                      <button className="bk-btn bk-btn-primary bk-btn-xs" onClick={() => handleSaveEdit(bm)} disabled={!editUrl.trim()}>保存</button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="bk-card-body">
+                      <a className="bk-card-title" href={bm.url} target="_blank" rel="noopener noreferrer">
+                        {hasTitle(bm) ? bm.title : bm.url}
+                      </a>
+                      {hasTitle(bm) && <div className="bk-card-url">{bm.url}</div>}
+                      {bm.description && <div className="bk-card-desc">{bm.description}</div>}
+                      {bm.tags.length > 0 && (
+                        <div className="bk-card-tags">
+                          {bm.tags.map(t => <span key={t} className="bk-tag">{t}</span>)}
+                        </div>
+                      )}
+                      <div className="bk-card-expiry">{daysLeft > 0 ? `あと${daysLeft}日でゴミ箱へ` : 'まもなくゴミ箱へ'}</div>
+                    </div>
+                    <div className="bk-card-actions">
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => startEdit(bm)}>編集</button>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleRestore(bm.id)}>戻す</button>
+                      <button className="bk-btn bk-btn-ghost bk-btn-xs" onClick={() => handleTrash(bm.id)}>🗑</button>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
