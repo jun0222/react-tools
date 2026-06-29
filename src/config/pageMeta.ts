@@ -152,4 +152,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Planner - メモ→計画図 🗂',
     description: '雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに変換するメガツール。',
   },
+  '/lexis': {
+    title: 'Lexis - 単語スキーマ 🎓',
+    description: '単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成。',
+  },
 };

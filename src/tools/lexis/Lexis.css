@@ -1,0 +1,177 @@
+/* Lexis - 単語スキーマ プロンプトジェネレータ */
+
+.lx-root {
+  --lx-teal:    #14b8a6;
+  --lx-indigo:  #6366f1;
+  --lx-radius:  12px;
+  --lx-radius-sm: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 60px);
+  font-family: inherit;
+}
+
+.lx-root.dark {
+  --lx-surface:  #1a1a24;
+  --lx-surface2: #22222e;
+  --lx-border:   #2e2e3e;
+  --lx-text:     #e0e0e0;
+  --lx-muted:    #666;
+  background: #0d0d14;
+  color: #e0e0e0;
+}
+
+.lx-root.light {
+  --lx-surface:  #ffffff;
+  --lx-surface2: #f0fafa;
+  --lx-border:   #d1fae5;
+  --lx-text:     #1a2030;
+  --lx-muted:    #888;
+  background: #f0fafa;
+  color: #1a2030;
+}
+
+/* --- Header --- */
+.lx-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 32px 16px;
+  flex-wrap: wrap;
+}
+
+.lx-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #14b8a6, #6366f1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lx-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lx-text);
+  margin: 0;
+  flex: 1;
+}
+
+.lx-accent { color: var(--lx-teal); }
+
+/* --- Lang toggle --- */
+.lx-lang-toggle {
+  display: flex;
+  border: 1.5px solid var(--lx-border);
+  border-radius: var(--lx-radius-sm);
+  overflow: hidden;
+}
+
+.lx-lang-btn {
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--lx-surface2);
+  color: var(--lx-muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lx-lang-btn + .lx-lang-btn {
+  border-left: 1.5px solid var(--lx-border);
+}
+
+.lx-lang-btn--active {
+  background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(99,102,241,0.2));
+  color: var(--lx-teal);
+}
+
+.lx-lang-btn:hover:not(.lx-lang-btn--active) {
+  color: var(--lx-text);
+}
+
+/* --- Copy button --- */
+.lx-copy-btn {
+  padding: 8px 20px;
+  border-radius: var(--lx-radius-sm);
+  border: 1.5px solid var(--lx-border);
+  background: var(--lx-surface2);
+  color: var(--lx-text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lx-copy-btn:hover:not(:disabled) {
+  border-color: var(--lx-teal);
+  color: var(--lx-teal);
+}
+
+.lx-copy-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* --- Body --- */
+.lx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 32px 40px;
+  max-width: 760px;
+  width: 100%;
+}
+
+/* --- Input --- */
+.lx-input {
+  width: 100%;
+  background: var(--lx-surface);
+  border: 1.5px solid var(--lx-border);
+  border-radius: var(--lx-radius-sm);
+  color: var(--lx-text);
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 14px 18px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.lx-input:focus { border-color: var(--lx-teal); }
+.lx-input::placeholder { color: var(--lx-muted); font-weight: 400; font-size: 16px; }
+
+/* --- Preview --- */
+.lx-preview {
+  background: var(--lx-surface);
+  border: 1px solid var(--lx-border);
+  border-radius: var(--lx-radius);
+  padding: 20px 24px;
+  min-height: 200px;
+}
+
+.lx-prompt-text {
+  margin: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--lx-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.lx-root.dark .lx-prompt-text { color: #b0b8c8; }
+
+@media (max-width: 600px) {
+  .lx-header { padding: 16px 16px 12px; gap: 8px; }
+  .lx-body   { padding: 0 16px 32px; }
+  .lx-input  { font-size: 18px; }
+}

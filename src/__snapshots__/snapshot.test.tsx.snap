@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        29
+        30
          tool
         s
          available
@@ -1634,6 +1634,55 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         diagram
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/lexis"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-graduation-cap"
+          fill="none"
+          height="20"
+          stroke="white"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+          />
+          <path
+            d="M22 10v6"
+          />
+          <path
+            d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+          />
+        </svg>
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Lexis
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        prompt
       </span>
     </a>
   </div>
@@ -1657,7 +1706,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        29
+        30
          tool
         s
          available
@@ -3276,6 +3325,227 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         diagram
       </span>
     </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/lexis"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-graduation-cap"
+          fill="none"
+          height="20"
+          stroke="white"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+          />
+          <path
+            d="M22 10v6"
+          />
+          <path
+            d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+          />
+        </svg>
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Lexis
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        prompt
+      </span>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Lexis > ダークモード（空の状態） 1`] = `
+<div
+  class="lx-root dark"
+>
+  <div
+    class="lx-header"
+  >
+    <div
+      class="lx-logo"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-graduation-cap"
+        fill="none"
+        height="20"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+        />
+        <path
+          d="M22 10v6"
+        />
+        <path
+          d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+        />
+      </svg>
+    </div>
+    <h1>
+      <span
+        class="lx-accent"
+      >
+        Lexis
+      </span>
+    </h1>
+    <div
+      class="lx-lang-toggle"
+    >
+      <button
+        class="lx-lang-btn lx-lang-btn--active"
+      >
+        日本語
+      </button>
+      <button
+        class="lx-lang-btn "
+      >
+        English
+      </button>
+    </div>
+    <button
+      class="lx-copy-btn"
+      disabled=""
+    >
+      プロンプトをコピー
+    </button>
+  </div>
+  <div
+    class="lx-body"
+  >
+    <input
+      class="lx-input"
+      placeholder="単語・概念を入力..."
+      spellcheck="false"
+      value=""
+    />
+    <div
+      aria-label="プロンプトプレビュー"
+      class="lx-preview"
+      role="region"
+    >
+      <pre
+        class="lx-prompt-text"
+      >
+        （単語を入力してください）
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Lexis > ライトモード（空の状態） 1`] = `
+<div
+  class="lx-root light"
+>
+  <div
+    class="lx-header"
+  >
+    <div
+      class="lx-logo"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-graduation-cap"
+        fill="none"
+        height="20"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+        />
+        <path
+          d="M22 10v6"
+        />
+        <path
+          d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+        />
+      </svg>
+    </div>
+    <h1>
+      <span
+        class="lx-accent"
+      >
+        Lexis
+      </span>
+    </h1>
+    <div
+      class="lx-lang-toggle"
+    >
+      <button
+        class="lx-lang-btn lx-lang-btn--active"
+      >
+        日本語
+      </button>
+      <button
+        class="lx-lang-btn "
+      >
+        English
+      </button>
+    </div>
+    <button
+      class="lx-copy-btn"
+      disabled=""
+    >
+      プロンプトをコピー
+    </button>
+  </div>
+  <div
+    class="lx-body"
+  >
+    <input
+      class="lx-input"
+      placeholder="単語・概念を入力..."
+      spellcheck="false"
+      value=""
+    />
+    <div
+      aria-label="プロンプトプレビュー"
+      class="lx-preview"
+      role="region"
+    >
+      <pre
+        class="lx-prompt-text"
+      >
+        （単語を入力してください）
+      </pre>
+    </div>
   </div>
 </div>
 `;

@@ -7,6 +7,7 @@ import { MetaProvider } from './context/MetaContext';
 import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
+import Lexis from './tools/lexis/Lexis';
 
 const THEME_KEY = 'oneshot-theme';
 
@@ -60,6 +61,18 @@ describe('UI スナップショット', () => {
 
     it('ライトモード', () => {
       const { container } = renderPage(<Phantom />, false);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('Lexis', () => {
+    it('ダークモード（空の状態）', () => {
+      const { container } = renderPage(<Lexis />, true);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('ライトモード（空の状態）', () => {
+      const { container } = renderPage(<Lexis />, false);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
