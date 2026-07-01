@@ -144,6 +144,15 @@ export const wrapMdBullet = (text: string, title = ''): string => {
   return `## ${title}\n\n${items}\n\n---`;
 };
 
+// --- MD リンク ---
+
+export const toMdLink = (input: string): string => {
+  const lines = input.split('\n').map(l => l.trim()).filter(Boolean);
+  if (lines.length < 2) return '';
+  const [text, url] = lines;
+  return `[${text}](${url})`;
+};
+
 /** Slack のリンクプレビュー（unfurl）を抑制するため、各行末尾に半角+全角スペースを付ける */
 export const addSlackSuffix = (text: string): string =>
   text

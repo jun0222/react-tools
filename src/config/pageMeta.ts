@@ -160,4 +160,12 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Nippo - 日報 📰',
     description: '日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー。',
   },
+  '/grok': {
+    title: 'Grok - 暗記レス理解 🧠',
+    description: '概念・単語を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成。',
+  },
+  '/pattern': {
+    title: 'Pattern - デザインパターンPHP 🔷',
+    description: 'デザインパターン名を入力すると、PHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成。',
+  },
 };

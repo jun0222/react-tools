@@ -400,7 +400,28 @@ describe('applyReplaces', () => {
   });
 });
 
-import { addSlackSuffix } from './helpers';
+import { addSlackSuffix, toMdLink } from './helpers';
+
+// =====================
+// MD リンク
+// =====================
+describe('toMdLink', () => {
+  it('テキスト + URL の2行を [text](url) に変換する', () => {
+    expect(toMdLink('hoge\nhttps://example.com')).toBe('[hoge](https://example.com)');
+  });
+
+  it('前後のスペースをトリムしてから変換する', () => {
+    expect(toMdLink('  記事タイトル  \n  https://example.com/path  ')).toBe('[記事タイトル](https://example.com/path)');
+  });
+
+  it('1行だけ（URL なし）のときは空文字を返す', () => {
+    expect(toMdLink('hoge')).toBe('');
+  });
+
+  it('空入力は空文字を返す', () => {
+    expect(toMdLink('')).toBe('');
+  });
+});
 
 describe('addSlackSuffix', () => {
   it('URLの末尾に半角スペース+全角スペースを付ける', () => {

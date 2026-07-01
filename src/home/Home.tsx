@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper,
+  Newspaper, Brain, Layers,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -332,6 +332,22 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
     desc: '日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー',
     tag: 'util',
+  },
+  {
+    path: '/grok',
+    name: 'Grok',
+    icon: <Brain size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+    desc: '概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成',
+    tag: 'prompt',
+  },
+  {
+    path: '/pattern',
+    name: 'Pattern',
+    icon: <Layers size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+    desc: 'デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成',
+    tag: 'prompt',
   },
 ];
 

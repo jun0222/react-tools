@@ -43,6 +43,8 @@ import TestData from './tools/testdata/TestData';
 import Planner from './tools/planner/Planner';
 import Lexis from './tools/lexis/Lexis';
 import Nippo from './tools/nippo/Nippo';
+import Grok from './tools/grok/Grok';
+import Pattern from './tools/pattern/Pattern';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -101,6 +103,8 @@ function App() {
             <Route path="/planner" element={<Planner />} />
             <Route path="/lexis" element={<Lexis />} />
             <Route path="/nippo" element={<Nippo />} />
+            <Route path="/grok" element={<Grok />} />
+            <Route path="/pattern" element={<Pattern />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

@@ -5,7 +5,7 @@ import {
   toPascal, toSnake, toCamel, toKebab,
   wrapMdDoc, wrapMdBullet, formatJson, formatSql, toOneLiner,
   normalizeSpaces, toBulletList, addMdLineBreaks, deleteChars, listToOneLiner,
-  applyReplaces, addSlackSuffix, wrapAtChars,
+  applyReplaces, addSlackSuffix, wrapAtChars, toMdLink,
 } from './helpers';
 import './Forge.css';
 
@@ -16,11 +16,12 @@ const CASES = [
   { label: 'kebab-case', fn: toKebab  },
 ] as const;
 
-type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace' | 'slackurl' | 'linebreak';
+type Tab = 'case' | 'md' | 'json' | 'sql' | 'normalize' | 'bullet' | 'oneliner' | 'mdsp' | 'delete' | 'listjoin' | 'replace' | 'slackurl' | 'linebreak' | 'mdlink';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'case',      label: 'ケース変換'   },
   { id: 'md',        label: 'MD 追記'     },
+  { id: 'mdlink',    label: 'MDリンク'    },
   { id: 'json',      label: 'JSON'         },
   { id: 'sql',       label: 'SQL'          },
   { id: 'normalize', label: 'スペース整形'  },
@@ -69,6 +70,7 @@ const Forge = () => {
   const [slackInput, setSlackInput] = useState('');
   const [linebreakInput, setLinebreakInput] = useState('');
   const [linebreakN, setLinebreakN] = useState('30');
+  const [mdlinkInput, setMdlinkInput] = useState('');
   const [replacePairs, setReplacePairs] = useState<{ id: string; from: string; to: string }[]>([
     { id: rpUid(), from: '', to: '' },
   ]);
@@ -101,6 +103,7 @@ const Forge = () => {
       case 'listjoin':  return listToOneLiner(listjoinInput);
       case 'replace':   return replaceOutput;
       case 'slackurl':  return addSlackSuffix(slackInput);
+      case 'mdlink':    return toMdLink(mdlinkInput);
       default:          return '';
     }
   })();
@@ -610,6 +613,35 @@ const Forge = () => {
                 </>
               );
             })()}
+          </>
+        )}
+
+        {/* ===== MD リンク ===== */}
+        {tab === 'mdlink' && (
+          <>
+            <textarea
+              className="fg-textarea"
+              placeholder={'1行目: リンクテキスト\n2行目: URL\n\nhoge\nhttps://example.com'}
+              value={mdlinkInput}
+              onChange={e => setMdlinkInput(e.target.value)}
+              rows={4}
+              aria-label="MDリンク入力"
+            />
+            {toMdLink(mdlinkInput) && (
+              <>
+                <div className="fg-md-output" aria-label="MDリンク結果">
+                  {toMdLink(mdlinkInput)}
+                </div>
+                <div className="fg-md-actions">
+                  <button
+                    className="fg-btn fg-btn-orange"
+                    onClick={() => copy(toMdLink(mdlinkInput))}
+                  >
+                    コピー
+                  </button>
+                </div>
+              </>
+            )}
           </>
         )}
 

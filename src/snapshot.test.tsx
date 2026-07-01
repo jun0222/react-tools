@@ -9,6 +9,8 @@ import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
 import Lexis from './tools/lexis/Lexis';
 import Nippo from './tools/nippo/Nippo';
+import Grok from './tools/grok/Grok';
+import Pattern from './tools/pattern/Pattern';
 
 const THEME_KEY = 'oneshot-theme';
 
@@ -86,6 +88,30 @@ describe('UI スナップショット', () => {
 
     it('ライトモード（空の状態）', () => {
       const { container } = renderPage(<Nippo />, false);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('Grok', () => {
+    it('ダークモード（空の状態）', () => {
+      const { container } = renderPage(<Grok />, true);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('ライトモード（空の状態）', () => {
+      const { container } = renderPage(<Grok />, false);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('Pattern', () => {
+    it('ダークモード（空の状態）', () => {
+      const { container } = renderPage(<Pattern />, true);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('ライトモード（空の状態）', () => {
+      const { container } = renderPage(<Pattern />, false);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
