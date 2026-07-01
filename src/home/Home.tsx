@@ -351,6 +351,17 @@ const tools: Tool[] = [
   },
 ];
 
+const GROUPS: { tag: string; label: string }[] = [
+  { tag: 'prompt',  label: 'プロンプト作成' },
+  { tag: 'text',    label: 'テキスト加工'  },
+  { tag: 'diagram', label: '図・可視化'    },
+  { tag: 'write',   label: '書く'          },
+  { tag: 'dev',     label: '開発'          },
+  { tag: 'util',    label: 'ユーティリティ' },
+  { tag: 'read',    label: '読む'          },
+  { tag: 'plan',    label: '計画'          },
+];
+
 const STORAGE_KEY = 'home-hidden-tools';
 
 const devHidden = new Set(tools.filter(t => t.hidden).map(t => t.path));
@@ -386,7 +397,7 @@ const Home = () => {
 
   const baseTools = editing ? tools : tools.filter(t => !hidden.has(t.path));
   const q = query.trim().toLowerCase();
-  const visibleTools = q
+  const filteredTools = q
     ? baseTools.filter(t =>
         t.name.toLowerCase().includes(q) ||
         t.desc.toLowerCase().includes(q) ||
@@ -394,17 +405,49 @@ const Home = () => {
       )
     : baseTools;
 
+  const groupedTools = GROUPS
+    .map(g => ({ ...g, tools: filteredTools.filter(t => t.tag === g.tag) }))
+    .filter(g => g.tools.length > 0);
+
+  const renderCard = (tool: Tool) => {
+    const isHidden = hidden.has(tool.path);
+    if (editing) {
+      return (
+        <div
+          key={tool.path}
+          className={`home-card home-card--editable ${isHidden ? 'home-card--hidden' : ''}`}
+          onClick={() => toggleHidden(tool.path)}
+        >
+          <div className="home-card-edit-badge">{isHidden ? '非表示' : '表示中'}</div>
+          <div className="home-card-icon" style={{ background: tool.iconBg }}>{tool.icon}</div>
+          <div className="home-card-name">{tool.name}</div>
+          <div className="home-card-desc">{tool.desc}</div>
+          <span className="home-card-tag">{tool.tag}</span>
+        </div>
+      );
+    }
+    return (
+      <Link key={tool.path} to={tool.path} className="home-card">
+        <div className="home-card-icon" style={{ background: tool.iconBg }}>{tool.icon}</div>
+        <div className="home-card-name">{tool.name}</div>
+        <div className="home-card-desc">{tool.desc}</div>
+        <span className="home-card-tag">{tool.tag}</span>
+      </Link>
+    );
+  };
+
   return (
     <div className={`home ${dark ? 'dark' : 'light'}`}>
       <header className="home-header">
         <div className="home-title">
           <h1>react-<span>tools</span></h1>
-          <p>{visibleTools.length} tool{visibleTools.length !== 1 ? 's' : ''} available</p>
+          <p>{filteredTools.length} tool{filteredTools.length !== 1 ? 's' : ''} available</p>
         </div>
         <div className="home-header-actions">
           <div className="home-search-wrap">
             <Search size={13} className="home-search-icon" />
             <input
+              type="search"
               className="home-search"
               value={query}
               onChange={e => setQuery(e.target.value)}
@@ -432,41 +475,23 @@ const Home = () => {
         </div>
       </header>
 
-      <div className="home-grid">
-        {visibleTools.map(tool => {
-          const isHidden = hidden.has(tool.path);
-          if (editing) {
-            return (
-              <div
-                key={tool.path}
-                className={`home-card home-card--editable ${isHidden ? 'home-card--hidden' : ''}`}
-                onClick={() => toggleHidden(tool.path)}
-              >
-                <div className="home-card-edit-badge">
-                  {isHidden ? '非表示' : '表示中'}
-                </div>
-                <div className="home-card-icon" style={{ background: tool.iconBg }}>
-                  {tool.icon}
-                </div>
-                <div className="home-card-name">{tool.name}</div>
-                <div className="home-card-desc">{tool.desc}</div>
-                <span className="home-card-tag">{tool.tag}</span>
-              </div>
-            );
-          }
-          return (
-            <Link key={tool.path} to={tool.path} className="home-card">
-              <div className="home-card-icon" style={{ background: tool.iconBg }}>
-                {tool.icon}
-              </div>
-              <div className="home-card-name">{tool.name}</div>
-              <div className="home-card-desc">{tool.desc}</div>
-              <span className="home-card-tag">{tool.tag}</span>
-            </Link>
-          );
-        })}
-        {visibleTools.length === 0 && (
+      <div className="home-content">
+        {groupedTools.length === 0 ? (
           <p className="home-no-results">「{query}」に一致するツールはありません</p>
+        ) : (
+          groupedTools.map(group => (
+            <section
+              key={group.tag}
+              className="home-group"
+              role="region"
+              aria-label={group.label}
+            >
+              <h2 className="home-group-title">{group.label}</h2>
+              <div className="home-grid">
+                {group.tools.map(tool => renderCard(tool))}
+              </div>
+            </section>
+          ))
         )}
       </div>
     </div>

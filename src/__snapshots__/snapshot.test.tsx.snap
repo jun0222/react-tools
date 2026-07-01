@@ -257,6 +257,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
           aria-label="ツール検索"
           class="home-search"
           placeholder="検索..."
+          type="search"
           value=""
         />
       </div>
@@ -269,1793 +270,1883 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
     </div>
   </header>
   <div
-    class="home-grid"
+    class="home-content"
   >
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/oneshot"
+    <section
+      aria-label="プロンプト作成"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-zap"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        プロンプト作成
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/oneshot"
         >
-          <path
-            d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-zap"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            OneShot
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            プロンプトを保存・編集・蒸留・検証する1画面ツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shinsho"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shinsho
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/insight"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f59e0b, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-lightbulb"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
+              />
+              <path
+                d="M9 18h6"
+              />
+              <path
+                d="M10 22h4"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Insight
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/rtodo"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #059669);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-square-check-big"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"
+              />
+              <path
+                d="m9 11 3 3L22 4"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            RTodo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/lexis"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-graduation-cap"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+              />
+              <path
+                d="M22 10v6"
+              />
+              <path
+                d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Lexis
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/grok"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-brain"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 18V5"
+              />
+              <path
+                d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"
+              />
+              <path
+                d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"
+              />
+              <path
+                d="M17.997 5.125a4 4 0 0 1 2.526 5.77"
+              />
+              <path
+                d="M18 18a4 4 0 0 0 2-7.464"
+              />
+              <path
+                d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"
+              />
+              <path
+                d="M6 18a4 4 0 0 1-2-7.464"
+              />
+              <path
+                d="M6.003 5.125a4 4 0 0 0-2.526 5.77"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Grok
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/pattern"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-layers"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
+              />
+              <path
+                d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"
+              />
+              <path
+                d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Pattern
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        OneShot
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        プロンプトを保存・編集・蒸留・検証する1画面ツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/phantom"
+    </section>
+    <section
+      aria-label="テキスト加工"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-wand-sparkles"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        テキスト加工
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/phantom"
         >
-          <path
-            d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
-          />
-          <path
-            d="m14 7 3 3"
-          />
-          <path
-            d="M5 6v4"
-          />
-          <path
-            d="M19 14v4"
-          />
-          <path
-            d="M10 2v2"
-          />
-          <path
-            d="M7 8H3"
-          />
-          <path
-            d="M21 16h-4"
-          />
-          <path
-            d="M11 3H9"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-wand-sparkles"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
+              />
+              <path
+                d="m14 7 3 3"
+              />
+              <path
+                d="M5 6v4"
+              />
+              <path
+                d="M19 14v4"
+              />
+              <path
+                d="M10 2v2"
+              />
+              <path
+                d="M7 8H3"
+              />
+              <path
+                d="M21 16h-4"
+              />
+              <path
+                d="M11 3H9"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Phantom
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            KMP置換・LCGランダム変換によるテキストマスクツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/forge"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-hammer"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"
+              />
+              <path
+                d="m18 15 4-4"
+              />
+              <path
+                d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Forge
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/romaji"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-languages"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m5 8 6 6"
+              />
+              <path
+                d="m4 14 6-6 2-3"
+              />
+              <path
+                d="M2 5h12"
+              />
+              <path
+                d="M7 2h1"
+              />
+              <path
+                d="m22 22-5-10-5 10"
+              />
+              <path
+                d="M14 18h6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Romaji
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/draft"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-pen-line"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13 21h8"
+              />
+              <path
+                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Draft
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/stencil"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-file-text"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"
+              />
+              <path
+                d="M14 2v5a1 1 0 0 0 1 1h5"
+              />
+              <path
+                d="M10 9H8"
+              />
+              <path
+                d="M16 13H8"
+              />
+              <path
+                d="M16 17H8"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Stencil
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Phantom
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        KMP置換・LCGランダム変換によるテキストマスクツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/forge"
+    </section>
+    <section
+      aria-label="図・可視化"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-hammer"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        図・可視化
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/mermaid"
         >
-          <path
-            d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"
-          />
-          <path
-            d="m18 15 4-4"
-          />
-          <path
-            d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-chart-column"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 3v16a2 2 0 0 0 2 2h16"
+              />
+              <path
+                d="M18 17V9"
+              />
+              <path
+                d="M13 17V5"
+              />
+              <path
+                d="M8 17v-3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Mermaid
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/logtree"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-network"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="16"
+                y="16"
+              />
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="2"
+                y="16"
+              />
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="9"
+                y="2"
+              />
+              <path
+                d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
+              />
+              <path
+                d="M12 12V8"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            LogTree
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/sketch"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-pen-tool"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"
+              />
+              <path
+                d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"
+              />
+              <path
+                d="m2.3 2.3 7.286 7.286"
+              />
+              <circle
+                cx="11"
+                cy="11"
+                r="2"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Sketch
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/gantt"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-calendar-days"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 2v4"
+              />
+              <path
+                d="M16 2v4"
+              />
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="4"
+              />
+              <path
+                d="M3 10h18"
+              />
+              <path
+                d="M8 14h.01"
+              />
+              <path
+                d="M12 14h.01"
+              />
+              <path
+                d="M16 14h.01"
+              />
+              <path
+                d="M8 18h.01"
+              />
+              <path
+                d="M12 18h.01"
+              />
+              <path
+                d="M16 18h.01"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Gantt
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            フォームでセクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/fishbone"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ef4444, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-fish"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"
+              />
+              <path
+                d="M18 12v.5"
+              />
+              <path
+                d="M16 17.93a9.77 9.77 0 0 1 0-11.86"
+              />
+              <path
+                d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"
+              />
+              <path
+                d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"
+              />
+              <path
+                d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Fishbone
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/flowchart"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-fork"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="18"
+                r="3"
+              />
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <circle
+                cx="18"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"
+              />
+              <path
+                d="M12 12v3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            FlowChart
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート・別タブ表示対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/planner"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-layout-dashboard"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="3"
+                y="3"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="14"
+                y="3"
+              />
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="14"
+                y="12"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="3"
+                y="16"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Planner
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに自動変換するメガツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Forge
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/mermaid"
+    </section>
+    <section
+      aria-label="書く"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-chart-column"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        書く
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/diary"
         >
-          <path
-            d="M3 3v16a2 2 0 0 0 2 2h16"
-          />
-          <path
-            d="M18 17V9"
-          />
-          <path
-            d="M13 17V5"
-          />
-          <path
-            d="M8 17v-3"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #d97706, #f59e0b);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-notebook-pen"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"
+              />
+              <path
+                d="M2 6h4"
+              />
+              <path
+                d="M2 10h4"
+              />
+              <path
+                d="M2 14h4"
+              />
+              <path
+                d="M2 18h4"
+              />
+              <path
+                d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Diary
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/pad"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-sticky-note"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"
+              />
+              <path
+                d="M15 3v5a1 1 0 0 0 1 1h5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Pad
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            ただのテキストパッド。書いた内容は自動保存される。
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/slideshow"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #7c3aed, #4f46e5);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panels-top-left"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M3 9h18"
+              />
+              <path
+                d="M9 21V9"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Slideshow
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/prose"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-text-align-start"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 5H3"
+              />
+              <path
+                d="M15 12H3"
+              />
+              <path
+                d="M17 19H3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Prose
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Mermaid
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/romaji"
+    </section>
+    <section
+      aria-label="開発"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-languages"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        開発
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/errlog"
         >
-          <path
-            d="m5 8 6 6"
-          />
-          <path
-            d="m4 14 6-6 2-3"
-          />
-          <path
-            d="M2 5h12"
-          />
-          <path
-            d="M7 2h1"
-          />
-          <path
-            d="m22 22-5-10-5 10"
-          />
-          <path
-            d="M14 18h6"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ef4444, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bug"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 20v-9"
+              />
+              <path
+                d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"
+              />
+              <path
+                d="M14.12 3.88 16 2"
+              />
+              <path
+                d="M21 21a4 4 0 0 0-3.81-4"
+              />
+              <path
+                d="M21 5a4 4 0 0 1-3.55 3.97"
+              />
+              <path
+                d="M22 13h-4"
+              />
+              <path
+                d="M3 21a4 4 0 0 1 3.81-4"
+              />
+              <path
+                d="M3 5a4 4 0 0 0 3.55 3.97"
+              />
+              <path
+                d="M6 13H2"
+              />
+              <path
+                d="m8 2 1.88 1.88"
+              />
+              <path
+                d="M9 7.13V6a3 3 0 1 1 6 0v1.13"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            ErrLog
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/commit"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #15803d, #22c55e);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-commit-horizontal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+              <line
+                x1="3"
+                x2="9"
+                y1="12"
+                y2="12"
+              />
+              <line
+                x1="15"
+                x2="21"
+                y1="12"
+                y2="12"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Commit
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/args"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-terminal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19h8"
+              />
+              <path
+                d="m4 17 6-6-6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Args
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Romaji
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/draft"
+    </section>
+    <section
+      aria-label="ユーティリティ"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-pen-line"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        ユーティリティ
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/bookmarks"
         >
-          <path
-            d="M13 21h8"
-          />
-          <path
-            d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Draft
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/stencil"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-file-text"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bookmark"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Bookmarks
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/snip"
         >
-          <path
-            d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"
-          />
-          <path
-            d="M14 2v5a1 1 0 0 0 1 1h5"
-          />
-          <path
-            d="M10 9H8"
-          />
-          <path
-            d="M16 13H8"
-          />
-          <path
-            d="M16 17H8"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Stencil
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/logtree"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-network"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-scissors"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M8.12 8.12 12 12"
+              />
+              <path
+                d="M20 4 8.12 15.88"
+              />
+              <circle
+                cx="6"
+                cy="18"
+                r="3"
+              />
+              <path
+                d="M14.8 14.8 20 20"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Snip
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/wordmemo"
         >
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="16"
-            y="16"
-          />
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="2"
-            y="16"
-          />
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="9"
-            y="2"
-          />
-          <path
-            d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
-          />
-          <path
-            d="M12 12V8"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        LogTree
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/bookmarks"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-bookmark"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            WordMemo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/meal"
         >
-          <path
-            d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Bookmarks
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/snip"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-scissors"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #0d9488);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-salad"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7 21h10"
+              />
+              <path
+                d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"
+              />
+              <path
+                d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"
+              />
+              <path
+                d="m13 12 4-4"
+              />
+              <path
+                d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Meal
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/convmap"
         >
-          <circle
-            cx="6"
-            cy="6"
-            r="3"
-          />
-          <path
-            d="M8.12 8.12 12 12"
-          />
-          <path
-            d="M20 4 8.12 15.88"
-          />
-          <circle
-            cx="6"
-            cy="18"
-            r="3"
-          />
-          <path
-            d="M14.8 14.8 20 20"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Snip
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/wordmemo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-book-open"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-message-square"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Convmap
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            LLMとの会話をMermaid図と一緒に記録・閲覧。プロンプトも残せてMarkdownでダウンロード
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/testdata"
         >
-          <path
-            d="M12 7v14"
-          />
-          <path
-            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        WordMemo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/errlog"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ef4444, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-bug"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #06b6d4);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-flask-conical"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
+              />
+              <path
+                d="M6.453 15h11.094"
+              />
+              <path
+                d="M8.5 2h7"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            TestData
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テーマを入力してLLMにテストデータを生成させ、JSONをローカルストレージに保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/nippo"
         >
-          <path
-            d="M12 20v-9"
-          />
-          <path
-            d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"
-          />
-          <path
-            d="M14.12 3.88 16 2"
-          />
-          <path
-            d="M21 21a4 4 0 0 0-3.81-4"
-          />
-          <path
-            d="M21 5a4 4 0 0 1-3.55 3.97"
-          />
-          <path
-            d="M22 13h-4"
-          />
-          <path
-            d="M3 21a4 4 0 0 1 3.81-4"
-          />
-          <path
-            d="M3 5a4 4 0 0 0 3.55 3.97"
-          />
-          <path
-            d="M6 13H2"
-          />
-          <path
-            d="m8 2 1.88 1.88"
-          />
-          <path
-            d="M9 7.13V6a3 3 0 1 1 6 0v1.13"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        ErrLog
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/diary"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #d97706, #f59e0b);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-notebook-pen"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"
-          />
-          <path
-            d="M2 6h4"
-          />
-          <path
-            d="M2 10h4"
-          />
-          <path
-            d="M2 14h4"
-          />
-          <path
-            d="M2 18h4"
-          />
-          <path
-            d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Diary
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/sketch"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-pen-tool"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"
-          />
-          <path
-            d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"
-          />
-          <path
-            d="m2.3 2.3 7.286 7.286"
-          />
-          <circle
-            cx="11"
-            cy="11"
-            r="2"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Sketch
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/commit"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #15803d, #22c55e);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-git-commit-horizontal"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="3"
-          />
-          <line
-            x1="3"
-            x2="9"
-            y1="12"
-            y2="12"
-          />
-          <line
-            x1="15"
-            x2="21"
-            y1="12"
-            y2="12"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Commit
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/args"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-terminal"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 19h8"
-          />
-          <path
-            d="m4 17 6-6-6-6"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Args
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/pad"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-sticky-note"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"
-          />
-          <path
-            d="M15 3v5a1 1 0 0 0 1 1h5"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Pad
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        ただのテキストパッド。書いた内容は自動保存される。
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/slideshow"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #7c3aed, #4f46e5);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-panels-top-left"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            height="18"
-            rx="2"
-            width="18"
-            x="3"
-            y="3"
-          />
-          <path
-            d="M3 9h18"
-          />
-          <path
-            d="M9 21V9"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Slideshow
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/shinsho"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-book-open"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 7v14"
-          />
-          <path
-            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Shinsho
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/prose"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-text-align-start"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 5H3"
-          />
-          <path
-            d="M15 12H3"
-          />
-          <path
-            d="M17 19H3"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Prose
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/insight"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f59e0b, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-lightbulb"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
-          />
-          <path
-            d="M9 18h6"
-          />
-          <path
-            d="M10 22h4"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Insight
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/meal"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #0d9488);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-salad"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 21h10"
-          />
-          <path
-            d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"
-          />
-          <path
-            d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"
-          />
-          <path
-            d="m13 12 4-4"
-          />
-          <path
-            d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Meal
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/gantt"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-calendar-days"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 2v4"
-          />
-          <path
-            d="M16 2v4"
-          />
-          <rect
-            height="18"
-            rx="2"
-            width="18"
-            x="3"
-            y="4"
-          />
-          <path
-            d="M3 10h18"
-          />
-          <path
-            d="M8 14h.01"
-          />
-          <path
-            d="M12 14h.01"
-          />
-          <path
-            d="M16 14h.01"
-          />
-          <path
-            d="M8 18h.01"
-          />
-          <path
-            d="M12 18h.01"
-          />
-          <path
-            d="M16 18h.01"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Gantt
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        フォームでセクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/fishbone"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ef4444, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-fish"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"
-          />
-          <path
-            d="M18 12v.5"
-          />
-          <path
-            d="M16 17.93a9.77 9.77 0 0 1 0-11.86"
-          />
-          <path
-            d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"
-          />
-          <path
-            d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"
-          />
-          <path
-            d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Fishbone
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/convmap"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-message-square"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Convmap
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        LLMとの会話をMermaid図と一緒に記録・閲覧。プロンプトも残せてMarkdownでダウンロード
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/rtodo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #059669);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-square-check-big"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"
-          />
-          <path
-            d="m9 11 3 3L22 4"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        RTodo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/flowchart"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-git-fork"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="18"
-            r="3"
-          />
-          <circle
-            cx="6"
-            cy="6"
-            r="3"
-          />
-          <circle
-            cx="18"
-            cy="6"
-            r="3"
-          />
-          <path
-            d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"
-          />
-          <path
-            d="M12 12v3"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        FlowChart
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート・別タブ表示対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/testdata"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #06b6d4);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-flask-conical"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
-          />
-          <path
-            d="M6.453 15h11.094"
-          />
-          <path
-            d="M8.5 2h7"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        TestData
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テーマを入力してLLMにテストデータを生成させ、JSONをローカルストレージに保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/planner"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-layout-dashboard"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            height="9"
-            rx="1"
-            width="7"
-            x="3"
-            y="3"
-          />
-          <rect
-            height="5"
-            rx="1"
-            width="7"
-            x="14"
-            y="3"
-          />
-          <rect
-            height="9"
-            rx="1"
-            width="7"
-            x="14"
-            y="12"
-          />
-          <rect
-            height="5"
-            rx="1"
-            width="7"
-            x="3"
-            y="16"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Planner
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに自動変換するメガツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/lexis"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-graduation-cap"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
-          />
-          <path
-            d="M22 10v6"
-          />
-          <path
-            d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Lexis
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/nippo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-newspaper"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 18h-5"
-          />
-          <path
-            d="M18 14h-8"
-          />
-          <path
-            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
-          />
-          <rect
-            height="4"
-            rx="1"
-            width="8"
-            x="10"
-            y="6"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Nippo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/grok"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-brain"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 18V5"
-          />
-          <path
-            d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"
-          />
-          <path
-            d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"
-          />
-          <path
-            d="M17.997 5.125a4 4 0 0 1 2.526 5.77"
-          />
-          <path
-            d="M18 18a4 4 0 0 0 2-7.464"
-          />
-          <path
-            d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"
-          />
-          <path
-            d="M6 18a4 4 0 0 1-2-7.464"
-          />
-          <path
-            d="M6.003 5.125a4 4 0 0 0-2.526 5.77"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Grok
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/pattern"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-layers"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
-          />
-          <path
-            d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"
-          />
-          <path
-            d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Pattern
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-newspaper"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18h-5"
+              />
+              <path
+                d="M18 14h-8"
+              />
+              <path
+                d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+              />
+              <rect
+                height="4"
+                rx="1"
+                width="8"
+                x="10"
+                y="6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Nippo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+      </div>
+    </section>
   </div>
 </div>
 `;
@@ -2115,6 +2206,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
           aria-label="ツール検索"
           class="home-search"
           placeholder="検索..."
+          type="search"
           value=""
         />
       </div>
@@ -2127,1793 +2219,1883 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
     </div>
   </header>
   <div
-    class="home-grid"
+    class="home-content"
   >
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/oneshot"
+    <section
+      aria-label="プロンプト作成"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-zap"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        プロンプト作成
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/oneshot"
         >
-          <path
-            d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ff2d7b, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-zap"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            OneShot
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            プロンプトを保存・編集・蒸留・検証する1画面ツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shinsho"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shinsho
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/insight"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f59e0b, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-lightbulb"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
+              />
+              <path
+                d="M9 18h6"
+              />
+              <path
+                d="M10 22h4"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Insight
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/rtodo"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #059669);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-square-check-big"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"
+              />
+              <path
+                d="m9 11 3 3L22 4"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            RTodo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/lexis"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-graduation-cap"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+              />
+              <path
+                d="M22 10v6"
+              />
+              <path
+                d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Lexis
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/grok"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-brain"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 18V5"
+              />
+              <path
+                d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"
+              />
+              <path
+                d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"
+              />
+              <path
+                d="M17.997 5.125a4 4 0 0 1 2.526 5.77"
+              />
+              <path
+                d="M18 18a4 4 0 0 0 2-7.464"
+              />
+              <path
+                d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"
+              />
+              <path
+                d="M6 18a4 4 0 0 1-2-7.464"
+              />
+              <path
+                d="M6.003 5.125a4 4 0 0 0-2.526 5.77"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Grok
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/pattern"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-layers"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
+              />
+              <path
+                d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"
+              />
+              <path
+                d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Pattern
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        OneShot
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        プロンプトを保存・編集・蒸留・検証する1画面ツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/phantom"
+    </section>
+    <section
+      aria-label="テキスト加工"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-wand-sparkles"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        テキスト加工
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/phantom"
         >
-          <path
-            d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
-          />
-          <path
-            d="m14 7 3 3"
-          />
-          <path
-            d="M5 6v4"
-          />
-          <path
-            d="M19 14v4"
-          />
-          <path
-            d="M10 2v2"
-          />
-          <path
-            d="M7 8H3"
-          />
-          <path
-            d="M21 16h-4"
-          />
-          <path
-            d="M11 3H9"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #00ffe7, #0a5eaa);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-wand-sparkles"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"
+              />
+              <path
+                d="m14 7 3 3"
+              />
+              <path
+                d="M5 6v4"
+              />
+              <path
+                d="M19 14v4"
+              />
+              <path
+                d="M10 2v2"
+              />
+              <path
+                d="M7 8H3"
+              />
+              <path
+                d="M21 16h-4"
+              />
+              <path
+                d="M11 3H9"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Phantom
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            KMP置換・LCGランダム変換によるテキストマスクツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/forge"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-hammer"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"
+              />
+              <path
+                d="m18 15 4-4"
+              />
+              <path
+                d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Forge
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/romaji"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-languages"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m5 8 6 6"
+              />
+              <path
+                d="m4 14 6-6 2-3"
+              />
+              <path
+                d="M2 5h12"
+              />
+              <path
+                d="M7 2h1"
+              />
+              <path
+                d="m22 22-5-10-5 10"
+              />
+              <path
+                d="M14 18h6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Romaji
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/draft"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-pen-line"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13 21h8"
+              />
+              <path
+                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Draft
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/stencil"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-file-text"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"
+              />
+              <path
+                d="M14 2v5a1 1 0 0 0 1 1h5"
+              />
+              <path
+                d="M10 9H8"
+              />
+              <path
+                d="M16 13H8"
+              />
+              <path
+                d="M16 17H8"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Stencil
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            text
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Phantom
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        KMP置換・LCGランダム変換によるテキストマスクツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/forge"
+    </section>
+    <section
+      aria-label="図・可視化"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-hammer"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        図・可視化
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/mermaid"
         >
-          <path
-            d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"
-          />
-          <path
-            d="m18 15 4-4"
-          />
-          <path
-            d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-chart-column"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 3v16a2 2 0 0 0 2 2h16"
+              />
+              <path
+                d="M18 17V9"
+              />
+              <path
+                d="M13 17V5"
+              />
+              <path
+                d="M8 17v-3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Mermaid
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/logtree"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-network"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="16"
+                y="16"
+              />
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="2"
+                y="16"
+              />
+              <rect
+                height="6"
+                rx="1"
+                width="6"
+                x="9"
+                y="2"
+              />
+              <path
+                d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
+              />
+              <path
+                d="M12 12V8"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            LogTree
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/sketch"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-pen-tool"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"
+              />
+              <path
+                d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"
+              />
+              <path
+                d="m2.3 2.3 7.286 7.286"
+              />
+              <circle
+                cx="11"
+                cy="11"
+                r="2"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Sketch
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/gantt"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-calendar-days"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 2v4"
+              />
+              <path
+                d="M16 2v4"
+              />
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="4"
+              />
+              <path
+                d="M3 10h18"
+              />
+              <path
+                d="M8 14h.01"
+              />
+              <path
+                d="M12 14h.01"
+              />
+              <path
+                d="M16 14h.01"
+              />
+              <path
+                d="M8 18h.01"
+              />
+              <path
+                d="M12 18h.01"
+              />
+              <path
+                d="M16 18h.01"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Gantt
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            フォームでセクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/fishbone"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ef4444, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-fish"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"
+              />
+              <path
+                d="M18 12v.5"
+              />
+              <path
+                d="M16 17.93a9.77 9.77 0 0 1 0-11.86"
+              />
+              <path
+                d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"
+              />
+              <path
+                d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"
+              />
+              <path
+                d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Fishbone
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/flowchart"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-fork"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="18"
+                r="3"
+              />
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <circle
+                cx="18"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"
+              />
+              <path
+                d="M12 12v3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            FlowChart
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート・別タブ表示対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/planner"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6366f1, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-layout-dashboard"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="3"
+                y="3"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="14"
+                y="3"
+              />
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="14"
+                y="12"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="3"
+                y="16"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Planner
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに自動変換するメガツール
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            diagram
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Forge
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        PascalCase / camelCase / snake_case / kebab-case 変換 ＋ MDラッパー
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/mermaid"
+    </section>
+    <section
+      aria-label="書く"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-chart-column"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        書く
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/diary"
         >
-          <path
-            d="M3 3v16a2 2 0 0 0 2 2h16"
-          />
-          <path
-            d="M18 17V9"
-          />
-          <path
-            d="M13 17V5"
-          />
-          <path
-            d="M8 17v-3"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #d97706, #f59e0b);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-notebook-pen"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"
+              />
+              <path
+                d="M2 6h4"
+              />
+              <path
+                d="M2 10h4"
+              />
+              <path
+                d="M2 14h4"
+              />
+              <path
+                d="M2 18h4"
+              />
+              <path
+                d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Diary
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/pad"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-sticky-note"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"
+              />
+              <path
+                d="M15 3v5a1 1 0 0 0 1 1h5"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Pad
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            ただのテキストパッド。書いた内容は自動保存される。
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/slideshow"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #7c3aed, #4f46e5);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panels-top-left"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M3 9h18"
+              />
+              <path
+                d="M9 21V9"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Slideshow
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/prose"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-text-align-start"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 5H3"
+              />
+              <path
+                d="M15 12H3"
+              />
+              <path
+                d="M17 19H3"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Prose
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            write
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Mermaid
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テンプレート＋カンペ付き Mermaid エディタ。フロー・シーケンス・ER図など7種類
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/romaji"
+    </section>
+    <section
+      aria-label="開発"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-languages"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        開発
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/errlog"
         >
-          <path
-            d="m5 8 6 6"
-          />
-          <path
-            d="m4 14 6-6 2-3"
-          />
-          <path
-            d="M2 5h12"
-          />
-          <path
-            d="M7 2h1"
-          />
-          <path
-            d="m22 22-5-10-5 10"
-          />
-          <path
-            d="M14 18h6"
-          />
-        </svg>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #ef4444, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bug"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 20v-9"
+              />
+              <path
+                d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"
+              />
+              <path
+                d="M14.12 3.88 16 2"
+              />
+              <path
+                d="M21 21a4 4 0 0 0-3.81-4"
+              />
+              <path
+                d="M21 5a4 4 0 0 1-3.55 3.97"
+              />
+              <path
+                d="M22 13h-4"
+              />
+              <path
+                d="M3 21a4 4 0 0 1 3.81-4"
+              />
+              <path
+                d="M3 5a4 4 0 0 0 3.55 3.97"
+              />
+              <path
+                d="M6 13H2"
+              />
+              <path
+                d="m8 2 1.88 1.88"
+              />
+              <path
+                d="M9 7.13V6a3 3 0 1 1 6 0v1.13"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            ErrLog
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/commit"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #15803d, #22c55e);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-commit-horizontal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+              <line
+                x1="3"
+                x2="9"
+                y1="12"
+                y2="12"
+              />
+              <line
+                x1="15"
+                x2="21"
+                y1="12"
+                y2="12"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Commit
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/args"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-terminal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19h8"
+              />
+              <path
+                d="m4 17 6-6-6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Args
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
       </div>
-      <div
-        class="home-card-name"
-      >
-        Romaji
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        ローマ字をひらがなに変換。変換しない範囲を {} や除外リストで複数指定できる
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/draft"
+    </section>
+    <section
+      aria-label="ユーティリティ"
+      class="home-group"
+      role="region"
     >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
+      <h2
+        class="home-group-title"
       >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-pen-line"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+        ユーティリティ
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/bookmarks"
         >
-          <path
-            d="M13 21h8"
-          />
-          <path
-            d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Draft
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        マインドマップで論点整理 → 文章を組み立て → チャット適性指標でチェック
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/stencil"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-file-text"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bookmark"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Bookmarks
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/snip"
         >
-          <path
-            d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"
-          />
-          <path
-            d="M14 2v5a1 1 0 0 0 1 1h5"
-          />
-          <path
-            d="M10 9H8"
-          />
-          <path
-            d="M16 13H8"
-          />
-          <path
-            d="M16 17H8"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Stencil
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        %%PLACEHOLDER%%形式の変数テンプレートに値を流し込み、安定フォーマットでドキュメント作成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        text
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/logtree"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #0d9488, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-network"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-scissors"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M8.12 8.12 12 12"
+              />
+              <path
+                d="M20 4 8.12 15.88"
+              />
+              <circle
+                cx="6"
+                cy="18"
+                r="3"
+              />
+              <path
+                d="M14.8 14.8 20 20"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Snip
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/wordmemo"
         >
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="16"
-            y="16"
-          />
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="2"
-            y="16"
-          />
-          <rect
-            height="6"
-            rx="1"
-            width="6"
-            x="9"
-            y="2"
-          />
-          <path
-            d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"
-          />
-          <path
-            d="M12 12V8"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        LogTree
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        インデントテキストをロジックツリーSVGに変換。右向き・下向きに対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/bookmarks"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-bookmark"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            WordMemo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/meal"
         >
-          <path
-            d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Bookmarks
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        URLをタグ付きで保存・検索。JSONファイルでインポート/エクスポート
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/snip"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #7c6cff, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-scissors"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #0d9488);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-salad"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7 21h10"
+              />
+              <path
+                d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"
+              />
+              <path
+                d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"
+              />
+              <path
+                d="m13 12 4-4"
+              />
+              <path
+                d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Meal
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/convmap"
         >
-          <circle
-            cx="6"
-            cy="6"
-            r="3"
-          />
-          <path
-            d="M8.12 8.12 12 12"
-          />
-          <path
-            d="M20 4 8.12 15.88"
-          />
-          <circle
-            cx="6"
-            cy="18"
-            r="3"
-          />
-          <path
-            d="M14.8 14.8 20 20"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Snip
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テキストを登録してワンクリックでコピー。検索対応のシンプルスニペット管理
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/wordmemo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-book-open"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-message-square"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Convmap
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            LLMとの会話をMermaid図と一緒に記録・閲覧。プロンプトも残せてMarkdownでダウンロード
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/testdata"
         >
-          <path
-            d="M12 7v14"
-          />
-          <path
-            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        WordMemo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        気になった単語をメモして、AIエージェント向け文献リサーチプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/errlog"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ef4444, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-bug"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #10b981, #06b6d4);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-flask-conical"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
+              />
+              <path
+                d="M6.453 15h11.094"
+              />
+              <path
+                d="M8.5 2h7"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            TestData
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テーマを入力してLLMにテストデータを生成させ、JSONをローカルストレージに保存
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/nippo"
         >
-          <path
-            d="M12 20v-9"
-          />
-          <path
-            d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"
-          />
-          <path
-            d="M14.12 3.88 16 2"
-          />
-          <path
-            d="M21 21a4 4 0 0 0-3.81-4"
-          />
-          <path
-            d="M21 5a4 4 0 0 1-3.55 3.97"
-          />
-          <path
-            d="M22 13h-4"
-          />
-          <path
-            d="M3 21a4 4 0 0 1 3.81-4"
-          />
-          <path
-            d="M3 5a4 4 0 0 0 3.55 3.97"
-          />
-          <path
-            d="M6 13H2"
-          />
-          <path
-            d="m8 2 1.88 1.88"
-          />
-          <path
-            d="M9 7.13V6a3 3 0 1 1 6 0v1.13"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        ErrLog
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        エラーを貼り付けてLLM向けプロンプトを生成。返答をMermaid付きで記録・再利用
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/diary"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #d97706, #f59e0b);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-notebook-pen"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"
-          />
-          <path
-            d="M2 6h4"
-          />
-          <path
-            d="M2 10h4"
-          />
-          <path
-            d="M2 14h4"
-          />
-          <path
-            d="M2 18h4"
-          />
-          <path
-            d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Diary
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        日記を書いて箇条書きに変換。LLMでサマリ・キーワードを生成してASCII art形式の.txtで保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/sketch"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-pen-tool"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"
-          />
-          <path
-            d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"
-          />
-          <path
-            d="m2.3 2.3 7.286 7.286"
-          />
-          <circle
-            cx="11"
-            cy="11"
-            r="2"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Sketch
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        フロー・ステートマシン・グラフを雑な記述で素早く描く。SVG/PNGでエクスポート
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/commit"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #15803d, #22c55e);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-git-commit-horizontal"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="3"
-          />
-          <line
-            x1="3"
-            x2="9"
-            y1="12"
-            y2="12"
-          />
-          <line
-            x1="15"
-            x2="21"
-            y1="12"
-            y2="12"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Commit
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        type(scope): desc 形式のコミットメッセージを組み立て。type・scope・description の履歴をJSON保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/args"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-terminal"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 19h8"
-          />
-          <path
-            d="m4 17 6-6-6-6"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Args
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        dev
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/pad"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6b7280, #9ca3af);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-sticky-note"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"
-          />
-          <path
-            d="M15 3v5a1 1 0 0 0 1 1h5"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Pad
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        ただのテキストパッド。書いた内容は自動保存される。
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/slideshow"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #7c3aed, #4f46e5);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-panels-top-left"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            height="18"
-            rx="2"
-            width="18"
-            x="3"
-            y="3"
-          />
-          <path
-            d="M3 9h18"
-          />
-          <path
-            d="M9 21V9"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Slideshow
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        スライドアウトラインをグラフィカルに編集。タイトル・セクション・2カラムなど5種類のレイアウト。JSONエクスポート・ASCIIアート書き出し対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/shinsho"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-book-open"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 7v14"
-          />
-          <path
-            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Shinsho
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        信頼できる新書・文庫レーベルを絞り込んでLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/prose"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-text-align-start"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 5H3"
-          />
-          <path
-            d="M15 12H3"
-          />
-          <path
-            d="M17 19H3"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Prose
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        文書を貼り付けてLLM向け構成改善プロンプトを生成。90/70/50/30%の4案
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        write
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/insight"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f59e0b, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-lightbulb"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"
-          />
-          <path
-            d="M9 18h6"
-          />
-          <path
-            d="M10 22h4"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Insight
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テーマを入力し、洞察を深める観点を選んでLLM向けプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/meal"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #0d9488);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-salad"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 21h10"
-          />
-          <path
-            d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"
-          />
-          <path
-            d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"
-          />
-          <path
-            d="m13 12 4-4"
-          />
-          <path
-            d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Meal
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        食べたものを入力してLLMにアドバイスをもらい、食事とアドバイスをASCIIアートのテキストファイルで保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/gantt"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-calendar-days"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 2v4"
-          />
-          <path
-            d="M16 2v4"
-          />
-          <rect
-            height="18"
-            rx="2"
-            width="18"
-            x="3"
-            y="4"
-          />
-          <path
-            d="M3 10h18"
-          />
-          <path
-            d="M8 14h.01"
-          />
-          <path
-            d="M12 14h.01"
-          />
-          <path
-            d="M16 14h.01"
-          />
-          <path
-            d="M8 18h.01"
-          />
-          <path
-            d="M12 18h.01"
-          />
-          <path
-            d="M16 18h.01"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Gantt
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        フォームでセクションとタスクを追加してMermaidガントチャートを生成。SVG/PNGエクスポート対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/fishbone"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #ef4444, #f97316);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-fish"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"
-          />
-          <path
-            d="M18 12v.5"
-          />
-          <path
-            d="M16 17.93a9.77 9.77 0 0 1 0-11.86"
-          />
-          <path
-            d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"
-          />
-          <path
-            d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"
-          />
-          <path
-            d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Fishbone
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        原因カテゴリと要因を追加して特性要因図（フィッシュボーン）を生成。SVG/PNGエクスポート対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/convmap"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-message-square"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Convmap
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        LLMとの会話をMermaid図と一緒に記録・閲覧。プロンプトも残せてMarkdownでダウンロード
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/rtodo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #059669);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-square-check-big"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"
-          />
-          <path
-            d="m9 11 3 3L22 4"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        RTodo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        雑なメモをtodo.txt形式に変換するLLMプロンプトを生成。優先度・プロジェクト・コンテキストタグ付き
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/flowchart"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-git-fork"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="18"
-            r="3"
-          />
-          <circle
-            cx="6"
-            cy="6"
-            r="3"
-          />
-          <circle
-            cx="18"
-            cy="6"
-            r="3"
-          />
-          <path
-            d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"
-          />
-          <path
-            d="M12 12v3"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        FlowChart
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        シンプルなテキストDSLで4色フロー図を作成。SVG/PNGエクスポート・別タブ表示対応
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/testdata"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #10b981, #06b6d4);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-flask-conical"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
-          />
-          <path
-            d="M6.453 15h11.094"
-          />
-          <path
-            d="M8.5 2h7"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        TestData
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        テーマを入力してLLMにテストデータを生成させ、JSONをローカルストレージに保存
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/planner"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #6366f1, #a855f7);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-layout-dashboard"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            height="9"
-            rx="1"
-            width="7"
-            x="3"
-            y="3"
-          />
-          <rect
-            height="5"
-            rx="1"
-            width="7"
-            x="14"
-            y="3"
-          />
-          <rect
-            height="9"
-            rx="1"
-            width="7"
-            x="14"
-            y="12"
-          />
-          <rect
-            height="5"
-            rx="1"
-            width="7"
-            x="3"
-            y="16"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Planner
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        雑なメモをLLMに渡してロジックツリー・フロー図・ガントチャートに自動変換するメガツール
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        diagram
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/lexis"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #14b8a6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-graduation-cap"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
-          />
-          <path
-            d="M22 10v6"
-          />
-          <path
-            d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Lexis
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/nippo"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #f97316, #ef4444);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-newspaper"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 18h-5"
-          />
-          <path
-            d="M18 14h-8"
-          />
-          <path
-            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
-          />
-          <rect
-            height="4"
-            rx="1"
-            width="8"
-            x="10"
-            y="6"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Nippo
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        util
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/grok"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-brain"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 18V5"
-          />
-          <path
-            d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"
-          />
-          <path
-            d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"
-          />
-          <path
-            d="M17.997 5.125a4 4 0 0 1 2.526 5.77"
-          />
-          <path
-            d="M18 18a4 4 0 0 0 2-7.464"
-          />
-          <path
-            d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"
-          />
-          <path
-            d="M6 18a4 4 0 0 1-2-7.464"
-          />
-          <path
-            d="M6.003 5.125a4 4 0 0 0-2.526 5.77"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Grok
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
-    <a
-      class="home-card"
-      data-discover="true"
-      href="/pattern"
-    >
-      <div
-        class="home-card-icon"
-        style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
-      >
-        <svg
-          aria-hidden="true"
-          class="lucide lucide-layers"
-          fill="none"
-          height="20"
-          stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
-          />
-          <path
-            d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"
-          />
-          <path
-            d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"
-          />
-        </svg>
-      </div>
-      <div
-        class="home-card-name"
-      >
-        Pattern
-      </div>
-      <div
-        class="home-card-desc"
-      >
-        デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
-      </div>
-      <span
-        class="home-card-tag"
-      >
-        prompt
-      </span>
-    </a>
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f97316, #ef4444);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-newspaper"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18h-5"
+              />
+              <path
+                d="M18 14h-8"
+              />
+              <path
+                d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+              />
+              <rect
+                height="4"
+                rx="1"
+                width="8"
+                x="10"
+                y="6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Nippo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+      </div>
+    </section>
   </div>
 </div>
 `;

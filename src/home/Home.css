@@ -243,8 +243,30 @@
 }
 .home-search-clear:hover { color: var(--h-text); }
 
+.home-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.home-group-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--h-text-dim);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--h-border);
+}
+
 .home-no-results {
-  grid-column: 1 / -1;
   text-align: center;
   color: var(--h-text-dim);
   font-size: 13px;

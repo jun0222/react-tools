@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, beforeEach } from 'vitest';
 import { ThemeProvider } from '../context/ThemeContext';
+import { MetaProvider } from '../context/MetaContext';
 import Home from './Home';
 
 const THEME_KEY = 'oneshot-theme';
@@ -12,9 +13,11 @@ const setup = (dark = false) => {
   localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
   return render(
     <MemoryRouter>
-      <ThemeProvider>
-        <Home />
-      </ThemeProvider>
+      <MetaProvider>
+        <ThemeProvider>
+          <Home />
+        </ThemeProvider>
+      </MetaProvider>
     </MemoryRouter>
   );
 };
@@ -61,5 +64,41 @@ describe('Home', () => {
   it('available ツール数が表示される', () => {
     setup();
     expect(screen.getByText(/tool.*available/i)).toBeInTheDocument();
+  });
+
+  it('グループヘッダー「プロンプト作成」が表示される', () => {
+    setup();
+    expect(screen.getByRole('heading', { name: /プロンプト作成/ })).toBeInTheDocument();
+  });
+
+  it('グループヘッダー「テキスト加工」が表示される', () => {
+    setup();
+    expect(screen.getByRole('heading', { name: /テキスト加工/ })).toBeInTheDocument();
+  });
+
+  it('グループヘッダー「図・可視化」が表示される', () => {
+    setup();
+    expect(screen.getByRole('heading', { name: /図・可視化/ })).toBeInTheDocument();
+  });
+
+  it('LexisはプロンプトグループにOneShotと一緒に表示される', () => {
+    setup();
+    const group = screen.getByRole('region', { name: 'プロンプト作成' });
+    expect(group).toHaveTextContent('Lexis');
+    expect(group).toHaveTextContent('OneShot');
+  });
+
+  it('Forgeはテキスト加工グループに表示される', () => {
+    setup();
+    const group = screen.getByRole('region', { name: 'テキスト加工' });
+    expect(group).toHaveTextContent('Forge');
+  });
+
+  it('検索時はグループをまたいでマッチしたツールが表示される', () => {
+    setup();
+    const searchInput = screen.getByRole('searchbox');
+    fireEvent.change(searchInput, { target: { value: 'lexis' } });
+    expect(screen.getByText('Lexis')).toBeInTheDocument();
+    expect(screen.queryByText('OneShot')).not.toBeInTheDocument();
   });
 });
