@@ -6,6 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
+  Newspaper,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -323,6 +324,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #14b8a6, #6366f1)',
     desc: '単語・概念を入力すると、定義・なぜ？・語源・例文×10 を引き出すLLMプロンプトを生成',
     tag: 'prompt',
+  },
+  {
+    path: '/nippo',
+    name: 'Nippo',
+    icon: <Newspaper size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
+    desc: '日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー',
+    tag: 'util',
   },
 ];
 

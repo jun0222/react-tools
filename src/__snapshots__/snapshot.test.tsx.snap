@@ -17,7 +17,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        30
+        31
          tool
         s
          available
@@ -1683,6 +1683,62 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         class="home-card-tag"
       >
         prompt
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/nippo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-newspaper"
+          fill="none"
+          height="20"
+          stroke="white"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18h-5"
+          />
+          <path
+            d="M18 14h-8"
+          />
+          <path
+            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+          />
+          <rect
+            height="4"
+            rx="1"
+            width="8"
+            x="10"
+            y="6"
+          />
+        </svg>
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Nippo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>
@@ -1706,7 +1762,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        30
+        31
          tool
         s
          available
@@ -3372,6 +3428,62 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         class="home-card-tag"
       >
         prompt
+      </span>
+    </a>
+    <a
+      class="home-card"
+      data-discover="true"
+      href="/nippo"
+    >
+      <div
+        class="home-card-icon"
+        style="background: linear-gradient(135deg, #f97316, #ef4444);"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-newspaper"
+          fill="none"
+          height="20"
+          stroke="white"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18h-5"
+          />
+          <path
+            d="M18 14h-8"
+          />
+          <path
+            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+          />
+          <rect
+            height="4"
+            rx="1"
+            width="8"
+            x="10"
+            y="6"
+          />
+        </svg>
+      </div>
+      <div
+        class="home-card-name"
+      >
+        Nippo
+      </div>
+      <div
+        class="home-card-desc"
+      >
+        日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+      </div>
+      <span
+        class="home-card-tag"
+      >
+        util
       </span>
     </a>
   </div>
@@ -3545,6 +3657,326 @@ exports[`UI スナップショット > Lexis > ライトモード（空の状態
       >
         （単語を入力してください）
       </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Nippo > ダークモード（空の状態） 1`] = `
+<div
+  class="np-root dark"
+>
+  <div
+    class="np-header"
+  >
+    <div
+      class="np-logo"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-newspaper"
+        fill="none"
+        height="20"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 18h-5"
+        />
+        <path
+          d="M18 14h-8"
+        />
+        <path
+          d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+        />
+        <rect
+          height="4"
+          rx="1"
+          width="8"
+          x="10"
+          y="6"
+        />
+      </svg>
+    </div>
+    <h1>
+      <span
+        class="np-accent"
+      >
+        Nippo
+      </span>
+    </h1>
+    <button
+      class="np-copy-btn"
+      disabled=""
+    >
+      サマリをコピー
+    </button>
+  </div>
+  <div
+    class="np-body"
+  >
+    <textarea
+      class="np-input"
+      placeholder="・朝会 9:00~9:30 完了
+・設計 10:00~11:30 進行中
+・タスク名（時刻なし）"
+      role="textbox"
+      spellcheck="false"
+    />
+    <div
+      aria-label="ガントチャート"
+      class="np-gantt"
+      role="region"
+    >
+      <div
+        class="np-gantt-header"
+      >
+        <span
+          class="np-gantt-hour"
+          style="left: 0%;"
+        >
+          6
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 11.11111111111111%;"
+        >
+          8
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 22.22222222222222%;"
+        >
+          10
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 33.33333333333333%;"
+        >
+          12
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 44.44444444444444%;"
+        >
+          14
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 55.55555555555556%;"
+        >
+          16
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 66.66666666666666%;"
+        >
+          18
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 77.77777777777779%;"
+        >
+          20
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 88.88888888888889%;"
+        >
+          22
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 100%;"
+        >
+          24
+        </span>
+      </div>
+      <div
+        class="np-gantt-rows"
+      >
+        <div
+          class="np-gantt-empty"
+        >
+          エントリを入力するとここに表示されます
+        </div>
+      </div>
+    </div>
+    <div
+      aria-label="サマリ"
+      class="np-summary"
+      role="region"
+    >
+      <div
+        class="np-summary-empty"
+      >
+        サマリがここに表示されます
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UI スナップショット > Nippo > ライトモード（空の状態） 1`] = `
+<div
+  class="np-root light"
+>
+  <div
+    class="np-header"
+  >
+    <div
+      class="np-logo"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-newspaper"
+        fill="none"
+        height="20"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 18h-5"
+        />
+        <path
+          d="M18 14h-8"
+        />
+        <path
+          d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"
+        />
+        <rect
+          height="4"
+          rx="1"
+          width="8"
+          x="10"
+          y="6"
+        />
+      </svg>
+    </div>
+    <h1>
+      <span
+        class="np-accent"
+      >
+        Nippo
+      </span>
+    </h1>
+    <button
+      class="np-copy-btn"
+      disabled=""
+    >
+      サマリをコピー
+    </button>
+  </div>
+  <div
+    class="np-body"
+  >
+    <textarea
+      class="np-input"
+      placeholder="・朝会 9:00~9:30 完了
+・設計 10:00~11:30 進行中
+・タスク名（時刻なし）"
+      role="textbox"
+      spellcheck="false"
+    />
+    <div
+      aria-label="ガントチャート"
+      class="np-gantt"
+      role="region"
+    >
+      <div
+        class="np-gantt-header"
+      >
+        <span
+          class="np-gantt-hour"
+          style="left: 0%;"
+        >
+          6
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 11.11111111111111%;"
+        >
+          8
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 22.22222222222222%;"
+        >
+          10
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 33.33333333333333%;"
+        >
+          12
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 44.44444444444444%;"
+        >
+          14
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 55.55555555555556%;"
+        >
+          16
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 66.66666666666666%;"
+        >
+          18
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 77.77777777777779%;"
+        >
+          20
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 88.88888888888889%;"
+        >
+          22
+        </span>
+        <span
+          class="np-gantt-hour"
+          style="left: 100%;"
+        >
+          24
+        </span>
+      </div>
+      <div
+        class="np-gantt-rows"
+      >
+        <div
+          class="np-gantt-empty"
+        >
+          エントリを入力するとここに表示されます
+        </div>
+      </div>
+    </div>
+    <div
+      aria-label="サマリ"
+      class="np-summary"
+      role="region"
+    >
+      <div
+        class="np-summary-empty"
+      >
+        サマリがここに表示されます
+      </div>
     </div>
   </div>
 </div>

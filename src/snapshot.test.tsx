@@ -8,6 +8,7 @@ import Home from './home/Home';
 import OneShot from './tools/oneshot/OneShot';
 import Phantom from './tools/phantom/Phantom';
 import Lexis from './tools/lexis/Lexis';
+import Nippo from './tools/nippo/Nippo';
 
 const THEME_KEY = 'oneshot-theme';
 
@@ -73,6 +74,18 @@ describe('UI スナップショット', () => {
 
     it('ライトモード（空の状態）', () => {
       const { container } = renderPage(<Lexis />, false);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('Nippo', () => {
+    it('ダークモード（空の状態）', () => {
+      const { container } = renderPage(<Nippo />, true);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('ライトモード（空の状態）', () => {
+      const { container } = renderPage(<Nippo />, false);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

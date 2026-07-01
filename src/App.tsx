@@ -42,6 +42,7 @@ import FlowChart from './tools/flowchart/FlowChart';
 import TestData from './tools/testdata/TestData';
 import Planner from './tools/planner/Planner';
 import Lexis from './tools/lexis/Lexis';
+import Nippo from './tools/nippo/Nippo';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -99,6 +100,7 @@ function App() {
             <Route path="/testdata" element={<TestData />} />
             <Route path="/planner" element={<Planner />} />
             <Route path="/lexis" element={<Lexis />} />
+            <Route path="/nippo" element={<Nippo />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
