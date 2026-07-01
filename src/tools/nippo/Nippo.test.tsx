@@ -95,4 +95,29 @@ describe('Nippo', () => {
     expect(summary.textContent).toContain('進行中');
     expect(summary.textContent).toContain('未着手');
   });
+
+  it('エントリが0件でもサマリパネルに全グループが表示される', () => {
+    renderNippo();
+    const summary = screen.getByRole('region', { name: 'サマリ' });
+    expect(summary.textContent).toContain('完了');
+    expect(summary.textContent).toContain('進行中');
+    expect(summary.textContent).toContain('未着手');
+  });
+
+  it('コピーされたタイムスタンプに曜日が含まれる', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2026, 6, 1, 23, 3)); // 水曜日
+
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '・朝会 完了' } });
+    fireEvent.click(screen.getByRole('button', { name: 'サマリをコピー' }));
+
+    await vi.waitFor(() => {
+      const text: string = writeText.mock.calls[0][0];
+      expect(text).toContain('(水)');
+    });
+    vi.useRealTimers();
+  });
 });

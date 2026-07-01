@@ -3813,9 +3813,58 @@ exports[`UI スナップショット > Nippo > ダークモード（空の状態
       role="region"
     >
       <div
-        class="np-summary-empty"
+        class="np-group np-group--pending"
       >
-        サマリがここに表示されます
+        <div
+          class="np-group-header"
+        >
+          未着手
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
+        class="np-group np-group--in-progress"
+      >
+        <div
+          class="np-group-header"
+        >
+          進行中
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
+        class="np-group np-group--completed"
+      >
+        <div
+          class="np-group-header"
+        >
+          完了
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3973,9 +4022,58 @@ exports[`UI スナップショット > Nippo > ライトモード（空の状態
       role="region"
     >
       <div
-        class="np-summary-empty"
+        class="np-group np-group--pending"
       >
-        サマリがここに表示されます
+        <div
+          class="np-group-header"
+        >
+          未着手
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
+        class="np-group np-group--in-progress"
+      >
+        <div
+          class="np-group-header"
+        >
+          進行中
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
+        class="np-group np-group--completed"
+      >
+        <div
+          class="np-group-header"
+        >
+          完了
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
       </div>
     </div>
   </div>

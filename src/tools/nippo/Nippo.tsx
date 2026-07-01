@@ -5,6 +5,7 @@ import {
   parseEntries,
   buildSummary,
   barPercent,
+  fmtTimestamp,
   GANTT_START_MIN,
   GANTT_RANGE_MIN,
   type Status,
@@ -21,13 +22,6 @@ const STATUS_LABEL: Record<Status, string> = {
   pending: '未着手',
 };
 
-const fmtTimestamp = (d: Date): string => {
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  const hh = String(d.getHours()).padStart(2, '0');
-  const min = String(d.getMinutes()).padStart(2, '0');
-  return `${mm}/${dd} ${hh}:${min}`;
-};
 
 const load = (key: string, fallback: string): string => {
   try {
@@ -137,23 +131,22 @@ const Nippo = () => {
           role="region"
           aria-label="サマリ"
         >
-          {(['completed', 'in-progress', 'pending'] as const).map(status => {
+          {(['pending', 'in-progress', 'completed'] as const).map(status => {
             const group = entries.filter(e => e.status === status);
-            if (group.length === 0) return null;
             return (
               <div key={status} className={`np-group np-group--${status}`}>
                 <div className="np-group-header">{STATUS_LABEL[status]}</div>
                 <div className="np-group-items">
-                  {group.map((e, i) => (
-                    <div key={i} className="np-group-item">・{e.label}</div>
-                  ))}
+                  {group.length === 0
+                    ? <div className="np-group-item np-group-item--empty">なし</div>
+                    : group.map((e, i) => (
+                        <div key={i} className="np-group-item">・{e.label}</div>
+                      ))
+                  }
                 </div>
               </div>
             );
           })}
-          {entries.length === 0 && (
-            <div className="np-summary-empty">サマリがここに表示されます</div>
-          )}
         </div>
       </div>
     </div>
