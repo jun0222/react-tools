@@ -20,7 +20,7 @@ const buildPrompt = (word: string, lang: Lang): string => {
   if (!w) return '（単語を入力してください）';
 
   if (lang === 'ja') {
-    return `「${w}」について、以下の4点を日本語で教えてください。
+    return `「${w}」について、以下の5点を日本語で教えてください。
 
 【定義】
 「${w}」の正確な定義を1〜2文で述べてください。
@@ -30,6 +30,9 @@ const buildPrompt = (word: string, lang: Lang): string => {
 
 【語源】
 「${w}」の語源（由来）を説明してください。どの言語・語根から来ているか、もとの意味は何かを含めてください。
+
+【歴史的経緯】
+「${w}」がどのように生まれ、時代を経てどのように発展・変化してきたかを説明してください。重要な人物・出来事・転換点があれば含めてください。
 
 【例文 × 10】
 「${w}」が実際に使われる、短い1行の例文を10個挙げてください。番号付きリストで。
@@ -47,6 +50,9 @@ Explain why this concept/word exists — what problem or need gave rise to it, a
 
 [Etymology]
 Explain the etymology of "${w}" — which language or root it comes from and what the original meaning was.
+
+[Historical Background]
+Describe how "${w}" came about and how it developed or evolved over time. Include key figures, events, or turning points if relevant.
 
 [10 Example Sentences]
 Give 10 short, one-line sentences that use "${w}" in context. Use a numbered list.

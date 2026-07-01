@@ -35,7 +35,7 @@ describe('Lexis', () => {
     expect(screen.getByRole('button', { name: 'プロンプトをコピー' })).not.toBeDisabled();
   });
 
-  it('生成プロンプトに定義・語源・なぜ・例文の各項目が含まれる', () => {
+  it('生成プロンプトに定義・語源・なぜ・例文・歴史的経緯の各項目が含まれる', () => {
     renderLexis();
     fireEvent.change(screen.getByPlaceholderText('単語・概念を入力...'), {
       target: { value: 'アルゴリズム' },
@@ -45,6 +45,7 @@ describe('Lexis', () => {
     expect(preview.textContent).toContain('語源');
     expect(preview.textContent).toContain('なぜ');
     expect(preview.textContent).toContain('例文');
+    expect(preview.textContent).toContain('歴史的経緯');
   });
 
   it('入力した単語がプロンプトに含まれる', () => {
