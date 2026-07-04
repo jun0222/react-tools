@@ -45,6 +45,7 @@ import Lexis from './tools/lexis/Lexis';
 import Nippo from './tools/nippo/Nippo';
 import Grok from './tools/grok/Grok';
 import Pattern from './tools/pattern/Pattern';
+import Unpack from './tools/unpack/Unpack';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -105,6 +106,7 @@ function App() {
             <Route path="/nippo" element={<Nippo />} />
             <Route path="/grok" element={<Grok />} />
             <Route path="/pattern" element={<Pattern />} />
+            <Route path="/unpack" element={<Unpack />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

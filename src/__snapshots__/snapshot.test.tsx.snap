@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        33
+        34
          tool
         s
          available
@@ -624,6 +624,58 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/unpack"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f43f5e, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-split"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16 3h5v5"
+              />
+              <path
+                d="M8 3H3v5"
+              />
+              <path
+                d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"
+              />
+              <path
+                d="m15 9 6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Unpack
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成
           </div>
           <span
             class="home-card-tag"
@@ -2168,7 +2220,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        33
+        34
          tool
         s
          available
@@ -2573,6 +2625,58 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/unpack"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f43f5e, #f97316);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-split"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16 3h5v5"
+              />
+              <path
+                d="M8 3H3v5"
+              />
+              <path
+                d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"
+              />
+              <path
+                d="m15 9 6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Unpack
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成
           </div>
           <span
             class="home-card-tag"

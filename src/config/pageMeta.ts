@@ -168,4 +168,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Pattern - デザインパターンPHP 🔷',
     description: 'デザインパターン名を入力すると、PHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成。',
   },
+  '/unpack': {
+    title: 'Unpack - 分解して理解する 🧩',
+    description: '単語・概念を入力すると、分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成。',
+  },
 };

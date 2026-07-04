@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers,
+  Newspaper, Brain, Layers, Split,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -347,6 +347,14 @@ const tools: Tool[] = [
     icon: <Layers size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
     desc: 'デザインパターン名を入力するとPHPPlayground実行可能な業務実装＋説明＋関連パターン比較プロンプトを生成',
+    tag: 'prompt',
+  },
+  {
+    path: '/unpack',
+    name: 'Unpack',
+    icon: <Split size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #f43f5e, #f97316)',
+    desc: '単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成',
     tag: 'prompt',
   },
 ];
