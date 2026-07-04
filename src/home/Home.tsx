@@ -357,6 +357,14 @@ const tools: Tool[] = [
     desc: '単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成',
     tag: 'prompt',
   },
+  {
+    path: '/shelly',
+    name: 'Shelly',
+    icon: <Terminal size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #334155, #0f172a)',
+    desc: 'POSIX準拠の使い捨てシェル関数を、目的確認の質問＋引数エラー処理・ドライラン付きコードで生成するプロンプトを作成',
+    tag: 'prompt',
+  },
 ];
 
 const GROUPS: { tag: string; label: string }[] = [

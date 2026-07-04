@@ -10,6 +10,7 @@ interface PromptToolProps {
   storageKey: string;
   placeholder: string;
   buildPrompt: (word: string) => string;
+  requireWord?: boolean;
 }
 
 const load = <T,>(key: string, fallback: T): T => {
@@ -19,13 +20,13 @@ const load = <T,>(key: string, fallback: T): T => {
   } catch { return fallback; }
 };
 
-const PromptTool = ({ name, icon, iconBg, accent, storageKey, placeholder, buildPrompt }: PromptToolProps) => {
+const PromptTool = ({ name, icon, iconBg, accent, storageKey, placeholder, buildPrompt, requireWord = true }: PromptToolProps) => {
   const { dark } = useTheme();
   const [word, setWord] = useState<string>(() => load(storageKey, ''));
   const [copied, setCopied] = useState(false);
 
   const prompt = buildPrompt(word);
-  const isPlaceholder = !word.trim();
+  const isPlaceholder = requireWord && !word.trim();
 
   const handleWordChange = (v: string) => {
     setWord(v);

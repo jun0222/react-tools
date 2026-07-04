@@ -172,4 +172,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Unpack - 分解して理解する 🧩',
     description: '単語・概念を入力すると、分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成。',
   },
+  '/shelly': {
+    title: 'Shelly - 使い捨てシェル関数 💻',
+    description: 'POSIX準拠の使い捨てシェル関数を、目的確認の質問→引数エラー処理・ドライラン付きコードで生成するLLMプロンプトを作成。',
+  },
 };

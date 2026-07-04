@@ -46,6 +46,7 @@ import Nippo from './tools/nippo/Nippo';
 import Grok from './tools/grok/Grok';
 import Pattern from './tools/pattern/Pattern';
 import Unpack from './tools/unpack/Unpack';
+import Shelly from './tools/shelly/Shelly';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -107,6 +108,7 @@ function App() {
             <Route path="/grok" element={<Grok />} />
             <Route path="/pattern" element={<Pattern />} />
             <Route path="/unpack" element={<Unpack />} />
+            <Route path="/shelly" element={<Shelly />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        34
+        35
          tool
         s
          available
@@ -676,6 +676,52 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shelly"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #334155, #0f172a);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-terminal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19h8"
+              />
+              <path
+                d="m4 17 6-6-6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shelly
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            POSIX準拠の使い捨てシェル関数を、目的確認の質問＋引数エラー処理・ドライラン付きコードで生成するプロンプトを作成
           </div>
           <span
             class="home-card-tag"
@@ -2220,7 +2266,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        34
+        35
          tool
         s
          available
@@ -2677,6 +2723,52 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             単語を入力すると分解・関係・マーキング・継続ルールで理解を深めるLLMプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shelly"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #334155, #0f172a);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-terminal"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19h8"
+              />
+              <path
+                d="m4 17 6-6-6-6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shelly
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            POSIX準拠の使い捨てシェル関数を、目的確認の質問＋引数エラー処理・ドライラン付きコードで生成するプロンプトを作成
           </div>
           <span
             class="home-card-tag"

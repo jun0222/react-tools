@@ -85,4 +85,26 @@ describe('PromptTool', () => {
       expect(writeText.mock.calls[0][0]).toContain('メモ化');
     });
   });
+
+  it('requireWord=falseのとき未入力でもコピーボタンが有効になる', () => {
+    render(
+      <MemoryRouter>
+        <MetaProvider>
+          <ThemeProvider>
+            <PromptTool
+              name="TestTool"
+              icon={<Split size={20} color="white" />}
+              iconBg="linear-gradient(135deg, #f43f5e, #f97316)"
+              accent="#f43f5e"
+              storageKey="testtool-optional-word"
+              placeholder="任意のヒントを入力…"
+              buildPrompt={buildPrompt}
+              requireWord={false}
+            />
+          </ThemeProvider>
+        </MetaProvider>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole('button', { name: 'プロンプトをコピー' })).not.toBeDisabled();
+  });
 });
