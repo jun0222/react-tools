@@ -47,6 +47,7 @@ import Grok from './tools/grok/Grok';
 import Pattern from './tools/pattern/Pattern';
 import Unpack from './tools/unpack/Unpack';
 import Shelly from './tools/shelly/Shelly';
+import Blogen from './tools/blogen/Blogen';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -109,6 +110,7 @@ function App() {
             <Route path="/pattern" element={<Pattern />} />
             <Route path="/unpack" element={<Unpack />} />
             <Route path="/shelly" element={<Shelly />} />
+            <Route path="/blogen" element={<Blogen />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

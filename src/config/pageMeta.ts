@@ -176,4 +176,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Shelly - 使い捨てシェル関数 💻',
     description: 'POSIX準拠の使い捨てシェル関数を、目的確認の質問→引数エラー処理・ドライラン付きコードで生成するLLMプロンプトを作成。',
   },
+  '/blogen': {
+    title: 'Blogen - ブログ生成プロンプト ✍️',
+    description: 'トピックと文字数を入力すると「〜について〜文字でブログを書いて」というLLMプロンプトを生成。',
+  },
 };

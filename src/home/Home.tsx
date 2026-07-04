@@ -365,6 +365,14 @@ const tools: Tool[] = [
     desc: 'POSIX準拠の使い捨てシェル関数を、目的確認の質問＋引数エラー処理・ドライラン付きコードで生成するプロンプトを作成',
     tag: 'prompt',
   },
+  {
+    path: '/blogen',
+    name: 'Blogen',
+    icon: <PenLine size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #eab308, #f97316)',
+    desc: 'トピックと文字数を入力すると「〜について〜文字でブログを書いて」というプロンプトを生成',
+    tag: 'prompt',
+  },
 ];
 
 const GROUPS: { tag: string; label: string }[] = [
