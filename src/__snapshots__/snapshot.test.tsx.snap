@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        36
+        37
          tool
         s
          available
@@ -574,7 +574,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
           <div
             class="home-card-desc"
           >
-            概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
+            概念を入力すると、本質・アナロジー・具体例・対義語類語・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
           </div>
           <span
             class="home-card-tag"
@@ -768,6 +768,52 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             トピックと文字数を入力すると「〜について〜文字でブログを書いて」というプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shakyo"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shakyo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するプロンプトを生成
           </div>
           <span
             class="home-card-tag"
@@ -2312,7 +2358,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        36
+        37
          tool
         s
          available
@@ -2667,7 +2713,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
           <div
             class="home-card-desc"
           >
-            概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
+            概念を入力すると、本質・アナロジー・具体例・対義語類語・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成
           </div>
           <span
             class="home-card-tag"
@@ -2861,6 +2907,52 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             トピックと文字数を入力すると「〜について〜文字でブログを書いて」というプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/shakyo"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #8b5cf6, #6366f1);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Shakyo
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するプロンプトを生成
           </div>
           <span
             class="home-card-tag"

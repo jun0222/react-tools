@@ -162,7 +162,7 @@ export const PAGE_META: Record<string, PageMeta> = {
   },
   '/grok': {
     title: 'Grok - 暗記レス理解 🧠',
-    description: '概念・単語を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成。',
+    description: '概念・単語を入力すると、本質・アナロジー・具体例・対義語類語・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成。',
   },
   '/pattern': {
     title: 'Pattern - デザインパターンPHP 🔷',
@@ -179,5 +179,9 @@ export const PAGE_META: Record<string, PageMeta> = {
   '/blogen': {
     title: 'Blogen - ブログ生成プロンプト ✍️',
     description: 'トピックと文字数を入力すると「〜について〜文字でブログを書いて」というLLMプロンプトを生成。',
+  },
+  '/shakyo': {
+    title: 'Shakyo - 写経すべき本質 📖',
+    description: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するLLMプロンプトを生成。',
   },
 };

@@ -30,6 +30,27 @@ describe('buildPrompt (ja)', () => {
     const result = buildPrompt('再帰', 'ja');
     expect(result).toContain('暗記');
   });
+
+  it('具体例の項目が含まれる', () => {
+    const result = buildPrompt('再帰', 'ja');
+    expect(result).toContain('具体例');
+  });
+
+  it('具体例にコード例への言及が含まれる', () => {
+    const result = buildPrompt('再帰', 'ja');
+    expect(result).toContain('コード');
+  });
+
+  it('具体例に身近なシーンへの言及が含まれる', () => {
+    const result = buildPrompt('再帰', 'ja');
+    expect(result).toContain('身近');
+  });
+
+  it('対義語・類語の項目が含まれる', () => {
+    const result = buildPrompt('再帰', 'ja');
+    expect(result).toContain('対義語');
+    expect(result).toContain('類語');
+  });
 });
 
 describe('buildPrompt (en)', () => {
@@ -56,5 +77,16 @@ describe('buildPrompt (en)', () => {
   it('Memorizeの項目が含まれる', () => {
     const result = buildPrompt('recursion', 'en');
     expect(result).toContain('Memorize');
+  });
+
+  it('Examplesの項目が含まれる', () => {
+    const result = buildPrompt('recursion', 'en');
+    expect(result).toContain('Examples');
+  });
+
+  it('Antonyms and Synonymsの項目が含まれる', () => {
+    const result = buildPrompt('recursion', 'en');
+    expect(result).toContain('Antonyms');
+    expect(result).toContain('Synonyms');
   });
 });

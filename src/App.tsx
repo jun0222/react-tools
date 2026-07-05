@@ -48,6 +48,7 @@ import Pattern from './tools/pattern/Pattern';
 import Unpack from './tools/unpack/Unpack';
 import Shelly from './tools/shelly/Shelly';
 import Blogen from './tools/blogen/Blogen';
+import Shakyo from './tools/shakyo/Shakyo';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -111,6 +112,7 @@ function App() {
             <Route path="/unpack" element={<Unpack />} />
             <Route path="/shelly" element={<Shelly />} />
             <Route path="/blogen" element={<Blogen />} />
+            <Route path="/shakyo" element={<Shakyo />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

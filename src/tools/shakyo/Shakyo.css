@@ -1,0 +1,18 @@
+.sk-textarea {
+  width: 100%;
+  min-height: 10rem;
+  padding: 0.75rem 1rem;
+  background: #13131e;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+.sk-textarea:focus { border-color: var(--ptool-accent); }
+.ptool-root.light .sk-textarea { background: #fff; border-color: #dde1ea; color: #1a2030; }
+.sk-textarea::placeholder { color: #555; }
+.ptool-root.light .sk-textarea::placeholder { color: #aaa; }

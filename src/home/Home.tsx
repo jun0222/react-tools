@@ -338,7 +338,7 @@ const tools: Tool[] = [
     name: 'Grok',
     icon: <Brain size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
-    desc: '概念を入力すると、本質・アナロジー・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成',
+    desc: '概念を入力すると、本質・アナロジー・具体例・対義語類語・再導出・暗記不要の根拠を引き出すLLMプロンプトを生成',
     tag: 'prompt',
   },
   {
@@ -371,6 +371,14 @@ const tools: Tool[] = [
     icon: <PenLine size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #eab308, #f97316)',
     desc: 'トピックと文字数を入力すると「〜について〜文字でブログを書いて」というプロンプトを生成',
+    tag: 'prompt',
+  },
+  {
+    path: '/shakyo',
+    name: 'Shakyo',
+    icon: <BookOpen size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+    desc: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するプロンプトを生成',
     tag: 'prompt',
   },
 ];

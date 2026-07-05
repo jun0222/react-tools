@@ -13,6 +13,12 @@ export const buildPrompt = (word: string, lang: Lang): string => {
 【直感的なアナロジー】
 「${w}」を身近な体験・現象・物に例えると、何に一番似ていますか？できるだけ具体的に。
 
+【具体例】
+「${w}」が実際に使われるコード例と、身近な状況・シーンでの具体例をそれぞれ挙げてください。
+
+【対義語・類語】
+「${w}」の対義語（反対の概念）と類語（似ている概念）をそれぞれ挙げ、何がどう違うのかを説明してください。
+
 【ゼロからの再導出】
 「${w}」を完全に忘れても、論理的な考え方のスジから再導出できるようにしてください。どんな問題意識や必要性から生まれたかも含めてください。
 
@@ -27,6 +33,12 @@ Why does "${w}" work the way it does? Focus on the fundamental "why", not just t
 
 [Intuitive Analogy]
 What everyday experience, phenomenon, or object is "${w}" most similar to? Be as concrete as possible.
+
+[Concrete Examples]
+Give a code example where "${w}" is actually used, along with a concrete example from an everyday situation or scene.
+
+[Antonyms and Synonyms]
+List antonyms (opposite concepts) and synonyms (similar concepts) of "${w}", and explain how each differs from it.
 
 [First Principles Derivation]
 If I completely forgot "${w}", how could I re-derive it from first principles? What problem or need gave rise to it?
