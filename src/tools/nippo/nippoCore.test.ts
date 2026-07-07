@@ -89,18 +89,18 @@ describe('buildSummary', () => {
     expect(result).toContain('【完了】');
   });
 
-  it('未着手→進行中→完了の順でグループが出力される', () => {
+  it('完了→進行中→未着手の順でグループが出力される', () => {
     const entries = [
       { label: '朝会', startMin: 540, endMin: 570, status: 'completed' as const },
       { label: '設計', startMin: 600, endMin: 690, status: 'in-progress' as const },
       { label: 'テスト', startMin: null, endMin: null, status: 'pending' as const },
     ];
     const result = buildSummary(entries, '07/01 01:11');
-    const idxPending = result.indexOf('【未着手】');
-    const idxInProgress = result.indexOf('【進行中】');
     const idxCompleted = result.indexOf('【完了】');
-    expect(idxPending).toBeLessThan(idxInProgress);
-    expect(idxInProgress).toBeLessThan(idxCompleted);
+    const idxInProgress = result.indexOf('【進行中】');
+    const idxPending = result.indexOf('【未着手】');
+    expect(idxCompleted).toBeLessThan(idxInProgress);
+    expect(idxInProgress).toBeLessThan(idxPending);
     expect(result).toContain('・朝会');
     expect(result).toContain('・設計');
     expect(result).toContain('・テスト');

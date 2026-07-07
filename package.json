@@ -11,7 +11,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "e2e": "playwright test",
-    "e2e:headless": "playwright test --headed=false"
+    "e2e:headless": "CI=true playwright test"
   },
   "dependencies": {
     "@fontsource/noto-sans-jp": "^5.2.9",

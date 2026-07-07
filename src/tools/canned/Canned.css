@@ -1,0 +1,13 @@
+.cn-select {
+  padding: 0.6rem 0.8rem;
+  background: #13131e;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  outline: none;
+  align-self: flex-start;
+  min-width: 12rem;
+}
+.cn-select:focus { border-color: var(--ptool-accent); }
+.ptool-root.light .cn-select { background: #fff; border-color: #dde1ea; color: #1a2030; }

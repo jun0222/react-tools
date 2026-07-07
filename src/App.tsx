@@ -49,6 +49,8 @@ import Unpack from './tools/unpack/Unpack';
 import Shelly from './tools/shelly/Shelly';
 import Blogen from './tools/blogen/Blogen';
 import Shakyo from './tools/shakyo/Shakyo';
+import Canned from './tools/canned/Canned';
+import Rederive from './tools/rederive/Rederive';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -113,6 +115,8 @@ function App() {
             <Route path="/shelly" element={<Shelly />} />
             <Route path="/blogen" element={<Blogen />} />
             <Route path="/shakyo" element={<Shakyo />} />
+            <Route path="/canned" element={<Canned />} />
+            <Route path="/rederive" element={<Rederive />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

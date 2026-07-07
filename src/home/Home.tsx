@@ -381,6 +381,22 @@ const tools: Tool[] = [
     desc: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するプロンプトを生成',
     tag: 'prompt',
   },
+  {
+    path: '/canned',
+    name: 'Canned',
+    icon: <ClipboardList size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
+    desc: '登録済みの定番文（プロンプト）をプルダウンで選んでコピー',
+    tag: 'prompt',
+  },
+  {
+    path: '/rederive',
+    name: 'Rederive',
+    icon: <GitFork size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #14b8a6, #0891b2)',
+    desc: '概念を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するプロンプトを生成',
+    tag: 'prompt',
+  },
 ];
 
 const GROUPS: { tag: string; label: string }[] = [

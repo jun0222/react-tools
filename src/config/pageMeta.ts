@@ -184,4 +184,12 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Shakyo - 写経すべき本質 📖',
     description: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するLLMプロンプトを生成。',
   },
+  '/canned': {
+    title: 'Canned - 定番文コピー 📋',
+    description: '登録済みの定番文（プロンプト）をプルダウンで選んでコピーするツール。',
+  },
+  '/rederive': {
+    title: 'Rederive - ゼロからの再導出 🍴',
+    description: '概念・単語を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するLLMプロンプトを生成。',
+  },
 };
