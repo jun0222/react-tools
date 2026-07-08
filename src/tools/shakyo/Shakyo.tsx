@@ -53,7 +53,7 @@ const Shakyo = () => {
       <div className="ptool-body">
         <textarea
           className="sk-textarea"
-          placeholder="写経元の文章を入力…"
+          placeholder="対象領域を入力…"
           value={text}
           onChange={e => handleTextChange(e.target.value)}
           spellCheck={false}

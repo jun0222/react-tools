@@ -182,7 +182,7 @@ export const PAGE_META: Record<string, PageMeta> = {
   },
   '/shakyo': {
     title: 'Shakyo - 写経すべき本質 📖',
-    description: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するLLMプロンプトを生成。',
+    description: '対象領域を入力すると、議論を前に進める写経に値する万能な問いを5つ生成するLLMプロンプトを作成。',
   },
   '/canned': {
     title: 'Canned - 定番文コピー 📋',

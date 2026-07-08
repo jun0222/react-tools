@@ -22,9 +22,9 @@ describe('Shakyo', () => {
     vi.restoreAllMocks();
   });
 
-  it('文章はtextareaタグに入力する', () => {
+  it('対象領域はtextareaタグに入力する', () => {
     renderShakyo();
-    expect(screen.getByPlaceholderText(/文章/).tagName).toBe('TEXTAREA');
+    expect(screen.getByPlaceholderText(/対象領域/).tagName).toBe('TEXTAREA');
   });
 
   it('未入力のときコピーボタンが無効になる', () => {
@@ -32,25 +32,25 @@ describe('Shakyo', () => {
     expect(screen.getByRole('button', { name: 'プロンプトをコピー' })).toBeDisabled();
   });
 
-  it('文章を入力するとコピーボタンが有効になりプレビューに反映される', () => {
+  it('対象領域を入力するとコピーボタンが有効になりプレビューに反映される', () => {
     renderShakyo();
-    fireEvent.change(screen.getByPlaceholderText(/文章/), { target: { value: 'これはテスト文章です。' } });
+    fireEvent.change(screen.getByPlaceholderText(/対象領域/), { target: { value: 'モバイルアプリ開発' } });
     expect(screen.getByRole('button', { name: 'プロンプトをコピー' })).not.toBeDisabled();
     const preview = screen.getByRole('region', { name: 'プロンプトプレビュー' });
-    expect(preview.textContent).toContain('これはテスト文章です。');
+    expect(preview.textContent).toContain('モバイルアプリ開発において');
     expect(preview.textContent).toContain('写経');
   });
 
-  it('文章をlocalStorageに保存する', () => {
+  it('対象領域をlocalStorageに保存する', () => {
     renderShakyo();
-    fireEvent.change(screen.getByPlaceholderText(/文章/), { target: { value: '保存されるべき文章' } });
-    expect(localStorage.getItem('shakyo-text')).toBe(JSON.stringify('保存されるべき文章'));
+    fireEvent.change(screen.getByPlaceholderText(/対象領域/), { target: { value: '組込み開発' } });
+    expect(localStorage.getItem('shakyo-text')).toBe(JSON.stringify('組込み開発'));
   });
 
   it('ページ再読み込みで前回の入力が復元される', () => {
-    localStorage.setItem('shakyo-text', JSON.stringify('前回の文章'));
+    localStorage.setItem('shakyo-text', JSON.stringify('前回の対象領域'));
     renderShakyo();
-    expect(screen.getByPlaceholderText(/文章/)).toHaveValue('前回の文章');
+    expect(screen.getByPlaceholderText(/対象領域/)).toHaveValue('前回の対象領域');
   });
 
   it('コピーボタンを押すとクリップボードにプロンプトが書き込まれる', async () => {
@@ -58,12 +58,12 @@ describe('Shakyo', () => {
     vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
 
     renderShakyo();
-    fireEvent.change(screen.getByPlaceholderText(/文章/), { target: { value: 'コピー対象の文章' } });
+    fireEvent.change(screen.getByPlaceholderText(/対象領域/), { target: { value: 'Web開発' } });
     fireEvent.click(screen.getByRole('button', { name: 'プロンプトをコピー' }));
 
     await vi.waitFor(() => {
       expect(writeText).toHaveBeenCalledOnce();
-      expect(writeText.mock.calls[0][0]).toContain('コピー対象の文章');
+      expect(writeText.mock.calls[0][0]).toContain('Web開発において');
     });
   });
 });

@@ -378,7 +378,7 @@ const tools: Tool[] = [
     name: 'Shakyo',
     icon: <BookOpen size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
-    desc: '文章を入力すると、写経して理解を深めるべき本質的な短文を5つ抽出するプロンプトを生成',
+    desc: '対象領域を入力すると、議論を前に進める写経に値する万能な問いを5つ生成するプロンプトを作成',
     tag: 'prompt',
   },
   {
