@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers, Split,
+  Newspaper, Brain, Layers, Split, GitPullRequest,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -396,6 +396,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #14b8a6, #0891b2)',
     desc: '概念を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するプロンプトを生成',
     tag: 'prompt',
+  },
+  {
+    path: '/githubhub',
+    name: 'Githubhub',
+    icon: <GitPullRequest size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #1a7f37, #24292f)',
+    desc: 'PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応',
+    tag: 'dev',
   },
 ];
 

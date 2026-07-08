@@ -192,4 +192,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Rederive - ゼロからの再導出 🍴',
     description: '概念・単語を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するLLMプロンプトを生成。',
   },
+  '/githubhub': {
+    title: 'Githubhub - PRカンバン 🔀',
+    description: 'GitHub PRのリンクをテキストで貼るとステータス別カンバンボードで可視化。依存関係の表示とステータス別サマリのコピーに対応。',
+  },
 };

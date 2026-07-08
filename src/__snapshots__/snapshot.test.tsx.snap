@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        39
+        40
          tool
         s
          available
@@ -2086,6 +2086,65 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/githubhub"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #1a7f37, #24292f);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-pull-request"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="18"
+                cy="18"
+                r="3"
+              />
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M13 6h3a2 2 0 0 1 2 2v7"
+              />
+              <line
+                x1="6"
+                x2="6"
+                y1="9"
+                y2="21"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Githubhub
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応
           </div>
           <span
             class="home-card-tag"
@@ -2482,7 +2541,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        39
+        40
          tool
         s
          available
@@ -4349,6 +4408,65 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             コマンドをスペースで分割、インデックス指定でトークンを置換。Diff確認付き
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            dev
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/githubhub"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #1a7f37, #24292f);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-git-pull-request"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="18"
+                cy="18"
+                r="3"
+              />
+              <circle
+                cx="6"
+                cy="6"
+                r="3"
+              />
+              <path
+                d="M13 6h3a2 2 0 0 1 2 2v7"
+              />
+              <line
+                x1="6"
+                x2="6"
+                y1="9"
+                y2="21"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Githubhub
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応
           </div>
           <span
             class="home-card-tag"
