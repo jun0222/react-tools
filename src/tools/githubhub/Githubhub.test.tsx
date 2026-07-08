@@ -85,6 +85,27 @@ describe('Githubhub', () => {
     expect(badge.tagName).not.toBe('A');
   });
 
+  it('カードにリポジトリ名のバッジが表示される', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/acme/webapp/pull/123 open ログイン修正' },
+    });
+    expect(screen.getByText('webapp')).toBeInTheDocument();
+  });
+
+  it('異なるリポジトリには異なるバッジ色が付く', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: {
+        value:
+          '・https://github.com/acme/webapp/pull/1 open A\n・https://github.com/acme/api/pull/2 open B',
+      },
+    });
+    const webappBadge = screen.getByText('webapp');
+    const apiBadge = screen.getByText('api');
+    expect(webappBadge.style.backgroundColor).not.toBe(apiBadge.style.backgroundColor);
+  });
+
   it('コピーボタンを押すとクリップボードにサマリが書き込まれる', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });

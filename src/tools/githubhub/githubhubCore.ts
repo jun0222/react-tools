@@ -6,6 +6,7 @@ export interface PrEntry {
   status: PrStatus;
   title: string;
   dependsOn: number | null;
+  repo: string;
 }
 
 const STATUS_KEYWORDS: readonly PrStatus[] = ['draft', 'open', 'review', 'merged'];
@@ -40,10 +41,12 @@ export const parseEntries = (text: string): PrEntry[] =>
 
       let url = '';
       let number = 0;
+      let repo = '';
       const urlIdx = tokens.findIndex(t => /\/pull\/\d+/.test(t));
       if (urlIdx !== -1) {
         url = tokens[urlIdx];
         number = Number(url.match(/\/pull\/(\d+)/)![1]);
+        repo = url.match(/\/([^/]+)\/pull\/\d+/)?.[1] ?? '';
         tokens.splice(urlIdx, 1);
       }
 
@@ -54,7 +57,7 @@ export const parseEntries = (text: string): PrEntry[] =>
 
       const title = tokens.join(' ');
 
-      return { url, number, status, title, dependsOn };
+      return { url, number, status, title, dependsOn, repo };
     })
     .filter(e => e.url !== '');
 
@@ -81,4 +84,24 @@ export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
   });
 
   return [timestamp, ...sections].join('\n\n');
+};
+
+// dataviz skill 検証済みカテゴリカルパレット（固定順）
+const REPO_PALETTE_LIGHT = [
+  '#2a78d6', '#1baf7a', '#eda100', '#008300',
+  '#4a3aa7', '#e34948', '#e87ba4', '#eb6834',
+];
+const REPO_PALETTE_DARK = [
+  '#3987e5', '#199e70', '#c98500', '#008300',
+  '#9085e9', '#e66767', '#d55181', '#d95926',
+];
+
+export const assignRepoColors = (repos: string[], dark: boolean): Record<string, string> => {
+  const palette = dark ? REPO_PALETTE_DARK : REPO_PALETTE_LIGHT;
+  const unique: string[] = [];
+  for (const r of repos) if (!unique.includes(r)) unique.push(r);
+
+  const map: Record<string, string> = {};
+  unique.forEach((r, i) => { map[r] = palette[i % palette.length]; });
+  return map;
 };

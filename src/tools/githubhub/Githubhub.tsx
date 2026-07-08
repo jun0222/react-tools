@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GitPullRequest, HelpCircle, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { parseEntries, buildSummary, fmtTimestamp, type PrStatus } from './githubhubCore';
+import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors, type PrStatus } from './githubhubCore';
 import './Githubhub.css';
 
 const SK_TEXT = 'githubhub-text';
@@ -28,6 +28,7 @@ const Githubhub = () => {
 
   const entries = parseEntries(text);
   const findByNumber = (n: number) => entries.find(e => e.number === n);
+  const repoColors = assignRepoColors(entries.map(e => e.repo), dark);
 
   const handleTextChange = (v: string) => {
     setText(v);
@@ -88,7 +89,13 @@ const Githubhub = () => {
                       onClick={() => window.open(e.url, '_blank', 'noopener,noreferrer')}
                     >
                       <span className="gh-card-title">
-                        #{e.number}{e.title ? ` ${e.title}` : ''}
+                        <span
+                          className="gh-repo-badge"
+                          style={{ backgroundColor: repoColors[e.repo] }}
+                        >
+                          {e.repo}
+                        </span>
+                        {' '}#{e.number}{e.title ? ` ${e.title}` : ''}
                       </span>
                       {e.dependsOn !== null && (() => {
                         const dep = findByNumber(e.dependsOn);
