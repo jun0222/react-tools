@@ -2144,7 +2144,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
           <div
             class="home-card-desc"
           >
-            PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応
+            PRリンクを貼ると7段階（draft〜1次/2次レビュー・修正中〜merged）のカンバンで可視化。依存関係・作業中フラグに対応
           </div>
           <span
             class="home-card-tag"
@@ -2510,7 +2510,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
           <div
             class="home-card-desc"
           >
-            日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+            日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー
           </div>
           <span
             class="home-card-tag"
@@ -4466,7 +4466,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
           <div
             class="home-card-desc"
           >
-            PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応
+            PRリンクを貼ると7段階（draft〜1次/2次レビュー・修正中〜merged）のカンバンで可視化。依存関係・作業中フラグに対応
           </div>
           <span
             class="home-card-tag"
@@ -4832,7 +4832,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
           <div
             class="home-card-desc"
           >
-            日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー
+            日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー
           </div>
           <span
             class="home-card-tag"
@@ -5085,85 +5085,6 @@ exports[`UI スナップショット > Nippo > ダークモード（空の状態
       spellcheck="false"
     />
     <div
-      aria-label="ガントチャート"
-      class="np-gantt"
-      role="region"
-    >
-      <div
-        class="np-gantt-header"
-      >
-        <span
-          class="np-gantt-hour"
-          style="left: 0%;"
-        >
-          6
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 11.11111111111111%;"
-        >
-          8
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 22.22222222222222%;"
-        >
-          10
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 33.33333333333333%;"
-        >
-          12
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 44.44444444444444%;"
-        >
-          14
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 55.55555555555556%;"
-        >
-          16
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 66.66666666666666%;"
-        >
-          18
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 77.77777777777779%;"
-        >
-          20
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 88.88888888888889%;"
-        >
-          22
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 100%;"
-        >
-          24
-        </span>
-      </div>
-      <div
-        class="np-gantt-rows"
-      >
-        <div
-          class="np-gantt-empty"
-        >
-          エントリを入力するとここに表示されます
-        </div>
-      </div>
-    </div>
-    <div
       aria-label="サマリ"
       class="np-summary"
       role="region"
@@ -5293,85 +5214,6 @@ exports[`UI スナップショット > Nippo > ライトモード（空の状態
       role="textbox"
       spellcheck="false"
     />
-    <div
-      aria-label="ガントチャート"
-      class="np-gantt"
-      role="region"
-    >
-      <div
-        class="np-gantt-header"
-      >
-        <span
-          class="np-gantt-hour"
-          style="left: 0%;"
-        >
-          6
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 11.11111111111111%;"
-        >
-          8
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 22.22222222222222%;"
-        >
-          10
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 33.33333333333333%;"
-        >
-          12
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 44.44444444444444%;"
-        >
-          14
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 55.55555555555556%;"
-        >
-          16
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 66.66666666666666%;"
-        >
-          18
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 77.77777777777779%;"
-        >
-          20
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 88.88888888888889%;"
-        >
-          22
-        </span>
-        <span
-          class="np-gantt-hour"
-          style="left: 100%;"
-        >
-          24
-        </span>
-      </div>
-      <div
-        class="np-gantt-rows"
-      >
-        <div
-          class="np-gantt-empty"
-        >
-          エントリを入力するとここに表示されます
-        </div>
-      </div>
-    </div>
     <div
       aria-label="サマリ"
       class="np-summary"

@@ -22,10 +22,13 @@ describe('Githubhub', () => {
     vi.restoreAllMocks();
   });
 
-  it('4つのステータス列がdraft→open→review→mergedの順で表示される', () => {
+  it('7つのステータス列がパイプライン順で表示される', () => {
     renderTool();
     const headers = screen.getAllByTestId('gh-column-header').map(el => el.textContent);
-    expect(headers).toEqual(['Draft0', 'Open0', 'Review中0', 'Merged0']);
+    expect(headers).toEqual([
+      'Draft0', 'Open0', '1次レビューまち0', '1次修正中0',
+      '2次レビューまち0', '2次修正中0', 'Merged0',
+    ]);
   });
 
   it('入力なしのときコピーボタンが無効になる', () => {
@@ -104,6 +107,53 @@ describe('Githubhub', () => {
     const webappBadge = screen.getByText('webapp');
     const apiBadge = screen.getByText('api');
     expect(webappBadge.style.backgroundColor).not.toBe(apiBadge.style.backgroundColor);
+  });
+
+  it('{now}が付いていないときは作業中領域が表示されない', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/1 open タイトル' },
+    });
+    expect(screen.queryByRole('region', { name: '作業中' })).not.toBeInTheDocument();
+  });
+
+  it('{now}が付いたPRは作業中領域と元のカンバン列の両方に表示される', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/1 open 対応中タスク {now}' },
+    });
+    const nowArea = screen.getByRole('region', { name: '作業中' });
+    expect(nowArea.textContent).toContain('対応中タスク');
+
+    const board = screen.getByRole('region', { name: 'カンバンボード' });
+    expect(board.textContent).toContain('対応中タスク');
+  });
+
+  it('作業中領域はカンバンボードより前（上）に表示される', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/1 open タイトル {now}' },
+    });
+    const nowArea = screen.getByRole('region', { name: '作業中' });
+    const board = screen.getByRole('region', { name: 'カンバンボード' });
+    expect(nowArea.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('コピーしたサマリに【作業中】が含まれる', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
+
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/1 open タイトル {now}' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'サマリをコピー' }));
+
+    await vi.waitFor(() => {
+      const text: string = writeText.mock.calls[0][0];
+      expect(text).toContain('【作業中】');
+      expect(text).toContain('・#1 タイトル');
+    });
   });
 
   it('コピーボタンを押すとクリップボードにサマリが書き込まれる', async () => {

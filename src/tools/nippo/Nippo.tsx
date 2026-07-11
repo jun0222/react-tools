@@ -4,17 +4,12 @@ import { useTheme } from '../../context/ThemeContext';
 import {
   parseEntries,
   buildSummary,
-  barPercent,
   fmtTimestamp,
-  GANTT_START_MIN,
-  GANTT_RANGE_MIN,
   type Status,
 } from './nippoCore';
 import './Nippo.css';
 
 const SK_TEXT = 'nippo-text';
-
-const GANTT_HOURS = [6, 8, 10, 12, 14, 16, 18, 20, 22, 24];
 
 const STATUS_LABEL: Record<Status, string> = {
   completed: '完了',
@@ -36,8 +31,7 @@ const Nippo = () => {
   const [copied, setCopied] = useState(false);
 
   const entries = parseEntries(text);
-  const timedEntries = entries.filter(e => e.startMin !== null);
-  const noTimeEntries = entries.filter(e => e.startMin === null);
+  const nowEntries = entries.filter(e => e.now);
 
   const handleTextChange = (v: string) => {
     setText(v);
@@ -69,6 +63,17 @@ const Nippo = () => {
       </div>
 
       <div className="np-body">
+        {nowEntries.length > 0 && (
+          <div className="np-now" role="region" aria-label="作業中">
+            <div className="np-now-header">作業中</div>
+            <div className="np-now-items">
+              {nowEntries.map((e, i) => (
+                <div key={i} className="np-now-item">・{e.label}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <textarea
           className="np-input"
           role="textbox"
@@ -77,54 +82,6 @@ const Nippo = () => {
           placeholder={'・朝会 9:00~9:30 完了\n・設計 10:00~11:30 進行中\n・タスク名（時刻なし）'}
           spellCheck={false}
         />
-
-        <div
-          className="np-gantt"
-          role="region"
-          aria-label="ガントチャート"
-        >
-          <div className="np-gantt-header">
-            {GANTT_HOURS.map(h => (
-              <span
-                key={h}
-                className="np-gantt-hour"
-                style={{ left: `${((h * 60 - GANTT_START_MIN) / GANTT_RANGE_MIN) * 100}%` }}
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-          <div className="np-gantt-rows">
-            {timedEntries.map((e, i) => {
-              const { left, width } = barPercent(e.startMin!, e.endMin!);
-              return (
-                <div key={i} className="np-gantt-row">
-                  <div
-                    className={`np-gantt-bar np-gantt-bar--${e.status}`}
-                    style={{ left: `${left}%`, width: `${Math.max(width, 0.4)}%` }}
-                    title={e.label}
-                  >
-                    <span className="np-gantt-bar-label">{e.label}</span>
-                  </div>
-                </div>
-              );
-            })}
-            {noTimeEntries.map((e, i) => (
-              <div key={`nt-${i}`} className="np-gantt-row">
-                <div
-                  className={`np-gantt-bar np-gantt-bar--${e.status} np-gantt-bar--no-time`}
-                  style={{ left: '0%', width: '100%' }}
-                  title={e.label}
-                >
-                  <span className="np-gantt-bar-label">{e.label}</span>
-                </div>
-              </div>
-            ))}
-            {entries.length === 0 && (
-              <div className="np-gantt-empty">エントリを入力するとここに表示されます</div>
-            )}
-          </div>
-        </div>
 
         <div
           className="np-summary"

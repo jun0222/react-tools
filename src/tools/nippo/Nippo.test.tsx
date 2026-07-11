@@ -76,13 +76,6 @@ describe('Nippo', () => {
     });
   });
 
-  it('時刻なしのエントリもガントチャートに表示される', () => {
-    renderNippo();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: '・タスク' } });
-    const gantt = screen.getByRole('region', { name: 'ガントチャート' });
-    expect(gantt.querySelector('.np-gantt-bar--no-time')).not.toBeNull();
-  });
-
   it('完了・進行中・未着手がサマリパネルに表示される', () => {
     renderNippo();
     fireEvent.change(screen.getByRole('textbox'), {
@@ -102,6 +95,49 @@ describe('Nippo', () => {
     expect(summary.textContent).toContain('完了');
     expect(summary.textContent).toContain('進行中');
     expect(summary.textContent).toContain('未着手');
+  });
+
+  it('{now}が付いたエントリがないときは作業中領域が表示されない', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '・朝会 完了' } });
+    expect(screen.queryByRole('region', { name: '作業中' })).not.toBeInTheDocument();
+  });
+
+  it('{now}が付いたエントリは作業中領域とサマリ両方に表示される', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・朝会 完了\n・設計 進行中 {now}' },
+    });
+    const nowArea = screen.getByRole('region', { name: '作業中' });
+    expect(nowArea.textContent).toContain('設計');
+
+    const summary = screen.getByRole('region', { name: 'サマリ' });
+    expect(summary.textContent).toContain('設計');
+  });
+
+  it('作業中領域はサマリより前（上）に表示される', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・設計 進行中 {now}' },
+    });
+    const nowArea = screen.getByRole('region', { name: '作業中' });
+    const summary = screen.getByRole('region', { name: 'サマリ' });
+    expect(nowArea.compareDocumentPosition(summary) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('コピーしたサマリに【作業中】が含まれる', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
+
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '・設計 進行中 {now}' } });
+    fireEvent.click(screen.getByRole('button', { name: 'サマリをコピー' }));
+
+    await vi.waitFor(() => {
+      const text: string = writeText.mock.calls[0][0];
+      expect(text).toContain('【作業中】');
+      expect(text).toContain('・設計');
+    });
   });
 
   it('コピーされたタイムスタンプに曜日が含まれる', async () => {

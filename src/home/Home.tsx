@@ -330,7 +330,7 @@ const tools: Tool[] = [
     name: 'Nippo',
     icon: <Newspaper size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
-    desc: '日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー',
+    desc: '日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー',
     tag: 'util',
   },
   {
@@ -402,7 +402,7 @@ const tools: Tool[] = [
     name: 'Githubhub',
     icon: <GitPullRequest size={20} color="white" />,
     iconBg: 'linear-gradient(135deg, #1a7f37, #24292f)',
-    desc: 'PRリンクを貼るとステータス別カンバンで可視化。依存関係の表示とステータス別サマリのコピーに対応',
+    desc: 'PRリンクを貼ると7段階（draft〜1次/2次レビュー・修正中〜merged）のカンバンで可視化。依存関係・作業中フラグに対応',
     tag: 'dev',
   },
 ];

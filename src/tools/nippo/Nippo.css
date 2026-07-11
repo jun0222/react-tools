@@ -81,6 +81,37 @@
   padding: 1rem 1.25rem;
 }
 
+/* ── Now (作業中) ── */
+.np-now {
+  background: #241d0d;
+  border: 1px solid #92640a;
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+}
+.np-root.light .np-now {
+  background: #fff8e6;
+  border-color: #eab308;
+}
+
+.np-now-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #eab308;
+  margin-bottom: 0.35rem;
+}
+
+.np-now-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.np-now-item {
+  font-size: 0.85rem;
+  color: #e0e0e0;
+}
+.np-root.light .np-now-item { color: #1a2030; }
+
 /* ── Input ── */
 .np-input {
   width: 100%;
@@ -119,108 +150,6 @@
 
 .np-root.light .np-input::placeholder {
   color: #aaa;
-}
-
-/* ── Gantt ── */
-.np-gantt {
-  background: #13131e;
-  border: 1px solid #1e1e2e;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.np-root.light .np-gantt {
-  background: #fff;
-  border-color: #dde1ea;
-}
-
-.np-gantt-header {
-  position: relative;
-  height: 20px;
-  border-bottom: 1px solid #1e1e2e;
-  background: #0d0d14;
-}
-
-.np-root.light .np-gantt-header {
-  background: #f4f6fa;
-  border-bottom-color: #dde1ea;
-}
-
-.np-gantt-hour {
-  position: absolute;
-  transform: translateX(-50%);
-  font-size: 0.6rem;
-  color: #555;
-  top: 4px;
-  pointer-events: none;
-  user-select: none;
-}
-
-.np-root.light .np-gantt-hour {
-  color: #999;
-}
-
-.np-gantt-rows {
-  padding: 0.4rem 0;
-  min-height: 28px;
-}
-
-.np-gantt-row {
-  position: relative;
-  height: 22px;
-  margin: 2px 0;
-}
-
-.np-gantt-bar {
-  position: absolute;
-  top: 2px;
-  height: 18px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  padding: 0 0.35rem;
-  overflow: hidden;
-  min-width: 6px;
-  box-sizing: border-box;
-}
-
-.np-gantt-bar--completed {
-  background: #16a34a;
-  opacity: 0.85;
-}
-
-.np-gantt-bar--in-progress {
-  background: #0284c7;
-  opacity: 0.85;
-}
-
-.np-gantt-bar--pending {
-  background: #4b5563;
-  opacity: 0.7;
-}
-
-.np-gantt-bar--no-time {
-  opacity: 0.4;
-}
-
-.np-gantt-bar-label {
-  font-size: 0.6rem;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1;
-}
-
-.np-gantt-empty {
-  text-align: center;
-  color: #444;
-  font-size: 0.75rem;
-  padding: 0.75rem;
-}
-
-.np-root.light .np-gantt-empty {
-  color: #bbb;
 }
 
 /* ── Summary ── */

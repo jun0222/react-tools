@@ -5,11 +5,8 @@ export interface NippoEntry {
   startMin: number | null;
   endMin: number | null;
   status: Status;
+  now: boolean;
 }
-
-export const GANTT_START_MIN = 6 * 60;
-export const GANTT_END_MIN = 24 * 60;
-export const GANTT_RANGE_MIN = GANTT_END_MIN - GANTT_START_MIN;
 
 const TIME_RE = /(\d{1,2}:\d{2})~(\d{1,2}:\d{2})/;
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -37,6 +34,13 @@ export const parseEntries = (text: string): NippoEntry[] =>
     .map(line => {
       let content = line.trimStart().slice(1).trim();
 
+      let now = false;
+      const nowMatch = content.match(/[{｛]now[}｝]/);
+      if (nowMatch) {
+        now = true;
+        content = content.replace(nowMatch[0], '').trim();
+      }
+
       let startMin: number | null = null;
       let endMin: number | null = null;
       const m = content.match(TIME_RE);
@@ -57,16 +61,8 @@ export const parseEntries = (text: string): NippoEntry[] =>
         content = content.slice(0, -3).trim();
       }
 
-      return { label: content, startMin, endMin, status };
+      return { label: content, startMin, endMin, status, now };
     });
-
-export const barPercent = (
-  startMin: number,
-  endMin: number,
-): { left: number; width: number } => ({
-  left: ((startMin - GANTT_START_MIN) / GANTT_RANGE_MIN) * 100,
-  width: ((endMin - startMin) / GANTT_RANGE_MIN) * 100,
-});
 
 export const buildSummary = (entries: NippoEntry[], timestamp: string): string => {
   const groups: Record<Status, string[]> = { completed: [], 'in-progress': [], pending: [] };
@@ -80,5 +76,11 @@ export const buildSummary = (entries: NippoEntry[], timestamp: string): string =
   const completed = groups.completed.length
     ? `【完了】\n${groups.completed.join('\n')}`
     : '【完了】\nなし';
-  return [timestamp, completed, inProgress, pending].join('\n\n');
+
+  const nowEntries = entries.filter(e => e.now);
+  const nowSection = nowEntries.length
+    ? [`【作業中】\n${nowEntries.map(e => `・${e.label}`).join('\n')}`]
+    : [];
+
+  return [timestamp, ...nowSection, completed, inProgress, pending].join('\n\n');
 };

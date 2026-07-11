@@ -12,7 +12,7 @@ describe('parseEntries', () => {
 
   it('URLのみの行はdraft扱いでタイトルなしになる', () => {
     expect(parseEntries('・https://github.com/org/repo/pull/123')).toEqual([
-      { url: 'https://github.com/org/repo/pull/123', number: 123, status: 'draft', title: '', dependsOn: null, repo: 'repo' },
+      { url: 'https://github.com/org/repo/pull/123', number: 123, status: 'draft', title: '', dependsOn: null, repo: 'repo', now: false },
     ]);
   });
 
@@ -28,8 +28,8 @@ describe('parseEntries', () => {
   });
 
   it('URL + ステータス + タイトルが反映される', () => {
-    const [e] = parseEntries('・https://github.com/org/repo/pull/45 review ログイン修正');
-    expect(e.status).toBe('review');
+    const [e] = parseEntries('・https://github.com/org/repo/pull/45 review1 ログイン修正');
+    expect(e.status).toBe('review1');
     expect(e.title).toBe('ログイン修正');
   });
 
@@ -50,6 +50,12 @@ describe('parseEntries', () => {
     expect(e.status).toBe('merged');
   });
 
+  it('fix1/review2/fix2も解釈できる', () => {
+    expect(parseEntries('・https://github.com/org/repo/pull/1 fix1')[0].status).toBe('fix1');
+    expect(parseEntries('・https://github.com/org/repo/pull/2 review2')[0].status).toBe('review2');
+    expect(parseEntries('・https://github.com/org/repo/pull/3 fix2')[0].status).toBe('fix2');
+  });
+
   it('依存指定がない行はdependsOnがnullになる', () => {
     const [e] = parseEntries('・https://github.com/org/repo/pull/1 open');
     expect(e.dependsOn).toBeNull();
@@ -61,6 +67,24 @@ describe('parseEntries', () => {
     );
     expect(entries.map(e => e.number)).toEqual([1, 2]);
   });
+
+  it('行末の{now}で作業中フラグがtrueになる', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open タイトル {now}');
+    expect(e.now).toBe(true);
+    expect(e.title).toBe('タイトル');
+  });
+
+  it('{now}がない場合はfalseになる', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open');
+    expect(e.now).toBe(false);
+  });
+
+  it('{依存}と{now}が両方あっても正しく解析される', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open タイトル {依存:#5} {now}');
+    expect(e.dependsOn).toBe(5);
+    expect(e.now).toBe(true);
+    expect(e.title).toBe('タイトル');
+  });
 });
 
 describe('buildSummary', () => {
@@ -69,30 +93,33 @@ describe('buildSummary', () => {
     expect(result).toContain('07/08 12:00');
     expect(result).toContain('【Draft】');
     expect(result).toContain('【Open】');
-    expect(result).toContain('【Review中】');
+    expect(result).toContain('【1次レビューまち】');
+    expect(result).toContain('【1次修正中】');
+    expect(result).toContain('【2次レビューまち】');
+    expect(result).toContain('【2次修正中】');
     expect(result).toContain('【Merged】');
   });
 
-  it('merged→review→open→draftの順で出力される', () => {
+  it('merged→fix2→review2→fix1→review1→open→draftの順で出力される', () => {
+    const mk = (n: number, status: Parameters<typeof buildSummary>[0][number]['status']) =>
+      ({ url: `u${n}`, number: n, status, title: '', dependsOn: null, repo: 'r', now: false });
     const entries = [
-      { url: 'u1', number: 1, status: 'draft' as const, title: '', dependsOn: null, repo: 'r' },
-      { url: 'u2', number: 2, status: 'open' as const, title: '', dependsOn: null, repo: 'r' },
-      { url: 'u3', number: 3, status: 'review' as const, title: '', dependsOn: null, repo: 'r' },
-      { url: 'u4', number: 4, status: 'merged' as const, title: '', dependsOn: null, repo: 'r' },
+      mk(1, 'draft'), mk(2, 'open'), mk(3, 'review1'), mk(4, 'fix1'),
+      mk(5, 'review2'), mk(6, 'fix2'), mk(7, 'merged'),
     ];
     const result = buildSummary(entries, '07/08 12:00');
-    const idxMerged = result.indexOf('【Merged】');
-    const idxReview = result.indexOf('【Review中】');
-    const idxOpen = result.indexOf('【Open】');
-    const idxDraft = result.indexOf('【Draft】');
-    expect(idxMerged).toBeLessThan(idxReview);
-    expect(idxReview).toBeLessThan(idxOpen);
-    expect(idxOpen).toBeLessThan(idxDraft);
+    const idx = (label: string) => result.indexOf(label);
+    expect(idx('【Merged】')).toBeLessThan(idx('【2次修正中】'));
+    expect(idx('【2次修正中】')).toBeLessThan(idx('【2次レビューまち】'));
+    expect(idx('【2次レビューまち】')).toBeLessThan(idx('【1次修正中】'));
+    expect(idx('【1次修正中】')).toBeLessThan(idx('【1次レビューまち】'));
+    expect(idx('【1次レビューまち】')).toBeLessThan(idx('【Open】'));
+    expect(idx('【Open】')).toBeLessThan(idx('【Draft】'));
   });
 
   it('タイトルがある場合は番号とタイトルが両方出力される', () => {
     const entries = [
-      { url: 'u1', number: 5, status: 'open' as const, title: 'ログイン修正', dependsOn: null, repo: 'r' },
+      { url: 'u1', number: 5, status: 'open' as const, title: 'ログイン修正', dependsOn: null, repo: 'r', now: false },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).toContain('・#5 ログイン修正');
@@ -100,11 +127,30 @@ describe('buildSummary', () => {
 
   it('タイトルがない場合は番号のみ出力される', () => {
     const entries = [
-      { url: 'u1', number: 5, status: 'open' as const, title: '', dependsOn: null, repo: 'r' },
+      { url: 'u1', number: 5, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).toContain('・#5');
     expect(result).not.toContain('・#5 ');
+  });
+
+  it('nowのエントリがあると【作業中】セクションが先頭に出力される', () => {
+    const entries = [
+      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
+      { url: 'u2', number: 2, status: 'fix1' as const, title: '修正対応', dependsOn: null, repo: 'r', now: true },
+    ];
+    const result = buildSummary(entries, '07/08 12:00');
+    expect(result).toContain('【作業中】');
+    expect(result.indexOf('【作業中】')).toBeLessThan(result.indexOf('【Merged】'));
+    expect(result.indexOf('・#2 修正対応')).toBeLessThan(result.indexOf('【Merged】'));
+  });
+
+  it('nowのエントリがない場合は【作業中】セクションを出力しない', () => {
+    const entries = [
+      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
+    ];
+    const result = buildSummary(entries, '07/08 12:00');
+    expect(result).not.toContain('【作業中】');
   });
 });
 

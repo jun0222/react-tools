@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { GitPullRequest, HelpCircle, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors, type PrStatus } from './githubhubCore';
+import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors, type PrEntry, type PrStatus } from './githubhubCore';
 import './Githubhub.css';
 
 const SK_TEXT = 'githubhub-text';
@@ -9,7 +9,10 @@ const SK_TEXT = 'githubhub-text';
 const COLUMNS: { status: PrStatus; label: string }[] = [
   { status: 'draft', label: 'Draft' },
   { status: 'open', label: 'Open' },
-  { status: 'review', label: 'Review中' },
+  { status: 'review1', label: '1次レビューまち' },
+  { status: 'fix1', label: '1次修正中' },
+  { status: 'review2', label: '2次レビューまち' },
+  { status: 'fix2', label: '2次修正中' },
   { status: 'merged', label: 'Merged' },
 ];
 
@@ -27,8 +30,43 @@ const Githubhub = () => {
   const [showHelp, setShowHelp] = useState(false);
 
   const entries = parseEntries(text);
+  const nowEntries = entries.filter(e => e.now);
   const findByNumber = (n: number) => entries.find(e => e.number === n);
   const repoColors = assignRepoColors(entries.map(e => e.repo), dark);
+
+  const renderCard = (e: PrEntry): ReactNode => (
+    <div
+      key={e.number}
+      className={`gh-card gh-card--${e.status}`}
+      onClick={() => window.open(e.url, '_blank', 'noopener,noreferrer')}
+    >
+      <span className="gh-card-title">
+        <span
+          className="gh-repo-badge"
+          style={{ backgroundColor: repoColors[e.repo] }}
+        >
+          {e.repo}
+        </span>
+        {' '}#{e.number}{e.title ? ` ${e.title}` : ''}
+      </span>
+      {e.dependsOn !== null && (() => {
+        const dep = findByNumber(e.dependsOn);
+        return dep ? (
+          <a
+            className="gh-dep-badge"
+            href={dep.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={ev => ev.stopPropagation()}
+          >
+            → #{e.dependsOn}
+          </a>
+        ) : (
+          <span className="gh-dep-badge gh-dep-badge--plain">→ #{e.dependsOn}</span>
+        );
+      })()}
+    </div>
+  );
 
   const handleTextChange = (v: string) => {
     setText(v);
@@ -68,9 +106,18 @@ const Githubhub = () => {
           className="gh-input"
           value={text}
           onChange={e => handleTextChange(e.target.value)}
-          placeholder={'・https://github.com/org/repo/pull/123 open タイトル {依存:#120}'}
+          placeholder={'・https://github.com/org/repo/pull/123 open タイトル {依存:#120} {now}'}
           spellCheck={false}
         />
+
+        {nowEntries.length > 0 && (
+          <div className="gh-now" role="region" aria-label="作業中">
+            <div className="gh-now-header">作業中</div>
+            <div className="gh-now-items">
+              {nowEntries.map(e => renderCard(e))}
+            </div>
+          </div>
+        )}
 
         <div className="gh-board" role="region" aria-label="カンバンボード">
           {COLUMNS.map(col => {
@@ -82,39 +129,7 @@ const Githubhub = () => {
                   <span className="gh-column-count">{items.length}</span>
                 </div>
                 <div className="gh-column-body">
-                  {items.map(e => (
-                    <div
-                      key={e.number}
-                      className={`gh-card gh-card--${e.status}`}
-                      onClick={() => window.open(e.url, '_blank', 'noopener,noreferrer')}
-                    >
-                      <span className="gh-card-title">
-                        <span
-                          className="gh-repo-badge"
-                          style={{ backgroundColor: repoColors[e.repo] }}
-                        >
-                          {e.repo}
-                        </span>
-                        {' '}#{e.number}{e.title ? ` ${e.title}` : ''}
-                      </span>
-                      {e.dependsOn !== null && (() => {
-                        const dep = findByNumber(e.dependsOn);
-                        return dep ? (
-                          <a
-                            className="gh-dep-badge"
-                            href={dep.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={ev => ev.stopPropagation()}
-                          >
-                            → #{e.dependsOn}
-                          </a>
-                        ) : (
-                          <span className="gh-dep-badge gh-dep-badge--plain">→ #{e.dependsOn}</span>
-                        );
-                      })()}
-                    </div>
-                  ))}
+                  {items.map(e => renderCard(e))}
                   {items.length === 0 && <div className="gh-column-empty">なし</div>}
                 </div>
               </div>
@@ -145,17 +160,18 @@ const Githubhub = () => {
             <div className="gh-modal-body">
               <p>1行につき1件、先頭に「・」を付けて入力します。</p>
               <pre className="gh-modal-code">
-・URL [ステータス] [タイトル] [{'{'}依存:#番号{'}'}]
+・URL [ステータス] [タイトル] [{'{'}依存:#番号{'}'}] [{'{'}now{'}'}]
               </pre>
               <ul>
                 <li><strong>URL</strong>: GitHubのPRリンク（必須）。末尾の番号を自動で抽出します</li>
-                <li><strong>ステータス</strong>: draft / open / review / merged（省略時はdraft）</li>
+                <li><strong>ステータス</strong>: draft / open / review1 / fix1 / review2 / fix2 / merged（省略時はdraft）</li>
                 <li><strong>タイトル</strong>: 任意。付けるとカードに番号と一緒に表示されます</li>
                 <li><strong>依存</strong>: <code>{'{'}依存:#120{'}'}</code> の形式で1件だけ指定可能。リスト内に該当PRがあればリンクになります</li>
+                <li><strong>作業中</strong>: <code>{'{'}now{'}'}</code> を付けると、ステータスに関わらず上部の「作業中」欄にも表示されます</li>
               </ul>
               <p className="gh-modal-example-label">例:</p>
               <pre className="gh-modal-code">
-・https://github.com/org/repo/pull/123 review ログイン修正 {'{'}依存:#120{'}'}
+・https://github.com/org/repo/pull/123 review1 ログイン修正 {'{'}依存:#120{'}'} {'{'}now{'}'}
               </pre>
             </div>
           </div>

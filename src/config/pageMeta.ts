@@ -158,7 +158,7 @@ export const PAGE_META: Record<string, PageMeta> = {
   },
   '/nippo': {
     title: 'Nippo - 日報 📰',
-    description: '日報エントリを入力してガントチャートで可視化。ステータス別サマリをワンクリックでコピー。',
+    description: '日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー。',
   },
   '/grok': {
     title: 'Grok - 暗記レス理解 🧠',
@@ -194,6 +194,6 @@ export const PAGE_META: Record<string, PageMeta> = {
   },
   '/githubhub': {
     title: 'Githubhub - PRカンバン 🔀',
-    description: 'GitHub PRのリンクをテキストで貼るとステータス別カンバンボードで可視化。依存関係の表示とステータス別サマリのコピーに対応。',
+    description: 'GitHub PRのリンクをテキストで貼るとdraft/open/1次・2次レビューまち/修正中/mergedの7列カンバンで可視化。依存関係・作業中フラグ・サマリコピーに対応。',
   },
 };

@@ -1,4 +1,4 @@
-export type PrStatus = 'draft' | 'open' | 'review' | 'merged';
+export type PrStatus = 'draft' | 'open' | 'review1' | 'fix1' | 'review2' | 'fix2' | 'merged';
 
 export interface PrEntry {
   url: string;
@@ -7,9 +7,10 @@ export interface PrEntry {
   title: string;
   dependsOn: number | null;
   repo: string;
+  now: boolean;
 }
 
-const STATUS_KEYWORDS: readonly PrStatus[] = ['draft', 'open', 'review', 'merged'];
+const STATUS_KEYWORDS: readonly PrStatus[] = ['draft', 'open', 'review1', 'fix1', 'review2', 'fix2', 'merged'];
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
@@ -29,6 +30,13 @@ export const parseEntries = (text: string): PrEntry[] =>
     .filter(line => line.trimStart().startsWith('・'))
     .map(line => {
       let content = line.trimStart().slice(1).trim();
+
+      let now = false;
+      const nowMatch = content.match(/[{｛]now[}｝]/);
+      if (nowMatch) {
+        now = true;
+        content = content.replace(nowMatch[0], '').trim();
+      }
 
       let dependsOn: number | null = null;
       const depMatch = content.match(/[{｛]依存:#(\d+)[}｝]/);
@@ -57,21 +65,26 @@ export const parseEntries = (text: string): PrEntry[] =>
 
       const title = tokens.join(' ');
 
-      return { url, number, status, title, dependsOn, repo };
+      return { url, number, status, title, dependsOn, repo, now };
     })
     .filter(e => e.url !== '');
 
 const STATUS_LABEL: Record<PrStatus, string> = {
   draft: 'Draft',
   open: 'Open',
-  review: 'Review中',
+  review1: '1次レビューまち',
+  fix1: '1次修正中',
+  review2: '2次レビューまち',
+  fix2: '2次修正中',
   merged: 'Merged',
 };
 
-const SUMMARY_ORDER: readonly PrStatus[] = ['merged', 'review', 'open', 'draft'];
+const SUMMARY_ORDER: readonly PrStatus[] = ['merged', 'fix2', 'review2', 'fix1', 'review1', 'open', 'draft'];
 
 export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
-  const groups: Record<PrStatus, string[]> = { draft: [], open: [], review: [], merged: [] };
+  const groups: Record<PrStatus, string[]> = {
+    draft: [], open: [], review1: [], fix1: [], review2: [], fix2: [], merged: [],
+  };
   for (const e of entries) {
     groups[e.status].push(e.title ? `・#${e.number} ${e.title}` : `・#${e.number}`);
   }
@@ -83,7 +96,12 @@ export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
       : `【${label}】\nなし`;
   });
 
-  return [timestamp, ...sections].join('\n\n');
+  const nowEntries = entries.filter(e => e.now);
+  const nowSection = nowEntries.length
+    ? [`【作業中】\n${nowEntries.map(e => (e.title ? `・#${e.number} ${e.title}` : `・#${e.number}`)).join('\n')}`]
+    : [];
+
+  return [timestamp, ...nowSection, ...sections].join('\n\n');
 };
 
 // dataviz skill 検証済みカテゴリカルパレット（固定順）
