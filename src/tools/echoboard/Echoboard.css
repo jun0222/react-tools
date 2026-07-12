@@ -1,0 +1,96 @@
+.eb-root {
+  min-height: 100vh;
+  background: #0d0d14;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+.eb-root.light { background: #f4f6fa; color: #1a2030; }
+
+.eb-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: #13131e;
+  border-bottom: 1px solid #1e1e2e;
+  flex-wrap: wrap;
+}
+.eb-root.light .eb-header { background: #fff; border-bottom-color: #dde1ea; }
+
+.eb-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.eb-header h1 { font-size: 1.1rem; font-weight: 700; flex: 1; }
+.eb-accent { color: #06b6d4; }
+
+.eb-clear-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #aaa;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.eb-clear-btn:hover:not(:disabled) { background: #1e1e2e; color: #e0e0e0; }
+.eb-clear-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.eb-root.light .eb-clear-btn { border-color: #ccc; color: #666; }
+.eb-root.light .eb-clear-btn:hover:not(:disabled) { background: #eef1f6; color: #1a2030; }
+
+.eb-body { flex: 1; display: flex; flex-direction: column; gap: 1rem; padding: 1rem 1.25rem; }
+
+.eb-input {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.75rem 1rem;
+  background: #13131e;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+.eb-input:focus { border-color: #06b6d4; }
+.eb-root.light .eb-input { background: #fff; border-color: #dde1ea; color: #1a2030; }
+.eb-input::placeholder { color: #555; }
+.eb-root.light .eb-input::placeholder { color: #aaa; }
+
+.eb-display {
+  flex: 1;
+  background: #13131e;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow: auto;
+}
+.eb-root.light .eb-display { background: #fff; border-color: #dde1ea; }
+
+.eb-display-text {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e0e0e0;
+}
+.eb-root.light .eb-display-text { color: #1a2030; }
+
+.eb-display-empty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+.eb-root.light .eb-display-empty { color: #aaa; }

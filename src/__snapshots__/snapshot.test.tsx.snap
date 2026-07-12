@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        40
+        41
          tool
         s
          available
@@ -2511,6 +2511,55 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/echoboard"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-volume2 lucide-volume-2"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+              />
+              <path
+                d="M16 9a5 5 0 0 1 0 6"
+              />
+              <path
+                d="M19.364 18.364a9 9 0 0 0 0-12.728"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Echoboard
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テキストを貼り付けるとDOMにそのまま反映。読み上げアプリ等での利用を想定
           </div>
           <span
             class="home-card-tag"
@@ -2541,7 +2590,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        40
+        41
          tool
         s
          available
@@ -4833,6 +4882,55 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             日報エントリを入力してステータス別に可視化。{now}で作業中を上部に表示、サマリはワンクリックでコピー
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            util
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/echoboard"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-volume2 lucide-volume-2"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+              />
+              <path
+                d="M16 9a5 5 0 0 1 0 6"
+              />
+              <path
+                d="M19.364 18.364a9 9 0 0 0 0-12.728"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Echoboard
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            テキストを貼り付けるとDOMにそのまま反映。読み上げアプリ等での利用を想定
           </div>
           <span
             class="home-card-tag"

@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers, Split, GitPullRequest,
+  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -404,6 +404,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #1a7f37, #24292f)',
     desc: 'PRリンクを貼ると7段階（draft〜1次/2次レビュー・修正中〜merged）のカンバンで可視化。依存関係・作業中フラグに対応',
     tag: 'dev',
+  },
+  {
+    path: '/echoboard',
+    name: 'Echoboard',
+    icon: <Volume2 size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+    desc: 'テキストを貼り付けるとDOMにそのまま反映。読み上げアプリ等での利用を想定',
+    tag: 'util',
   },
 ];
 

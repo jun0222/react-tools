@@ -196,4 +196,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Githubhub - PRカンバン 🔀',
     description: 'GitHub PRのリンクをテキストで貼るとdraft/open/1次・2次レビューまち/修正中/mergedの7列カンバンで可視化。依存関係・作業中フラグ・サマリコピーに対応。',
   },
+  '/echoboard': {
+    title: 'Echoboard - 読み上げ用テキスト表示 🔊',
+    description: 'テキストを貼り付けるとDOMにそのまま反映するツール。読み上げアプリ等での利用を想定。',
+  },
 };

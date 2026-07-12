@@ -52,6 +52,7 @@ import Shakyo from './tools/shakyo/Shakyo';
 import Canned from './tools/canned/Canned';
 import Rederive from './tools/rederive/Rederive';
 import Githubhub from './tools/githubhub/Githubhub';
+import Echoboard from './tools/echoboard/Echoboard';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -119,6 +120,7 @@ function App() {
             <Route path="/canned" element={<Canned />} />
             <Route path="/rederive" element={<Rederive />} />
             <Route path="/githubhub" element={<Githubhub />} />
+            <Route path="/echoboard" element={<Echoboard />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>
