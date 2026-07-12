@@ -139,7 +139,7 @@ describe('Githubhub', () => {
     expect(nowArea.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it('コピーしたサマリに【作業中】が含まれる', async () => {
+  it('コピーしたサマリには【作業中】セクションを含めない', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
 
@@ -151,7 +151,7 @@ describe('Githubhub', () => {
 
     await vi.waitFor(() => {
       const text: string = writeText.mock.calls[0][0];
-      expect(text).toContain('【作業中】');
+      expect(text).not.toContain('【作業中】');
       expect(text).toContain('・#1 タイトル');
     });
   });

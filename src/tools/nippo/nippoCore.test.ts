@@ -132,18 +132,17 @@ describe('buildSummary', () => {
     expect(result).toContain('07/01 13:45');
   });
 
-  it('nowのエントリがあると【作業中】セクションが先頭に出力される', () => {
+  it('nowのエントリがあってもサマリに【作業中】セクションは出力されない', () => {
     const entries = [
       { label: '朝会', startMin: 540, endMin: 570, status: 'completed' as const, now: false },
       { label: '設計', startMin: 600, endMin: 690, status: 'in-progress' as const, now: true },
     ];
     const result = buildSummary(entries, '07/01 01:11');
-    expect(result).toContain('【作業中】');
-    expect(result.indexOf('【作業中】')).toBeLessThan(result.indexOf('【完了】'));
-    expect(result.indexOf('・設計')).toBeLessThan(result.indexOf('【完了】'));
+    expect(result).not.toContain('【作業中】');
+    expect(result).toContain('・設計');
   });
 
-  it('nowのエントリがない場合は【作業中】セクションを出力しない', () => {
+  it('nowのエントリがない場合も同様に出力しない', () => {
     const entries = [
       { label: '朝会', startMin: 540, endMin: 570, status: 'completed' as const, now: false },
     ];

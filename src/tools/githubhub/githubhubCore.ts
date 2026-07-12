@@ -96,12 +96,7 @@ export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
       : `【${label}】\nなし`;
   });
 
-  const nowEntries = entries.filter(e => e.now);
-  const nowSection = nowEntries.length
-    ? [`【作業中】\n${nowEntries.map(e => (e.title ? `・#${e.number} ${e.title}` : `・#${e.number}`)).join('\n')}`]
-    : [];
-
-  return [timestamp, ...nowSection, ...sections].join('\n\n');
+  return [timestamp, ...sections].join('\n\n');
 };
 
 // dataviz skill 検証済みカテゴリカルパレット（固定順）

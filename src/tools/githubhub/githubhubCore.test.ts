@@ -134,18 +134,17 @@ describe('buildSummary', () => {
     expect(result).not.toContain('・#5 ');
   });
 
-  it('nowのエントリがあると【作業中】セクションが先頭に出力される', () => {
+  it('nowのエントリがあってもサマリに【作業中】セクションは出力されない', () => {
     const entries = [
       { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
       { url: 'u2', number: 2, status: 'fix1' as const, title: '修正対応', dependsOn: null, repo: 'r', now: true },
     ];
     const result = buildSummary(entries, '07/08 12:00');
-    expect(result).toContain('【作業中】');
-    expect(result.indexOf('【作業中】')).toBeLessThan(result.indexOf('【Merged】'));
-    expect(result.indexOf('・#2 修正対応')).toBeLessThan(result.indexOf('【Merged】'));
+    expect(result).not.toContain('【作業中】');
+    expect(result).toContain('・#2 修正対応');
   });
 
-  it('nowのエントリがない場合は【作業中】セクションを出力しない', () => {
+  it('nowのエントリがない場合も同様に出力しない', () => {
     const entries = [
       { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
     ];
