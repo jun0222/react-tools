@@ -100,6 +100,18 @@ describe('buildSummary', () => {
     expect(result).toContain('【Merged】');
   });
 
+  it('先頭と末尾がコードフェンス(```)で囲まれる', () => {
+    const result = buildSummary([], '07/08 12:00');
+    const lines = result.split('\n');
+    expect(lines[0]).toBe('```');
+    expect(lines[lines.length - 1]).toBe('```');
+  });
+
+  it('日付の行の先頭に【Github PR】が付く', () => {
+    const result = buildSummary([], '07/08 12:00');
+    expect(result).toContain('【Github PR】07/08 12:00');
+  });
+
   it('merged→fix2→review2→fix1→review1→open→draftの順で出力される', () => {
     const mk = (n: number, status: Parameters<typeof buildSummary>[0][number]['status']) =>
       ({ url: `u${n}`, number: n, status, title: '', dependsOn: null, repo: 'r', now: false });

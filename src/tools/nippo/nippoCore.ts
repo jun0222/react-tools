@@ -77,5 +77,6 @@ export const buildSummary = (entries: NippoEntry[], timestamp: string): string =
     ? `【完了】\n${groups.completed.join('\n')}`
     : '【完了】\nなし';
 
-  return [timestamp, completed, inProgress, pending].join('\n\n');
+  const body = [`【タスク】${timestamp}`, completed, inProgress, pending].join('\n\n');
+  return ['```', body, '```'].join('\n');
 };

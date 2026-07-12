@@ -96,7 +96,8 @@ export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
       : `【${label}】\nなし`;
   });
 
-  return [timestamp, ...sections].join('\n\n');
+  const body = [`【Github PR】${timestamp}`, ...sections].join('\n\n');
+  return ['```', body, '```'].join('\n');
 };
 
 // dataviz skill 検証済みカテゴリカルパレット（固定順）

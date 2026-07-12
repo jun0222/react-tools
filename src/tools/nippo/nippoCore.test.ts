@@ -132,6 +132,18 @@ describe('buildSummary', () => {
     expect(result).toContain('07/01 13:45');
   });
 
+  it('先頭と末尾がコードフェンス(```)で囲まれる', () => {
+    const result = buildSummary([], '07/01 13:45');
+    const lines = result.split('\n');
+    expect(lines[0]).toBe('```');
+    expect(lines[lines.length - 1]).toBe('```');
+  });
+
+  it('日付の行の先頭に【タスク】が付く', () => {
+    const result = buildSummary([], '07/01 13:45');
+    expect(result).toContain('【タスク】07/01 13:45');
+  });
+
   it('nowのエントリがあってもサマリに【作業中】セクションは出力されない', () => {
     const entries = [
       { label: '朝会', startMin: 540, endMin: 570, status: 'completed' as const, now: false },
