@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2,
+  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2, BookText,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -412,6 +412,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
     desc: 'テキストを貼り付けるとDOMにそのまま反映。読み上げアプリ等での利用を想定',
     tag: 'util',
+  },
+  {
+    path: '/story',
+    name: 'Story',
+    icon: <BookText size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #f472b6, #a855f7)',
+    desc: '設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使える',
+    tag: 'prompt',
   },
 ];
 

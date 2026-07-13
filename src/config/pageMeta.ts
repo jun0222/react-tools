@@ -200,4 +200,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Echoboard - 読み上げ用テキスト表示 🔊',
     description: 'テキストを貼り付けるとDOMにそのまま反映するツール。読み上げアプリ等での利用を想定。',
   },
+  '/story': {
+    title: 'Story - 物語化プロンプト 📖',
+    description: '設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使えるLLMプロンプトを作成。',
+  },
 };

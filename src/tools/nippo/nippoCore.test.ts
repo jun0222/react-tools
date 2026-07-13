@@ -132,11 +132,9 @@ describe('buildSummary', () => {
     expect(result).toContain('07/01 13:45');
   });
 
-  it('先頭と末尾がコードフェンス(```)で囲まれる', () => {
+  it('コードフェンス(```)では囲まれない', () => {
     const result = buildSummary([], '07/01 13:45');
-    const lines = result.split('\n');
-    expect(lines[0]).toBe('```');
-    expect(lines[lines.length - 1]).toBe('```');
+    expect(result).not.toContain('```');
   });
 
   it('日付の行の先頭に【タスク】が付く', () => {

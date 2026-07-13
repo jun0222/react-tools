@@ -53,6 +53,7 @@ import Canned from './tools/canned/Canned';
 import Rederive from './tools/rederive/Rederive';
 import Githubhub from './tools/githubhub/Githubhub';
 import Echoboard from './tools/echoboard/Echoboard';
+import Story from './tools/story/Story';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -121,6 +122,7 @@ function App() {
             <Route path="/rederive" element={<Rederive />} />
             <Route path="/githubhub" element={<Githubhub />} />
             <Route path="/echoboard" element={<Echoboard />} />
+            <Route path="/story" element={<Story />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

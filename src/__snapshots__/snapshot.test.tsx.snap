@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        41
+        42
          tool
         s
          available
@@ -938,6 +938,55 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-desc"
           >
             概念を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/story"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f472b6, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-text"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"
+              />
+              <path
+                d="M8 11h8"
+              />
+              <path
+                d="M8 7h6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Story
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使える
           </div>
           <span
             class="home-card-tag"
@@ -2590,7 +2639,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        41
+        42
          tool
         s
          available
@@ -3309,6 +3358,55 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-desc"
           >
             概念を入力すると、問題意識・原理からの構築・再構築の道筋でゼロから理解するプロンプトを生成
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            prompt
+          </span>
+        </a>
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/story"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #f472b6, #a855f7);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-text"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"
+              />
+              <path
+                d="M8 11h8"
+              />
+              <path
+                d="M8 7h6"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Story
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使える
           </div>
           <span
             class="home-card-tag"
