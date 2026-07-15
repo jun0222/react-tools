@@ -1,0 +1,106 @@
+.ib-root {
+  min-height: 100vh;
+  background: #0d0d14;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.15s;
+}
+.ib-root.light { background: #f4f6fa; color: #1a2030; }
+
+.ib-root.ib-flash { background: #2a1a3d; }
+.ib-root.light.ib-flash { background: #ffe9f7; }
+
+.ib-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: #13131e;
+  border-bottom: 1px solid #1e1e2e;
+}
+.ib-root.light .ib-header { background: #fff; border-bottom-color: #dde1ea; }
+
+.ib-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ib-header h1 { font-size: 1.1rem; font-weight: 700; }
+.ib-accent { color: #a855f7; }
+
+.ib-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.ib-interval-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+.ib-root.light .ib-interval-label { color: #666; }
+
+.ib-interval-input {
+  width: 5rem;
+  padding: 0.4rem 0.6rem;
+  background: #13131e;
+  border: 1px solid #1e1e2e;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+}
+.ib-interval-input:focus { border-color: #a855f7; }
+.ib-interval-input:disabled { opacity: 0.5; }
+.ib-root.light .ib-interval-input { background: #fff; border-color: #dde1ea; color: #1a2030; }
+
+.ib-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ib-cycle-time {
+  font-size: 5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ib-beep-count {
+  font-size: 1.1rem;
+  color: #aaa;
+}
+.ib-root.light .ib-beep-count { color: #666; }
+
+.ib-controls { display: flex; gap: 1rem; }
+
+.ib-start-btn, .ib-stop-btn {
+  padding: 0.75rem 2.5rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.ib-start-btn { background: #a855f7; color: #fff; }
+.ib-start-btn:hover { opacity: 0.85; }
+.ib-stop-btn { background: #e34948; color: #fff; }
+.ib-stop-btn:hover { opacity: 0.85; }

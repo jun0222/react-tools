@@ -219,7 +219,7 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
         </span>
       </h1>
       <p>
-        42
+        43
          tool
         s
          available
@@ -2614,6 +2614,67 @@ exports[`UI スナップショット > Home > ダークモード 1`] = `
             class="home-card-tag"
           >
             util
+          </span>
+        </a>
+      </div>
+    </section>
+    <section
+      aria-label="読む"
+      class="home-group"
+      role="region"
+    >
+      <h2
+        class="home-group-title"
+      >
+        読む
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/intervalbell"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #ec4899);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bell"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.268 21a2 2 0 0 0 3.464 0"
+              />
+              <path
+                d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Intervalbell
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            read
           </span>
         </a>
       </div>
@@ -2639,7 +2700,7 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
         </span>
       </h1>
       <p>
-        42
+        43
          tool
         s
          available
@@ -5034,6 +5095,67 @@ exports[`UI スナップショット > Home > ライトモード 1`] = `
             class="home-card-tag"
           >
             util
+          </span>
+        </a>
+      </div>
+    </section>
+    <section
+      aria-label="読む"
+      class="home-group"
+      role="region"
+    >
+      <h2
+        class="home-group-title"
+      >
+        読む
+      </h2>
+      <div
+        class="home-grid"
+      >
+        <a
+          class="home-card"
+          data-discover="true"
+          href="/intervalbell"
+        >
+          <div
+            class="home-card-icon"
+            style="background: linear-gradient(135deg, #a855f7, #ec4899);"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-bell"
+              fill="none"
+              height="20"
+              stroke="white"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.268 21a2 2 0 0 0 3.464 0"
+              />
+              <path
+                d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"
+              />
+            </svg>
+          </div>
+          <div
+            class="home-card-name"
+          >
+            Intervalbell
+          </div>
+          <div
+            class="home-card-desc"
+          >
+            指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに
+          </div>
+          <span
+            class="home-card-tag"
+          >
+            read
           </span>
         </a>
       </div>

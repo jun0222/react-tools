@@ -204,4 +204,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Story - 物語化プロンプト 📖',
     description: '設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使えるLLMプロンプトを作成。',
   },
+  '/intervalbell': {
+    title: 'Intervalbell - 反復ビープタイマー 🔔',
+    description: '指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに使える。',
+  },
 };

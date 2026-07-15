@@ -54,6 +54,7 @@ import Rederive from './tools/rederive/Rederive';
 import Githubhub from './tools/githubhub/Githubhub';
 import Echoboard from './tools/echoboard/Echoboard';
 import Story from './tools/story/Story';
+import Intervalbell from './tools/intervalbell/Intervalbell';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -123,6 +124,7 @@ function App() {
             <Route path="/githubhub" element={<Githubhub />} />
             <Route path="/echoboard" element={<Echoboard />} />
             <Route path="/story" element={<Story />} />
+            <Route path="/intervalbell" element={<Intervalbell />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

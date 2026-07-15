@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2, BookText,
+  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2, BookText, Bell,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -420,6 +420,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #f472b6, #a855f7)',
     desc: '設定の断片と三幕構成/起承転結/ヒーローズジャーニーを選ぶと物語化プロンプトを生成。学習モードで知識定着にも使える',
     tag: 'prompt',
+  },
+  {
+    path: '/intervalbell',
+    name: 'Intervalbell',
+    icon: <Bell size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #a855f7, #ec4899)',
+    desc: '指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに',
+    tag: 'read',
   },
 ];
 
