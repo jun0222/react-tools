@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors } from './githubhubCore';
+import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors, assignAssigneeColors } from './githubhubCore';
 
 describe('parseEntries', () => {
   it('空の入力は空配列を返す', () => {
@@ -12,7 +12,7 @@ describe('parseEntries', () => {
 
   it('URLのみの行はdraft扱いでタイトルなしになる', () => {
     expect(parseEntries('・https://github.com/org/repo/pull/123')).toEqual([
-      { url: 'https://github.com/org/repo/pull/123', number: 123, status: 'draft', title: '', dependsOn: null, repo: 'repo', now: false },
+      { url: 'https://github.com/org/repo/pull/123', number: 123, status: 'draft', title: '', dependsOn: null, repo: 'repo', now: false, assignee: null },
     ]);
   });
 
@@ -85,6 +85,25 @@ describe('parseEntries', () => {
     expect(e.now).toBe(true);
     expect(e.title).toBe('タイトル');
   });
+
+  it('{担当:名前}で担当者が設定される', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open タイトル {担当:田中}');
+    expect(e.assignee).toBe('田中');
+    expect(e.title).toBe('タイトル');
+  });
+
+  it('{担当:名前}がない場合はnullになる', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open');
+    expect(e.assignee).toBeNull();
+  });
+
+  it('{担当}と{依存}と{now}が全部あっても正しく解析される', () => {
+    const [e] = parseEntries('・https://github.com/org/repo/pull/1 open タイトル {依存:#5} {担当:鈴木} {now}');
+    expect(e.dependsOn).toBe(5);
+    expect(e.assignee).toBe('鈴木');
+    expect(e.now).toBe(true);
+    expect(e.title).toBe('タイトル');
+  });
 });
 
 describe('buildSummary', () => {
@@ -112,7 +131,7 @@ describe('buildSummary', () => {
 
   it('merged→fix2→review2→fix1→review1→open→draftの順で出力される', () => {
     const mk = (n: number, status: Parameters<typeof buildSummary>[0][number]['status']) =>
-      ({ url: `u${n}`, number: n, status, title: '', dependsOn: null, repo: 'r', now: false });
+      ({ url: `u${n}`, number: n, status, title: '', dependsOn: null, repo: 'r', now: false, assignee: null });
     const entries = [
       mk(1, 'draft'), mk(2, 'open'), mk(3, 'review1'), mk(4, 'fix1'),
       mk(5, 'review2'), mk(6, 'fix2'), mk(7, 'merged'),
@@ -129,7 +148,7 @@ describe('buildSummary', () => {
 
   it('タイトルがある場合は番号とタイトルが両方出力される', () => {
     const entries = [
-      { url: 'u1', number: 5, status: 'open' as const, title: 'ログイン修正', dependsOn: null, repo: 'r', now: false },
+      { url: 'u1', number: 5, status: 'open' as const, title: 'ログイン修正', dependsOn: null, repo: 'r', now: false, assignee: null },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).toContain('・#5 ログイン修正');
@@ -137,7 +156,7 @@ describe('buildSummary', () => {
 
   it('タイトルがない場合は番号のみ出力される', () => {
     const entries = [
-      { url: 'u1', number: 5, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
+      { url: 'u1', number: 5, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false, assignee: null },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).toContain('・#5');
@@ -146,8 +165,8 @@ describe('buildSummary', () => {
 
   it('nowのエントリがあってもサマリに【作業中】セクションは出力されない', () => {
     const entries = [
-      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
-      { url: 'u2', number: 2, status: 'fix1' as const, title: '修正対応', dependsOn: null, repo: 'r', now: true },
+      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false, assignee: null },
+      { url: 'u2', number: 2, status: 'fix1' as const, title: '修正対応', dependsOn: null, repo: 'r', now: true, assignee: null },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).not.toContain('【作業中】');
@@ -156,7 +175,7 @@ describe('buildSummary', () => {
 
   it('nowのエントリがない場合も同様に出力しない', () => {
     const entries = [
-      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false },
+      { url: 'u1', number: 1, status: 'open' as const, title: '', dependsOn: null, repo: 'r', now: false, assignee: null },
     ];
     const result = buildSummary(entries, '07/08 12:00');
     expect(result).not.toContain('【作業中】');

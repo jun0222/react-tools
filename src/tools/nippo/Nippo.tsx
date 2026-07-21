@@ -5,6 +5,7 @@ import {
   parseEntries,
   buildSummary,
   fmtTimestamp,
+  assignAssigneeColors,
   type Status,
 } from './nippoCore';
 import './Nippo.css';
@@ -14,8 +15,15 @@ const SK_TEXT = 'nippo-text';
 const STATUS_LABEL: Record<Status, string> = {
   completed: '完了',
   'in-progress': '進行中',
+  deferred: '保留',
   pending: '未着手',
 };
+
+const Avatar = ({ name, color }: { name: string; color: string }) => (
+  <span className="np-avatar" style={{ backgroundColor: color }}>
+    {Array.from(name)[0]}
+  </span>
+);
 
 
 const load = (key: string, fallback: string): string => {
@@ -32,6 +40,10 @@ const Nippo = () => {
 
   const entries = parseEntries(text);
   const nowEntries = entries.filter(e => e.now);
+  const assigneeColors = assignAssigneeColors(
+    entries.map(e => e.assignee).filter((a): a is string => a !== null),
+    dark,
+  );
 
   const handleTextChange = (v: string) => {
     setText(v);
@@ -68,7 +80,10 @@ const Nippo = () => {
             <div className="np-now-header">作業中</div>
             <div className="np-now-items">
               {nowEntries.map((e, i) => (
-                <div key={i} className="np-now-item">・{e.label}</div>
+                <div key={i} className="np-now-item">
+                  {e.assignee && <Avatar name={e.assignee} color={assigneeColors[e.assignee]} />}
+                  ・{e.label}
+                </div>
               ))}
             </div>
           </div>
@@ -88,7 +103,7 @@ const Nippo = () => {
           role="region"
           aria-label="サマリ"
         >
-          {(['pending', 'in-progress', 'completed'] as const).map(status => {
+          {(['pending', 'deferred', 'in-progress', 'completed'] as const).map(status => {
             const group = entries.filter(e => e.status === status);
             return (
               <div key={status} className={`np-group np-group--${status}`}>
@@ -97,7 +112,10 @@ const Nippo = () => {
                   {group.length === 0
                     ? <div className="np-group-item np-group-item--empty">なし</div>
                     : group.map((e, i) => (
-                        <div key={i} className="np-group-item">・{e.label}</div>
+                        <div key={i} className="np-group-item">
+                          {e.assignee && <Avatar name={e.assignee} color={assigneeColors[e.assignee]} />}
+                          ・{e.label}
+                        </div>
                       ))
                   }
                 </div>

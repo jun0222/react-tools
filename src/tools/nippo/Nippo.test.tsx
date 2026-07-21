@@ -76,16 +76,17 @@ describe('Nippo', () => {
     });
   });
 
-  it('完了・進行中・未着手がサマリパネルに表示される', () => {
+  it('完了・進行中・保留・未着手がサマリパネルに表示される', () => {
     renderNippo();
     fireEvent.change(screen.getByRole('textbox'), {
       target: {
-        value: '・朝会 9:00~9:30 完了\n・設計 10:00~11:00 進行中\n・テスト',
+        value: '・朝会 9:00~9:30 完了\n・設計 10:00~11:00 進行中\n・企画書 保留\n・テスト',
       },
     });
     const summary = screen.getByRole('region', { name: 'サマリ' });
     expect(summary.textContent).toContain('完了');
     expect(summary.textContent).toContain('進行中');
+    expect(summary.textContent).toContain('保留');
     expect(summary.textContent).toContain('未着手');
   });
 
@@ -94,7 +95,43 @@ describe('Nippo', () => {
     const summary = screen.getByRole('region', { name: 'サマリ' });
     expect(summary.textContent).toContain('完了');
     expect(summary.textContent).toContain('進行中');
+    expect(summary.textContent).toContain('保留');
     expect(summary.textContent).toContain('未着手');
+  });
+
+  it('未着手と進行中の間に保留の列が表示される', () => {
+    renderNippo();
+    const summary = screen.getByRole('region', { name: 'サマリ' });
+    const headers = summary.querySelectorAll('.np-group-header');
+    const labels = Array.from(headers).map(h => h.textContent);
+    expect(labels.indexOf('未着手')).toBeLessThan(labels.indexOf('保留'));
+    expect(labels.indexOf('保留')).toBeLessThan(labels.indexOf('進行中'));
+  });
+
+  it('{担当:名前}を付けるとサマリ項目に担当者アイコンが表示される', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・朝会 完了 {担当:田中}' },
+    });
+    const avatar = screen.getByText('田');
+    expect(avatar).toHaveClass('np-avatar');
+  });
+
+  it('担当者が異なると異なる色のアイコンになる', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・朝会 完了 {担当:田中}\n・設計 完了 {担当:鈴木}' },
+    });
+    const tanaka = screen.getByText('田');
+    const suzuki = screen.getByText('鈴');
+    expect(tanaka.style.backgroundColor).not.toBe(suzuki.style.backgroundColor);
+  });
+
+  it('{担当:名前}がない場合はアイコンが表示されない', () => {
+    renderNippo();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '・朝会 完了' } });
+    const summary = screen.getByRole('region', { name: 'サマリ' });
+    expect(summary.querySelector('.np-avatar')).not.toBeInTheDocument();
   });
 
   it('{now}が付いたエントリがないときは作業中領域が表示されない', () => {
