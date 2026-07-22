@@ -214,3 +214,23 @@ describe('assignRepoColors', () => {
     expect(colors.repo11).toBeDefined();
   });
 });
+
+describe('assignAssigneeColors', () => {
+  it('初出順にパレットの色を先頭から割り当てる', () => {
+    const colors = assignAssigneeColors(['田中', '鈴木', '田中'], false);
+    expect(colors['田中']).not.toBe(colors['鈴木']);
+    expect(Object.keys(colors)).toEqual(['田中', '鈴木']);
+  });
+
+  it('darkフラグでライト/ダーク用の色が変わる', () => {
+    const light = assignAssigneeColors(['田中'], false);
+    const dark = assignAssigneeColors(['田中'], true);
+    expect(light['田中']).not.toBe(dark['田中']);
+  });
+
+  it('パレット数を超えても全員に色を割り当てる', () => {
+    const names = Array.from({ length: 12 }, (_, i) => `担当${i}`);
+    const colors = assignAssigneeColors(names, false);
+    expect(Object.keys(colors)).toHaveLength(12);
+  });
+});

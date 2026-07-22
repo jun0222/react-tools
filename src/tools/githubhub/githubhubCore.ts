@@ -8,6 +8,7 @@ export interface PrEntry {
   dependsOn: number | null;
   repo: string;
   now: boolean;
+  assignee: string | null;
 }
 
 const STATUS_KEYWORDS: readonly PrStatus[] = ['draft', 'open', 'review1', 'fix1', 'review2', 'fix2', 'merged'];
@@ -45,6 +46,13 @@ export const parseEntries = (text: string): PrEntry[] =>
         content = content.replace(depMatch[0], '').trim();
       }
 
+      let assignee: string | null = null;
+      const assigneeMatch = content.match(/[{｛]担当:([^}｛｝]+)[}｝]/);
+      if (assigneeMatch) {
+        assignee = assigneeMatch[1].trim();
+        content = content.replace(assigneeMatch[0], '').trim();
+      }
+
       const tokens = content.split(/\s+/).filter(Boolean);
 
       let url = '';
@@ -65,7 +73,7 @@ export const parseEntries = (text: string): PrEntry[] =>
 
       const title = tokens.join(' ');
 
-      return { url, number, status, title, dependsOn, repo, now };
+      return { url, number, status, title, dependsOn, repo, now, assignee };
     })
     .filter(e => e.url !== '');
 
@@ -100,21 +108,27 @@ export const buildSummary = (entries: PrEntry[], timestamp: string): string => {
 };
 
 // dataviz skill 検証済みカテゴリカルパレット（固定順）
-const REPO_PALETTE_LIGHT = [
+const CATEGORY_PALETTE_LIGHT = [
   '#2a78d6', '#1baf7a', '#eda100', '#008300',
   '#4a3aa7', '#e34948', '#e87ba4', '#eb6834',
 ];
-const REPO_PALETTE_DARK = [
+const CATEGORY_PALETTE_DARK = [
   '#3987e5', '#199e70', '#c98500', '#008300',
   '#9085e9', '#e66767', '#d55181', '#d95926',
 ];
 
-export const assignRepoColors = (repos: string[], dark: boolean): Record<string, string> => {
-  const palette = dark ? REPO_PALETTE_DARK : REPO_PALETTE_LIGHT;
+const assignColors = (keys: string[], dark: boolean): Record<string, string> => {
+  const palette = dark ? CATEGORY_PALETTE_DARK : CATEGORY_PALETTE_LIGHT;
   const unique: string[] = [];
-  for (const r of repos) if (!unique.includes(r)) unique.push(r);
+  for (const k of keys) if (!unique.includes(k)) unique.push(k);
 
   const map: Record<string, string> = {};
-  unique.forEach((r, i) => { map[r] = palette[i % palette.length]; });
+  unique.forEach((k, i) => { map[k] = palette[i % palette.length]; });
   return map;
 };
+
+export const assignRepoColors = (repos: string[], dark: boolean): Record<string, string> =>
+  assignColors(repos, dark);
+
+export const assignAssigneeColors = (names: string[], dark: boolean): Record<string, string> =>
+  assignColors(names, dark);

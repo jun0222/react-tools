@@ -194,6 +194,37 @@ describe('Githubhub', () => {
     expect(dialog).toBeInTheDocument();
     expect(dialog.textContent).toContain('依存');
     expect(dialog.textContent).toContain('draft');
+    expect(dialog.textContent).toContain('担当');
+  });
+
+  it('カードに{担当:名前}のアイコンが表示される', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/123 open タイトル {担当:田中}' },
+    });
+    const avatar = screen.getByText('田');
+    expect(avatar).toHaveClass('gh-avatar');
+  });
+
+  it('担当者が異なると異なる色のアイコンになる', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: {
+        value:
+          '・https://github.com/org/repo/pull/1 open A {担当:田中}\n・https://github.com/org/repo/pull/2 open B {担当:鈴木}',
+      },
+    });
+    const tanaka = screen.getByText('田');
+    const suzuki = screen.getByText('鈴');
+    expect(tanaka.style.backgroundColor).not.toBe(suzuki.style.backgroundColor);
+  });
+
+  it('{担当:名前}がない場合はアイコンが表示されない', () => {
+    renderTool();
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '・https://github.com/org/repo/pull/1 open タイトル' },
+    });
+    expect(document.querySelector('.gh-avatar')).not.toBeInTheDocument();
   });
 
   it('閉じるボタンを押すとモーダルが閉じる', () => {

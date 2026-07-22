@@ -204,6 +204,21 @@
 }
 .gh-root.light .gh-card-title { color: #1a2030; }
 
+.gh-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.3rem;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
 .gh-repo-badge {
   display: inline-block;
   font-size: 0.68rem;

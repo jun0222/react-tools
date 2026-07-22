@@ -1,7 +1,15 @@
 import { useState, type ReactNode } from 'react';
 import { GitPullRequest, HelpCircle, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { parseEntries, buildSummary, fmtTimestamp, assignRepoColors, type PrEntry, type PrStatus } from './githubhubCore';
+import {
+  parseEntries,
+  buildSummary,
+  fmtTimestamp,
+  assignRepoColors,
+  assignAssigneeColors,
+  type PrEntry,
+  type PrStatus,
+} from './githubhubCore';
 import './Githubhub.css';
 
 const SK_TEXT = 'githubhub-text';
@@ -33,6 +41,10 @@ const Githubhub = () => {
   const nowEntries = entries.filter(e => e.now);
   const findByNumber = (n: number) => entries.find(e => e.number === n);
   const repoColors = assignRepoColors(entries.map(e => e.repo), dark);
+  const assigneeColors = assignAssigneeColors(
+    entries.map(e => e.assignee).filter((a): a is string => a !== null),
+    dark,
+  );
 
   const renderCard = (e: PrEntry): ReactNode => (
     <div
@@ -41,6 +53,11 @@ const Githubhub = () => {
       onClick={() => window.open(e.url, '_blank', 'noopener,noreferrer')}
     >
       <span className="gh-card-title">
+        {e.assignee && (
+          <span className="gh-avatar" style={{ backgroundColor: assigneeColors[e.assignee] }}>
+            {Array.from(e.assignee)[0]}
+          </span>
+        )}
         <span
           className="gh-repo-badge"
           style={{ backgroundColor: repoColors[e.repo] }}
@@ -160,18 +177,19 @@ const Githubhub = () => {
             <div className="gh-modal-body">
               <p>1行につき1件、先頭に「・」を付けて入力します。</p>
               <pre className="gh-modal-code">
-・URL [ステータス] [タイトル] [{'{'}依存:#番号{'}'}] [{'{'}now{'}'}]
+・URL [ステータス] [タイトル] [{'{'}依存:#番号{'}'}] [{'{'}担当:名前{'}'}] [{'{'}now{'}'}]
               </pre>
               <ul>
                 <li><strong>URL</strong>: GitHubのPRリンク（必須）。末尾の番号を自動で抽出します</li>
                 <li><strong>ステータス</strong>: draft / open / review1 / fix1 / review2 / fix2 / merged（省略時はdraft）</li>
                 <li><strong>タイトル</strong>: 任意。付けるとカードに番号と一緒に表示されます</li>
                 <li><strong>依存</strong>: <code>{'{'}依存:#120{'}'}</code> の形式で1件だけ指定可能。リスト内に該当PRがあればリンクになります</li>
+                <li><strong>担当</strong>: <code>{'{'}担当:田中{'}'}</code> の形式で指定すると、カードに担当者の頭文字が入った色付きアイコンが表示されます</li>
                 <li><strong>作業中</strong>: <code>{'{'}now{'}'}</code> を付けると、ステータスに関わらず上部の「作業中」欄にも表示されます</li>
               </ul>
               <p className="gh-modal-example-label">例:</p>
               <pre className="gh-modal-code">
-・https://github.com/org/repo/pull/123 review1 ログイン修正 {'{'}依存:#120{'}'} {'{'}now{'}'}
+・https://github.com/org/repo/pull/123 review1 ログイン修正 {'{'}依存:#120{'}'} {'{'}担当:田中{'}'} {'{'}now{'}'}
               </pre>
             </div>
           </div>
