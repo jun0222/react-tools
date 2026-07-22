@@ -5426,6 +5426,24 @@ exports[`UI スナップショット > Nippo > ダークモード（空の状態
         </div>
       </div>
       <div
+        class="np-group np-group--deferred"
+      >
+        <div
+          class="np-group-header"
+        >
+          保留
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
         class="np-group np-group--in-progress"
       >
         <div
@@ -5544,6 +5562,24 @@ exports[`UI スナップショット > Nippo > ライトモード（空の状態
           class="np-group-header"
         >
           未着手
+        </div>
+        <div
+          class="np-group-items"
+        >
+          <div
+            class="np-group-item np-group-item--empty"
+          >
+            なし
+          </div>
+        </div>
+      </div>
+      <div
+        class="np-group np-group--deferred"
+      >
+        <div
+          class="np-group-header"
+        >
+          保留
         </div>
         <div
           class="np-group-items"
