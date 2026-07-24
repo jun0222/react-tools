@@ -6,6 +6,7 @@ import {
   BOXES,
   CONNECTIONS,
   boxWidthCh,
+  boxRows,
   emptyTexts,
   exportJson,
   importJson,
@@ -183,13 +184,14 @@ const Symtree = () => {
               onClick={() => setPinnedId(prev => (prev === b.id ? null : b.id))}
             >
               <div className="sym-box-label">{b.label}</div>
-              <input
+              <textarea
                 className="sym-box"
                 style={{ width: `${boxWidthCh(texts[b.id] ?? '')}ch`, color: b.fg }}
                 value={texts[b.id] ?? ''}
                 onChange={e => updateText(b.id, e.target.value)}
                 onFocus={() => setPinnedId(b.id)}
                 aria-label={b.label}
+                rows={boxRows(texts[b.id] ?? '')}
                 spellCheck={false}
               />
             </div>

@@ -4,6 +4,7 @@ import {
   CONNECTIONS,
   MIN_CH,
   boxWidthCh,
+  boxRows,
   emptyTexts,
   exportJson,
   importJson,
@@ -62,6 +63,40 @@ describe('boxWidthCh', () => {
   it('MIN_CHを超える長さの文字列は文字数+2を返す', () => {
     const text = 'a'.repeat(MIN_CH + 5);
     expect(boxWidthCh(text)).toBe(text.length + 2);
+  });
+
+  it('複数行のときは最も長い行の長さを基準にする', () => {
+    const longLine = 'a'.repeat(MIN_CH + 10);
+    const text = `短い\n${longLine}\n中くらいの行`;
+    expect(boxWidthCh(text)).toBe(longLine.length + 2);
+  });
+
+  it('全ての行がMIN_CH未満ならMIN_CHを返す', () => {
+    expect(boxWidthCh('あ\nい\nう')).toBe(MIN_CH);
+  });
+
+  it('全角文字は半角の2倍の幅として計算される', () => {
+    const text = 'あ'.repeat(10);
+    expect(boxWidthCh(text)).toBe(20 + 2);
+  });
+
+  it('全角と半角が混在する行も正しく幅を計算する', () => {
+    const text = 'aあaあaあaあaあaあ';
+    expect(boxWidthCh(text)).toBe((6 * 1 + 6 * 2) + 2);
+  });
+});
+
+describe('boxRows', () => {
+  it('空文字のときは1を返す', () => {
+    expect(boxRows('')).toBe(1);
+  });
+
+  it('改行がない場合は1を返す', () => {
+    expect(boxRows('こんにちは')).toBe(1);
+  });
+
+  it('改行の数+1を返す', () => {
+    expect(boxRows('1行目\n2行目\n3行目')).toBe(3);
   });
 });
 

@@ -119,14 +119,17 @@
 }
 
 .sym-box {
-  min-height: 26px;
-  padding: 0 0.4rem;
+  padding: 0.15rem 0.4rem;
   border: none;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.15);
   text-align: center;
+  font-family: inherit;
   font-size: 0.78rem;
+  line-height: 1.4;
   outline: none;
+  resize: none;
+  overflow: hidden;
   transition: width 0.1s ease, background 0.15s;
 }
 .sym-box:focus { background: rgba(255, 255, 255, 0.3); }

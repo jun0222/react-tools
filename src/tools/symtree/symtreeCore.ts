@@ -98,7 +98,24 @@ export type BoxTexts = Record<string, string>;
 
 export const MIN_CH = 12;
 
-export const boxWidthCh = (text: string): number => Math.max(MIN_CH, text.length + 2);
+// 'ch' 単位は半角文字基準のため、全角文字（日本語など）は2倍の幅として数える
+const isFullWidth = (code: number): boolean =>
+  (code >= 0x3000 && code <= 0x30ff) || // CJK記号・句読点、ひらがな、カタカナ
+  (code >= 0x3400 && code <= 0x9fff) || // CJK統合漢字（拡張A含む）
+  (code >= 0xf900 && code <= 0xfaff) || // CJK互換漢字
+  (code >= 0xff00 && code <= 0xffef); // 全角形
+
+const charWidth = (ch: string): number => (isFullWidth(ch.codePointAt(0) ?? 0) ? 2 : 1);
+
+const lineWidth = (line: string): number =>
+  Array.from(line).reduce((sum, ch) => sum + charWidth(ch), 0);
+
+export const boxWidthCh = (text: string): number => {
+  const longestLine = Math.max(...text.split('\n').map(lineWidth));
+  return Math.max(MIN_CH, longestLine + 2);
+};
+
+export const boxRows = (text: string): number => text.split('\n').length;
 
 export const emptyTexts = (): BoxTexts =>
   Object.fromEntries(BOXES.map(b => [b.id, '']));
