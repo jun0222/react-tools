@@ -55,6 +55,7 @@ import Githubhub from './tools/githubhub/Githubhub';
 import Echoboard from './tools/echoboard/Echoboard';
 import Story from './tools/story/Story';
 import Intervalbell from './tools/intervalbell/Intervalbell';
+import Symtree from './tools/symtree/Symtree';
 
 const MetaManager = () => {
   const { pathname } = useLocation();
@@ -125,6 +126,7 @@ function App() {
             <Route path="/echoboard" element={<Echoboard />} />
             <Route path="/story" element={<Story />} />
             <Route path="/intervalbell" element={<Intervalbell />} />
+            <Route path="/symtree" element={<Symtree />} />
           </Routes>
         </ThemeProvider>
       </MetaProvider>

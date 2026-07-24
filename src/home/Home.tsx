@@ -6,7 +6,7 @@ import {
   TrendingUp, Bookmark, Scissors, BookOpen, Bug, NotebookPen,
   PenTool, GitCommit, StickyNote, Terminal, Layout, Search, X, AlignLeft, Salad, Lightbulb,
   CalendarDays, Fish, MessageSquare, CheckSquare, GitFork, FlaskConical, LayoutDashboard, GraduationCap,
-  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2, BookText, Bell,
+  Newspaper, Brain, Layers, Split, GitPullRequest, Volume2, BookText, Bell, Boxes,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Home.css';
@@ -428,6 +428,14 @@ const tools: Tool[] = [
     iconBg: 'linear-gradient(135deg, #a855f7, #ec4899)',
     desc: '指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに',
     tag: 'read',
+  },
+  {
+    path: '/symtree',
+    name: 'Symtree',
+    icon: <Boxes size={20} color="white" />,
+    iconBg: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+    desc: '文字数に応じて伸び縮みする中央揃えテキストボックスを線で繋いだ対称ダイアグラム。PNG/JSON入出力対応',
+    tag: 'diagram',
   },
 ];
 

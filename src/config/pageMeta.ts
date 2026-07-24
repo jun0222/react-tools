@@ -208,4 +208,8 @@ export const PAGE_META: Record<string, PageMeta> = {
     title: 'Intervalbell - 反復ビープタイマー 🔔',
     description: '指定した間隔でビープ音を繰り返し鳴らすメトロノーム。速読の反復練習などに使える。',
   },
+  '/symtree': {
+    title: 'Symtree - 対称ダイアグラム 🔷',
+    description: '文字数に応じて伸び縮みする中央揃えテキストボックスを線で繋いだ対称ダイアグラム。PNG/JSON入出力対応。',
+  },
 };
