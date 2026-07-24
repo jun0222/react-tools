@@ -96,10 +96,10 @@ export const CONNECTIONS: readonly ConnDef[] = [
 
 export type BoxTexts = Record<string, string>;
 
-const PASSWORD = 'seimei';
+const KOTOBA = 'seimei';
 export const AUTH_DURATION_MS = 14 * 24 * 60 * 60 * 1000;
 
-export const checkPassword = (input: string): boolean => input === PASSWORD;
+export const checkKotoba = (input: string): boolean => input === KOTOBA;
 
 export const isAuthValid = (authUntil: number | null, now: number): boolean =>
   authUntil !== null && now < authUntil;

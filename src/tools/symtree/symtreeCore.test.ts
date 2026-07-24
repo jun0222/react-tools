@@ -11,7 +11,7 @@ import {
   tickForConnection,
   arrowHeadPoints,
   sanitizeFileName,
-  checkPassword,
+  checkKotoba,
   isAuthValid,
   nextAuthUntil,
   AUTH_DURATION_MS,
@@ -208,17 +208,17 @@ describe('sanitizeFileName', () => {
   });
 });
 
-describe('checkPassword', () => {
-  it('正しいパスワードでtrueを返す', () => {
-    expect(checkPassword('seimei')).toBe(true);
+describe('checkKotoba', () => {
+  it('正しい合言葉でtrueを返す', () => {
+    expect(checkKotoba('seimei')).toBe(true);
   });
 
-  it('間違ったパスワードでfalseを返す', () => {
-    expect(checkPassword('wrong')).toBe(false);
+  it('間違った合言葉でfalseを返す', () => {
+    expect(checkKotoba('wrong')).toBe(false);
   });
 
   it('大文字小文字を区別する', () => {
-    expect(checkPassword('SEIMEI')).toBe(false);
+    expect(checkKotoba('SEIMEI')).toBe(false);
   });
 });
 

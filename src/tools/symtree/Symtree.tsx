@@ -13,7 +13,7 @@ import {
   tickForConnection,
   arrowHeadPoints,
   sanitizeFileName,
-  checkPassword,
+  checkKotoba,
   isAuthValid,
   nextAuthUntil,
   type BoxTexts,
@@ -48,7 +48,7 @@ const BOX_MAP = Object.fromEntries(BOXES.map(b => [b.id, b]));
 const Symtree = () => {
   const { dark } = useTheme();
   const [authed, setAuthed] = useState(loadAuthed);
-  const [passwordInput, setPasswordInput] = useState('');
+  const [kotobaInput, setKotobaInput] = useState('');
   const [authError, setAuthError] = useState(false);
   const [texts, setTexts] = useState<BoxTexts>(load);
   const [toast, setToast] = useState('');
@@ -61,11 +61,11 @@ const Symtree = () => {
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
-    if (checkPassword(passwordInput)) {
+    if (checkKotoba(kotobaInput)) {
       localStorage.setItem(SK_AUTH, String(nextAuthUntil(Date.now())));
       setAuthed(true);
       setAuthError(false);
-      setPasswordInput('');
+      setKotobaInput('');
     } else {
       setAuthError(true);
     }
@@ -152,17 +152,17 @@ const Symtree = () => {
           <form className="sym-lock-form" onSubmit={handleUnlock}>
             <div className="sym-logo"><Boxes size={20} color="white" /></div>
             <h1><span className="sym-accent">Symtree</span></h1>
-            <p className="sym-lock-desc">閲覧にはパスワードが必要です</p>
+            <p className="sym-lock-desc">閲覧には合言葉が必要です</p>
             <input
               className="sym-lock-input"
-              type="password"
-              value={passwordInput}
-              onChange={e => { setPasswordInput(e.target.value); setAuthError(false); }}
-              aria-label="パスワード"
-              placeholder="パスワード"
+              type="text"
+              value={kotobaInput}
+              onChange={e => { setKotobaInput(e.target.value); setAuthError(false); }}
+              aria-label="合言葉"
+              placeholder="合言葉"
               autoFocus
             />
-            {authError && <p className="sym-lock-error">パスワードが違います</p>}
+            {authError && <p className="sym-lock-error">合言葉が違います</p>}
             <button className="sym-btn sym-lock-submit" type="submit">解除</button>
           </form>
         </div>
