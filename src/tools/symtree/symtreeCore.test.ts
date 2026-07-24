@@ -10,6 +10,11 @@ import {
   importJson,
   tickForConnection,
   arrowHeadPoints,
+  sanitizeFileName,
+  checkPassword,
+  isAuthValid,
+  nextAuthUntil,
+  AUTH_DURATION_MS,
 } from './symtreeCore';
 
 describe('BOXES', () => {
@@ -178,5 +183,68 @@ describe('arrowHeadPoints', () => {
     const [tip] = points.trim().split(/\s+/).map(p => p.split(',').map(Number));
     expect(tip[0]).toBeCloseTo(17);
     expect(tip[1]).toBeCloseTo(0);
+  });
+});
+
+describe('sanitizeFileName', () => {
+  it('空文字のときデフォルト名を返す', () => {
+    expect(sanitizeFileName('')).toBe('symtree');
+  });
+
+  it('空白のみのときデフォルト名を返す', () => {
+    expect(sanitizeFileName('   ')).toBe('symtree');
+  });
+
+  it('前後の空白を取り除く', () => {
+    expect(sanitizeFileName('  my-tree  ')).toBe('my-tree');
+  });
+
+  it('ファイル名に使えない文字を除去する', () => {
+    expect(sanitizeFileName('my/tree:name*?"<>|')).toBe('mytreename');
+  });
+
+  it('日本語はそのまま使える', () => {
+    expect(sanitizeFileName('生命の樹')).toBe('生命の樹');
+  });
+});
+
+describe('checkPassword', () => {
+  it('正しいパスワードでtrueを返す', () => {
+    expect(checkPassword('seimei')).toBe(true);
+  });
+
+  it('間違ったパスワードでfalseを返す', () => {
+    expect(checkPassword('wrong')).toBe(false);
+  });
+
+  it('大文字小文字を区別する', () => {
+    expect(checkPassword('SEIMEI')).toBe(false);
+  });
+});
+
+describe('isAuthValid', () => {
+  it('authUntilがnullのときfalse', () => {
+    expect(isAuthValid(null, Date.now())).toBe(false);
+  });
+
+  it('現在時刻がauthUntilより前ならtrue', () => {
+    const now = 1000;
+    expect(isAuthValid(2000, now)).toBe(true);
+  });
+
+  it('現在時刻がauthUntilを過ぎたらfalse', () => {
+    const now = 3000;
+    expect(isAuthValid(2000, now)).toBe(false);
+  });
+});
+
+describe('nextAuthUntil', () => {
+  it('現在時刻から2週間後のタイムスタンプを返す', () => {
+    const now = 1000;
+    expect(nextAuthUntil(now)).toBe(now + AUTH_DURATION_MS);
+  });
+
+  it('2週間はミリ秒換算で14日分になる', () => {
+    expect(AUTH_DURATION_MS).toBe(14 * 24 * 60 * 60 * 1000);
   });
 });

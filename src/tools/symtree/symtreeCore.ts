@@ -96,6 +96,16 @@ export const CONNECTIONS: readonly ConnDef[] = [
 
 export type BoxTexts = Record<string, string>;
 
+const PASSWORD = 'seimei';
+export const AUTH_DURATION_MS = 14 * 24 * 60 * 60 * 1000;
+
+export const checkPassword = (input: string): boolean => input === PASSWORD;
+
+export const isAuthValid = (authUntil: number | null, now: number): boolean =>
+  authUntil !== null && now < authUntil;
+
+export const nextAuthUntil = (now: number): number => now + AUTH_DURATION_MS;
+
 export const MIN_CH = 12;
 
 // 'ch' 単位は半角文字基準のため、全角文字（日本語など）は2倍の幅として数える
@@ -121,6 +131,11 @@ export const emptyTexts = (): BoxTexts =>
   Object.fromEntries(BOXES.map(b => [b.id, '']));
 
 export const exportJson = (texts: BoxTexts): string => JSON.stringify(texts, null, 2);
+
+export const sanitizeFileName = (name: string): string => {
+  const cleaned = name.trim().replace(/[/\\:*?"<>|]/g, '');
+  return cleaned || 'symtree';
+};
 
 export const importJson = (json: string): BoxTexts | null => {
   try {
